@@ -57,7 +57,7 @@ We switch to branch `main` of this package and run an expression to benchmark.
 In a real-world scenario, you would:
 
 * Select multiple branches instead of just `main`. Benchmarking code will be ran
-  on all of them, multiple time, in random order.
+  on all of them, multiple times, in random order.
 * use a function that is exported from the package namespace you want to 
   benchmark, because otherwise you would not be able to measure the performance
   difference between different branches.
