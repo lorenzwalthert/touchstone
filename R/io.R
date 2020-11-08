@@ -34,10 +34,11 @@ benchmark_write_impl <- function(benchmark, path, append) {
 #' @export
 benchmark_read <- function(ref) {
   path_outputs <- fs::path(dir_touchstone(), ref)
-  purrr::map_dfr(
+  out <- purrr::map(
     path_outputs,
     benchmark_read_impl
   )
+  vctrs::vec_rbind(!!!out)
 }
 
 benchmark_read_impl <- function(path) {
