@@ -15,8 +15,10 @@ gert
 ggplot
 href
 https
+icloud
 io
 LazyData
+lorenz
 magrittr
 MERCHANTABILITY
 NONINFRINGEMENT
@@ -35,5 +37,6 @@ testpkg
 testthat
 tibble
 usethis
+walthert
 Walthert
 withr

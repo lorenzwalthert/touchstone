@@ -15,12 +15,12 @@ benchmark_iteration_prepare(
 \item{ref}{A reference to a git commit. Currently, only branch names are
 supported.}
 
+\item{path_pkg}{The path to the repository to install.}
+
 \item{install_quick}{Passed to \code{\link[devtools:install]{devtools::install()}} as \code{quick}.}
 
 \item{install_dependencies}{Passed to \code{\link[devtools:install]{devtools::install()}}. Set to \code{FALSE}
 can help when ran locally without internet connection.}
-
-\item{repo}{The path to the repository to install.}
 }
 \description{
 Checks out a source branch and install the package

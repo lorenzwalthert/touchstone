@@ -1,7 +1,24 @@
-#' The directory where the touchstone database lives
-#' @keywords internal
+#' Touchstone managers
+#'
+#' Utilities to manage the touchstone database.
+#' @name touchstone_managers
+NULL
+
+#' @describeIn touchstone_managers returns the directory where the touchstone database lives.
+#' @aliases touchstone_managers
+#' @export
 dir_touchstone <- function() {
   "touchstone"
+}
+
+
+#' @describeIn touchstone_managers clears the touchstone database.
+#' @aliases touchstone_managers
+#' @export
+touchstone_clear <- function() {
+  paths <- dir_touchstone()
+  paths <- paths[fs::dir_exists(paths)]
+  fs::dir_delete(paths)
 }
 
 #' Evaluate an expression
@@ -21,11 +38,7 @@ ensure_touchstone_dir <- function() {
   fs::dir_create(dir_touchstone())
 }
 
-touchstone_clear <- function() {
-  paths <- dir_touchstone()
-  paths <- paths[fs::dir_exists(paths)]
-  fs::dir_delete(paths)
-}
+
 
 schema_disk <- function() {
   c(

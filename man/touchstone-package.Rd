@@ -13,7 +13,7 @@ A common problem of benchmarking in continuous
     better comparison.
 }
 \author{
-\strong{Maintainer}: First Last \email{first.last@example.com} (\href{https://orcid.org/YOUR-ORCID-ID}{ORCID})
+\strong{Maintainer}: Lorenz Walthert \email{lorenz.walthert@icloud.com}
 
 }
 \keyword{internal}

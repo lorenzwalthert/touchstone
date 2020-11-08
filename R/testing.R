@@ -29,6 +29,8 @@ local_package <- function(path = path_temp_pkg("testpkg"),
     usethis::create_package(path, open = FALSE) #
   )
   gert::git_init(path)
+  gert::git_config_set("user.name", "GitHub Actions", repo = path)
+  gert::git_config_set("user.email", "actions@github.com", repo = path)
   gert::git_add("DESCRIPTION", repo = path)
   gert::git_commit("[init]", repo = path)
   purrr::walk(branches, gert::git_branch_create, repo = path)

@@ -25,6 +25,8 @@ evaluated with \code{\link[=expr_eval]{expr_eval()}}.}
 
 \item{n}{Number of time to run benchmark.}
 
+\item{path_pkg}{The path to the repository to install.}
+
 \item{install_quick}{Passed to \code{\link[devtools:install]{devtools::install()}} as \code{quick}.}
 
 \item{install_dependencies}{Passed to \code{\link[devtools:install]{devtools::install()}}. Set to \code{FALSE}

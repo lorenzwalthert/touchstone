@@ -1,8 +1,8 @@
 test_that("iterations can be run", {
   local_clean_touchstone()
   bm <- benchmark_run_iteration(
-    expr_before_benchmark = "library(styler)",
-    expr_to_benchmark = 'styler::style_text("1 + 1")',
+    expr_before_benchmark = "library(testthat)",
+    expr_to_benchmark = "expect_equal(Sys.sleep(1e-3), NULL)",
     ref = "benchmark_run_iteration",
     n = 2
   )
@@ -16,8 +16,8 @@ test_that("refs can be run", {
   path_test_pkg <- local_package()
   bm <- benchmark_run_ref(
     "master",
-    expr_before_benchmark = "library(styler)",
-    expr_to_benchmark = 'styler::style_text("1 + 1")',
+    expr_before_benchmark = "library(testthat)",
+    expr_to_benchmark = "expect_equal(Sys.sleep(1e-3), NULL)",
     n = 2,
     path_pkg = path_test_pkg
   )
