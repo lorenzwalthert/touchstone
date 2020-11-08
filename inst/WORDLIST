@@ -12,6 +12,7 @@ eval
 expr
 fs
 gert
+ggplot
 href
 https
 io
@@ -28,6 +29,7 @@ roxygen
 Roxygen
 RoxygenNote
 seealso
+styler
 sublicense
 testpkg
 testthat

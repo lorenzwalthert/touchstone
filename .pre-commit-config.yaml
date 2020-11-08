@@ -30,7 +30,8 @@ repos:
           .*\.rds|
           .*\.Rds|
           .*\.sh|
-          .*\.RData
+          .*\.RData|
+          .*\.png
           )$
     -   id: readme-rmd-rendered
     -   id: parsable-R

@@ -12,6 +12,9 @@ benchmark_run_iteration <- function(expr_before_benchmark,
                                     expr_to_benchmark,
                                     ref,
                                     n = 20) {
+  if (rlang::is_missing(expr_before_benchmark)) {
+    expr_before_benchmark <- ""
+  }
   args <- lst(
     expr_before_benchmark,
     expr_to_benchmark,
