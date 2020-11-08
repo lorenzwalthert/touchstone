@@ -31,7 +31,8 @@ repos:
           .*\.Rds|
           .*\.sh|
           .*\.RData|
-          .*\.png
+          .*\.png|
+          \.github/workflows/.*\.yaml
           )$
     -   id: readme-rmd-rendered
     -   id: parsable-R
