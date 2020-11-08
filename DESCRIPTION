@@ -22,7 +22,8 @@ Imports:
     purrr,
     rlang,
     tibble,
-    usethis
+    usethis,
+    vctrs
 Suggests: 
     digest,
     ggplot2,

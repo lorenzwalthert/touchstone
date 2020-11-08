@@ -37,6 +37,7 @@ testpkg
 testthat
 tibble
 usethis
+vctrs
 walthert
 Walthert
 withr

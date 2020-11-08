@@ -64,13 +64,14 @@ benchmark_run_ref <- function(refs,
                               install_quick = TRUE,
                               install_dependencies = FALSE) {
   refs <- ref_upsample(refs, n = n)
-  purrr::map_dfr(refs, benchmark_run_ref_impl,
+  out_list <- purrr::map(refs, benchmark_run_ref_impl,
     expr_before_benchmark = expr_before_benchmark,
     expr_to_benchmark = expr_to_benchmark,
     path_pkg = path_pkg,
     install_quick = install_quick,
     install_dependencies = install_dependencies
   )
+  vctrs::vec_rbind(!!!out_list)
 }
 
 benchmark_run_ref_impl <- function(ref,
