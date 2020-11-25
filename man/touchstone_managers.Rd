@@ -8,7 +8,11 @@
 \usage{
 dir_touchstone()
 
-touchstone_clear()
+touchstone_clear(all = FALSE)
+}
+\arguments{
+\item{all}{Whether to clear the whole touchstone directory or just the
+records sub directory.}
 }
 \description{
 Utilities to manage the touchstone database.

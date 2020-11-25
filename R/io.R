@@ -1,18 +1,19 @@
 #' Write a benchmark
 #'
 #' @param benchmark The result of [bench::mark()], with `iterations = 1`.
+#' @param name The name of the benchmark.
 #' @param append Whether to append the result to the file or not.
 #' @param ref A character vector of length one to indicate the git ref (i.e.
 #'   commit, tag, branch etc) of the benchmarking.
 #' @param iteration An integer indicating to which iteration the benchmark
 #'   refers to.
 #' @export
-benchmark_write <- function(benchmark, ref, iteration = NA, append = TRUE) {
+benchmark_write <- function(benchmark, name, ref, iteration = NA, append = TRUE) {
   if (benchmark$n_itr > 1) {
     rlang::abort("This package only supports benchmarks with `bench::mark(..., iterations = 1`.")
   }
-  ensure_touchstone_dir()
-  path <- as.character(fs::path(dir_touchstone(), ref))
+  path <- path_record(name, ref)
+  ensure_dir(fs::path_dir(path))
   tibble(elapsed = as.numeric(benchmark$median), iteration = iteration, ref = enc2utf8(ref)) %>%
     benchmark_write_impl(path = path, append = append)
 }
@@ -32,13 +33,17 @@ benchmark_write_impl <- function(benchmark, path, append) {
 #' Read benchmarks
 #' @inheritParams benchmark_write
 #' @export
-benchmark_read <- function(ref) {
-  path_outputs <- fs::path(dir_touchstone(), ref)
+benchmark_read <- function(name, ref) {
+  path_outputs <- path_record(name, ref)
   out <- purrr::map(
     path_outputs,
     benchmark_read_impl
   )
   vctrs::vec_rbind(!!!out)
+}
+
+path_record <- function(name, ref) {
+  as.character(fs::path(dir_touchstone(), "records", name, ref))
 }
 
 benchmark_read_impl <- function(path) {

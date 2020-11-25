@@ -4,14 +4,14 @@
 \alias{benchmark_run_iteration}
 \title{Run a benchmark iteration}
 \usage{
-benchmark_run_iteration(expr_before_benchmark, expr_to_benchmark, ref, n = 20)
+benchmark_run_iteration(expr_before_benchmark, ..., ref, n = 20)
 }
 \arguments{
 \item{expr_before_benchmark}{Character vector with code to run before
-the benchmark is ran, will be evaluated with \code{\link[=expr_eval]{expr_eval()}}.}
+the benchmark is ran, will be evaluated with \code{\link[=exprs_eval]{exprs_eval()}}.}
 
-\item{expr_to_benchmark}{Character vector with code to benchmark, will be
-evaluated with \code{\link[=expr_eval]{expr_eval()}}.}
+\item{...}{Named character vector of length one with code to benchmark, will
+be evaluated with \code{\link[=exprs_eval]{exprs_eval()}}.}
 
 \item{ref}{A character vector of length one to indicate the git ref (i.e.
 commit, tag, branch etc) of the benchmarking.}

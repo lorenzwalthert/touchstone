@@ -7,7 +7,7 @@
 benchmark_run_ref(
   refs,
   expr_before_benchmark,
-  expr_to_benchmark,
+  ...,
   n = 20,
   path_pkg = ".",
   install_quick = TRUE,
@@ -18,10 +18,10 @@ benchmark_run_ref(
 \item{refs}{Git refs passed as \code{ref} to \code{\link[=benchmark_iteration_prepare]{benchmark_iteration_prepare()}}.}
 
 \item{expr_before_benchmark}{Character vector with code to run before
-the benchmark is ran, will be evaluated with \code{\link[=expr_eval]{expr_eval()}}.}
+the benchmark is ran, will be evaluated with \code{\link[=exprs_eval]{exprs_eval()}}.}
 
-\item{expr_to_benchmark}{Character vector with code to benchmark, will be
-evaluated with \code{\link[=expr_eval]{expr_eval()}}.}
+\item{...}{Named character vector of length one with code to benchmark, will
+be evaluated with \code{\link[=exprs_eval]{exprs_eval()}}.}
 
 \item{n}{Number of time to run benchmark.}
 

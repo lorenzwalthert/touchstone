@@ -3,9 +3,9 @@ test_that("can read and write benchmark", {
   ref <- "hash"
   atomic <- bench::mark(1 + 1, iterations = 1)
   expect_silent(
-    benchmark_write(atomic, ref = ref)
+    benchmark_write(atomic, name = "x1", ref = ref)
   )
-  bm <- benchmark_read(ref)
+  bm <- benchmark_read(ref, name = "x1")
   schema <- purrr::map_chr(bm, ~ class(.x)[1])
   expect_equal(schema, schema_disk())
 })

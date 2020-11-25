@@ -14,9 +14,12 @@ dir_touchstone <- function() {
 
 #' @describeIn touchstone_managers clears the touchstone database.
 #' @aliases touchstone_managers
+#' @param all Whether to clear the whole touchstone directory or just the
+#'   records sub directory.
 #' @export
-touchstone_clear <- function() {
-  paths <- dir_touchstone()
+touchstone_clear <- function(all = FALSE) {
+  paths <- fs::path(dir_touchstone(), if (!all) "records" else "")
+
   paths <- paths[fs::dir_exists(paths)]
   fs::dir_delete(paths)
 }
@@ -25,8 +28,8 @@ touchstone_clear <- function() {
 #'
 #' @param text Character vector with code to evaluate.
 #' @keywords internal
-expr_eval <- function(text) {
-  eval(parse(text = text))
+exprs_eval <- function(...) {
+  eval(parse(text = c(...)))
 }
 
 ref_upsample <- function(ref, n = 20) {
@@ -34,8 +37,8 @@ ref_upsample <- function(ref, n = 20) {
   sample(rep(ref, length.out = n))
 }
 
-ensure_touchstone_dir <- function() {
-  fs::dir_create(dir_touchstone())
+ensure_dir <- function(...) {
+  fs::dir_create(...)
 }
 
 

@@ -4,10 +4,12 @@
 \alias{benchmark_write}
 \title{Write a benchmark}
 \usage{
-benchmark_write(benchmark, ref, iteration = NA, append = TRUE)
+benchmark_write(benchmark, name, ref, iteration = NA, append = TRUE)
 }
 \arguments{
 \item{benchmark}{The result of \code{\link[bench:mark]{bench::mark()}}, with \code{iterations = 1}.}
+
+\item{name}{The name of the benchmark.}
 
 \item{ref}{A character vector of length one to indicate the git ref (i.e.
 commit, tag, branch etc) of the benchmarking.}

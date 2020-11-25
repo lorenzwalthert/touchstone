@@ -1,6 +1,6 @@
 test_that("can evaluate expressions for benchmarking", {
   expect_equal(
-    expr_eval("1 + 2.3"),
+    exprs_eval("1 + 2.3"),
     1 + 2.3
   )
 })
@@ -19,6 +19,6 @@ test_that("ref can be sampled", {
 test_that("touchstone dir can be removed", {
   local_clean_touchstone()
   fs::dir_create(dir_touchstone())
-  touchstone_clear()
+  touchstone_clear(all = TRUE)
   expect_false(fs::dir_exists(dir_touchstone()))
 })

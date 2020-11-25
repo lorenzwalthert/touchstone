@@ -4,7 +4,7 @@
 #' @inheritParams withr::defer
 #' @family testers
 local_clean_touchstone <- function(envir = parent.frame()) {
-  withr::defer(touchstone_clear(), envir = envir)
+  withr::defer(touchstone_clear(all = TRUE), envir = envir)
 }
 
 path_temp_pkg <- function(name) {

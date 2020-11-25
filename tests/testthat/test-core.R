@@ -17,7 +17,7 @@ test_that("refs can be run", {
   bm <- benchmark_run_ref(
     "master",
     expr_before_benchmark = "library(testthat)",
-    expr_to_benchmark = "expect_equal(Sys.sleep(1e-3), NULL)",
+    bliblablup = "expect_equal(Sys.sleep(1e-3), NULL)",
     n = 2,
     path_pkg = path_test_pkg
   )
