@@ -7,17 +7,11 @@ status](https://github.com/lorenzwalthert/touchstone/workflows/R-CMD-check/badge
 
 # touchstone
 
+touchstone is a tool for continuous benchmarking.
+
 <!-- badges: start -->
 
 <!-- badges: end -->
-
-The goal of touchstone is to benchmark code from different branches in
-the same continuous benchmarking run. This is helpful because continuous
-benchmarking that benchmarks just one commit is often very imprecise
-since the computational power available on a service like GitHub actions
-varies considerably between runs. Experience with styler showed that a
-variation [around 30%](https://github.com/r-lib/styler/pull/679) is not
-unusual.
 
 ## Installation
 
@@ -27,6 +21,44 @@ You can install the package from GitHub:
 # install.packages("devtools")
 devtools::install_github("lorenzwalthert/touchstone")
 ```
+
+## Motivation
+
+The motivation for touchstone is to provide accurate benchmarking
+results for package developers. The following insights were the
+motivation:
+
+  - Often, it does not make sense to only benchmark the feature branch
+    and compare this result with a CI/CD run that only benchmarked th
+    master branch, because compute power available in GitHub Actions
+    generally varies too much. The solution to this is to benchmark the
+    two branches in one CI/CD run and look at *relative difference*
+    between branches. This matters in particular when running one
+    iteration of a benchmark takes long (\>\> a few seconds) and speed
+    implications are small. Experience with styler showed that a
+    variation [around 30%](https://github.com/r-lib/styler/pull/679) for
+    identical benchmarking code is not unusual.
+
+  - Maintaining a timeline such as the implementation of r-lib/bench is
+    of limited use because of the first bullet. Speed implications are
+    to be checked between two revisions.
+
+  - R and package versions must be fixed via RSPM to allow as much
+    continuation as possible anyways. Changing the timestamp of RSPM can
+    happen in PRs that are only dedicated to dependency updates.
+
+## Proposed Workflow
+
+touchstone makes it easy for you to
+
+  - select a branch in your package root and built the package.
+
+  - run code to benchmark.
+
+  - iterate over the above with random order of the branches you want to
+    compare.
+
+See the example below.
 
 ## Example
 
@@ -52,12 +84,14 @@ timings %>%
   ggplot2::geom_density()
 ```
 
-<img src="man/figures/README-example-1.png" width="100%" /> We switch to
-branch `main` of this package and run an expression to benchmark. In a
-real-world scenario, you would:
+<img src="man/figures/README-example-1.png" width="100%" />
+
+Touchstone switches to branch `main` of this package, builds it and run
+an expression to benchmark. In a real-world scenario, you would:
 
   - Select multiple branches instead of just `main`. Benchmarking code
     will be ran on all of them, multiple times, in random order.
+
   - use a function that is exported from the package namespace you want
     to benchmark, because otherwise you would not be able to measure the
     performance difference between different branches.

@@ -1,4 +1,5 @@
 aut
+benchmarked
 benchmarking
 callr
 Config
@@ -24,17 +25,20 @@ MERCHANTABILITY
 NONINFRINGEMENT
 orcid
 ORCID
+PRs
 purrr
 repo
 rlang
 roxygen
 Roxygen
 RoxygenNote
+RSPM
 seealso
 styler
 sublicense
 testpkg
 testthat
+th
 tibble
 usethis
 vctrs
