@@ -29,7 +29,7 @@ touchstone_clear <- function(all = FALSE) {
 #' @param text Character vector with code to evaluate.
 #' @keywords internal
 exprs_eval <- function(...) {
-  eval(parse(text = c(...)))
+  eval(parse(text = unlist(rlang::list2(...))))
 }
 
 ref_upsample <- function(ref, n = 20) {
@@ -45,6 +45,7 @@ ensure_dir <- function(...) {
 
 schema_disk <- function() {
   c(
-    elapsed = "numeric", iteration = "integer", ref = "character"
+    elapsed = "numeric", iteration = "integer", ref = "character",
+    name = "character"
   )
 }

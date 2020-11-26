@@ -14,7 +14,12 @@ benchmark_write <- function(benchmark, name, ref, iteration = NA, append = TRUE)
   }
   path <- path_record(name, ref)
   ensure_dir(fs::path_dir(path))
-  tibble(elapsed = as.numeric(benchmark$median), iteration = iteration, ref = enc2utf8(ref)) %>%
+  tibble(
+    elapsed = as.numeric(benchmark$median),
+    iteration = iteration,
+    ref = enc2utf8(ref),
+    name = name
+  ) %>%
     benchmark_write_impl(path = path, append = append)
 }
 

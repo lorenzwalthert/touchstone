@@ -15,13 +15,13 @@ benchmark_run_iteration <- function(expr_before_benchmark,
   if (rlang::is_missing(expr_before_benchmark)) {
     expr_before_benchmark <- ""
   }
-  if (length(c(...)) > 1) {
+  if (length(rlang::list2(...)) > 1) {
     rlang::abort("Can only pass one expression to benchmark")
   }
-  args <- lst(
-    expr_before_benchmark,
+  args <- rlang::list2(
+    expr_before_benchmark = expr_before_benchmark,
     ...,
-    ref
+    ref = ref
     # touchstone namespace not available in callr. For quick testing, it's
     # easier to pass required elements via .ref to the env instead of
     # relying on the built package and use ::(:).
@@ -35,13 +35,13 @@ benchmark_run_iteration <- function(expr_before_benchmark,
         on.exit(detach(new_name, character.only = TRUE), add = TRUE)
         exprs_eval(expr_before_benchmark)
         benchmark <- bench::mark(exprs_eval(...), memory = FALSE, iterations = 1)
-        benchmark_write(benchmark, names(c(...)), ref = ref, iteration = iteration)
+        benchmark_write(benchmark, names(rlang::list2(...)), ref = ref, iteration = iteration)
       },
       args = append(args, lst(iteration))
     )
   }
   usethis::ui_done("Ran {n} iterations of ref `{ref}`.")
-  benchmark_read(names(c(...)), ref)
+  benchmark_read(names(rlang::list2(...)), ref)
 }
 
 #' Run a benchmark for git refs

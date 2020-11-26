@@ -24,3 +24,28 @@ test_that("refs can be run", {
   schema <- purrr::map_chr(bm, ~ class(.x)[1])
   expect_equal(schema, schema_disk())
 })
+
+test_that("dynamic dots are supported", {
+  local_clean_touchstone()
+  path_test_pkg <- local_package()
+  x <- "cc"
+  bm <- benchmark_run_ref(
+    "master",
+    expr_before_benchmark = "",
+    !!x := "Sys.sleep(0)",
+    n = 1,
+    path_pkg = path_test_pkg
+  )
+  schema <- purrr::map_chr(bm, ~ class(.x)[1])
+  expect_equal(schema, schema_disk())
+  vec <- c("xzy" = "Sys.sleep(0)")
+  bm <- benchmark_run_ref(
+    "master",
+    expr_before_benchmark = "",
+    !!!vec,
+    n = 1,
+    path_pkg = path_test_pkg
+  )
+  schema <- purrr::map_chr(bm, ~ class(.x)[1])
+  expect_equal(schema, schema_disk())
+})
