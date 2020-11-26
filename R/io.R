@@ -13,6 +13,7 @@ benchmark_write <- function(benchmark, name, ref, iteration = NA, append = TRUE)
     rlang::abort("This package only supports benchmarks with `bench::mark(..., iterations = 1`.")
   }
   path <- path_record(name, ref)
+  init_touchstone()
   ensure_dir(fs::path_dir(path))
   tibble(
     elapsed = as.numeric(benchmark$median),
@@ -21,6 +22,12 @@ benchmark_write <- function(benchmark, name, ref, iteration = NA, append = TRUE)
     name = name
   ) %>%
     benchmark_write_impl(path = path, append = append)
+}
+
+init_touchstone <- function() {
+  ensure_dir(dir_touchstone(), "plots")
+  ensure_dir(dir_touchstone(), "pr-comment")
+  ensure_dir(dir_touchstone(), "records")
 }
 
 benchmark_write_impl <- function(benchmark, path, append) {
