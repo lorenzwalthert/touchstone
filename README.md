@@ -69,7 +69,7 @@ library(touchstone)
 library(magrittr)
 ## basic example code
 timings <- benchmark_run_ref(
-  refs = "main", expr_to_benchmark = "runif(100)", n = 2
+  refs = "main", name_of_benchmark = "runif(100)", n = 2
 )
 #> ✓ Switched to branch main.
 #> ✓ Installed branch main.
@@ -86,6 +86,26 @@ timings %>%
 
 <img src="man/figures/README-example-1.png" width="100%" />
 
+``` r
+
+# retrieve later
+benchmark_read("name_of_benchmark", "main")
+#> # A tibble: 40 x 4
+#>      elapsed iteration ref   name             
+#>        <dbl>     <int> <chr> <chr>            
+#>  1 0.0000834         1 main  name_of_benchmark
+#>  2 0.0000599         2 main  name_of_benchmark
+#>  3 0.000159          3 main  name_of_benchmark
+#>  4 0.000323          4 main  name_of_benchmark
+#>  5 0.000134          5 main  name_of_benchmark
+#>  6 0.0000671         6 main  name_of_benchmark
+#>  7 0.0000827         7 main  name_of_benchmark
+#>  8 0.000125          8 main  name_of_benchmark
+#>  9 0.0000664         9 main  name_of_benchmark
+#> 10 0.0000803        10 main  name_of_benchmark
+#> # … with 30 more rows
+```
+
 Touchstone switches to branch `main` of this package, builds it and run
 an expression to benchmark. In a real-world scenario, you would:
 
@@ -95,3 +115,7 @@ an expression to benchmark. In a real-world scenario, you would:
   - use a function that is exported from the package namespace you want
     to benchmark, because otherwise you would not be able to measure the
     performance difference between different branches.
+
+  - use a different name than `name_of_benchmark` in the function call.
+    We support dynamic dots from {rlang} for the benchmarking
+    expression.
