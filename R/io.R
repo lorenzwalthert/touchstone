@@ -47,7 +47,20 @@ benchmark_read <- function(name, ref) {
   vctrs::vec_rbind(!!!out)
 }
 
-path_record <- function(name, ref) {
+#' List which benchmarks were recorded
+#'
+#' @inheritParams benchmark_write
+#' @export
+benchmark_ls <- function(name = "") {
+  path <- path_record(name = name)
+  if (fs::file_exists(path)) {
+    as.character(fs::path_file(fs::dir_ls(path)))
+  } else {
+    character()
+  }
+}
+
+path_record <- function(name = "", ref = "") {
   as.character(fs::path(dir_touchstone(), "records", name, ref))
 }
 
