@@ -2,9 +2,6 @@
 output: github_document
 ---
 
-<!-- badges: start --> [![R build
-status](https://github.com/lorenzwalthert/touchstone/workflows/R-CMD-check/badge.svg)](https://github.com/lorenzwalthert/touchstone/actions)
-<!-- badges: end -->
 
 ```{r, include = FALSE}
 knitr::opts_chunk$set(
@@ -19,7 +16,11 @@ knitr::opts_chunk$set(
 
 touchstone is a tool for continuous benchmarking.
 
-<!-- badges: start --> <!-- badges: end -->
+<!-- badges: start -->
+[![Lifecycle: experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://www.tidyverse.org/lifecycle/#experimental)
+[![R build
+status](https://github.com/lorenzwalthert/touchstone/workflows/R-CMD-check/badge.svg)](https://github.com/lorenzwalthert/touchstone/actions)
+<!-- badges: end -->
 
 ## Installation
 
@@ -69,7 +70,7 @@ See the example below.
 
 This is a basic example which shows you how to solve a common problem:
 
-```{r example}
+```{r example, cache = TRUE}
 library(touchstone)
 library(magrittr)
 ## basic example code
@@ -97,4 +98,10 @@ expression to benchmark. In a real-world scenario, you would:
   difference between different branches.
 
 * use a different name than `name_of_benchmark` in the function call. We support
-  dynamic dots from {rlang} for the benchmarking expression.
+  dynamic dots from `{rlang}` for the benchmarking expression.
+
+
+## Status
+
+This package is experimental. It is currently used in [styler](https://github.com/r-lib/styler/blob/master/.github/workflows/benchmarking.yaml). We'll further reduce boilerplate code required in the GitHub Actions workflow 
+file and move it to `{touchstone}`.
