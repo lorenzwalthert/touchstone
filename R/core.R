@@ -57,7 +57,10 @@ benchmark_run_iteration <- function(expr_before_benchmark,
 #'  * benchmarks `expr_to_benchmark`.
 #' Returns all timings.
 #' @export
-benchmark_run_ref <- function(refs,
+benchmark_run_ref <- function(refs = c(
+                                Sys.getenv("GITHUB_BASE_REF"),
+                                Sys.getenv("GITHUB_HEAD_REF")
+                              ),
                               expr_before_benchmark,
                               ...,
                               n = 20,

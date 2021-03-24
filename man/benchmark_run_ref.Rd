@@ -5,7 +5,7 @@
 \title{Run a benchmark for git refs}
 \usage{
 benchmark_run_ref(
-  refs,
+  refs = c(Sys.getenv("GITHUB_BASE_REF"), Sys.getenv("GITHUB_HEAD_REF")),
   expr_before_benchmark,
   ...,
   n = 20,
