@@ -6,11 +6,10 @@ Authors@R:
            family = "Walthert",
            role = c("aut", "cre"),
            email = "lorenz.walthert@icloud.com")
-Description: A common problem of benchmarking in continuous
-    integration is that the computational power of the virtual machines
-    that run the job varies over time.  This package allows users to
-    benchmark two git refs of the same repo in a random sequence for
-    better comparison.
+Description: A common problem of benchmarking in continuous integration is
+    that the computational power of the virtual machines that run the job
+    varies over time.  This package allows users to benchmark two git refs
+    of the same repo in a random sequence for better comparison.
 License: MIT + file LICENSE
 Imports: 
     bench,
@@ -26,7 +25,9 @@ Imports:
     vctrs
 Suggests: 
     digest,
+    dplyr,
     ggplot2,
+    glue,
     testthat (>= 3.0.0),
     withr
 Config/testthat/edition: 3
