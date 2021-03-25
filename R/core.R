@@ -66,9 +66,8 @@ benchmark_run_ref <- function(expr_before_benchmark,
                               ),
                               n = 20,
                               path_pkg = ".",
-                              install_quick = TRUE,
                               install_dependencies = FALSE) {
-  libpaths <- refs_install(refs, path_pkg, install_quick, install_dependencies)
+  libpaths <- refs_install(refs, path_pkg, install_dependencies)
   refs <- ref_upsample(refs, n = n)
   out_list <- purrr::map(refs, benchmark_run_ref_impl,
     expr_before_benchmark = expr_before_benchmark,
@@ -79,10 +78,10 @@ benchmark_run_ref <- function(expr_before_benchmark,
   vctrs::vec_rbind(!!!out_list)
 }
 
-refs_install <- function(refs, path_pkg, install_quick, install_dependencies) {
+refs_install <- function(refs, path_pkg, install_dependencies) {
   usethis::ui_info("Start installing branches into separate libraries.")
   libpaths <- purrr::map_chr(refs, benchmark_ref_install,
-    path_pkg = path_pkg, install_quick = install_quick,
+    path_pkg = path_pkg,
     install_dependencies = install_dependencies
   )
   assert_no_global_installation(path_pkg)

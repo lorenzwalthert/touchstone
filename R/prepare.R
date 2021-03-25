@@ -2,13 +2,11 @@
 #' @param path_pkg The path to the repository to install.
 #' @param ref A reference to a git commit. Currently, only branch names are
 #'   supported.
-#' @param install_dependencies Passed to [devtools::install()]. Set to `FALSE`
-#'   can help when ran locally without internet connection.
-#' @param install_quick Passed to [devtools::install()] as `quick`.
+#' @param install_dependencies Passed to [remotes::install_local()]. Set to
+#'   `FALSE` can help when ran locally without internet connection.
 #' @keywords internal
 benchmark_ref_install <- function(ref = "master",
                                   path_pkg = ".",
-                                  install_quick = TRUE,
                                   install_dependencies = FALSE) {
   local_git_checkout(ref, path_pkg)
   if (getOption("touchstone.skip_install", FALSE)) {
@@ -18,8 +16,8 @@ benchmark_ref_install <- function(ref = "master",
   } else {
     libpath <- fs::dir_create(libpath_touchstone(ref))
     withr::local_libpaths(libpath)
-    devtools::install(path_pkg,
-      upgrade = "never", quiet = TRUE, quick = install_quick,
+    remotes::install_local(path_pkg,
+      upgrade = "never", quiet = TRUE,
       dependencies = install_dependencies
     )
     usethis::ui_done("Installed branch {ref} into {libpath}.")

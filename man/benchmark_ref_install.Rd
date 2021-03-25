@@ -7,7 +7,6 @@
 benchmark_ref_install(
   ref = "master",
   path_pkg = ".",
-  install_quick = TRUE,
   install_dependencies = FALSE
 )
 }
@@ -17,10 +16,8 @@ supported.}
 
 \item{path_pkg}{The path to the repository to install.}
 
-\item{install_quick}{Passed to \code{\link[devtools:install]{devtools::install()}} as \code{quick}.}
-
-\item{install_dependencies}{Passed to \code{\link[devtools:install]{devtools::install()}}. Set to \code{FALSE}
-can help when ran locally without internet connection.}
+\item{install_dependencies}{Passed to \code{\link[remotes:install_local]{remotes::install_local()}}. Set to
+\code{FALSE} can help when ran locally without internet connection.}
 }
 \description{
 Checks out a source branch and install the package

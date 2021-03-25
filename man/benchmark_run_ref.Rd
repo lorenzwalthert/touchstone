@@ -10,7 +10,6 @@ benchmark_run_ref(
   refs = c(Sys.getenv("GITHUB_BASE_REF"), Sys.getenv("GITHUB_HEAD_REF")),
   n = 20,
   path_pkg = ".",
-  install_quick = TRUE,
   install_dependencies = FALSE
 )
 }

@@ -14,11 +14,11 @@ License: MIT + file LICENSE
 Imports: 
     bench,
     callr,
-    devtools,
     fs,
     gert,
     magrittr,
     purrr,
+    remotes,
     rlang,
     tibble,
     usethis,
