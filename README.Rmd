@@ -65,9 +65,7 @@ For your PR branch and the target branch:
   implement) that you can manually insert in the PR description and plots that
   show how the distribution of the timings for both branches.
   
-```{r}
-knitr::include_graphics(here::here("man/figures/screenshot-pr-comment.png"))
-```
+![](man/figures/screenshot-pr-comment.png)
 
 ## Proposed Workflow
 

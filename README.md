@@ -58,11 +58,7 @@ For your PR branch and the target branch:
     plots that show how the distribution of the timings for both
     branches.
 
-``` r
-knitr::include_graphics(here::here("man/figures/screenshot-pr-comment.png"))
-```
-
-<img src="/Users/lorenz/git/touchstone/man/figures/screenshot-pr-comment.png" width="100%" />
+![](man/figures/screenshot-pr-comment.png)
 
 ## Proposed Workflow
 
