@@ -1,7 +1,8 @@
 
 # touchstone
 
-touchstone is a tool for continuous benchmarking.
+touchstone is a tool for continuous benchmarking, in particular useful
+for estimating speed implications of a pull request.
 
 <!-- badges: start -->
 
@@ -19,6 +20,21 @@ You can install the package from GitHub:
 # install.packages("devtools")
 devtools::install_github("lorenzwalthert/touchstone")
 ```
+
+## Conceptual
+
+For your PR branch and the target branch:
+
+-   build the repo.
+
+-   define code you want to benchmark, run it multiple times.
+
+-   Create c/p ready text (because commenting on the PR is not so easy
+    to implement) that you can manually insert in the PR description and
+    plots that show how the distribution of the timings for both
+    branches.
+
+![](man/figures/screenshot-pr-comment.png)
 
 ## Motivation
 
@@ -44,21 +60,6 @@ motivation:
 -   R and package versions must be fixed via RSPM to allow as much
     continuation as possible anyways. Changing the timestamp of RSPM can
     happen in PRs that are only dedicated to dependency updates.
-
-## Conceptual
-
-For your PR branch and the target branch:
-
--   build the repo.
-
--   run the benchmarking code multiple times.
-
--   Create c/p ready text (because commenting on the PR is not so easy
-    to implement) that you can manually insert in the PR description and
-    plots that show how the distribution of the timings for both
-    branches.
-
-![](man/figures/screenshot-pr-comment.png)
 
 ## Proposed Workflow
 
