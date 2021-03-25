@@ -39,6 +39,6 @@ test_that("can checkout locally", {
     local_git_checkout(new_branch, tmp)
     expect_equal(gert::git_branch(tmp), new_branch)
   }
-  test_f(tmp, new_branch)
+  test_f(tmp = tmp, new_branch = new_branch)
   expect_equal(gert::git_branch(tmp), "master")
 })
