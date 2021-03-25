@@ -14,8 +14,11 @@ benchmark_ref_install <- function(ref = "master",
       "R option `touchstone.skip_install` is set, skipping installation."
     )
   } else {
-    libpath <- fs::dir_create(libpath_touchstone(ref))
-    withr::local_libpaths(libpath, "prefix")
+    libpath <- c(
+      .libPaths(),
+      fs::dir_create(libpath_touchstone(ref)),
+    )
+    withr::local_libpaths(libpath)
     remotes::install_local(path_pkg,
       upgrade = "never", quiet = TRUE,
       dependencies = install_dependencies
