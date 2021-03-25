@@ -28,6 +28,8 @@ test_that("can checkout locally", {
   tmp <- withr::local_tempdir()
   fs::dir_create(tmp)
   fs::file_touch(fs::path(tmp, ".gitignore"))
+  gert::git_config_set("user.name", "GitHub Actions", repo = tmp)
+  gert::git_config_set("user.email", "actions@github.com", repo = tmp)
   gert::git_init(tmp)
   gert::git_add(".gitignore", repo = tmp)
   gert::git_commit("initial", repo = tmp)
