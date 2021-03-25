@@ -1,11 +1,13 @@
 #' Turn raw benchmark results into text and figures
 #'
+#' @details
 #' Creates two side effects:
 #'
 #' * Density plots for each element in `refs` are written to `touchstone/plots`.
 #' * A text explaining the speed diff is written to
 #'   `touchstone/pr-comment/info.txt` for every registered benchmarking
 #'   expression.
+#' @param refs The names of the branches for which analysis should be created.
 #' @export
 benchmarks_analyze <- function(refs = c(
                                  Sys.getenv("GITHUB_BASE_REF"),

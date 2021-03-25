@@ -8,10 +8,14 @@ benchmarks_analyze(
   refs = c(Sys.getenv("GITHUB_BASE_REF"), Sys.getenv("GITHUB_HEAD_REF"))
 )
 }
+\arguments{
+\item{refs}{The names of the branches for which analysis should be created.}
+}
 \description{
-Creates two side effects:
+Turn raw benchmark results into text and figures
 }
 \details{
+Creates two side effects:
 \itemize{
 \item Density plots for each element in \code{refs} are written to \code{touchstone/plots}.
 \item A text explaining the speed diff is written to
