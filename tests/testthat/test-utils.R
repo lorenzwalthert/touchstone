@@ -27,6 +27,8 @@ test_that("can checkout locally", {
   new_branch <- "fjiois"
   tmp <- tempfile("repo")
   gert::git_init(tmp)
+  fs::file_touch(fs::path(tmp, ".gitignore"))
+  gert::git_add(".gitignore", repo = tmp)
   withr::with_dir(tmp, {
     system2("git", c("commit", "-m", "'initial empty'", "--allow-empty"))
     gert::git_branch_create(new_branch, checkout = FALSE)
