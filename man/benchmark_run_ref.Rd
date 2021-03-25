@@ -20,7 +20,7 @@ the benchmark is ran, will be evaluated with \code{\link[=exprs_eval]{exprs_eval
 \item{...}{Named character vector of length one with code to benchmark, will
 be evaluated with \code{\link[=exprs_eval]{exprs_eval()}}.}
 
-\item{refs}{Git refs passed as \code{ref} to \code{\link[=benchmark_iteration_prepare]{benchmark_iteration_prepare()}}.}
+\item{refs}{Character vector with branch names to build and benchmark.}
 
 \item{n}{Number of time to run benchmark.}
 

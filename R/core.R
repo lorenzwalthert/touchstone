@@ -45,7 +45,7 @@ benchmark_run_iteration <- function(expr_before_benchmark,
 
 #' Run a benchmark for git refs
 #'
-#' @param refs Git refs passed as `ref` to [benchmark_iteration_prepare()].
+#' @param refs Character vector with branch names to build and benchmark.
 #' @param n Number of time to run benchmark.
 #' @inheritParams refs_install
 #' @inheritParams benchmark_run_iteration
