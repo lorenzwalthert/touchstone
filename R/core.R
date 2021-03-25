@@ -80,10 +80,11 @@ benchmark_run_ref <- function(expr_before_benchmark,
 
 refs_install <- function(refs, path_pkg, install_dependencies) {
   usethis::ui_info("Start installing branches into separate libraries.")
-  libpaths <- purrr::map_chr(refs, benchmark_ref_install,
+  libpaths <- purrr::map(refs, benchmark_ref_install,
     path_pkg = path_pkg,
     install_dependencies = install_dependencies
-  )
+  ) %>%
+    purrr::flatten_chr()
   assert_no_global_installation(path_pkg)
   usethis::ui_done("Completed installations.")
   libpaths

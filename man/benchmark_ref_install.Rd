@@ -19,6 +19,9 @@ supported.}
 \item{install_dependencies}{Passed to \code{\link[remotes:install_local]{remotes::install_local()}}. Set to
 \code{FALSE} can help when ran locally without internet connection.}
 }
+\value{
+A character vector with library paths.
+}
 \description{
 Checks out a source branch and install the package
 }

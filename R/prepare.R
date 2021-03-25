@@ -4,6 +4,8 @@
 #'   supported.
 #' @param install_dependencies Passed to [remotes::install_local()]. Set to
 #'   `FALSE` can help when ran locally without internet connection.
+#' @return
+#' A character vector with library paths.
 #' @keywords internal
 benchmark_ref_install <- function(ref = "master",
                                   path_pkg = ".",
@@ -13,6 +15,7 @@ benchmark_ref_install <- function(ref = "master",
     usethis::ui_info(
       "R option `touchstone.skip_install` is set, skipping installation."
     )
+    NULL
   } else {
     libpath <- c(
       .libPaths(),
@@ -24,8 +27,8 @@ benchmark_ref_install <- function(ref = "master",
       dependencies = install_dependencies
     )
     usethis::ui_done("Installed branch {ref} into {libpath}.")
+    libpath
   }
-  libpath
 }
 
 
