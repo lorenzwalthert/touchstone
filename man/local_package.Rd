@@ -7,6 +7,7 @@
 local_package(
   path = path_temp_pkg("testpkg"),
   branches = c("main", "devel"),
+  r_sample = NULL,
   envir = parent.frame()
 )
 }
@@ -15,6 +16,10 @@ local_package(
 
 \item{branches}{Branches to be created.}
 
+\item{r_sample}{Character with code to write to \code{R/sampleR.}. This is helpful
+to validate if the installed package corresponds to source branch for
+testing. If \code{NULL}, nothing is written.}
+
 \item{envir}{\verb{[environment]}\cr Attach exit handlers to this environment.
 Typically, this should be either the current environment or
 a parent frame (accessed through \code{\link[=parent.frame]{parent.frame()}}).}
@@ -22,6 +27,9 @@ a parent frame (accessed through \code{\link[=parent.frame]{parent.frame()}}).}
 \description{
 Creates a package in a temporary directory until the local frame is
 destroyed.
+}
+\details{
+This is primarily for testing.
 }
 \seealso{
 Other testers: 
