@@ -3,6 +3,7 @@
 #'   the benchmark is ran, will be evaluated with [exprs_eval()].
 #' @param ... Named character vector of length one with code to benchmark, will
 #'   be evaluated with [exprs_eval()].
+#' @param libpaths Passed as `libpath` to [callr::r()].
 #' @param n The number of times to run a benchmark, each time with a separate
 #'   call to [bench::mark()].
 #' @inheritParams benchmark_write
@@ -23,9 +24,6 @@ benchmark_run_iteration <- function(expr_before_benchmark,
     expr_before_benchmark = expr_before_benchmark,
     ...,
     ref = ref
-    # touchstone namespace not available in callr. For quick testing, it's
-    # easier to pass required elements via .ref to the env instead of
-    # relying on the built package and use ::(:).
   )
   for (iteration in seq_len(n)) { # iterations
     callr::r(
@@ -49,7 +47,7 @@ benchmark_run_iteration <- function(expr_before_benchmark,
 #'
 #' @param refs Git refs passed as `ref` to [benchmark_iteration_prepare()].
 #' @param n Number of time to run benchmark.
-#' @inheritParams benchmark_iteration_prepare
+#' @inheritParams refs_install
 #' @inheritParams benchmark_run_iteration
 #' @details
 #' Runs the following loop `n` times:
@@ -78,6 +76,12 @@ benchmark_run_ref <- function(expr_before_benchmark,
   vctrs::vec_rbind(!!!out_list)
 }
 
+#' Install branches
+#'
+#' Installs each `ref` in a separate library for isolation.
+#' @param refs The names of the branches in a character vector.
+#' @inheritParams benchmark_ref_install
+#' @keywords internal
 refs_install <- function(refs, path_pkg, install_dependencies) {
   usethis::ui_info("Start installing branches into separate libraries.")
   libpaths <- purrr::map(refs, benchmark_ref_install,

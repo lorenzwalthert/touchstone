@@ -23,6 +23,11 @@ be evaluated with \code{\link[=exprs_eval]{exprs_eval()}}.}
 \item{refs}{Git refs passed as \code{ref} to \code{\link[=benchmark_iteration_prepare]{benchmark_iteration_prepare()}}.}
 
 \item{n}{Number of time to run benchmark.}
+
+\item{path_pkg}{The path to the repository to install.}
+
+\item{install_dependencies}{Passed to \code{\link[remotes:install_local]{remotes::install_local()}}. Set to
+\code{FALSE} can help when ran locally without internet connection.}
 }
 \description{
 Run a benchmark for git refs
