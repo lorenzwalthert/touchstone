@@ -16,7 +16,7 @@ benchmarks_analyze <- function(refs = c(
   purrr::walk(benchmark_ls(), benchmark_analyze, refs = refs)
 }
 
-#' @importFrom dplyr .data
+#' @importFrom rlang .data
 benchmark_analyze <- function(benchmark, refs) {
   # TODO test this
   timings <- benchmark_read(benchmark, refs)
