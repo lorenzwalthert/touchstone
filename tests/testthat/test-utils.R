@@ -24,16 +24,14 @@ test_that("touchstone dir can be removed", {
 })
 
 test_that("can checkout locally", {
-  new_branch <- "fjiois"
-  tmp <- tempfile("repo")
+  new_branch <- "ewjlkj"
+  tmp <- withr::local_tempdir()
   fs::dir_create(tmp)
   fs::file_touch(fs::path(tmp, ".gitignore"))
   gert::git_init(tmp)
   gert::git_add(".gitignore", repo = tmp)
-  withr::with_dir(tmp, {
-    system2("git", c("commit", "-m", "'initial'"))
-    system2("git", c("branch", new_branch))
-  })
+  gert::git_commit("initial", repo = tmp)
+  gert::git_branch_create(new_branch, repo = tmp, checkout = FALSE)
   gert::git_branch_list(repo = tmp)
   test_f <- function(tmp, new_branch) {
     local_git_checkout(new_branch, tmp)
