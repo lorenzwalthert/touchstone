@@ -12,4 +12,4 @@ benchmark_run_ref(
   n = 2
 )
 
-benchmarks_analyse()
+benchmarks_analyze()

@@ -7,7 +7,7 @@
 #'   `touchstone/pr-comment/info.txt` for every registered benchmarking
 #'   expression.
 #' @export
-benchmarks_analyse <- function(refs = c(
+benchmarks_analyze <- function(refs = c(
                                  Sys.getenv("GITHUB_BASE_REF"),
                                  Sys.getenv("GITHUB_HEAD_REF")
                                )) {
