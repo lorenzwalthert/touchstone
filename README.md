@@ -119,5 +119,6 @@ We’ll further reduce boilerplate code required in the GitHub Actions
 workflow file and move it to `{touchstone}`.
 
 Strange errors were found when `touchstone/script.R` was not identical
-on both branches. If you find problem, try to eliminate this source of
-friction.
+on both branches (probably because the script that is sourced changes
+itself when switching branches). If you find problem, try to eliminate
+this source of friction.

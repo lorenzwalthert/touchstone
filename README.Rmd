@@ -127,4 +127,6 @@ This package is experimental. It is currently used in [styler](https://github.co
 file and move it to `{touchstone}`.
 
 Strange errors were found when `touchstone/script.R` was not identical on both 
-branches. If you find problem, try to eliminate this source of friction.
+branches (probably because the script that is sourced changes itself when 
+switching branches). If you find problem, try to eliminate this source of 
+friction.
