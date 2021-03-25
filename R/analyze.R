@@ -20,7 +20,7 @@ benchmark_analyze <- function(benchmark, refs) {
   timings <- benchmark_read(benchmark, refs)
 
   timings %>%
-    ggplot2::ggplot(ggplot2::aes(x = elapsed, color = ref)) +
+    ggplot2::ggplot(ggplot2::aes(x = .data$elapsed, color = .data$ref)) +
     ggplot2::geom_density()
   fs::path("touchstone/plots/", benchmark) %>%
     fs::path_ext_set("png") %>%
