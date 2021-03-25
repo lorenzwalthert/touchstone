@@ -86,7 +86,7 @@ refs_install <- function(refs, path_pkg, install_dependencies) {
   )
   assert_no_global_installation(path_pkg)
   usethis::ui_done("Completed installations.")
-  c(.libPaths(), libpaths)
+  libpaths
 }
 
 benchmark_run_ref_impl <- function(ref,

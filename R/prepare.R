@@ -15,7 +15,7 @@ benchmark_ref_install <- function(ref = "master",
     )
   } else {
     libpath <- fs::dir_create(libpath_touchstone(ref))
-    withr::local_libpaths(libpath)
+    withr::local_libpaths(libpath, "prefix")
     remotes::install_local(path_pkg,
       upgrade = "never", quiet = TRUE,
       dependencies = install_dependencies
