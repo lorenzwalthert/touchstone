@@ -6,15 +6,28 @@
 #'   can help when ran locally without internet connection.
 #' @param install_quick Passed to [devtools::install()] as `quick`.
 #' @keywords internal
-benchmark_iteration_prepare <- function(ref = "master",
-                                        path_pkg = ".",
-                                        install_quick = TRUE,
-                                        install_dependencies = FALSE) {
-  gert::git_branch_checkout(ref, repo = path_pkg)
-  usethis::ui_done("Switched to branch {ref}.")
-  devtools::install(path_pkg,
-    upgrade = "never", quiet = TRUE, quick = install_quick,
-    dependencies = install_dependencies
-  )
-  usethis::ui_done("Installed branch {ref}.")
+benchmark_ref_install <- function(ref = "master",
+                                  path_pkg = ".",
+                                  install_quick = TRUE,
+                                  install_dependencies = FALSE) {
+  local_git_checkout(ref, path_pkg)
+  if (getOption("touchstone.skip_install", FALSE)) {
+    usethis::ui_info(
+      "R option `touchstone.skip_install` is set, skipping installation."
+    )
+  } else {
+    libpath <- fs::dir_create(libpath_touchstone(ref))
+    withr::local_libpaths(libpath)
+    devtools::install(path_pkg,
+      upgrade = "never", quiet = TRUE, quick = install_quick,
+      dependencies = install_dependencies
+    )
+    usethis::ui_done("Installed branch {ref} into {libpath}.")
+  }
+  libpath
+}
+
+
+libpath_touchstone <- function(ref) {
+  fs::path("touchstone", "lib", ref)
 }

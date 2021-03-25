@@ -8,7 +8,8 @@ test_that("can analyze results", {
     "",
     xx1 = "Sys.sleep(runif(1, 0, 1e-5))",
     ref = branch,
-    n = 5
+    n = 5,
+    libpaths = .libPaths()
   )
   benchmarks_analyze(branch)
   expect_match(

@@ -4,7 +4,7 @@
 
 benchmark_ls(name)
 benchmark_read(name, ref)
-benchmark_run_iteration(expr_before_benchmark, ..., ref, n = 20)
+benchmark_run_iteration(expr_before_benchmark, ..., ref, libpaths, n = 20)
 benchmark_run_ref(expr_before_benchmark, ..., refs = c(Sys.getenv("GITHUB_BASE_REF"), Sys.getenv("GITHUB_HEAD_REF")), n = 20, path_pkg = ".", install_quick = TRUE, install_dependencies = FALSE)
 benchmark_write(benchmark, name, ref, iteration = NA, append = TRUE)
 benchmarks_analyze(refs = c(Sys.getenv("GITHUB_BASE_REF"), Sys.getenv("GITHUB_HEAD_REF")))

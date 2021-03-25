@@ -11,6 +11,7 @@
 benchmark_run_iteration <- function(expr_before_benchmark,
                                     ...,
                                     ref,
+                                    libpaths,
                                     n = 20) {
   if (rlang::is_missing(expr_before_benchmark)) {
     expr_before_benchmark <- ""
@@ -26,7 +27,6 @@ benchmark_run_iteration <- function(expr_before_benchmark,
     # easier to pass required elements via .ref to the env instead of
     # relying on the built package and use ::(:).
   )
-
   for (iteration in seq_len(n)) { # iterations
     callr::r(
       function(expr_before_benchmark, ..., ref, iteration) {
@@ -37,7 +37,8 @@ benchmark_run_iteration <- function(expr_before_benchmark,
         benchmark <- bench::mark(exprs_eval(...), memory = FALSE, iterations = 1)
         benchmark_write(benchmark, names(rlang::list2(...)), ref = ref, iteration = iteration)
       },
-      args = append(args, lst(iteration))
+      args = append(args, lst(iteration)),
+      libpath = libpaths
     )
   }
   usethis::ui_done("Ran {n} iterations of ref `{ref}`.")
@@ -67,32 +68,38 @@ benchmark_run_ref <- function(expr_before_benchmark,
                               path_pkg = ".",
                               install_quick = TRUE,
                               install_dependencies = FALSE) {
+  libpaths <- refs_install(refs, path_pkg, install_quick, install_dependencies)
   refs <- ref_upsample(refs, n = n)
   out_list <- purrr::map(refs, benchmark_run_ref_impl,
     expr_before_benchmark = expr_before_benchmark,
     ...,
-    path_pkg = path_pkg,
-    install_quick = install_quick,
-    install_dependencies = install_dependencies
+    libpaths = libpaths,
+    path_pkg = path_pkg
   )
   vctrs::vec_rbind(!!!out_list)
+}
+
+refs_install <- function(refs, path_pkg, install_quick, install_dependencies) {
+  usethis::ui_info("Start installing branches into separate libraries.")
+  libpaths <- purrr::map_chr(refs, benchmark_ref_install,
+    path_pkg = path_pkg, install_quick = install_quick,
+    install_dependencies = install_dependencies
+  )
+  assert_no_global_installation(path_pkg)
+  usethis::ui_done("Completed installations.")
+  c(.libPaths(), libpaths)
 }
 
 benchmark_run_ref_impl <- function(ref,
                                    expr_before_benchmark,
                                    ...,
-                                   path_pkg,
-                                   install_quick,
-                                   install_dependencies) {
-  benchmark_iteration_prepare(
-    ref,
-    path_pkg,
-    install_quick = install_quick,
-    install_dependencies = install_dependencies
-  )
+                                   libpaths,
+                                   path_pkg) {
+  local_git_checkout(ref, path_pkg)
   benchmark_run_iteration(
     expr_before_benchmark = expr_before_benchmark,
     ...,
+    libpaths = libpaths,
     ref = ref
   )
 }

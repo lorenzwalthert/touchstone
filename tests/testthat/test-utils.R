@@ -22,3 +22,20 @@ test_that("touchstone dir can be removed", {
   touchstone_clear(all = TRUE)
   expect_false(fs::dir_exists(dir_touchstone()))
 })
+
+test_that("can checkout locally", {
+  new_branch <- "fjiois"
+  tmp <- tempfile("repo")
+  gert::git_init(tmp)
+  withr::with_dir(tmp, {
+    system2("git", c("commit", "-m", "'initial empty'", "--allow-empty"))
+    gert::git_branch_create(new_branch, checkout = FALSE)
+  })
+  gert::git_branch_list(repo = tmp)
+  test_f <- function(tmp, new_branch) {
+    local_git_checkout(new_branch, tmp)
+    expect_equal(gert::git_branch(tmp), new_branch)
+  }
+  test_f(tmp, new_branch)
+  expect_equal(gert::git_branch(tmp), "master")
+})
