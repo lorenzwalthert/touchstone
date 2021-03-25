@@ -32,7 +32,7 @@ test_that("can checkout locally", {
   gert::git_add(".gitignore", repo = tmp)
   withr::with_dir(tmp, {
     system2("git", c("commit", "-m", "'initial'"))
-    gert::git_branch_create(new_branch, checkout = FALSE)
+    system2("git", c("branch", new_branch))
   })
   gert::git_branch_list(repo = tmp)
   test_f <- function(tmp, new_branch) {
