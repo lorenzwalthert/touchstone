@@ -45,77 +45,74 @@ motivation:
     continuation as possible anyways. Changing the timestamp of RSPM can
     happen in PRs that are only dedicated to dependency updates.
 
+## Conceptual
+
+For your PR branch and the target branch:
+
+-   build the repo.
+
+-   run the benchmarking code multiple times.
+
+-   Create c/p ready text (because commenting on the PR is not so easy
+    to implement) that you can manually insert in the PR description and
+    plots that show how the distribution of the timings for both
+    branches.
+
+``` r
+knitr::include_graphics(here::here("man/figures/screenshot-pr-comment.png"))
+```
+
+<img src="/Users/lorenz/git/touchstone/man/figures/screenshot-pr-comment.png" width="100%" />
+
 ## Proposed Workflow
 
-touchstone makes it easy for you to
-
--   select a branch in your package root and built the package.
-
--   run code to benchmark.
-
--   iterate over the above with random order of the branches you want to
-    compare.
-
-See the example below.
-
-## Example
-
-This is a basic example which shows you how to solve a common problem:
+touchstone makes it easy for you to benchmark PRs. Initialize it in your
+repo with
 
 ``` r
-library(touchstone)
-library(magrittr)
-## basic example code
-timings <- benchmark_run_ref(
-  refs = "main", name_of_benchmark = "runif(100)", n = 2
+touchstone::use_touchstone()
+```
+
+This will:
+
+-   write `.github/workflows/touchstone.yaml`: The github actions
+    workflow file.
+-   create a `touchstone` directory in the repo root with:
+    -   `config.json` that defines how to run your benchmark. In
+        particular, you can define a benchmarking repo, that is, code
+        you need to run your bench mark. The code you want to benchmark
+        comes from the benchmarked repo, which in our case is the root
+        from where you call `use_touchstone()` and hence does not need
+        to be defined explicitly.
+
+``` json
+{
+  "benchmarking_repo": "lorenzwalthert/here",
+  "benchmarking_ref": "ca9c8e69c727def88d8ba1c8b85b0e0bcea87b3f",
+  "benchmarking_path": "touchstone/sources/here",
+
+  "os": "ubuntu-18.04",
+  "r": "4.0.0",
+  "rspm": "https://packagemanager.rstudio.com/all/__linux__/bionic/291"
+}
+```
+
+-   `script.R`, the script that runs the benchmark. The below code will
+    run the benchmarking expression `runif(100)`, give it the name
+    `random_test`, and do this twice in total (once for each branch).
+
+``` r
+touchstone::benchmark_run_ref(
+  random_test = "runif(100)", n = 2
 )
-#> ✓ Switched to branch main.
-#> ✓ Installed branch main.
-#> ✓ Ran 20 iterations of ref `main`.
-#> ✓ Switched to branch main.
-#> ✓ Installed branch main.
-#> ✓ Ran 20 iterations of ref `main`.
-
-timings %>%
-  ggplot2::ggplot(ggplot2::aes(.data$elapsed, color = .data$ref)) +
-  ggplot2::scale_x_continuous(trans = "log10") +
-  ggplot2::geom_density()
 ```
 
-<img src="man/figures/README-example-1.png" width="100%" />
-
-``` r
-# retrieve later
-benchmark_read("name_of_benchmark", "main")
-#> # A tibble: 54 x 4
-#>      elapsed iteration ref   name             
-#>        <dbl>     <int> <chr> <chr>            
-#>  1 0.0000700         1 main  name_of_benchmark
-#>  2 0.000210          2 main  name_of_benchmark
-#>  3 0.000117          3 main  name_of_benchmark
-#>  4 0.0000992         4 main  name_of_benchmark
-#>  5 0.0000691         5 main  name_of_benchmark
-#>  6 0.0000799         6 main  name_of_benchmark
-#>  7 0.0000720         7 main  name_of_benchmark
-#>  8 0.0000674         8 main  name_of_benchmark
-#>  9 0.0000571         9 main  name_of_benchmark
-#> 10 0.0000703        10 main  name_of_benchmark
-#> # … with 44 more rows
-```
-
-Touchstone switches to branch `main` of this package, builds it and run
-an expression to benchmark. In a real-world scenario, you would:
-
--   Select multiple branches instead of just `main`. Benchmarking code
-    will be ran on all of them, multiple times, in random order.
-
--   use a function that is exported from the package namespace you want
-    to benchmark, because otherwise you would not be able to measure the
-    performance difference between different branches.
-
--   use a different name than `name_of_benchmark` in the function call.
-    We support dynamic dots from `{rlang}` for the benchmarking
-    expression.
+This is not particularly useful, since `runif()` is not a function from
+the benchmarked repo. You want to bench mark functions from your package
+(that don’t have the same source code in both branches). The script
+should contain a call to `touchstone::benchmarks_analyse()` at the end
+to write the required artifacts that are used downstream in the GitHub
+Actions workflow.
 
 ## Status
 
@@ -123,3 +120,7 @@ This package is experimental. It is currently used in
 [styler](https://github.com/r-lib/styler/blob/master/.github/workflows/benchmarking.yaml).
 We’ll further reduce boilerplate code required in the GitHub Actions
 workflow file and move it to `{touchstone}`.
+
+Strange errors were found when `touchstone/script.R` was not identical
+on both branches. If you find problem, try to eliminate this source of
+friction.
