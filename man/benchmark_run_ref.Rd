@@ -5,9 +5,9 @@
 \title{Run a benchmark for git refs}
 \usage{
 benchmark_run_ref(
-  refs,
   expr_before_benchmark,
   ...,
+  refs = c(Sys.getenv("GITHUB_BASE_REF"), Sys.getenv("GITHUB_HEAD_REF")),
   n = 20,
   path_pkg = ".",
   install_quick = TRUE,
@@ -15,13 +15,13 @@ benchmark_run_ref(
 )
 }
 \arguments{
-\item{refs}{Git refs passed as \code{ref} to \code{\link[=benchmark_iteration_prepare]{benchmark_iteration_prepare()}}.}
-
 \item{expr_before_benchmark}{Character vector with code to run before
 the benchmark is ran, will be evaluated with \code{\link[=exprs_eval]{exprs_eval()}}.}
 
 \item{...}{Named character vector of length one with code to benchmark, will
 be evaluated with \code{\link[=exprs_eval]{exprs_eval()}}.}
+
+\item{refs}{Git refs passed as \code{ref} to \code{\link[=benchmark_iteration_prepare]{benchmark_iteration_prepare()}}.}
 
 \item{n}{Number of time to run benchmark.}
 

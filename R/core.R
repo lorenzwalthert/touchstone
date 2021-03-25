@@ -57,9 +57,12 @@ benchmark_run_iteration <- function(expr_before_benchmark,
 #'  * benchmarks `expr_to_benchmark`.
 #' Returns all timings.
 #' @export
-benchmark_run_ref <- function(refs,
-                              expr_before_benchmark,
+benchmark_run_ref <- function(expr_before_benchmark,
                               ...,
+                              refs = c(
+                                Sys.getenv("GITHUB_BASE_REF"),
+                                Sys.getenv("GITHUB_HEAD_REF")
+                              ),
                               n = 20,
                               path_pkg = ".",
                               install_quick = TRUE,

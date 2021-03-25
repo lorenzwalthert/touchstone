@@ -32,7 +32,9 @@ repos:
           .*\.sh|
           .*\.RData|
           .*\.png|
-          \.github/workflows/.*\.yaml
+          \.github/workflows/.*\.yaml|
+          inst/touchstone\.yaml|
+          inst/config\.json
           )$
     -   id: readme-rmd-rendered
     -   id: parsable-R

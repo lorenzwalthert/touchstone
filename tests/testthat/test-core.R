@@ -15,9 +15,9 @@ test_that("refs can be run", {
   local_clean_touchstone()
   path_test_pkg <- local_package()
   bm <- benchmark_run_ref(
-    "master",
     expr_before_benchmark = "library(testthat)",
     bliblablup = "expect_equal(Sys.sleep(1e-3), NULL)",
+    refs = "master",
     n = 2,
     path_pkg = path_test_pkg
   )
@@ -30,9 +30,9 @@ test_that("dynamic dots are supported", {
   path_test_pkg <- local_package()
   x <- "cc"
   bm <- benchmark_run_ref(
-    "master",
     expr_before_benchmark = "",
     !!x := "Sys.sleep(0)",
+    refs = "main",
     n = 1,
     path_pkg = path_test_pkg
   )
@@ -40,9 +40,9 @@ test_that("dynamic dots are supported", {
   expect_equal(schema, schema_disk())
   vec <- c("xzy" = "Sys.sleep(0)")
   bm <- benchmark_run_ref(
-    "master",
     expr_before_benchmark = "",
     !!!vec,
+    refs = "main",
     n = 1,
     path_pkg = path_test_pkg
   )
