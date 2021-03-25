@@ -1,5 +1,5 @@
 Package: touchstone
-Title: Benchmark Different git Refs In One Run
+Title: Benchmark Different Git Refs in One Run
 Version: 0.0.0.9000
 Authors@R: 
     person(given = "Lorenz",
