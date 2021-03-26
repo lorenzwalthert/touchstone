@@ -83,6 +83,7 @@ benchmark_run_ref <- function(expr_before_benchmark,
 #' @inheritParams benchmark_ref_install
 #' @keywords internal
 refs_install <- function(refs, path_pkg, install_dependencies) {
+  assert_no_global_installation()
   usethis::ui_info("Start installing branches into separate libraries.")
   libpaths <- purrr::map(refs, benchmark_ref_install,
     path_pkg = path_pkg,
