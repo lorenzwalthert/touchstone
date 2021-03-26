@@ -17,4 +17,8 @@ use_touchstone <- function() {
     system.file("config.json", package = "touchstone"),
     fs::path("touchstone", "config.json")
   )
+  writeLines(
+    c("*", "!script.R", "!config.json", "!.gitignore"),
+    fs::path("touchstone", ".gitignore")
+  )
 }
