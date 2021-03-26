@@ -18,7 +18,7 @@ dir_touchstone <- function() {
 #'   records sub directory.
 #' @export
 touchstone_clear <- function(all = FALSE) {
-  paths <- fs::path(dir_touchstone(), if (!all) "records" else "")
+  paths <- fs::path(dir_touchstone(), if (!all) c("records", "lib") else "")
 
   paths <- paths[fs::dir_exists(paths)]
   fs::dir_delete(paths)
