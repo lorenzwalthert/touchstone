@@ -76,7 +76,7 @@ jobs:
           if (pkg %in% rownames(installed.packages())) {
             remove.packages(pkg)
           }
-        shell: Rscript -e {0}
+        shell: Rscript {0}
       - name: Checkout benchmarking repo
         uses: actions/checkout@v2
         with:
