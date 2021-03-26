@@ -16,12 +16,18 @@ path_temp_pkg <- function(name) {
 #'
 #' Creates a package in a temporary directory until the local frame is
 #' destroyed.
+#'
+#' This is primarily for testing.
 #' @param path The path to the temporary package.
 #' @param branches Branches to be created.
+#' @param r_sample Character with code to write to `R/sampleR.`. This is helpful
+#'   to validate if the installed package corresponds to source branch for
+#'   testing. If `NULL`, nothing is written.
 #' @inheritParams withr::defer
 #' @family testers
 local_package <- function(path = path_temp_pkg("testpkg"),
                           branches = c("main", "devel"),
+                          r_sample = NULL,
                           envir = parent.frame()) {
   fs::dir_create(fs::path_dir(path))
   withr::with_options(
@@ -32,8 +38,15 @@ local_package <- function(path = path_temp_pkg("testpkg"),
   gert::git_config_set("user.name", "GitHub Actions", repo = path)
   gert::git_config_set("user.email", "actions@github.com", repo = path)
   gert::git_add("DESCRIPTION", repo = path)
+  if (!is.null(r_sample)) {
+    writeLines(r_sample, fs::path(path, "R", "sample.R"))
+  }
+  gert::git_add("R/", repo = path)
   gert::git_commit("[init]", repo = path)
   purrr::walk(branches, gert::git_branch_create, repo = path)
   withr::defer(unlink(path), envir = envir)
+  if (rlang::is_installed(fs::path_file(path))) {
+    withr::defer(utils::remove.packages(fs::path_file(path)), envir = envir)
+  }
   path
 }

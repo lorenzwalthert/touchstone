@@ -14,11 +14,11 @@ License: MIT + file LICENSE
 Imports: 
     bench,
     callr,
-    devtools,
     fs,
     gert,
     magrittr,
     purrr,
+    remotes,
     rlang,
     tibble,
     usethis,
@@ -31,7 +31,6 @@ Suggests:
     testthat (>= 3.0.0),
     withr
 Config/testthat/edition: 3
-Config/testthat/parallel: true
 Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE, roclets = c("rd", "namespace", "collate",

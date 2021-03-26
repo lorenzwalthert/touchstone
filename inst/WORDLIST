@@ -36,6 +36,7 @@ json
 LazyData
 libcurl
 libgit
+libpaths
 LIBS
 Lifecycle
 linux

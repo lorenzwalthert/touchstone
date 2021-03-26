@@ -4,7 +4,7 @@
 \name{touchstone-package}
 \alias{touchstone}
 \alias{touchstone-package}
-\title{touchstone: Benchmark Different git Refs In One Run}
+\title{touchstone: Benchmark Different Git Refs in One Run}
 \description{
 A common problem of benchmarking in continuous integration is
     that the computational power of the virtual machines that run the job

@@ -49,3 +49,34 @@ schema_disk <- function() {
     name = "character"
   )
 }
+
+
+local_git_checkout <- function(branch,
+                               path_pkg = ".",
+                               envir = parent.frame()) {
+  current_branch <- gert::git_branch(repo = path_pkg)
+  withr::defer(
+    gert::git_branch_checkout(current_branch, repo = path_pkg),
+    envir = envir
+  )
+  if (!(branch %in% gert::git_branch_list(repo = path_pkg)$name)) {
+    usethis::ui_stop("Branch {branch} does not exist, create it and add commits before you can switch on it.")
+  }
+  gert::git_branch_checkout(branch, repo = path_pkg)
+  usethis::ui_done("Temporarily checked out branch {branch}.")
+}
+
+#' Make sure there is no installation of the package to benchmark in the global
+#' package library
+#' @keywords internal
+assert_no_global_installation <- function(path_pkg = ".") {
+  path_desc <- fs::path(path_pkg, "DESCRIPTION")
+  pkg_name <- unname(read.dcf(path_desc)[, "Package"])
+  if (rlang::is_installed(pkg_name)) {
+    usethis::ui_stop(paste0(
+      "Package {pkg_name} can be found on library path. This should not be ",
+      "the case - as the package is installed in dedicated library paths ",
+      "during benchmarking."
+    ))
+  }
+}

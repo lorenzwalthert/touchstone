@@ -10,7 +10,6 @@ benchmark_run_ref(
   refs = c(Sys.getenv("GITHUB_BASE_REF"), Sys.getenv("GITHUB_HEAD_REF")),
   n = 20,
   path_pkg = ".",
-  install_quick = TRUE,
   install_dependencies = FALSE
 )
 }
@@ -21,16 +20,14 @@ the benchmark is ran, will be evaluated with \code{\link[=exprs_eval]{exprs_eval
 \item{...}{Named character vector of length one with code to benchmark, will
 be evaluated with \code{\link[=exprs_eval]{exprs_eval()}}.}
 
-\item{refs}{Git refs passed as \code{ref} to \code{\link[=benchmark_iteration_prepare]{benchmark_iteration_prepare()}}.}
+\item{refs}{Character vector with branch names to build and benchmark.}
 
 \item{n}{Number of time to run benchmark.}
 
 \item{path_pkg}{The path to the repository to install.}
 
-\item{install_quick}{Passed to \code{\link[devtools:install]{devtools::install()}} as \code{quick}.}
-
-\item{install_dependencies}{Passed to \code{\link[devtools:install]{devtools::install()}}. Set to \code{FALSE}
-can help when ran locally without internet connection.}
+\item{install_dependencies}{Passed to \code{\link[remotes:install_local]{remotes::install_local()}}. Set to
+\code{FALSE} can help when ran locally without internet connection.}
 }
 \description{
 Run a benchmark for git refs
