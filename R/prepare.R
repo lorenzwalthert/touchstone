@@ -26,7 +26,7 @@ benchmark_ref_install <- function(ref = "master",
       upgrade = "never", quiet = TRUE,
       dependencies = install_dependencies
     )
-    usethis::ui_done("Installed branch {ref} into {libpath}.")
+    usethis::ui_done("Installed branch {ref} into {libpath[1]}.")
     libpath
   }
 }
