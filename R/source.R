@@ -11,6 +11,7 @@
 #' @param path The script to run.
 #' @param ref The ref that corresponds to the library that should be prepended
 #'   to the library path.
+#' @export
 with_touchstone_lib <- function(path, ref = Sys.getenv("GITHUB_HEAD_REF")) {
   withr::local_libpaths(
     list(fs::path("touchstone", "lib", ref)),
