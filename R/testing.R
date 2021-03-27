@@ -67,8 +67,9 @@ local_package <- function(path = path_temp_pkg("testpkg"),
   gert::git_commit("[init]", repo = path)
   purrr::walk(branches, gert::git_branch_create, repo = path)
   withr::defer(unlink(path), envir = envir)
-  if (rlang::is_installed(fs::path_file(path))) {
-    withr::defer(utils::remove.packages(fs::path_file(path)), envir = envir)
+  install_check <- is_installed(fs::path_file(path))
+  if (install_check$installed) {
+    withr::defer(utils::remove.packages(install_check$name), envir = envir)
   }
   path
 }

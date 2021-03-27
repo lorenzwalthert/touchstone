@@ -81,15 +81,21 @@ benchmark_run_ref <- function(expr_before_benchmark,
 #' Installs each `ref` in a separate library for isolation.
 #' @param refs The names of the branches in a character vector.
 #' @inheritParams benchmark_ref_install
+#' @return
+#' The global and touchstone library paths
 #' @keywords internal
 refs_install <- function(refs, path_pkg, install_dependencies) {
-  assert_no_global_installation()
+  assert_no_global_installation(path_pkg)
   usethis::ui_info("Start installing branches into separate libraries.")
   libpaths <- purrr::map(refs, benchmark_ref_install,
     path_pkg = path_pkg,
     install_dependencies = install_dependencies
   ) %>%
-    purrr::flatten_chr()
+    purrr::flatten_chr() %>%
+    unique() %>%
+    fs::path_abs() %>%
+    as.character() %>%
+    sort()
   assert_no_global_installation(path_pkg)
   usethis::ui_done("Completed installations.")
   libpaths

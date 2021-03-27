@@ -12,6 +12,10 @@ dir_touchstone <- function() {
 }
 
 
+path_touchstone_script <- function(root = ".") {
+  fs::path(root, "touchstone", "script.R")
+}
+
 #' @describeIn touchstone_managers clears the touchstone database.
 #' @aliases touchstone_managers
 #' @param all Whether to clear the whole touchstone directory or just the
@@ -70,13 +74,21 @@ local_git_checkout <- function(branch,
 #' package library
 #' @keywords internal
 assert_no_global_installation <- function(path_pkg = ".") {
-  path_desc <- fs::path(path_pkg, "DESCRIPTION")
-  pkg_name <- unname(read.dcf(path_desc)[, "Package"])
-  if (rlang::is_installed(pkg_name)) {
+  check <- is_installed(path_pkg)
+  if (check$installed) {
     usethis::ui_stop(paste0(
-      "Package {pkg_name} can be found on library path. This should not be ",
+      "Package {check$name} can be found on library path. This should not be ",
       "the case - as the package is installed in dedicated library paths ",
       "during benchmarking."
     ))
   }
+}
+
+
+#' Check if a package is installed and unloading it
+#' @keywords internal
+is_installed <- function(path_pkg = ".") {
+  path_desc <- fs::path(path_pkg, "DESCRIPTION")
+  pkg_name <- unname(read.dcf(path_desc)[, "Package"])
+  list(name = pkg_name, installed = pkg_name %in% rownames(installed.packages()))
 }
