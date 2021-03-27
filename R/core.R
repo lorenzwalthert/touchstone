@@ -65,6 +65,8 @@ benchmark_run_ref <- function(expr_before_benchmark,
                               n = 20,
                               path_pkg = ".",
                               install_dependencies = FALSE) {
+  # touchstone libraries must be removed from the path temporarily
+  local_without_touchstone_lib()
   libpaths <- refs_install(refs, path_pkg, install_dependencies)
   refs <- ref_upsample(refs, n = n)
   out_list <- purrr::map(refs, benchmark_run_ref_impl,

@@ -70,6 +70,29 @@ local_git_checkout <- function(branch,
   usethis::ui_done("Temporarily checked out branch {branch}.")
 }
 
+#' Temporarily remove all touchstone libraries from the path
+#'
+#' This is useful in conjunction with [with_touchstone_lib()].
+#' @param path_pkg The path to the package that contains the touchstone library.
+#' @param envir The environment that triggers the deferred action on
+#'   destruction.
+#' @details
+#' * Add a touchstone library to the path with [with_touchstone_lib()] and
+#'   run a script. The script hence may contain calls to libraries only installed
+#'   in touchstone libraries.
+#' * benchmark code with [benchmark_run_ref()]. At the start, remove all
+#'   all touchstone libraries from path and add the touchstone library we need.
+#'
+#' Advantages: Keep benchmarked repo in touchstone library only.
+#' @keywords internal
+local_without_touchstone_lib <- function(path_pkg = ".", envir = parent.frame()) {
+  all <- .libPaths()
+  all_rel <- fs::path_rel(all, start = path_pkg)
+  all_but_touchstone <- all[!fs::path_has_parent(all_rel, dir_touchstone())]
+  withr::local_libpaths(all_but_touchstone, .local_envir = envir)
+}
+
+
 #' Make sure there is no installation of the package to benchmark in the global
 #' package library
 #' @keywords internal
