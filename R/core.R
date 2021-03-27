@@ -13,7 +13,7 @@ benchmark_run_iteration <- function(expr_before_benchmark,
                                     ...,
                                     ref,
                                     libpaths,
-                                    n = 20) {
+                                    n = getOption("touchstone.n_iterations", 20)) {
   if (rlang::is_missing(expr_before_benchmark)) {
     expr_before_benchmark <- ""
   }

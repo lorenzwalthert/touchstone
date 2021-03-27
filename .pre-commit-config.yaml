@@ -34,12 +34,17 @@ repos:
           .*\.png|
           \.github/workflows/.*\.yaml|
           inst/touchstone\.yaml|
-          inst/config\.json
+          inst/config\.json|
+          API
           )$
     -   id: readme-rmd-rendered
     -   id: parsable-R
     -   id: no-browser-statement
     -   id: deps-in-desc
+        exclude:  >
+          (?x)^(
+          tests/testthat/test-prepare\.R
+          )$
 -   repo: https://github.com/pre-commit/pre-commit-hooks
     rev: v3.3.0
     hooks:

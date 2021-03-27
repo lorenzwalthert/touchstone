@@ -4,7 +4,13 @@
 \alias{benchmark_run_iteration}
 \title{Run a benchmark iteration}
 \usage{
-benchmark_run_iteration(expr_before_benchmark, ..., ref, libpaths, n = 20)
+benchmark_run_iteration(
+  expr_before_benchmark,
+  ...,
+  ref,
+  libpaths,
+  n = getOption("touchstone.n_iterations", 20)
+)
 }
 \arguments{
 \item{expr_before_benchmark}{Character vector with code to run before

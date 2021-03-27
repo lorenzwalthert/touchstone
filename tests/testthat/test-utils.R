@@ -24,6 +24,7 @@ test_that("touchstone dir can be removed", {
 })
 
 test_that("can checkout locally", {
+  local_test_setup()
   new_branch <- "ewjlkj"
   tmp <- withr::local_tempdir()
   fs::dir_create(tmp)
