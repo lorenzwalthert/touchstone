@@ -13,8 +13,10 @@
 #'   to the library path.
 #' @export
 with_touchstone_lib <- function(path, ref = Sys.getenv("GITHUB_HEAD_REF")) {
+  lib <- libpath_touchstone(ref)
+  fs::dir_create(lib)
   withr::local_libpaths(
-    list(fs::path("touchstone", "lib", ref)),
+    list(lib),
     action = "prefix"
   )
   source(path, max.deparse.length = Inf)
