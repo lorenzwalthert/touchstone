@@ -10,7 +10,7 @@ use_touchstone <- function() {
   fs::dir_create("touchstone")
   copy_if_not_exists(
     system.file("script.R", package = "touchstone"),
-    fs::path("touchstone", "script.R")
+    path_touchstone_script()
   )
   copy_if_not_exists(
     system.file("config.json", package = "touchstone"),
