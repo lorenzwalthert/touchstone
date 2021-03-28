@@ -82,27 +82,28 @@ This will:
         from where you call `use_touchstone()` and hence does not need
         to be defined explicitly.
 
-``` json
-{
-  "benchmarking_repo": "lorenzwalthert/here",
-  "benchmarking_ref": "ca9c8e69c727def88d8ba1c8b85b0e0bcea87b3f",
-  "benchmarking_path": "touchstone/sources/here",
+    ``` json
+    {
+      "benchmarking_repo": "lorenzwalthert/here",
+      "benchmarking_ref": "ca9c8e69c727def88d8ba1c8b85b0e0bcea87b3f",
+      "benchmarking_path": "touchstone/sources/here",
 
-  "os": "ubuntu-18.04",
-  "r": "4.0.0",
-  "rspm": "https://packagemanager.rstudio.com/all/__linux__/bionic/291"
-}
-```
+      "os": "ubuntu-18.04",
+      "r": "4.0.0",
+      "rspm": "https://packagemanager.rstudio.com/all/__linux__/bionic/291"
+    }
+    ```
 
--   `script.R`, the script that runs the benchmark. The below code will
-    run the benchmarking expression `runif(100)`, give it the name
-    `random_test`, and do this twice in total (once for each branch).
+    -   `script.R`, the script that runs the benchmark. The below code
+        will run the benchmarking expression `runif(100)`, give it the
+        name `random_test`, and do this twice in total (once for each
+        branch).
 
-``` r
-touchstone::benchmark_run_ref(
-  random_test = "runif(100)", n = 2
-)
-```
+    ``` r
+    touchstone::benchmark_run_ref(
+    random_test = "runif(100)", n = 2
+    )
+    ```
 
 This is not particularly useful, since `runif()` is not a function from
 the benchmarked repo. You want to bench mark functions from your package
