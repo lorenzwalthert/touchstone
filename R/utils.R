@@ -113,5 +113,8 @@ assert_no_global_installation <- function(path_pkg = ".") {
 is_installed <- function(path_pkg = ".") {
   path_desc <- fs::path(path_pkg, "DESCRIPTION")
   pkg_name <- unname(read.dcf(path_desc)[, "Package"])
-  list(name = pkg_name, installed = pkg_name %in% rownames(installed.packages()))
+  list(
+    name = pkg_name,
+    installed = pkg_name %in% rownames(utils::installed.packages())
+  )
 }

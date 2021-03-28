@@ -27,6 +27,7 @@ getenv
 getRversion
 ggplot
 github
+gitignore
 hashFiles
 href
 https

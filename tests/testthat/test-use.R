@@ -1,4 +1,5 @@
 test_that("can initialize", {
+  local_test_setup()
   withr::with_tempdir(
     expect_silent(use_touchstone())
   )

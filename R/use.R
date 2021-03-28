@@ -18,7 +18,7 @@ use_touchstone <- function() {
   )
 
   copy_if_not_exists(
-    system.file(".gitignore", package = "touchstone"),
+    system.file("gitignore", package = "touchstone"),
     fs::path("touchstone", ".gitignore")
   )
 }
