@@ -27,6 +27,7 @@ getenv
 getRversion
 ggplot
 github
+gitignore
 hashFiles
 href
 https
@@ -52,6 +53,7 @@ ORCID
 os
 packagemanager
 pkgapi
+prepending
 PRs
 purrr
 Rds

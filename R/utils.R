@@ -12,13 +12,17 @@ dir_touchstone <- function() {
 }
 
 
+path_touchstone_script <- function(root = ".") {
+  fs::path(root, "touchstone", "script.R")
+}
+
 #' @describeIn touchstone_managers clears the touchstone database.
 #' @aliases touchstone_managers
 #' @param all Whether to clear the whole touchstone directory or just the
 #'   records sub directory.
 #' @export
 touchstone_clear <- function(all = FALSE) {
-  paths <- fs::path(dir_touchstone(), if (!all) "records" else "")
+  paths <- fs::path(dir_touchstone(), if (!all) c("records", "lib") else "")
 
   paths <- paths[fs::dir_exists(paths)]
   fs::dir_delete(paths)
@@ -66,17 +70,51 @@ local_git_checkout <- function(branch,
   usethis::ui_done("Temporarily checked out branch {branch}.")
 }
 
+#' Temporarily remove all touchstone libraries from the path
+#'
+#' This is useful in conjunction with [with_touchstone_lib()].
+#' @param path_pkg The path to the package that contains the touchstone library.
+#' @param envir The environment that triggers the deferred action on
+#'   destruction.
+#' @details
+#' * Add a touchstone library to the path with [with_touchstone_lib()] and
+#'   run a script. The script hence may contain calls to libraries only installed
+#'   in touchstone libraries.
+#' * benchmark code with [benchmark_run_ref()]. At the start, remove all
+#'   all touchstone libraries from path and add the touchstone library we need.
+#'
+#' Advantages: Keep benchmarked repo in touchstone library only.
+#' @keywords internal
+local_without_touchstone_lib <- function(path_pkg = ".", envir = parent.frame()) {
+  all <- .libPaths()
+  all_rel <- fs::path_rel(all, start = path_pkg)
+  all_but_touchstone <- all[!fs::path_has_parent(all_rel, dir_touchstone())]
+  withr::local_libpaths(all_but_touchstone, .local_envir = envir)
+}
+
+
 #' Make sure there is no installation of the package to benchmark in the global
 #' package library
 #' @keywords internal
 assert_no_global_installation <- function(path_pkg = ".") {
-  path_desc <- fs::path(path_pkg, "DESCRIPTION")
-  pkg_name <- unname(read.dcf(path_desc)[, "Package"])
-  if (rlang::is_installed(pkg_name)) {
+  check <- is_installed(path_pkg)
+  if (check$installed) {
     usethis::ui_stop(paste0(
-      "Package {pkg_name} can be found on library path. This should not be ",
+      "Package {check$name} can be found on library path. This should not be ",
       "the case - as the package is installed in dedicated library paths ",
       "during benchmarking."
     ))
   }
+}
+
+
+#' Check if a package is installed and unloading it
+#' @keywords internal
+is_installed <- function(path_pkg = ".") {
+  path_desc <- fs::path(path_pkg, "DESCRIPTION")
+  pkg_name <- unname(read.dcf(path_desc)[, "Package"])
+  list(
+    name = pkg_name,
+    installed = pkg_name %in% rownames(utils::installed.packages())
+  )
 }

@@ -1,7 +1,8 @@
 .onLoad <- function(libname, pkgname) {
   op <- options()
   op.touchstone <- list(
-    "touchstone.skip_install" = FALSE
+    "touchstone.skip_install" = FALSE,
+    "touchstone.n_iterations" = 20
   )
   toset <- !(names(op.touchstone) %in% names(op))
   if (any(toset)) options(op.touchstone[toset])

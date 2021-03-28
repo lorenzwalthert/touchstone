@@ -1,4 +1,5 @@
 test_that("can install in isolated repos", {
+  local_test_setup()
   name_tmp_pkg <- "bli33"
   path_pkg <- local_package(path_temp_pkg(name_tmp_pkg), r_sample = "x <- 3")
   lib_path1 <- benchmark_ref_install("devel", path_pkg = path_pkg)

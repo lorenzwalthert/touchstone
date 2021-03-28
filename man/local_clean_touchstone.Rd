@@ -19,3 +19,4 @@ Other testers:
 \code{\link{local_package}()}
 }
 \concept{testers}
+\keyword{internal}

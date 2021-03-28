@@ -13,7 +13,7 @@ benchmark_run_iteration <- function(expr_before_benchmark,
                                     ...,
                                     ref,
                                     libpaths,
-                                    n = 20) {
+                                    n = getOption("touchstone.n_iterations", 20)) {
   if (rlang::is_missing(expr_before_benchmark)) {
     expr_before_benchmark <- ""
   }
@@ -65,6 +65,8 @@ benchmark_run_ref <- function(expr_before_benchmark,
                               n = 20,
                               path_pkg = ".",
                               install_dependencies = FALSE) {
+  # touchstone libraries must be removed from the path temporarily
+  local_without_touchstone_lib()
   libpaths <- refs_install(refs, path_pkg, install_dependencies)
   refs <- ref_upsample(refs, n = n)
   out_list <- purrr::map(refs, benchmark_run_ref_impl,
@@ -81,14 +83,21 @@ benchmark_run_ref <- function(expr_before_benchmark,
 #' Installs each `ref` in a separate library for isolation.
 #' @param refs The names of the branches in a character vector.
 #' @inheritParams benchmark_ref_install
+#' @return
+#' The global and touchstone library paths
 #' @keywords internal
 refs_install <- function(refs, path_pkg, install_dependencies) {
+  assert_no_global_installation(path_pkg)
   usethis::ui_info("Start installing branches into separate libraries.")
   libpaths <- purrr::map(refs, benchmark_ref_install,
     path_pkg = path_pkg,
     install_dependencies = install_dependencies
   ) %>%
-    purrr::flatten_chr()
+    purrr::flatten_chr() %>%
+    unique() %>%
+    fs::path_abs() %>%
+    as.character() %>%
+    sort()
   assert_no_global_installation(path_pkg)
   usethis::ui_done("Completed installations.")
   libpaths

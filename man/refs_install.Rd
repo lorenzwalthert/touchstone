@@ -14,6 +14,9 @@ refs_install(refs, path_pkg, install_dependencies)
 \item{install_dependencies}{Passed to \code{\link[remotes:install_local]{remotes::install_local()}}. Set to
 \code{FALSE} can help when ran locally without internet connection.}
 }
+\value{
+The global and touchstone library paths
+}
 \description{
 Installs each \code{ref} in a separate library for isolation.
 }

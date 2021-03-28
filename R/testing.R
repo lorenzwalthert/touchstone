@@ -3,8 +3,30 @@
 #' Deletes [dir_touchstone()] when the local frame is destroyed.
 #' @inheritParams withr::defer
 #' @family testers
+#' @keywords internal
 local_clean_touchstone <- function(envir = parent.frame()) {
   withr::defer(touchstone_clear(all = TRUE), envir = envir)
+}
+
+#' Combines a few options for a good testing environment
+#'
+#' @param envir The environment that determines when the deferred actions will
+#'   manifest.
+#' @param keywords internal
+#' @details
+#' Setup includes:
+#'
+#' * temporarily disables usethis communication.
+#' * runs touchstone for only two iterations for speeding things up.
+#' * remove the touchstone env with [local_clean_touchstone()].
+#' @keywords internal
+local_test_setup <- function(envir = parent.frame()) {
+  withr::local_options(
+    usethis.quiet = TRUE,
+    touchstone.n_iterations = 2,
+    .local_envir = envir
+  )
+  local_clean_touchstone(envir)
 }
 
 path_temp_pkg <- function(name) {
@@ -45,8 +67,9 @@ local_package <- function(path = path_temp_pkg("testpkg"),
   gert::git_commit("[init]", repo = path)
   purrr::walk(branches, gert::git_branch_create, repo = path)
   withr::defer(unlink(path), envir = envir)
-  if (rlang::is_installed(fs::path_file(path))) {
-    withr::defer(utils::remove.packages(fs::path_file(path)), envir = envir)
+  install_check <- is_installed(path)
+  if (install_check$installed) {
+    withr::defer(utils::remove.packages(install_check$name), envir = envir)
   }
   path
 }

@@ -1,5 +1,5 @@
 test_that("iterations can be run", {
-  local_clean_touchstone()
+  local_test_setup()
   bm <- benchmark_run_iteration(
     expr_before_benchmark = "library(testthat)",
     expr_to_benchmark = "expect_equal(Sys.sleep(1e-3), NULL)",
@@ -13,7 +13,7 @@ test_that("iterations can be run", {
 
 
 test_that("refs can be run", {
-  local_clean_touchstone()
+  local_test_setup()
   path_test_pkg <- local_package()
   bm <- benchmark_run_ref(
     expr_before_benchmark = "library(testthat)",
@@ -27,7 +27,7 @@ test_that("refs can be run", {
 })
 
 test_that("dynamic dots are supported", {
-  local_clean_touchstone()
+  local_test_setup()
   path_test_pkg <- local_package()
   x <- "cc"
   bm <- benchmark_run_ref(
