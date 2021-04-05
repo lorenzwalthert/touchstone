@@ -88,6 +88,10 @@ local_git_checkout <- function(branch,
 local_without_touchstone_lib <- function(path_pkg = ".", envir = parent.frame()) {
   all <- .libPaths()
   print("in local_without_touchstone_lib:")
+  print("wd")
+  print(getwd())
+  print("path_pkg:")
+  print(path_pkg)
   print("all libpaths:")
   print(.libPaths())
   all_rel <- fs::path_rel(all, start = path_pkg)
@@ -95,7 +99,8 @@ local_without_touchstone_lib <- function(path_pkg = ".", envir = parent.frame())
   print(all_rel)
   is_touchstone <- fs::path_has_parent(all_rel, fs::path_abs(dir_touchstone()))
   all_but_touchstone <- all[!is_touchstone]
-  print(all_but_touchstone)
+  print("all but touchstone")
+  print(as.character(all_but_touchstone))
   print("exiting local_without_touchstone_lib")
   withr::local_libpaths(all_but_touchstone, .local_envir = envir)
 }
