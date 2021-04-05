@@ -91,6 +91,7 @@ local_without_touchstone_lib <- function(path_pkg = ".", envir = parent.frame())
   print("all libpaths:")
   print(.libPaths())
   all_rel <- fs::path_rel(all, start = path_pkg)
+  print("all relative")
   print(all_rel)
   all_but_touchstone <- all[!fs::path_has_parent(all_rel, dir_touchstone())]
   print(all_but_touchstone)

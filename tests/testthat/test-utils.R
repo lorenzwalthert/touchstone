@@ -65,5 +65,5 @@ test_that("can remove touchstone libpaths", {
   )
   print("after removing")
   print(.libPaths())
-  expect_equal(.libPaths(), after_removal)
+  expect_equal(after_removal, .libPaths())
 })
