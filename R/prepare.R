@@ -41,7 +41,10 @@ ref_install <- function(ref = "master",
 #' @return
 #' The global and touchstone library paths
 #' @export
-refs_install <- function(refs,
+refs_install <- function(refs = c(
+                           Sys.getenv("GITHUB_BASE_REF"),
+                           Sys.getenv("GITHUB_HEAD_REF")
+                         ),
                          path_pkg = ".",
                          install_dependencies = FALSE) {
   assert_no_global_installation(path_pkg)

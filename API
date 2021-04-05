@@ -9,7 +9,7 @@ benchmark_run_ref(expr_before_benchmark, ..., refs = c(Sys.getenv("GITHUB_BASE_R
 benchmark_write(benchmark, name, ref, iteration = NA, append = TRUE)
 benchmarks_analyze(refs = c(Sys.getenv("GITHUB_BASE_REF"), Sys.getenv("GITHUB_HEAD_REF")))
 dir_touchstone()
-refs_install(refs, path_pkg = ".", install_dependencies = FALSE)
+refs_install(refs = c(Sys.getenv("GITHUB_BASE_REF"), Sys.getenv("GITHUB_HEAD_REF")), path_pkg = ".", install_dependencies = FALSE)
 touchstone_clear(all = FALSE)
 use_touchstone()
 with_touchstone_lib(path, ref = Sys.getenv("GITHUB_HEAD_REF"))

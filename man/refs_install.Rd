@@ -4,7 +4,11 @@
 \alias{refs_install}
 \title{Install branches}
 \usage{
-refs_install(refs, path_pkg = ".", install_dependencies = FALSE)
+refs_install(
+  refs = c(Sys.getenv("GITHUB_BASE_REF"), Sys.getenv("GITHUB_HEAD_REF")),
+  path_pkg = ".",
+  install_dependencies = FALSE
+)
 }
 \arguments{
 \item{refs}{The names of the branches in a character vector.}
