@@ -36,7 +36,8 @@ ref_install <- function(ref = "master",
 #'
 #' Installs each `ref` in a separate library for isolation.
 #' @param refs The names of the branches in a character vector.
-#' @inheritParams benchmark_ref_install
+#' @param install_dependencies Passed to ``
+#' @inheritParams ref_install
 #' @return
 #' The global and touchstone library paths
 #' @export

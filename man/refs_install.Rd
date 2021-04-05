@@ -8,6 +8,10 @@ refs_install(refs, path_pkg = ".", install_dependencies = FALSE)
 }
 \arguments{
 \item{refs}{The names of the branches in a character vector.}
+
+\item{path_pkg}{The path to the repository to install.}
+
+\item{install_dependencies}{Passed to ``}
 }
 \value{
 The global and touchstone library paths

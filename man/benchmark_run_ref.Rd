@@ -24,6 +24,8 @@ must be built for each benchmarked branch beforehand with \code{\link[=refs_inst
 
 \item{n}{Number of times benchmarks should be run. Refers to the total of
 all \code{refs}.}
+
+\item{path_pkg}{The path to the repository to install.}
 }
 \description{
 Run a benchmark for git refs

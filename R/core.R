@@ -48,7 +48,7 @@ benchmark_run_iteration <- function(expr_before_benchmark,
 #' @param n Number of times benchmarks should be run. Refers to the total of
 #'   all `refs`.
 #' @inheritParams refs_install
-#' @inheritParams benchmark_run_iteration
+#' @inheritParams benchmark_run_ref_impl
 #' @details
 #' Runs the following loop `n` times:
 #'  * removes all touchstone libraries from the library path, adding the one
@@ -81,6 +81,8 @@ benchmark_run_ref <- function(expr_before_benchmark,
 
 #' Checkout a branch from a repo and run an iteration
 #'
+#' @param path_pkg The path to the root of the package you want to benchmark.
+#' @inheritParams benchmark_run_iteration
 #' @keywords internal
 benchmark_run_ref_impl <- function(ref,
                                    expr_before_benchmark,
