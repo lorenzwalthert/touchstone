@@ -9,8 +9,7 @@ benchmark_run_ref(
   ...,
   refs = c(Sys.getenv("GITHUB_BASE_REF"), Sys.getenv("GITHUB_HEAD_REF")),
   n = 20,
-  path_pkg = ".",
-  install_dependencies = FALSE
+  path_pkg = "."
 )
 }
 \arguments{
@@ -20,14 +19,13 @@ the benchmark is ran, will be evaluated with \code{\link[=exprs_eval]{exprs_eval
 \item{...}{Named character vector of length one with code to benchmark, will
 be evaluated with \code{\link[=exprs_eval]{exprs_eval()}}.}
 
-\item{refs}{Character vector with branch names to build and benchmark.}
+\item{refs}{Character vector with branch names to benchmark. The package
+must be built for each benchmarked branch beforehand with \code{\link[=refs_install]{refs_install()}}.}
 
-\item{n}{Number of time to run benchmark.}
+\item{n}{Number of times benchmarks should be run. Refers to the total of
+all \code{refs}.}
 
 \item{path_pkg}{The path to the repository to install.}
-
-\item{install_dependencies}{Passed to \code{\link[remotes:install_local]{remotes::install_local()}}. Set to
-\code{FALSE} can help when ran locally without internet connection.}
 }
 \description{
 Run a benchmark for git refs
@@ -35,9 +33,11 @@ Run a benchmark for git refs
 \details{
 Runs the following loop \code{n} times:
 \itemize{
-\item Installs random branch from \code{refs} of the package \code{path_profiling_pkg}.
+\item removes all touchstone libraries from the library path, adding the one
+corresponding to \code{ref}.
 \item runs setup code \code{exp_before_ref}.
-\item benchmarks \code{expr_to_benchmark}.
-Returns all timings.
+\item benchmarks \code{expr_to_benchmark} and writes them to disk.
 }
+
+Returns all timings.
 }
