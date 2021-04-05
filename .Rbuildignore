@@ -5,3 +5,6 @@
 ^\.github$
 ^README\.Rmd$
 ^API$
+^_pkgdown\.yml$
+^docs$
+^pkgdown$
