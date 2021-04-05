@@ -50,20 +50,20 @@ test_that("can remove touchstone libpaths", {
   local_test_setup()
   path_pkg <- local_package(path = path_temp_pkg(pkg_name))
   new_libpaths <- refs_install(refs, path_pkg, install_dependencies = FALSE)
-  print("new libpaths")
-  print(new_libpaths)
-  print("current libpths")
-  print(.libPaths())
+
+
+
+
   withr::local_libpaths(new_libpaths)
-  print("after setting")
-  print(.libPaths())
+
+
   expect_equal(.libPaths(), new_libpaths)
   local_without_touchstone_lib(path_pkg)
   after_removal <- setdiff(
     new_libpaths,
     as.character(fs::path_abs(libpath_touchstone(refs)))
   )
-  print("after removing")
-  print(.libPaths())
+
+
   expect_equal(after_removal, .libPaths())
 })
