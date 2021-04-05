@@ -3,15 +3,15 @@ test_that("can analyze results", {
   # generate results
   local_test_setup()
   withr::local_options(list(touchstone.skip_install = TRUE))
-  path_test_pkg <- local_package()
+  branches <- c("devel", "c4")
+  path_test_pkg <- local_package(branches = branches)
   bm <- benchmark_run_iteration(
     "",
     xx1 = "Sys.sleep(runif(1, 0, 1e-5))",
-    ref = branch,
     n = 5,
-    libpaths = .libPaths()
+    ref = branches[2]
   )
-  benchmarks_analyze(branch)
+  benchmarks_analyze(branches[2])
   expect_match(
     readLines("touchstone/pr-comment/info.txt"),
     "xx1: .* -> .* \\(.*%\\)"

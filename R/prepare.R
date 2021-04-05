@@ -1,4 +1,5 @@
 #' Checks out a source branch and install the package
+#'
 #' @param path_pkg The path to the repository to install.
 #' @param ref A reference to a git commit. Currently, only branch names are
 #'   supported.
@@ -7,9 +8,9 @@
 #' @return
 #' A character vector with library paths.
 #' @keywords internal
-benchmark_ref_install <- function(ref = "master",
-                                  path_pkg = ".",
-                                  install_dependencies = FALSE) {
+ref_install <- function(ref = "master",
+                        path_pkg = ".",
+                        install_dependencies = FALSE) {
   local_git_checkout(ref, path_pkg)
   if (getOption("touchstone.skip_install", FALSE)) {
     usethis::ui_info(
@@ -30,6 +31,34 @@ benchmark_ref_install <- function(ref = "master",
     libpath
   }
 }
+
+#' Install branches
+#'
+#' Installs each `ref` in a separate library for isolation.
+#' @param refs The names of the branches in a character vector.
+#' @inheritParams benchmark_ref_install
+#' @return
+#' The global and touchstone library paths
+#' @export
+refs_install <- function(refs,
+                         path_pkg = ".",
+                         install_dependencies = FALSE) {
+  assert_no_global_installation(path_pkg)
+  usethis::ui_info("Start installing branches into separate libraries.")
+  libpaths <- purrr::map(refs, ref_install,
+    path_pkg = path_pkg,
+    install_dependencies = install_dependencies
+  ) %>%
+    purrr::flatten_chr() %>%
+    unique() %>%
+    fs::path_abs() %>%
+    as.character() %>%
+    sort()
+  assert_no_global_installation(path_pkg)
+  usethis::ui_done("Completed installations.")
+  libpaths
+}
+
 
 
 libpath_touchstone <- function(ref) {
