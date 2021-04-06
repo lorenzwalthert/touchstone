@@ -15,7 +15,9 @@ knitr::opts_chunk$set(
 # touchstone
 
 touchstone is a tool for continuous benchmarking, in particular useful for 
-estimating speed implications of a pull request.
+estimating speed implications of a pull request. 
+
+*This is very experimental, don't use for serious things (yet) and expect breaking changes*
 
 <!-- badges: start -->
 [![Lifecycle: experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://www.tidyverse.org/lifecycle/#experimental)

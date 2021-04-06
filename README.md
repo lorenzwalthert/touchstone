@@ -4,6 +4,9 @@
 touchstone is a tool for continuous benchmarking, in particular useful
 for estimating speed implications of a pull request.
 
+*This is very experimental, don’t use for serious things (yet) and
+expect breaking changes*
+
 <!-- badges: start -->
 
 [![Lifecycle:
