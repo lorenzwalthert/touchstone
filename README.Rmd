@@ -86,7 +86,8 @@ This will:
 - create a `touchstone` directory in the repo root with:
   * `config.json` that defines how to run your benchmark. In particular, you
     can define a benchmarking repo, that is, code you need to run your bench 
-    mark. The code you want to benchmark comes from the benchmarked repo, which 
+    mark. This repo will be cloned into `benchmarking_path`. The code you want 
+    to benchmark comes from the benchmarked repo, which 
     in our case is the root from where you call `use_touchstone()` and hence 
     does not need to be defined explicitly.
 
