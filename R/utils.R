@@ -97,12 +97,13 @@ local_without_touchstone_lib <- function(path_pkg = ".", envir = parent.frame())
 #' package library
 #' @keywords internal
 assert_no_global_installation <- function(path_pkg = ".") {
+  local_without_touchstone_lib()
   check <- is_installed(path_pkg)
   if (check$installed) {
     usethis::ui_stop(paste0(
-      "Package {check$name} can be found on library path. This should not be ",
-      "the case - as the package is installed in dedicated library paths ",
-      "during benchmarking."
+      "Package {check$name} can be found on a non-touchstone library path. ",
+      "This should not be the case - as the package should be installed in ",
+      "dedicated library paths for benchmarking."
     ))
   }
 }
