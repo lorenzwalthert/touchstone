@@ -18,5 +18,7 @@ in \code{\link[=benchmark_run_ref]{benchmark_run_ref()}} is added.}
 }
 \description{
 Basically \code{\link[base:source]{base::source()}}, but prepending the library path with a
-touchstone library.
+touchstone library and running the script in a temp directory to avoid
+git operations like checking out different branches to interfere with the
+script execution (as running the script changes itself through git checkout).
 }

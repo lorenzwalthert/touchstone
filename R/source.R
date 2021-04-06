@@ -1,7 +1,9 @@
 #' Sources a script
 #'
 #' Basically [base::source()], but prepending the library path with a
-#' touchstone library.
+#' touchstone library and running the script in a temp directory to avoid
+#' git operations like checking out different branches to interfere with the
+#' script execution (as running the script changes itself through git checkout).
 #'
 #' @param path The script to run. It must fulfill the requirements of a
 #'   [touchstone_script].
@@ -26,7 +28,13 @@ with_touchstone_lib <- function(path, ref = Sys.getenv("GITHUB_HEAD_REF")) {
     list(lib),
     action = "prefix"
   )
-  source(path, max.deparse.length = Inf)
+  tempfile <- fs::file_temp()
+  fs::file_copy(path, tempfile)
+  usethis::ui_done(glue::glue(
+    "Copied touchstone script to tempdir to prevent branch checkouts to effect",
+    "the script."
+  ))
+  source(tempfile, max.deparse.length = Inf)
 }
 
 
