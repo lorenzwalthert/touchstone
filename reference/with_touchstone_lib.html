@@ -41,7 +41,9 @@
 
 <meta property="og:title" content="Sources a script — with_touchstone_lib" />
 <meta property="og:description" content="Basically base::source(), but prepending the library path with a
-touchstone library." />
+touchstone library and running the script in a temp directory to avoid
+git operations like checking out different branches to interfere with the
+script execution (as running the script changes itself through git checkout)." />
 
 
 
@@ -111,7 +113,9 @@ touchstone library." />
 
     <div class="ref-description">
     <p>Basically <code><a href='https://rdrr.io/r/base/source.html'>base::source()</a></code>, but prepending the library path with a
-touchstone library.</p>
+touchstone library and running the script in a temp directory to avoid
+git operations like checking out different branches to interfere with the
+script execution (as running the script changes itself through git checkout).</p>
     </div>
 
     <pre class="usage"><span class='fu'>with_touchstone_lib</span><span class='op'>(</span><span class='va'>path</span>, ref <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/Sys.getenv.html'>Sys.getenv</a></span><span class='op'>(</span><span class='st'>"GITHUB_HEAD_REF"</span><span class='op'>)</span><span class='op'>)</span></pre>
