@@ -109,7 +109,7 @@
 <li>create a <code>touchstone</code> directory in the repo root with:
 <ul>
 <li>
-<code>config.json</code> that defines how to run your benchmark. In particular, you can define a benchmarking repo, that is, code you need to run your bench mark. The code you want to benchmark comes from the benchmarked repo, which in our case is the root from where you call <code><a href="reference/use_touchstone.html">use_touchstone()</a></code> and hence does not need to be defined explicitly.</li>
+<code>config.json</code> that defines how to run your benchmark. In particular, you can define a benchmarking repo, that is, code you need to run your bench mark. This repo will be cloned into <code>benchmarking_path</code>. The code you want to benchmark comes from the benchmarked repo, which in our case is the root from where you call <code><a href="reference/use_touchstone.html">use_touchstone()</a></code> and hence does not need to be defined explicitly.</li>
 </ul>
 <div class="sourceCode" id="cb3"><pre class="sourceCode json"><code class="sourceCode json"><span id="cb3-1"><a href="#cb3-1"></a><span class="fu">{</span></span>
 <span id="cb3-2"><a href="#cb3-2"></a>  <span class="dt">"benchmarking_repo"</span><span class="fu">:</span> <span class="st">"lorenzwalthert/here"</span><span class="fu">,</span></span>
