@@ -37,8 +37,8 @@ exprs_eval <- function(...) {
 }
 
 ref_upsample <- function(ref, n = 20) {
-  ref <- unique(ref)
-  sample(rep(ref, length.out = n))
+  ref <- sample(unique(ref))
+  rep(ref, length.out = n)
 }
 
 ensure_dir <- function(...) {
