@@ -26,6 +26,7 @@ local_test_setup <- function(envir = parent.frame()) {
     touchstone.n_iterations = 2,
     .local_envir = envir
   )
+  local_tempdir_setwd(envir)
   local_clean_touchstone(envir)
 }
 

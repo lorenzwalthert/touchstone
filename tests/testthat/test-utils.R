@@ -67,3 +67,14 @@ test_that("can remove touchstone libpaths", {
 
   expect_equal(after_removal, .libPaths())
 })
+
+
+test_that("local test setup changes wd to temp dir", {
+  previous_wd <- getwd()
+  simulate_wd_change <- function(previous_wd) {
+    local_tempdir_setwd()
+    expect_false(getwd() == previous_wd)
+  }
+  simulate_wd_change(previous_wd)
+  expect_equal(getwd(), previous_wd)
+})

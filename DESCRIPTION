@@ -1,3 +1,4 @@
+Type: Package
 Package: touchstone
 Title: Benchmark Different Git Refs in One Run
 Version: 0.0.0.9000
@@ -31,8 +32,9 @@ Suggests:
     testthat (>= 3.0.0),
     withr
 Config/testthat/edition: 3
+Config/testthat/parallel: true
 Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE, roclets = c("rd", "namespace", "collate",
     "pkgapi::api_roclet"))
-RoxygenNote: 7.1.1
+RoxygenNote: 7.1.1.9001
