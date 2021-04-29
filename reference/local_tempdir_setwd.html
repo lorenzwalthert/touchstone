@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Combines a few options for a good testing environment — local_test_setup • touchstone</title>
+<title>Temporarily set the working directory to a temp directory — local_tempdir_setwd • touchstone</title>
 
 
 <!-- jquery -->
@@ -39,8 +39,8 @@
 
 
 
-<meta property="og:title" content="Combines a few options for a good testing environment — local_test_setup" />
-<meta property="og:description" content="Combines a few options for a good testing environment" />
+<meta property="og:title" content="Temporarily set the working directory to a temp directory — local_tempdir_setwd" />
+<meta property="og:description" content="Temporarily set the working directory to a temp directory" />
 
 
 
@@ -103,42 +103,17 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Combines a few options for a good testing environment</h1>
+    <h1>Temporarily set the working directory to a temp directory</h1>
     
-    <div class="hidden name"><code>local_test_setup.Rd</code></div>
+    <div class="hidden name"><code>local_tempdir_setwd.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Combines a few options for a good testing environment</p>
+    <p>Temporarily set the working directory to a temp directory</p>
     </div>
 
-    <pre class="usage"><span class='fu'>local_test_setup</span><span class='op'>(</span>
-  use_tempdir <span class='op'>=</span> <span class='cn'>TRUE</span>,
-  dir_touchstone <span class='op'>=</span> <span class='cn'>NULL</span>,
-  envir <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/sys.parent.html'>parent.frame</a></span><span class='op'>(</span><span class='op'>)</span>
-<span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>local_tempdir_setwd</span><span class='op'>(</span>.local_envir <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/sys.parent.html'>parent.frame</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span></pre>
 
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
-    <table class="ref-arguments">
-    <colgroup><col class="name" /><col class="desc" /></colgroup>
-    <tr>
-      <th>envir</th>
-      <td><p>The environment that determines when the deferred actions will
-manifest.</p></td>
-    </tr>
-    <tr>
-      <th>keywords</th>
-      <td><p>internal</p></td>
-    </tr>
-    </table>
-
-    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
-
-    <p>Setup includes:</p><ul>
-<li><p>temporarily disables usethis communication.</p></li>
-<li><p>runs touchstone for only two iterations for speeding things up.</p></li>
-<li><p>remove the touchstone env with <code><a href='local_clean_touchstone.html'>local_clean_touchstone()</a></code>.</p></li>
-</ul>
 
 
   </div>
