@@ -96,8 +96,10 @@ local_tempdir_setwd <- function(.local_envir = parent.frame()) {
 #' Advantages: Keep benchmarked repo in touchstone library only.
 #' @keywords internal
 local_without_touchstone_lib <- function(path_pkg = ".", envir = parent.frame()) {
-  all <- .libPaths()
-  is_touchstone <- fs::path_has_parent(all, fs::path_abs(dir_touchstone()))
+  all <- normalizePath(.libPaths())
+  is_touchstone <- fs::path_has_parent(
+    all, normalizePath(fs::path_abs(dir_touchstone()))
+  )
   all_but_touchstone <- all[!is_touchstone]
   withr::local_libpaths(all_but_touchstone, .local_envir = envir)
 }
