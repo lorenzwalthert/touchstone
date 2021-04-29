@@ -66,5 +66,5 @@ refs_install <- function(refs = c(
 
 
 libpath_touchstone <- function(ref) {
-  fs::path("touchstone", "lib", ref)
+  fs::path(dir_touchstone(), "lib", ref)
 }

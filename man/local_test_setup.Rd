@@ -4,7 +4,11 @@
 \alias{local_test_setup}
 \title{Combines a few options for a good testing environment}
 \usage{
-local_test_setup(envir = parent.frame())
+local_test_setup(
+  use_tempdir = TRUE,
+  dir_touchstone = NULL,
+  envir = parent.frame()
+)
 }
 \arguments{
 \item{envir}{The environment that determines when the deferred actions will

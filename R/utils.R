@@ -8,12 +8,12 @@ NULL
 #' @aliases touchstone_managers
 #' @export
 dir_touchstone <- function() {
-  "touchstone"
+  getOption("touchstone.dir", "touchstone")
 }
 
 
 path_touchstone_script <- function(root = ".") {
-  fs::path(root, "touchstone", "script.R")
+  fs::path(root, dir_touchstone(), "script.R")
 }
 
 #' @describeIn touchstone_managers clears the touchstone database.
@@ -128,4 +128,8 @@ is_installed <- function(path_pkg = ".") {
     name = pkg_name,
     installed = pkg_name %in% rownames(utils::installed.packages())
   )
+}
+
+is_windows <- function() {
+  identical(.Platform$OS.type, "windows")
 }

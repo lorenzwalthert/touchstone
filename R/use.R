@@ -7,19 +7,20 @@ use_touchstone <- function() {
     system.file("touchstone.yaml", package = "touchstone"),
     fs::path(workflows, "touchstone.yaml")
   )
-  fs::dir_create("touchstone")
+  dir_touchstone <- dir_touchstone()
+  fs::dir_create(dir_touchstone)
   copy_if_not_exists(
     system.file("script.R", package = "touchstone"),
     path_touchstone_script()
   )
   copy_if_not_exists(
     system.file("config.json", package = "touchstone"),
-    fs::path("touchstone", "config.json")
+    fs::path(dir_touchstone, "config.json")
   )
 
   copy_if_not_exists(
     system.file("gitignore", package = "touchstone"),
-    fs::path("touchstone", ".gitignore")
+    fs::path(dir_touchstone, ".gitignore")
   )
 }
 
