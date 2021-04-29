@@ -8,12 +8,12 @@ NULL
 #' @aliases touchstone_managers
 #' @export
 dir_touchstone <- function() {
-  "touchstone"
+  getOption("touchstone.dir", "touchstone")
 }
 
 
 path_touchstone_script <- function(root = ".") {
-  fs::path(root, "touchstone", "script.R")
+  fs::path(root, dir_touchstone(), "script.R")
 }
 
 #' @describeIn touchstone_managers clears the touchstone database.
@@ -70,6 +70,16 @@ local_git_checkout <- function(branch,
   usethis::ui_done("Temporarily checked out branch {branch}.")
 }
 
+#' Temporarily set the working directory to a temp directory
+#' @keywords internal
+local_tempdir_setwd <- function(.local_envir = parent.frame()) {
+  withr::local_dir(
+    withr::local_tempdir(.local_envir = .local_envir),
+    .local_envir = .local_envir
+  )
+}
+
+
 #' Temporarily remove all touchstone libraries from the path
 #'
 #' This is useful in conjunction with [with_touchstone_lib()].
@@ -86,8 +96,10 @@ local_git_checkout <- function(branch,
 #' Advantages: Keep benchmarked repo in touchstone library only.
 #' @keywords internal
 local_without_touchstone_lib <- function(path_pkg = ".", envir = parent.frame()) {
-  all <- .libPaths()
-  is_touchstone <- fs::path_has_parent(all, fs::path_abs(dir_touchstone()))
+  all <- normalizePath(.libPaths())
+  is_touchstone <- fs::path_has_parent(
+    all, normalizePath(fs::path_abs(dir_touchstone()))
+  )
   all_but_touchstone <- all[!is_touchstone]
   withr::local_libpaths(all_but_touchstone, .local_envir = envir)
 }
@@ -118,4 +130,8 @@ is_installed <- function(path_pkg = ".") {
     name = pkg_name,
     installed = pkg_name %in% rownames(utils::installed.packages())
   )
+}
+
+is_windows <- function() {
+  identical(.Platform$OS.type, "windows")
 }

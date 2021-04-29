@@ -47,15 +47,15 @@ test_that("can checkout locally", {
 test_that("can remove touchstone libpaths", {
   pkg_name <- "flower.3"
   refs <- c("devel", "main")
-  local_test_setup()
+  if (is_windows()) {
+    local_test_setup(use_tempdir = FALSE, pkg_name)
+  } else {
+    local_test_setup()
+  }
   path_pkg <- local_package(path = path_temp_pkg(pkg_name))
   new_libpaths <- refs_install(refs, path_pkg, install_dependencies = FALSE)
 
-
-
-
   withr::local_libpaths(new_libpaths)
-
 
   expect_equal(.libPaths(), new_libpaths)
   local_without_touchstone_lib(path_pkg)
@@ -64,6 +64,16 @@ test_that("can remove touchstone libpaths", {
     as.character(fs::path_abs(libpath_touchstone(refs)))
   )
 
-
   expect_equal(after_removal, .libPaths())
+})
+
+
+test_that("local test setup changes wd to temp dir", {
+  previous_wd <- getwd()
+  simulate_wd_change <- function(previous_wd) {
+    local_tempdir_setwd()
+    expect_false(getwd() == previous_wd)
+  }
+  simulate_wd_change(previous_wd)
+  expect_equal(getwd(), previous_wd)
 })

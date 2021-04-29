@@ -20,12 +20,24 @@ local_clean_touchstone <- function(envir = parent.frame()) {
 #' * runs touchstone for only two iterations for speeding things up.
 #' * remove the touchstone env with [local_clean_touchstone()].
 #' @keywords internal
-local_test_setup <- function(envir = parent.frame()) {
+local_test_setup <- function(use_tempdir = TRUE,
+                             dir_touchstone = NULL,
+                             envir = parent.frame()) {
   withr::local_options(
     usethis.quiet = TRUE,
     touchstone.n_iterations = 2,
     .local_envir = envir
   )
+  if (use_tempdir) {
+    local_tempdir_setwd(envir)
+  } else {
+    if (is.null(dir_touchstone)) {
+      rlang::abort("If no temp dir is used, you must specify `dir_touchstone`.")
+    } else {
+      withr::local_options(dir_touchstone, .local_envir = envir)
+    }
+  }
+
   local_clean_touchstone(envir)
 }
 
