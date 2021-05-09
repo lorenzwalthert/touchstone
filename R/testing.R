@@ -19,7 +19,9 @@ path_temp_pkg <- function(name) {
 #' until the local frame is destroyed.
 #'
 #' This is primarily for testing.
-#' @param path The path to the temporary package.
+#' @param pkg_name The name of the temporary package.
+#' @param setwd Whether or not the working directory should be temporarily
+#'   set to the package root.
 #' @param branches Branches to be created.
 #' @param r_sample Character with code to write to `R/sampleR.`. This is helpful
 #'   to validate if the installed package corresponds to source branch for
