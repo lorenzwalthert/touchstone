@@ -35,7 +35,7 @@ benchmark_verbalize <- function(benchmark, timings, refs) {
       mean = mean(.data$elapsed),
       sd = stats::sd(.data$elapsed)
     ) %>%
-    dplyr::mutate(dplyr::across(dplyr::where(is.numeric), round, 2)) %>%
+    dplyr::mutate(dplyr::across(tidyselect::vars_select_helpers$where(is.numeric), round, 2)) %>%
     dplyr::inner_join(tibble::tibble(ref = refs), ., by = "ref")
 
 

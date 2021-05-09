@@ -84,6 +84,7 @@ testpkg
 testthat
 th
 tibble
+tidyselect
 ubuntu
 usethis
 vctrs
