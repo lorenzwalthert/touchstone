@@ -40,10 +40,9 @@ test_that("can checkout locally", {
 test_that("can remove touchstone libpaths", {
   refs <- c("devel", "main")
   if (is_windows()) {
-    # cannot
-    withr::local_options(
-      dir_touchstone = fs::path_file(tempfile()), .local_envir = envir
-    )
+    # cannot have touchstone library in temp, as lib path comparison becomes
+    # infeasible due to short/name notation
+    withr::local_options(dir_touchstone = fs::path_file(tempfile()))
   }
   path_pkg <- local_package(setwd = is_windows())
   new_libpaths <- refs_install(refs, path_pkg, install_dependencies = FALSE)
@@ -58,15 +57,4 @@ test_that("can remove touchstone libpaths", {
   )
 
   expect_equal(after_removal, .libPaths())
-})
-
-
-test_that("local test setup changes wd to temp dir", {
-  previous_wd <- getwd()
-  simulate_wd_change <- function(previous_wd) {
-    local_tempdir_setwd()
-    expect_false(getwd() == previous_wd)
-  }
-  simulate_wd_change(previous_wd)
-  expect_equal(getwd(), previous_wd)
 })
