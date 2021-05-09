@@ -116,7 +116,7 @@
   <span class='va'>expr_before_benchmark</span>,
   <span class='va'>...</span>,
   refs <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/Sys.getenv.html'>Sys.getenv</a></span><span class='op'>(</span><span class='st'>"GITHUB_BASE_REF"</span><span class='op'>)</span>, <span class='fu'><a href='https://rdrr.io/r/base/Sys.getenv.html'>Sys.getenv</a></span><span class='op'>(</span><span class='st'>"GITHUB_HEAD_REF"</span><span class='op'>)</span><span class='op'>)</span>,
-  n <span class='op'>=</span> <span class='fl'>20</span>,
+  n <span class='op'>=</span> <span class='fl'>100</span>,
   path_pkg <span class='op'>=</span> <span class='st'>"."</span>
 <span class='op'>)</span></pre>
 
@@ -136,7 +136,9 @@ be evaluated with <code><a href='exprs_eval.html'>exprs_eval()</a></code>.</p></
     <tr>
       <th>refs</th>
       <td><p>Character vector with branch names to benchmark. The package
-must be built for each benchmarked branch beforehand with <code><a href='refs_install.html'>refs_install()</a></code>.</p></td>
+must be built for each benchmarked branch beforehand with <code><a href='refs_install.html'>refs_install()</a></code>.
+The base ref is the target branch of the pull request in a workflow run,
+the head ref is the source branch of the pull request in a workflow run.</p></td>
     </tr>
     <tr>
       <th>n</th>

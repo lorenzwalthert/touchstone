@@ -116,7 +116,7 @@
   <span class='va'>expr_before_benchmark</span>,
   <span class='va'>...</span>,
   <span class='va'>ref</span>,
-  n <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/options.html'>getOption</a></span><span class='op'>(</span><span class='st'>"touchstone.n_iterations"</span>, <span class='fl'>20</span><span class='op'>)</span>
+  n <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/options.html'>getOption</a></span><span class='op'>(</span><span class='st'>"touchstone.n_iterations"</span>, <span class='fl'>1</span><span class='op'>)</span>
 <span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -139,8 +139,7 @@ commit, tag, branch etc) of the benchmarking.</p></td>
     </tr>
     <tr>
       <th>n</th>
-      <td><p>The number of times to run a benchmark, each time with a separate
-call to <code><a href='https://rdrr.io/pkg/bench/man/mark.html'>bench::mark()</a></code>.</p></td>
+      <td><p>Number of iterations to run a benchmark within an iteration.</p></td>
     </tr>
     </table>
 
