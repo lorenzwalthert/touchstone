@@ -3,6 +3,7 @@
 #'   the benchmark is ran, will be evaluated with [exprs_eval()].
 #' @param ... Named character vector of length one with code to benchmark, will
 #'   be evaluated with [exprs_eval()].
+#' @param n Number of iterations to run a benchmark within an iteration.
 #' @inheritParams benchmark_write
 #' @importFrom tibble lst tibble
 #' @export

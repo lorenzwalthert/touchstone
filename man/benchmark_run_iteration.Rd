@@ -20,6 +20,8 @@ be evaluated with \code{\link[=exprs_eval]{exprs_eval()}}.}
 
 \item{ref}{A character vector of length one to indicate the git ref (i.e.
 commit, tag, branch etc) of the benchmarking.}
+
+\item{n}{Number of iterations to run a benchmark within an iteration.}
 }
 \description{
 Run a benchmark iteration
