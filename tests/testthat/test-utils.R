@@ -44,7 +44,7 @@ test_that("can remove touchstone libpaths", {
     # infeasible due to short/name notation
     withr::local_options(dir_touchstone = fs::path_file(tempfile()))
   }
-  path_pkg <- local_package(setwd = is_windows())
+  path_pkg <- local_package(setwd = !is_windows())
   new_libpaths <- refs_install(refs, path_pkg, install_dependencies = FALSE)
 
   withr::local_libpaths(new_libpaths)
