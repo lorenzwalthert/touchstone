@@ -5,7 +5,7 @@
 \title{Create a test package}
 \usage{
 local_package(
-  pkg_name = "testpkg",
+  pkg_name = fs::path_file(tempfile("pkg")),
   branches = c("main", "devel"),
   r_sample = NULL,
   setwd = TRUE,

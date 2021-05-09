@@ -26,7 +26,7 @@ path_temp_pkg <- function(name) {
 #'   testing. If `NULL`, nothing is written.
 #' @inheritParams withr::defer
 #' @family testers
-local_package <- function(pkg_name = "testpkg",
+local_package <- function(pkg_name = fs::path_file(tempfile("pkg")),
                           branches = c("main", "devel"),
                           r_sample = NULL,
                           setwd = TRUE,
@@ -45,9 +45,7 @@ local_package <- function(pkg_name = "testpkg",
   gert::git_config_set("user.name", "GitHub Actions")
   gert::git_config_set("user.email", "actions@github.com")
   gert::git_add("DESCRIPTION")
-  if (!is.null(r_sample)) {
-    writeLines(r_sample, fs::path("R", "sample.R"))
-  }
+  writeLines(if (is.null(r_sample)) "" else r_sample, fs::path("R", "sample.R"))
   gert::git_add("R/")
   gert::git_commit("[init]")
   purrr::walk(branches, gert::git_branch_create)
