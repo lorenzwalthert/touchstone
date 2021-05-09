@@ -5,6 +5,7 @@ bcea
 benchmarked
 benchmarking
 callr
+CMD
 config
 Config
 cr
@@ -53,6 +54,7 @@ ORCID
 os
 packagemanager
 pkgapi
+pkgdown
 prepending
 PRs
 purrr
@@ -74,6 +76,7 @@ saveRDS
 seealso
 SHA
 sprintf
+styfle
 styler
 sublicense
 sudo

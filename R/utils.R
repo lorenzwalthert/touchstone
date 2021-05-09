@@ -12,8 +12,8 @@ dir_touchstone <- function() {
 }
 
 
-path_touchstone_script <- function(root = ".") {
-  fs::path(root, dir_touchstone(), "script.R")
+path_touchstone_script <- function() {
+  fs::path(dir_touchstone(), "script.R")
 }
 
 #' @describeIn touchstone_managers clears the touchstone database.

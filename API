@@ -11,5 +11,5 @@ benchmarks_analyze(refs = c(Sys.getenv("GITHUB_BASE_REF"), Sys.getenv("GITHUB_HE
 dir_touchstone()
 refs_install(refs = c(Sys.getenv("GITHUB_BASE_REF"), Sys.getenv("GITHUB_HEAD_REF")), path_pkg = ".", install_dependencies = FALSE)
 touchstone_clear(all = FALSE)
-use_touchstone()
+use_touchstone(cancel = TRUE)
 with_touchstone_lib(path, ref = Sys.getenv("GITHUB_HEAD_REF"))

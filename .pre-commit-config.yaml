@@ -20,7 +20,7 @@ repos:
         -    magrittr@2.0.1
         -    purrr@0.3.4
         -    remotes@2.3.0
-        # -    r-lib/pkgapi@35226e9
+        -    r-lib/pkgapi@35226e9
         -    rlang@0.4.11
         -    testthat@3.0.2
         -    tibble@3.1.1
