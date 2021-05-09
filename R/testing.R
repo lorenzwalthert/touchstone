@@ -39,10 +39,10 @@ local_package <- function(pkg_name = fs::path_file(tempfile("pkg")),
     .local_envir = envir
   )
   usethis::create_package(path, open = FALSE)
-  print('setenv')
+  print("setenv")
   print(setwd)
-  # withr::local_dir(path, .local_envir = if (setwd) envir else parent.frame())
-  print(c('wd is', getwd()))
+  withr::local_dir(path, .local_envir = if (setwd) envir else rlang::current_env())
+  print(c("wd is", getwd()))
   gert::git_init()
   gert::git_config_set("user.name", "GitHub Actions")
   gert::git_config_set("user.email", "actions@github.com")
