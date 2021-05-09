@@ -80,11 +80,12 @@
 <div id="conceptual" class="section level2">
 <h2 class="hasAnchor">
 <a href="#conceptual" class="anchor"></a>Conceptual</h2>
-<p>For your PR branch and the target branch:</p>
+<p>For your PR branch and the target branch, {touchstone} will:</p>
 <ul>
 <li><p>build the repo.</p></li>
-<li><p>define code you want to benchmark, run it multiple times.</p></li>
-<li><p>Create c/p ready text (because commenting on the PR is not so easy to implement) that you can manually insert in the PR description and plots that show how the distribution of the timings for both branches.</p></li>
+<li><p>run the code you want to benchmark, multiple times, in random order.</p></li>
+<li><p>Create c/p ready text (because commenting on the PR is not so easy to implement) that you can manually insert in the PR description</p></li>
+<li><p>Visualizations as Github Action artifacts that show how the distribution of the timings for both branches.</p></li>
 </ul>
 <p><img src="reference/figures/screenshot-pr-comment.png"></p>
 </div>
@@ -136,7 +137,7 @@ random_test <span class="op">=</span> <span class="st">"runif(100)"</span>, n <s
 <div id="status" class="section level2">
 <h2 class="hasAnchor">
 <a href="#status" class="anchor"></a>Status</h2>
-<p>This package is experimental. It is currently used in <a href="https://github.com/r-lib/styler/blob/master/.github/workflows/benchmarking.yaml">styler</a>. We’ll further reduce boilerplate code required in the GitHub Actions workflow file and move it to <code>{touchstone}</code>.</p>
+<p>This package is experimental. It is currently used in <a href="https://github.com/r-lib/styler/blob/master/.github/workflows/benchmarking.yaml">styler</a>. We’ll further reduce boilerplate code required in the GitHub Actions workflow file and move it to {touchstone}.</p>
 </div>
 </div>
   </div>
