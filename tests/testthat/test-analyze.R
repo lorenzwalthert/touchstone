@@ -1,7 +1,4 @@
 test_that("can analyze results", {
-  branch <- gert::git_branch()
-  # generate results
-  local_test_setup()
   withr::local_options(list(touchstone.skip_install = TRUE))
   branches <- c("devel", "c4")
   path_test_pkg <- local_package(branches = branches)

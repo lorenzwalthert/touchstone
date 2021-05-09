@@ -8,7 +8,7 @@ benchmark_run_ref(
   expr_before_benchmark,
   ...,
   refs = c(Sys.getenv("GITHUB_BASE_REF"), Sys.getenv("GITHUB_HEAD_REF")),
-  n = 20,
+  n = 100,
   path_pkg = "."
 )
 }

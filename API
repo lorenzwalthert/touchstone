@@ -4,8 +4,8 @@
 
 benchmark_ls(name)
 benchmark_read(name, ref)
-benchmark_run_iteration(expr_before_benchmark, ..., ref, n = getOption("touchstone.n_iterations", 20))
-benchmark_run_ref(expr_before_benchmark, ..., refs = c(Sys.getenv("GITHUB_BASE_REF"), Sys.getenv("GITHUB_HEAD_REF")), n = 20, path_pkg = ".")
+benchmark_run_iteration(expr_before_benchmark, ..., ref, n = getOption("touchstone.n_iterations", 1))
+benchmark_run_ref(expr_before_benchmark, ..., refs = c(Sys.getenv("GITHUB_BASE_REF"), Sys.getenv("GITHUB_HEAD_REF")), n = 100, path_pkg = ".")
 benchmark_write(benchmark, name, ref, iteration = NA, append = TRUE)
 benchmarks_analyze(refs = c(Sys.getenv("GITHUB_BASE_REF"), Sys.getenv("GITHUB_HEAD_REF")))
 dir_touchstone()

@@ -70,15 +70,6 @@ local_git_checkout <- function(branch,
   usethis::ui_done("Temporarily checked out branch {branch}.")
 }
 
-#' Temporarily set the working directory to a temp directory
-#' @keywords internal
-local_tempdir_setwd <- function(.local_envir = parent.frame()) {
-  withr::local_dir(
-    withr::local_tempdir(.local_envir = .local_envir),
-    .local_envir = .local_envir
-  )
-}
-
 
 #' Temporarily remove all touchstone libraries from the path
 #'

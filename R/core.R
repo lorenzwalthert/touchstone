@@ -3,15 +3,13 @@
 #'   the benchmark is ran, will be evaluated with [exprs_eval()].
 #' @param ... Named character vector of length one with code to benchmark, will
 #'   be evaluated with [exprs_eval()].
-#' @param n The number of times to run a benchmark, each time with a separate
-#'   call to [bench::mark()].
 #' @inheritParams benchmark_write
 #' @importFrom tibble lst tibble
 #' @export
 benchmark_run_iteration <- function(expr_before_benchmark,
                                     ...,
                                     ref,
-                                    n = getOption("touchstone.n_iterations", 20)) {
+                                    n = getOption("touchstone.n_iterations", 1)) {
   if (rlang::is_missing(expr_before_benchmark)) {
     expr_before_benchmark <- ""
   }
@@ -64,7 +62,7 @@ benchmark_run_ref <- function(expr_before_benchmark,
                                 Sys.getenv("GITHUB_BASE_REF"),
                                 Sys.getenv("GITHUB_HEAD_REF")
                               ),
-                              n = 20,
+                              n = 100,
                               path_pkg = ".") {
   # touchstone libraries must be removed from the path temporarily
   # and the one to benchmark will be added in benchmark_run_ref_impl()

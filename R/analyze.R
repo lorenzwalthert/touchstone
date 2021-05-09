@@ -31,7 +31,7 @@ benchmark_analyze <- function(benchmark, refs) {
 benchmark_verbalize <- function(benchmark, timings, refs) {
   tbl <- timings %>%
     dplyr::group_by(.data$ref) %>%
-    dplyr::summarise(m = mean(.data$elapsed)) %>%
+    dplyr::summarise(m = mean(.data$elapsed), sd = sd(.data$elapsed)) %>%
     tibble::deframe()
   if (length(tbl) > 2) {
     rlang::abort("Benchmarks with more than two `refs` cannot be verbalized.")

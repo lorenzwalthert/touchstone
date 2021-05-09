@@ -8,39 +8,6 @@ local_clean_touchstone <- function(envir = parent.frame()) {
   withr::defer(touchstone_clear(all = TRUE), envir = envir)
 }
 
-#' Combines a few options for a good testing environment
-#'
-#' @param envir The environment that determines when the deferred actions will
-#'   manifest.
-#' @param keywords internal
-#' @details
-#' Setup includes:
-#'
-#' * temporarily disables usethis communication.
-#' * runs touchstone for only two iterations for speeding things up.
-#' * remove the touchstone env with [local_clean_touchstone()].
-#' @keywords internal
-local_test_setup <- function(use_tempdir = TRUE,
-                             dir_touchstone = NULL,
-                             envir = parent.frame()) {
-  withr::local_options(
-    usethis.quiet = TRUE,
-    touchstone.n_iterations = 2,
-    .local_envir = envir
-  )
-  if (use_tempdir) {
-    local_tempdir_setwd(envir)
-  } else {
-    if (is.null(dir_touchstone)) {
-      rlang::abort("If no temp dir is used, you must specify `dir_touchstone`.")
-    } else {
-      withr::local_options(dir_touchstone, .local_envir = envir)
-    }
-  }
-
-  local_clean_touchstone(envir)
-}
-
 path_temp_pkg <- function(name) {
   fs::path(tempdir(), digest::digest(Sys.time()), name)
 }
@@ -48,8 +15,8 @@ path_temp_pkg <- function(name) {
 
 #' Create a test package
 #'
-#' Creates a package in a temporary directory until the local frame is
-#' destroyed.
+#' Creates a package in a temporary directory and sets the working directory
+#' until the local frame is destroyed.
 #'
 #' This is primarily for testing.
 #' @param path The path to the temporary package.
@@ -59,25 +26,31 @@ path_temp_pkg <- function(name) {
 #'   testing. If `NULL`, nothing is written.
 #' @inheritParams withr::defer
 #' @family testers
-local_package <- function(path = path_temp_pkg("testpkg"),
+local_package <- function(pkg_name = "testpkg",
                           branches = c("main", "devel"),
                           r_sample = NULL,
+                          setwd = TRUE,
                           envir = parent.frame()) {
-  fs::dir_create(fs::path_dir(path))
-  withr::with_options(
-    list(usethis.quiet = TRUE),
-    usethis::create_package(path, open = FALSE) #
+  path <- fs::path(tempfile(""), pkg_name)
+  fs::dir_create(path)
+  withr::local_options(
+    usethis.quiet = TRUE,
+    touchstone.n_iterations = 2,
+    .local_envir = envir
   )
-  gert::git_init(path)
-  gert::git_config_set("user.name", "GitHub Actions", repo = path)
-  gert::git_config_set("user.email", "actions@github.com", repo = path)
-  gert::git_add("DESCRIPTION", repo = path)
+  usethis::create_package(path, open = FALSE)
+
+  withr::local_dir(path, .local_envir = if (setwd) envir else parent.frame())
+  gert::git_init()
+  gert::git_config_set("user.name", "GitHub Actions")
+  gert::git_config_set("user.email", "actions@github.com")
+  gert::git_add("DESCRIPTION")
   if (!is.null(r_sample)) {
-    writeLines(r_sample, fs::path(path, "R", "sample.R"))
+    writeLines(r_sample, fs::path("R", "sample.R"))
   }
-  gert::git_add("R/", repo = path)
-  gert::git_commit("[init]", repo = path)
-  purrr::walk(branches, gert::git_branch_create, repo = path)
+  gert::git_add("R/")
+  gert::git_commit("[init]")
+  purrr::walk(branches, gert::git_branch_create)
   withr::defer(unlink(path), envir = envir)
   install_check <- is_installed(path)
   if (install_check$installed) {

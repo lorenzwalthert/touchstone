@@ -5,15 +5,14 @@
 \title{Create a test package}
 \usage{
 local_package(
-  path = path_temp_pkg("testpkg"),
+  pkg_name = "testpkg",
   branches = c("main", "devel"),
   r_sample = NULL,
+  setwd = TRUE,
   envir = parent.frame()
 )
 }
 \arguments{
-\item{path}{The path to the temporary package.}
-
 \item{branches}{Branches to be created.}
 
 \item{r_sample}{Character with code to write to \code{R/sampleR.}. This is helpful
@@ -23,10 +22,12 @@ testing. If \code{NULL}, nothing is written.}
 \item{envir}{\verb{[environment]}\cr Attach exit handlers to this environment.
 Typically, this should be either the current environment or
 a parent frame (accessed through \code{\link[=parent.frame]{parent.frame()}}).}
+
+\item{path}{The path to the temporary package.}
 }
 \description{
-Creates a package in a temporary directory until the local frame is
-destroyed.
+Creates a package in a temporary directory and sets the working directory
+until the local frame is destroyed.
 }
 \details{
 This is primarily for testing.

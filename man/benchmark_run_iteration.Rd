@@ -8,7 +8,7 @@ benchmark_run_iteration(
   expr_before_benchmark,
   ...,
   ref,
-  n = getOption("touchstone.n_iterations", 20)
+  n = getOption("touchstone.n_iterations", 1)
 )
 }
 \arguments{
@@ -20,9 +20,6 @@ be evaluated with \code{\link[=exprs_eval]{exprs_eval()}}.}
 
 \item{ref}{A character vector of length one to indicate the git ref (i.e.
 commit, tag, branch etc) of the benchmarking.}
-
-\item{n}{The number of times to run a benchmark, each time with a separate
-call to \code{\link[bench:mark]{bench::mark()}}.}
 }
 \description{
 Run a benchmark iteration
