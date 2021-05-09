@@ -43,6 +43,8 @@ benchmark_run_iteration <- function(expr_before_benchmark,
 #'
 #' @param refs Character vector with branch names to benchmark. The package
 #'   must be built for each benchmarked branch beforehand with [refs_install()].
+#'   The base ref is the target branch of the pull request in a workflow run,
+#'   the head ref is the source branch of the pull request in a workflow run.
 #' @param n Number of times benchmarks should be run. Refers to the total of
 #'   all `refs`.
 #' @inheritParams refs_install

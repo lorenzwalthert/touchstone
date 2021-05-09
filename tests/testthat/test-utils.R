@@ -41,7 +41,7 @@ test_that("can remove touchstone libpaths", {
   refs <- c("devel", "main")
   if (is_windows()) {
     # cannot have touchstone library in temp, as lib path comparison becomes
-    # infeasible due to short/name notation
+    # unfeasible due to short/name notation
     withr::local_options(dir_touchstone = fs::path_file(tempfile()))
   }
   path_pkg <- local_package(setwd = !is_windows())
