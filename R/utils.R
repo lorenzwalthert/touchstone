@@ -98,7 +98,7 @@ local_tempdir_setwd <- function(.local_envir = parent.frame()) {
 local_without_touchstone_lib <- function(path_pkg = ".", envir = parent.frame()) {
   all <- normalizePath(.libPaths())
   is_touchstone <- fs::path_has_parent(
-    all, normalizePath(fs::path_abs(dir_touchstone()))
+    all, normalizePath(fs::path_abs(dir_touchstone()), mustWork = FALSE)
   )
   all_but_touchstone <- all[!is_touchstone]
   withr::local_libpaths(all_but_touchstone, .local_envir = envir)
