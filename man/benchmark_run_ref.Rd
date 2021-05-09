@@ -8,7 +8,7 @@ benchmark_run_ref(
   expr_before_benchmark,
   ...,
   refs = c(Sys.getenv("GITHUB_BASE_REF"), Sys.getenv("GITHUB_HEAD_REF")),
-  n = 20,
+  n = 100,
   path_pkg = "."
 )
 }
@@ -20,7 +20,9 @@ the benchmark is ran, will be evaluated with \code{\link[=exprs_eval]{exprs_eval
 be evaluated with \code{\link[=exprs_eval]{exprs_eval()}}.}
 
 \item{refs}{Character vector with branch names to benchmark. The package
-must be built for each benchmarked branch beforehand with \code{\link[=refs_install]{refs_install()}}.}
+must be built for each benchmarked branch beforehand with \code{\link[=refs_install]{refs_install()}}.
+The base ref is the target branch of the pull request in a workflow run,
+the head ref is the source branch of the pull request in a workflow run.}
 
 \item{n}{Number of times benchmarks should be run. Refers to the total of
 all \code{refs}.}

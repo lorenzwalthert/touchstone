@@ -1,7 +1,4 @@
 test_that("can analyze results", {
-  branch <- gert::git_branch()
-  # generate results
-  local_test_setup()
   withr::local_options(list(touchstone.skip_install = TRUE))
   branches <- c("devel", "c4")
   path_test_pkg <- local_package(branches = branches)
@@ -14,7 +11,8 @@ test_that("can analyze results", {
   benchmarks_analyze(branches[2])
   expect_match(
     readLines("touchstone/pr-comment/info.txt"),
-    "xx1: .* -> .* \\(.*%\\)"
+    as.character(glue::glue("xx1 \\(NA -> {branches[2]}\\): .* -> .* \\(.*%\\)"))
   )
   expect_true(fs::file_exists("touchstone/plots/xx1.png"))
 })
+#

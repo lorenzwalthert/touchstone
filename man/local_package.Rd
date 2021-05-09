@@ -5,14 +5,15 @@
 \title{Create a test package}
 \usage{
 local_package(
-  path = path_temp_pkg("testpkg"),
+  pkg_name = fs::path_file(tempfile("pkg")),
   branches = c("main", "devel"),
   r_sample = NULL,
+  setwd = TRUE,
   envir = parent.frame()
 )
 }
 \arguments{
-\item{path}{The path to the temporary package.}
+\item{pkg_name}{The name of the temporary package.}
 
 \item{branches}{Branches to be created.}
 
@@ -20,13 +21,16 @@ local_package(
 to validate if the installed package corresponds to source branch for
 testing. If \code{NULL}, nothing is written.}
 
+\item{setwd}{Whether or not the working directory should be temporarily
+set to the package root.}
+
 \item{envir}{\verb{[environment]}\cr Attach exit handlers to this environment.
 Typically, this should be either the current environment or
 a parent frame (accessed through \code{\link[=parent.frame]{parent.frame()}}).}
 }
 \description{
-Creates a package in a temporary directory until the local frame is
-destroyed.
+Creates a package in a temporary directory and sets the working directory
+until the local frame is destroyed.
 }
 \details{
 This is primarily for testing.

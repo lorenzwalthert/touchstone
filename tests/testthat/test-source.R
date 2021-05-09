@@ -1,11 +1,10 @@
 test_that("can call package in script", {
   refs <- c("devel", "main")
   pkg_name <- "b32jk"
-  local_test_setup()
-  path_test_pkg <- local_package(path_temp_pkg(pkg_name), branches = refs)
+  path_test_pkg <- local_package(pkg_name, branches = refs)
   # install refs, so ref[1] will be available outside benchmark_run_ref,
   # not modifying libpath permanently
-  path_touchstone <- path_touchstone_script(path_test_pkg)
+  path_touchstone <- path_touchstone_script()
   fs::dir_create(fs::path_dir(path_touchstone))
   refs_dput <- capture.output(dput(refs))
   writeLines(

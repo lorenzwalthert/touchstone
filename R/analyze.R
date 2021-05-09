@@ -31,21 +31,30 @@ benchmark_analyze <- function(benchmark, refs) {
 benchmark_verbalize <- function(benchmark, timings, refs) {
   tbl <- timings %>%
     dplyr::group_by(.data$ref) %>%
-    dplyr::summarise(m = mean(.data$elapsed)) %>%
-    tibble::deframe()
-  if (length(tbl) > 2) {
+    dplyr::summarise(
+      mean = mean(.data$elapsed),
+      sd = stats::sd(.data$elapsed)
+    ) %>%
+    dplyr::mutate(dplyr::across(tidyselect::vars_select_helpers$where(is.numeric), round, 2)) %>%
+    dplyr::inner_join(tibble::tibble(ref = refs), ., by = "ref")
+
+
+  if (nrow(tbl) > 2) {
     rlang::abort("Benchmarks with more than two `refs` cannot be verbalized.")
   }
-  diff_percent <- round(100 * (tbl[refs[2]] - tbl[refs[1]]) / tbl[refs[1]], 1)
+  diff_percent <- round(100 * (tbl$mean[2] - tbl$mean[1]) / tbl$mean[1], 1)
+  sign <- ifelse(diff_percent > 0, "+", "")
+  text <- glue::glue(
+    "{benchmark} ({tbl$ref[2]} -> {tbl$ref[1]}): ",
+    "{tbl$mean[1]} (\U00B1 {tbl$sd[1]}) -> {tbl$mean[2]} ",
+    "(\U00B1 {tbl$sd[2]}): ({sign}{diff_percent}%)"
+  )
   cat(
-    glue::glue(
-      "{benchmark}: {round(tbl[refs[1]], 2)} -> {round(tbl[refs[2]], 2)} ",
-      "({diff_percent}%)"
-    ),
-    fill = TRUE,
-    file = fs::path(dir_touchstone(), "pr-comment/info.txt"),
+    text,
+    fill = TRUE, file = fs::path(dir_touchstone(), "pr-comment/info.txt"),
     append = TRUE
   )
+  text
 }
 
 #' @param timing a benchmark read with [benchmark_read()], column `name` must

@@ -24,35 +24,27 @@ test_that("touchstone dir can be removed", {
 })
 
 test_that("can checkout locally", {
-  local_test_setup()
+  local_package()
+  old_branch <- gert::git_branch()
   new_branch <- "ewjlkj"
-  tmp <- withr::local_tempdir()
-  fs::dir_create(tmp)
-  fs::file_touch(fs::path(tmp, ".gitignore"))
-  gert::git_init(tmp)
-  gert::git_config_set("user.name", "GitHub Actions", repo = tmp)
-  gert::git_config_set("user.email", "actions@github.com", repo = tmp)
-  gert::git_add(".gitignore", repo = tmp)
-  gert::git_commit("initial", repo = tmp)
-  gert::git_branch_create(new_branch, repo = tmp, checkout = FALSE)
-  gert::git_branch_list(repo = tmp)
-  test_f <- function(tmp, new_branch) {
-    local_git_checkout(new_branch, tmp)
-    expect_equal(gert::git_branch(tmp), new_branch)
+  gert::git_branch_create(new_branch, checkout = FALSE)
+  gert::git_branch_list()
+  test_f <- function(new_branch) {
+    local_git_checkout(new_branch)
+    expect_equal(gert::git_branch(), new_branch)
   }
-  test_f(tmp = tmp, new_branch = new_branch)
-  expect_equal(gert::git_branch(tmp), "master")
+  test_f(new_branch = new_branch)
+  expect_equal(gert::git_branch(), old_branch)
 })
 
 test_that("can remove touchstone libpaths", {
-  pkg_name <- "flower.3"
   refs <- c("devel", "main")
   if (is_windows()) {
-    local_test_setup(use_tempdir = FALSE, pkg_name)
-  } else {
-    local_test_setup()
+    # cannot have touchstone library in temp, as lib path comparison becomes
+    # unfeasible due to short/name notation
+    withr::local_options(dir_touchstone = fs::path_file(tempfile()))
   }
-  path_pkg <- local_package(path = path_temp_pkg(pkg_name))
+  path_pkg <- local_package(setwd = !is_windows())
   new_libpaths <- refs_install(refs, path_pkg, install_dependencies = FALSE)
 
   withr::local_libpaths(new_libpaths)
@@ -65,15 +57,4 @@ test_that("can remove touchstone libpaths", {
   )
 
   expect_equal(after_removal, .libPaths())
-})
-
-
-test_that("local test setup changes wd to temp dir", {
-  previous_wd <- getwd()
-  simulate_wd_change <- function(previous_wd) {
-    local_tempdir_setwd()
-    expect_false(getwd() == previous_wd)
-  }
-  simulate_wd_change(previous_wd)
-  expect_equal(getwd(), previous_wd)
 })

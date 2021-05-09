@@ -2,25 +2,32 @@
 # R specific hooks: https://github.com/lorenzwalthert/precommit
 repos:
 -   repo: https://github.com/lorenzwalthert/precommit
-    rev: 80c13e3ddc4ad0e766a0381598bad15573949a54
+    rev: d70f4c563cbf818424ecc42703aaddb7f62d3faf
     hooks:
     -   id: style-files
         args: [--style_pkg=styler, --style_fun=tidyverse_style]
     -   id: roxygenize
         additional_dependencies:
         # roxygen requires loading pkg -> add dependencies from DESCRIPTION
-        - bench
-        - callr
-        - fs
-        - gert
-        - magrittr
-        - purrr
-        - remotes
-        - rlang
-        - tibble
-        - usethis
-        - vctrs
-        - r-lib/pkgapi
+        -    bench@1.1.1
+        -    callr@3.7.0
+        -    digest@0.6.27
+        -    dplyr@1.0.5
+        -    fs@1.5.0
+        -    gert@1.3.0
+        -    ggplot2@3.3.3
+        -    glue@1.4.2
+        -    magrittr@2.0.1
+        -    purrr@0.3.4
+        -    remotes@2.3.0
+        # -    r-lib/pkgapi@35226e9
+        -    rlang@0.4.11
+        -    testthat@3.0.2
+        -    tibble@3.1.1
+        -    tidyselect@1.1.1
+        -    usethis@2.0.1
+        -    vctrs@0.3.8
+        -    withr@2.4.2
     # codemeta must be above use-tidy-description when both are used
     # -   id: codemeta-description-updated
     -   id: use-tidy-description

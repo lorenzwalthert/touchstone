@@ -70,15 +70,6 @@ local_git_checkout <- function(branch,
   usethis::ui_done("Temporarily checked out branch {branch}.")
 }
 
-#' Temporarily set the working directory to a temp directory
-#' @keywords internal
-local_tempdir_setwd <- function(.local_envir = parent.frame()) {
-  withr::local_dir(
-    withr::local_tempdir(.local_envir = .local_envir),
-    .local_envir = .local_envir
-  )
-}
-
 
 #' Temporarily remove all touchstone libraries from the path
 #'
@@ -98,7 +89,7 @@ local_tempdir_setwd <- function(.local_envir = parent.frame()) {
 local_without_touchstone_lib <- function(path_pkg = ".", envir = parent.frame()) {
   all <- normalizePath(.libPaths())
   is_touchstone <- fs::path_has_parent(
-    all, normalizePath(fs::path_abs(dir_touchstone()))
+    all, normalizePath(fs::path_abs(dir_touchstone()), mustWork = FALSE)
   )
   all_but_touchstone <- all[!is_touchstone]
   withr::local_libpaths(all_but_touchstone, .local_envir = envir)
