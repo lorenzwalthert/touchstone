@@ -112,8 +112,20 @@
     <p>Initiate touchstone</p>
     </div>
 
-    <pre class="usage"><span class='fu'>use_touchstone</span><span class='op'>(</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>use_touchstone</span><span class='op'>(</span>cancel <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span></pre>
 
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
+    <table class="ref-arguments">
+    <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>cancel</th>
+      <td><p>Whether or not to also introduce a GitHub Actions
+<a href='https://github.com/marketplace/actions/cancel-workflow-action'>cancel workflow</a>
+for canceling old runs when new ones are started. This makes sense because
+touchstone runs can take a lot of time and compute resources and you usually
+don't care about old runs when you pushed new code.</p></td>
+    </tr>
+    </table>
 
 
   </div>
