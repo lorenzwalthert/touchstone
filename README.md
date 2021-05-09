@@ -26,16 +26,17 @@ devtools::install_github("lorenzwalthert/touchstone")
 
 ## Conceptual
 
-For your PR branch and the target branch:
+For your PR branch and the target branch, {touchstone} will:
 
 -   build the repo.
 
--   define code you want to benchmark, run it multiple times.
+-   run the code you want to benchmark, multiple times, in random order.
 
 -   Create c/p ready text (because commenting on the PR is not so easy
-    to implement) that you can manually insert in the PR description and
-    plots that show how the distribution of the timings for both
-    branches.
+    to implement) that you can manually insert in the PR description
+
+-   Visualizations as Github Action artifacts that show how the
+    distribution of the timings for both branches.
 
 ![](man/figures/screenshot-pr-comment.png)
 
@@ -121,4 +122,4 @@ Actions workflow.
 This package is experimental. It is currently used in
 [styler](https://github.com/r-lib/styler/blob/master/.github/workflows/benchmarking.yaml).
 We’ll further reduce boilerplate code required in the GitHub Actions
-workflow file and move it to `{touchstone}`.
+workflow file and move it to {touchstone}.
