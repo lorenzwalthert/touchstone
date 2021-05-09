@@ -46,7 +46,7 @@ benchmark_verbalize <- function(benchmark, timings, refs) {
   sign <- ifelse(diff_percent > 0, "+", "")
   text <- glue::glue(
     "{benchmark} ({tbl$ref[2]} -> {tbl$ref[1]}): ",
-    "{tbl$mean[1]} (\U00B1 {tbl$sd[1]})-> {tbl$mean[2]} ",
+    "{tbl$mean[1]} (\U00B1 {tbl$sd[1]}) -> {tbl$mean[2]} ",
     "(\U00B1 {tbl$sd[2]}): ({sign}{diff_percent}%)"
   )
   cat(

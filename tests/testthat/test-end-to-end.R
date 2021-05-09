@@ -22,7 +22,6 @@ test_that("end to end run", {
     refs = branches,
     n = 2
   )
-  browser()
   out <- benchmark_read("bliblablup", branches) %>%
     dplyr::group_by(.data$ref) %>%
     dplyr::summarise(mean = mean(elapsed), sd = sd(elapsed))
@@ -33,6 +32,6 @@ test_that("end to end run", {
   out <- benchmark_analyze("bliblablup", branches)
   expect_match(
     out,
-    glue::glue("bliblablup \\({branches[2]} -> {branches[1]}\\): 0.42 \\(± .+\\)-> 0.83 \\(± .*\\): \\(+.*%\\)")
+    glue::glue("bliblablup \\({branches[2]} -> {branches[1]}\\): 0.42 \\(± .+\\) -> 0.83 \\(± .*\\): \\(+.*%\\)")
   )
 })
