@@ -45,8 +45,10 @@ exprs_eval <- function(...) {
 #' random.
 #' @keywords internal
 ref_upsample <- function(ref, n = 20) {
-  purrr::rerun(n, sample(unique(ref))) %>%
-    unlist()
+  purrr::map_dfr(
+    rlang::seq2(1, n),
+    ~ tibble::tibble(block = .x, ref = sample(unique(ref)))
+  )
 }
 
 ensure_dir <- function(...) {
@@ -58,6 +60,7 @@ ensure_dir <- function(...) {
 schema_disk <- function() {
   c(
     elapsed = "numeric", iteration = "integer", ref = "character",
+    block = "integer",
     name = "character"
   )
 }
