@@ -4,7 +4,14 @@
 \alias{benchmark_write}
 \title{Write a benchmark}
 \usage{
-benchmark_write(benchmark, name, ref, iteration = NA, append = TRUE)
+benchmark_write(
+  benchmark,
+  name,
+  ref,
+  block = NA,
+  iteration = NA,
+  append = TRUE
+)
 }
 \arguments{
 \item{benchmark}{The result of \code{\link[bench:mark]{bench::mark()}}, with \code{iterations = 1}.}
@@ -14,8 +21,11 @@ benchmark_write(benchmark, name, ref, iteration = NA, append = TRUE)
 \item{ref}{A character vector of length one to indicate the git ref (i.e.
 commit, tag, branch etc) of the benchmarking.}
 
+\item{block}{All refs appear once in a block.}
+
 \item{iteration}{An integer indicating to which iteration the benchmark
-refers to.}
+refers to. Multiple iterations within a block always benchmark the same
+\code{ref}.}
 
 \item{append}{Whether to append the result to the file or not.}
 }

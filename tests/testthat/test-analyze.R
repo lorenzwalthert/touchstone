@@ -6,7 +6,8 @@ test_that("can analyze results", {
     "",
     xx1 = "Sys.sleep(runif(1, 0, 1e-5))",
     n = 5,
-    ref = branches[2]
+    ref = branches[2],
+    block = 1
   )
   benchmarks_analyze(branches[2])
   expect_match(
