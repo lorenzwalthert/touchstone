@@ -9,7 +9,10 @@ test_that("can analyze results", {
     ref = branches[2],
     block = 1
   )
-  mockery::stub(benchmark_verbalize, "confint_relative_get", "[x.xx%, y.yy%]", depth = 2)
+  mockery::stub(
+    touchstone:::benchmark_verbalize, "confint_relative_get", "[x.xx%, y.yy%]",
+    depth = 2
+  )
   benchmarks_analyze(branches[2])
   expect_match(
     readLines("touchstone/pr-comment/info.txt"),
