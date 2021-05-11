@@ -92,6 +92,7 @@ tidyselect
 ubuntu
 usethis
 vctrs
+VignetteBuilder
 walthert
 Walthert
 withr
