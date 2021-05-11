@@ -31,6 +31,7 @@ Suggests:
     ggplot2,
     glue,
     knitr,
+    mockery,
     testthat (>= 3.0.0),
     withr
 VignetteBuilder: 
