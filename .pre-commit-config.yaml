@@ -2,7 +2,7 @@
 # R specific hooks: https://github.com/lorenzwalthert/precommit
 repos:
 -   repo: https://github.com/lorenzwalthert/precommit
-    rev: d70f4c563cbf818424ecc42703aaddb7f62d3faf
+    rev: a632da39a23e806f06261ebf0cf294e1b70428f2
     hooks:
     -   id: style-files
         args: [--style_pkg=styler, --style_fun=tidyverse_style]
@@ -67,7 +67,7 @@ repos:
           tests/testthat/test-prepare\.R
           )$
 -   repo: https://github.com/pre-commit/pre-commit-hooks
-    rev: v3.3.0
+    rev: 11a996eec600aa64d1cc12859d9bffbc6422836c
     hooks:
     -   id: check-added-large-files
         args: ['--maxkb=200']
