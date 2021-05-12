@@ -10,7 +10,7 @@ test_that("can analyze results", {
     block = 1
   )
   mockery::stub(
-    touchstone:::benchmark_verbalize, "confint_relative_get", "[x.xx%, y.yy%]",
+    benchmark_verbalize, "confint_relative_get", "[x.xx%, y.yy%]",
     depth = 2
   )
   benchmarks_analyze(branches[2])
