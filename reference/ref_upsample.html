@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Write a benchmark — benchmark_write • touchstone</title>
+<title>Samples ref — ref_upsample • touchstone</title>
 
 
 <!-- jquery -->
@@ -39,8 +39,12 @@
 
 
 
-<meta property="og:title" content="Write a benchmark — benchmark_write" />
-<meta property="og:description" content="Write a benchmark" />
+<meta property="og:title" content="Samples ref — ref_upsample" />
+<meta property="og:description" content="A block is a permutation of all unique elements in ref. Then, we sample
+n blocks. This is better than repeating one sample a certain number of
+times because if compute resources steadily increase, the first sample will
+always perform worse than the second, so the order within the blocks must be
+random." />
 
 
 
@@ -103,55 +107,21 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Write a benchmark</h1>
+    <h1>Samples <code>ref</code></h1>
     
-    <div class="hidden name"><code>benchmark_write.Rd</code></div>
+    <div class="hidden name"><code>ref_upsample.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Write a benchmark</p>
+    <p>A block is a permutation of all unique elements in <code>ref</code>. Then, we sample
+<code>n</code> blocks. This is better than repeating one sample a certain number of
+times because if compute resources steadily increase, the first sample will
+always perform worse than the second, so the order within the blocks must be
+random.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>benchmark_write</span><span class='op'>(</span>
-  <span class='va'>benchmark</span>,
-  <span class='va'>name</span>,
-  <span class='va'>ref</span>,
-  block <span class='op'>=</span> <span class='cn'>NA</span>,
-  iteration <span class='op'>=</span> <span class='cn'>NA</span>,
-  append <span class='op'>=</span> <span class='cn'>TRUE</span>
-<span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>ref_upsample</span><span class='op'>(</span><span class='va'>ref</span>, n <span class='op'>=</span> <span class='fl'>20</span><span class='op'>)</span></pre>
 
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
-    <table class="ref-arguments">
-    <colgroup><col class="name" /><col class="desc" /></colgroup>
-    <tr>
-      <th>benchmark</th>
-      <td><p>The result of <code><a href='https://rdrr.io/pkg/bench/man/mark.html'>bench::mark()</a></code>, with <code>iterations = 1</code>.</p></td>
-    </tr>
-    <tr>
-      <th>name</th>
-      <td><p>The name of the benchmark.</p></td>
-    </tr>
-    <tr>
-      <th>ref</th>
-      <td><p>A character vector of length one to indicate the git ref (i.e.
-commit, tag, branch etc) of the benchmarking.</p></td>
-    </tr>
-    <tr>
-      <th>block</th>
-      <td><p>All refs appear once in a block.</p></td>
-    </tr>
-    <tr>
-      <th>iteration</th>
-      <td><p>An integer indicating to which iteration the benchmark
-refers to. Multiple iterations within a block always benchmark the same
-<code>ref</code>.</p></td>
-    </tr>
-    <tr>
-      <th>append</th>
-      <td><p>Whether to append the result to the file or not.</p></td>
-    </tr>
-    </table>
 
 
   </div>

@@ -116,6 +116,7 @@
   <span class='va'>expr_before_benchmark</span>,
   <span class='va'>...</span>,
   <span class='va'>ref</span>,
+  <span class='va'>block</span>,
   n <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/options.html'>getOption</a></span><span class='op'>(</span><span class='st'>"touchstone.n_iterations"</span>, <span class='fl'>1</span><span class='op'>)</span>
 <span class='op'>)</span></pre>
 
@@ -136,6 +137,10 @@ be evaluated with <code><a href='exprs_eval.html'>exprs_eval()</a></code>.</p></
       <th>ref</th>
       <td><p>A character vector of length one to indicate the git ref (i.e.
 commit, tag, branch etc) of the benchmarking.</p></td>
+    </tr>
+    <tr>
+      <th>block</th>
+      <td><p>All refs appear once in a block.</p></td>
     </tr>
     <tr>
       <th>n</th>

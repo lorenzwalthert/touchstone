@@ -112,7 +112,7 @@
     <p>Checkout a branch from a repo and run an iteration</p>
     </div>
 
-    <pre class="usage"><span class='fu'>benchmark_run_ref_impl</span><span class='op'>(</span><span class='va'>ref</span>, <span class='va'>expr_before_benchmark</span>, <span class='va'>...</span>, <span class='va'>path_pkg</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>benchmark_run_ref_impl</span><span class='op'>(</span><span class='va'>ref</span>, <span class='va'>block</span>, <span class='va'>expr_before_benchmark</span>, <span class='va'>...</span>, <span class='va'>path_pkg</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -121,6 +121,10 @@
       <th>ref</th>
       <td><p>A character vector of length one to indicate the git ref (i.e.
 commit, tag, branch etc) of the benchmarking.</p></td>
+    </tr>
+    <tr>
+      <th>block</th>
+      <td><p>All refs appear once in a block.</p></td>
     </tr>
     <tr>
       <th>expr_before_benchmark</th>
