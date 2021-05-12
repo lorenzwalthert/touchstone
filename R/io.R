@@ -5,10 +5,12 @@
 #' @param append Whether to append the result to the file or not.
 #' @param ref A character vector of length one to indicate the git ref (i.e.
 #'   commit, tag, branch etc) of the benchmarking.
+#' @param block All refs appear once in a block.
 #' @param iteration An integer indicating to which iteration the benchmark
-#'   refers to.
+#'   refers to. Multiple iterations within a block always benchmark the same
+#'   `ref`.
 #' @export
-benchmark_write <- function(benchmark, name, ref, iteration = NA, append = TRUE) {
+benchmark_write <- function(benchmark, name, ref, block = NA, iteration = NA, append = TRUE) {
   if (benchmark$n_itr > 1) {
     rlang::abort("This package only supports benchmarks with `bench::mark(..., iterations = 1`.")
   }
@@ -19,6 +21,7 @@ benchmark_write <- function(benchmark, name, ref, iteration = NA, append = TRUE)
     elapsed = as.numeric(benchmark$median),
     iteration = iteration,
     ref = enc2utf8(ref),
+    block = block,
     name = name
   ) %>%
     benchmark_write_impl(path = path, append = append)

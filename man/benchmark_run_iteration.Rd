@@ -8,6 +8,7 @@ benchmark_run_iteration(
   expr_before_benchmark,
   ...,
   ref,
+  block,
   n = getOption("touchstone.n_iterations", 1)
 )
 }
@@ -20,6 +21,8 @@ be evaluated with \code{\link[=exprs_eval]{exprs_eval()}}.}
 
 \item{ref}{A character vector of length one to indicate the git ref (i.e.
 commit, tag, branch etc) of the benchmarking.}
+
+\item{block}{All refs appear once in a block.}
 
 \item{n}{Number of iterations to run a benchmark within an iteration.}
 }

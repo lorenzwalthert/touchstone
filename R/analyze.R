@@ -38,16 +38,15 @@ benchmark_verbalize <- function(benchmark, timings, refs) {
     dplyr::mutate(dplyr::across(tidyselect::vars_select_helpers$where(is.numeric), round, 2)) %>%
     dplyr::inner_join(tibble::tibble(ref = refs), ., by = "ref")
 
-
   if (nrow(tbl) > 2) {
     rlang::abort("Benchmarks with more than two `refs` cannot be verbalized.")
   }
-  diff_percent <- round(100 * (tbl$mean[2] - tbl$mean[1]) / tbl$mean[1], 1)
-  sign <- ifelse(diff_percent > 0, "+", "")
+  confint <- confint_relative_get(timings, refs, tbl$mean[1])
+
   text <- glue::glue(
-    "{benchmark} ({tbl$ref[2]} -> {tbl$ref[1]}): ",
-    "{tbl$mean[1]} (\U00B1 {tbl$sd[1]}) -> {tbl$mean[2]} ",
-    "(\U00B1 {tbl$sd[2]}): ({sign}{diff_percent}%)"
+    "{benchmark} (merge {tbl$ref[2]} into {tbl$ref[1]}): ",
+    "{tbl$mean[1]} -> {tbl$mean[2]} ",
+    "{confint}"
   )
   cat(
     text,
@@ -56,6 +55,20 @@ benchmark_verbalize <- function(benchmark, timings, refs) {
   )
   text
 }
+
+set_sign <- function(x) {
+  purrr::map_chr(x, ~ paste0(ifelse(.x > 0, "+", ""), .x))
+}
+
+confint_relative_get <- function(timings, refs, reference) {
+  timings_with_factors <- timings %>%
+    dplyr::mutate(, dplyr::across(c(ref, block), as.factor))
+  fit <- aov(elapsed ~ block + ref, data = timings_with_factors)
+  var <- paste0("ref", refs[2])
+  confint <- confint(fit, var)
+  paste0("[", paste0(set_sign(round(100 * confint / reference, 2)), collapse = "%, "), "%]")
+}
+
 
 #' @param timing a benchmark read with [benchmark_read()], column `name` must
 #'   only contain one unique value.

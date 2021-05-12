@@ -32,6 +32,6 @@ test_that("end to end run", {
   out <- benchmark_analyze("bliblablup", branches)
   expect_match(
     out,
-    glue::glue("bliblablup \\({branches[2]} -> {branches[1]}\\): .* \\(± .+\\) -> .* \\(± .*\\): \\(+.*%\\)")
+    glue::glue("bliblablup \\(merge {branches[2]} into {branches[1]}\\): .* -> .*\\[.*%, .*\\]")
   )
 })

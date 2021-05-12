@@ -36,9 +36,19 @@ exprs_eval <- function(...) {
   eval(parse(text = unlist(rlang::list2(...))))
 }
 
+#' Samples `ref`
+#'
+#' A block is a permutation of all unique elements in `ref`. Then, we sample
+#' `n` blocks. This is better than repeating one sample a certain number of
+#' times because if compute resources steadily increase, the first sample will
+#' always perform worse than the second, so the order within the blocks must be
+#' random.
+#' @keywords internal
 ref_upsample <- function(ref, n = 20) {
-  ref <- sample(unique(ref))
-  rep(ref, length.out = n)
+  purrr::map_dfr(
+    rlang::seq2(1, n),
+    ~ tibble::tibble(block = .x, ref = sample(unique(ref)))
+  )
 }
 
 ensure_dir <- function(...) {
@@ -50,6 +60,7 @@ ensure_dir <- function(...) {
 schema_disk <- function() {
   c(
     elapsed = "numeric", iteration = "integer", ref = "character",
+    block = "integer",
     name = "character"
   )
 }

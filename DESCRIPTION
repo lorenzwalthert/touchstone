@@ -18,6 +18,7 @@ Imports:
     fs,
     gert,
     magrittr,
+    mockery (>= 0.4.2.9000),
     purrr,
     remotes,
     rlang,
@@ -35,6 +36,8 @@ Suggests:
     withr
 VignetteBuilder: 
     knitr
+Remotes: 
+    r-lib/mockery
 Config/testthat/edition: 3
 Config/testthat/parallel: true
 Encoding: UTF-8
