@@ -8,22 +8,33 @@
 #'   `touchstone/pr-comment/info.txt` for every registered benchmarking
 #'   expression.
 #' @param refs The names of the branches for which analysis should be created.
+#' @param ci The confidence level, defaults to 95%.
 #' @export
 benchmarks_analyze <- function(refs = c(
                                  Sys.getenv("GITHUB_BASE_REF", abort_missing_ref()),
                                  Sys.getenv("GITHUB_HEAD_REF", abort_missing_ref())
-                               )) {
-  purrr::walk(benchmark_ls(), benchmark_analyze, refs = refs)
+                               ),
+                               ci = 0.95) {
+  paste0(
+    "This is how benchmark results would change (along with a ", 100 * ci,
+    "% confience interval in relative change) if ",
+    system2("git", c("rev-parse", "HEAD"), stdout = TRUE),
+    " and ancestors are merged into ", refs[1], ":"
+  ) %>%
+    writeLines(fs::path(dir_touchstone(), "pr-comment/info.txt"))
+
+  purrr::walk(benchmark_ls(), benchmark_analyze, refs = refs, ci = ci)
 }
 
 #' @importFrom rlang .data
 benchmark_analyze <- function(benchmark, refs = c(
                                 Sys.getenv("GITHUB_BASE_REF", abort_missing_ref()),
                                 Sys.getenv("GITHUB_HEAD_REF", abort_missing_ref())
-                              )) {
+                              ),
+                              ci = 0.95) {
   timings <- benchmark_read(benchmark, refs)
   benchmark_plot(benchmark, timings)
-  benchmark_verbalize(benchmark, timings, refs)
+  benchmark_verbalize(benchmark, timings = timings, refs = refs, ci = ci)
 }
 
 #' Create nice text from benchmarks
@@ -31,7 +42,7 @@ benchmark_analyze <- function(benchmark, refs = c(
 #' `refs` must be passed because the order is relevant.
 #' @inheritParams benchmark_plot
 #' @keywords internal
-benchmark_verbalize <- function(benchmark, timings, refs) {
+benchmark_verbalize <- function(benchmark, timings, refs, ci) {
   tbl <- timings %>%
     dplyr::group_by(.data$ref) %>%
     dplyr::summarise(
@@ -44,7 +55,7 @@ benchmark_verbalize <- function(benchmark, timings, refs) {
   if (nrow(tbl) > 2) {
     rlang::abort("Benchmarks with more than two `refs` cannot be verbalized.")
   }
-  confint <- confint_relative_get(timings, refs, tbl$mean[1])
+  confint <- confint_relative_get(timings, refs, tbl$mean[1], ci = ci)
 
   text <- glue::glue(
     "* {benchmark}: {tbl$mean[1]}s -> {tbl$mean[2]}s {confint}"
@@ -61,14 +72,14 @@ set_sign <- function(x) {
   purrr::map_chr(x, ~ paste0(ifelse(.x > 0, "+", ""), .x))
 }
 
-confint_relative_get <- function(timings, refs, reference) {
+confint_relative_get <- function(timings, refs, reference, ci) {
   timings_with_factors <- timings %>%
     dplyr::mutate(
       block = factor(.data$block), ref = factor(.data$ref, levels = refs)
     )
   fit <- aov(elapsed ~ block + ref, data = timings_with_factors)
   var <- paste0("ref", refs[2])
-  confint <- confint(fit, var)
+  confint <- confint(fit, var, level = ci)
   paste0("[", paste0(set_sign(round(100 * confint / reference, 2)), collapse = "%, "), "%]")
 }
 

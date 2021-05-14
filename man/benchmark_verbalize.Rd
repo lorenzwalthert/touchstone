@@ -4,7 +4,7 @@
 \alias{benchmark_verbalize}
 \title{Create nice text from benchmarks}
 \usage{
-benchmark_verbalize(benchmark, timings, refs)
+benchmark_verbalize(benchmark, timings, refs, ci)
 }
 \description{
 \code{refs} must be passed because the order is relevant.
