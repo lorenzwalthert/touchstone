@@ -63,6 +63,7 @@ Rds
 repo
 RHUB
 rlang
+rmarkdown
 roclet
 roclets
 roxygen
