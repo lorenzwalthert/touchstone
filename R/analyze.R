@@ -15,11 +15,11 @@ benchmarks_analyze <- function(refs = c(
                                  Sys.getenv("GITHUB_HEAD_REF", abort_missing_ref())
                                ),
                                ci = 0.95) {
-  glue::glue(
+  paste0(
     "This is how benchmark results would change (along with a ", 100 * ci,
     "% confience interval in relative change) if ",
     system2("git", c("rev-parse", "HEAD"), stdout = TRUE),
-    " and ancestors are merged into ", ref, ":"
+    " and ancestors are merged into ", refs[1], ":"
   ) %>%
     writeLines(fs::path(dir_touchstone(), "pr-comment/info.txt"))
 
