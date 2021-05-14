@@ -59,7 +59,12 @@ benchmark_run_iteration <- function(expr_before_benchmark,
 #'  * runs setup code `exp_before_ref`.
 #'  * benchmarks `expr_to_benchmark` and writes them to disk.
 #'
+#' @return
 #' Returns all timings.
+#' @section Caution:
+#' This function will perform various git operations that affect the state of
+#' the directory it is ran in, in particular different branches will be checked
+#' out. Ensure a clean git working directory before invocation.
 #' @export
 benchmark_run_ref <- function(expr_before_benchmark,
                               ...,
