@@ -32,7 +32,6 @@ Suggests:
     ggplot2,
     glue,
     knitr,
-    markdown,
     rmarkdown,
     testthat (>= 3.0.0),
     withr
