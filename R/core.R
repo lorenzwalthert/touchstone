@@ -6,7 +6,7 @@
 #' @param n Number of iterations to run a benchmark within an iteration.
 #' @inheritParams benchmark_write
 #' @importFrom tibble lst tibble
-#' @export
+#' @keywords internal
 benchmark_run_iteration <- function(expr_before_benchmark,
                                     ...,
                                     ref,
@@ -69,11 +69,12 @@ benchmark_run_iteration <- function(expr_before_benchmark,
 benchmark_run_ref <- function(expr_before_benchmark,
                               ...,
                               refs = c(
-                                Sys.getenv("GITHUB_BASE_REF"),
-                                Sys.getenv("GITHUB_HEAD_REF")
+                                Sys.getenv("GITHUB_BASE_REF", abort_missing_ref()),
+                                Sys.getenv("GITHUB_HEAD_REF", abort_missing_ref())
                               ),
                               n = 100,
                               path_pkg = ".") {
+  force(refs)
   # touchstone libraries must be removed from the path temporarily
   # and the one to benchmark will be added in benchmark_run_ref_impl()
   local_without_touchstone_lib()

@@ -40,3 +40,4 @@ Other testers:
 \code{\link{local_clean_touchstone}()}
 }
 \concept{testers}
+\keyword{internal}

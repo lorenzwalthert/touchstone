@@ -4,14 +4,19 @@
 \alias{with_touchstone_lib}
 \title{Sources a script}
 \usage{
-with_touchstone_lib(path, ref = Sys.getenv("GITHUB_HEAD_REF"))
+with_touchstone_lib(
+  path,
+  ref = Sys.getenv("GITHUB_HEAD_REF", abort_missing_ref())
+)
 }
 \arguments{
 \item{path}{The script to run. It must fulfill the requirements of a
 \link{touchstone_script}.}
 
-\item{ref}{The ref that corresponds to the library that should be prepended
-to the library path when the script at \code{path} is executed. Note that during
+\item{ref}{The branch that corresponds to the library that should be prepended
+to the library path when the script at \code{path} is executed, e.g. because
+you need to call a utility function from the benchmarked package before you
+run the benchmark with \code{\link[=benchmark_run_ref]{benchmark_run_ref()}}. Note that during
 a benchmark run with \code{\link[=benchmark_run_ref]{benchmark_run_ref()}}, all touchstone library paths
 are removed and the library path corresponding to the argument \code{ref}
 in \code{\link[=benchmark_run_ref]{benchmark_run_ref()}} is added.}

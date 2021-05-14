@@ -2,7 +2,6 @@
 
 export(benchmark_ls)
 export(benchmark_read)
-export(benchmark_run_iteration)
 export(benchmark_run_ref)
 export(benchmark_write)
 export(benchmarks_analyze)

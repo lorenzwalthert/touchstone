@@ -11,6 +11,19 @@ dir_touchstone <- function() {
   getOption("touchstone.dir", "touchstone")
 }
 
+#' Abort if relevant environment variables are not set
+#'
+#' This function is only exported because it is called when environment
+#' variables are not used.
+#'  @export
+abort_missing_ref <- function() {
+  rlang::abort(paste0(
+    "If you don't specify the argument `refs`, you must set the environment ",
+    "variables `GITHUB_BASE_REF` and `GITHUB_HEAD_REF` to tell {touchstone} ",
+    "which branches you want to benchmark against each other, see ",
+    "help(with_touchstone_lib, package = 'touchstone')."
+  ))
+}
 
 path_touchstone_script <- function() {
   fs::path(dir_touchstone(), "script.R")

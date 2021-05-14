@@ -10,14 +10,17 @@
 #' @param refs The names of the branches for which analysis should be created.
 #' @export
 benchmarks_analyze <- function(refs = c(
-                                 Sys.getenv("GITHUB_BASE_REF"),
-                                 Sys.getenv("GITHUB_HEAD_REF")
+                                 Sys.getenv("GITHUB_BASE_REF", abort_missing_ref()),
+                                 Sys.getenv("GITHUB_HEAD_REF", abort_missing_ref())
                                )) {
   purrr::walk(benchmark_ls(), benchmark_analyze, refs = refs)
 }
 
 #' @importFrom rlang .data
-benchmark_analyze <- function(benchmark, refs) {
+benchmark_analyze <- function(benchmark, refs = c(
+                                Sys.getenv("GITHUB_BASE_REF", abort_missing_ref()),
+                                Sys.getenv("GITHUB_HEAD_REF", abort_missing_ref())
+                              )) {
   timings <- benchmark_read(benchmark, refs)
   benchmark_plot(benchmark, timings)
   benchmark_verbalize(benchmark, timings, refs)

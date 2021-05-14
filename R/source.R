@@ -7,11 +7,23 @@
 #'
 #' @param path The script to run. It must fulfill the requirements of a
 #'   [touchstone_script].
-#' @param ref The ref that corresponds to the library that should be prepended
-#'   to the library path when the script at `path` is executed. Note that during
+#' @param ref The branch that corresponds to the library that should be prepended
+#'   to the library path when the script at `path` is executed, e.g. because
+#'   you need to call a utility function from the benchmarked package before you
+#'   run the benchmark with [benchmark_run_ref()]. Note that during
 #'   a benchmark run with [benchmark_run_ref()], all touchstone library paths
 #'   are removed and the library path corresponding to the argument `ref`
 #'   in [benchmark_run_ref()] is added.
+#' @section How to run this interactively?
+#' In a GitHub Action workflow, the environment variables `GITHUB_BASE_REF` and
+#' `GITHUB_HEAD_REF` denote the target and source branch of the pull request -
+#' and these are default arguments in [benchmark_run_ref()] (and other functions
+#' you probably want to call in your benchmarking script) to determinate the
+#' branches to use. Hence, you must set these with [base::Sys.setenv()], e.g. if
+#' you want to benchmark the local branch `devel` against `main`
+#' ```
+#' Sys.setenv(GITHUB_BASE_REF = "main", GITHUB_HEAD_REF = "devel")
+#' ```
 #' @section Why this function?
 #' For isolation, it's not allowed to install the
 #' benchmarked package into the global library, as asserted with
@@ -21,7 +33,7 @@
 #' contains the installed benchmarked package, and temporarily remove it during
 #' benchmarking if another touchstone library is used.
 #' @export
-with_touchstone_lib <- function(path, ref = Sys.getenv("GITHUB_HEAD_REF")) {
+with_touchstone_lib <- function(path, ref = Sys.getenv("GITHUB_HEAD_REF", abort_missing_ref())) {
   lib <- libpath_touchstone(ref)
   fs::dir_create(lib)
   withr::local_libpaths(
