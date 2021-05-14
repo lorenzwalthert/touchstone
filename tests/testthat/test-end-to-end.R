@@ -14,7 +14,6 @@ test_that("end to end run", {
     gert::git_commit_all(
       glue::glue("setup branch {branch}.")
     )
-    refs_install(branch)
   }
   bm <- benchmark_run_ref(
     expr_before_benchmark = "source('R/core.R')",
