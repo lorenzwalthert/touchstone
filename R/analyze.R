@@ -6,7 +6,7 @@
 #' * Density plots for each element in `refs` are written to `touchstone/plots`.
 #' * A text explaining the speed diff is written to
 #'   `touchstone/pr-comment/info.txt` for every registered benchmarking
-#'   expression.
+#'   expression. See `vignette("inference", package = "touchstone")` for details.
 #' @param refs The names of the branches for which analysis should be created.
 #' @param ci The confidence level, defaults to 95%.
 #' @export

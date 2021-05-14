@@ -23,6 +23,6 @@ Creates two side effects:
 \item Density plots for each element in \code{refs} are written to \code{touchstone/plots}.
 \item A text explaining the speed diff is written to
 \code{touchstone/pr-comment/info.txt} for every registered benchmarking
-expression.
+expression. See \code{vignette("inference", package = "touchstone")} for details.
 }
 }
