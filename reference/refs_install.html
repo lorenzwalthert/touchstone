@@ -113,7 +113,8 @@
     </div>
 
     <pre class="usage"><span class='fu'>refs_install</span><span class='op'>(</span>
-  refs <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/Sys.getenv.html'>Sys.getenv</a></span><span class='op'>(</span><span class='st'>"GITHUB_BASE_REF"</span><span class='op'>)</span>, <span class='fu'><a href='https://rdrr.io/r/base/Sys.getenv.html'>Sys.getenv</a></span><span class='op'>(</span><span class='st'>"GITHUB_HEAD_REF"</span><span class='op'>)</span><span class='op'>)</span>,
+  refs <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/Sys.getenv.html'>Sys.getenv</a></span><span class='op'>(</span><span class='st'>"GITHUB_BASE_REF"</span>, <span class='fu'><a href='abort_missing_ref.html'>abort_missing_ref</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span>,
+    <span class='fu'><a href='https://rdrr.io/r/base/Sys.getenv.html'>Sys.getenv</a></span><span class='op'>(</span><span class='st'>"GITHUB_HEAD_REF"</span>, <span class='fu'><a href='abort_missing_ref.html'>abort_missing_ref</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span>,
   path_pkg <span class='op'>=</span> <span class='st'>"."</span>,
   install_dependencies <span class='op'>=</span> <span class='cn'>FALSE</span>
 <span class='op'>)</span></pre>

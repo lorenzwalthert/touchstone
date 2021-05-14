@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Run a benchmark for git refs — benchmark_run_ref • touchstone</title>
+<title>Abort if relevant environment variables are not set — abort_missing_ref • touchstone</title>
 
 
 <!-- jquery -->
@@ -39,8 +39,10 @@
 
 
 
-<meta property="og:title" content="Run a benchmark for git refs — benchmark_run_ref" />
-<meta property="og:description" content="Run a benchmark for git refs" />
+<meta property="og:title" content="Abort if relevant environment variables are not set — abort_missing_ref" />
+<meta property="og:description" content="This function is only exported because it is called when environment
+variables are not used.
+@export" />
 
 
 
@@ -103,74 +105,20 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Run a benchmark for git refs</h1>
+    <h1>Abort if relevant environment variables are not set</h1>
     
-    <div class="hidden name"><code>benchmark_run_ref.Rd</code></div>
+    <div class="hidden name"><code>abort_missing_ref.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Run a benchmark for git refs</p>
+    <p>This function is only exported because it is called when environment
+variables are not used.
+@export</p>
     </div>
 
-    <pre class="usage"><span class='fu'>benchmark_run_ref</span><span class='op'>(</span>
-  <span class='va'>expr_before_benchmark</span>,
-  <span class='va'>...</span>,
-  refs <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/Sys.getenv.html'>Sys.getenv</a></span><span class='op'>(</span><span class='st'>"GITHUB_BASE_REF"</span>, <span class='fu'><a href='abort_missing_ref.html'>abort_missing_ref</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span>,
-    <span class='fu'><a href='https://rdrr.io/r/base/Sys.getenv.html'>Sys.getenv</a></span><span class='op'>(</span><span class='st'>"GITHUB_HEAD_REF"</span>, <span class='fu'><a href='abort_missing_ref.html'>abort_missing_ref</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span>,
-  n <span class='op'>=</span> <span class='fl'>100</span>,
-  path_pkg <span class='op'>=</span> <span class='st'>"."</span>
-<span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>abort_missing_ref</span><span class='op'>(</span><span class='op'>)</span></pre>
 
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
-    <table class="ref-arguments">
-    <colgroup><col class="name" /><col class="desc" /></colgroup>
-    <tr>
-      <th>expr_before_benchmark</th>
-      <td><p>Character vector with code to run before
-the benchmark is ran, will be evaluated with <code><a href='exprs_eval.html'>exprs_eval()</a></code>.</p></td>
-    </tr>
-    <tr>
-      <th>...</th>
-      <td><p>Named character vector of length one with code to benchmark, will
-be evaluated with <code><a href='exprs_eval.html'>exprs_eval()</a></code>.</p></td>
-    </tr>
-    <tr>
-      <th>refs</th>
-      <td><p>Character vector with branch names to benchmark. The package
-must be built for each benchmarked branch beforehand with <code><a href='refs_install.html'>refs_install()</a></code>.
-The base ref is the target branch of the pull request in a workflow run,
-the head ref is the source branch of the pull request in a workflow run.</p></td>
-    </tr>
-    <tr>
-      <th>n</th>
-      <td><p>Number of times benchmarks should be run. Refers to the total of
-all <code>refs</code>.</p></td>
-    </tr>
-    <tr>
-      <th>path_pkg</th>
-      <td><p>The path to the repository to install.</p></td>
-    </tr>
-    </table>
 
-    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
-
-    <p>Returns all timings.</p>
-    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
-
-    <p>Runs the following loop <code>n</code> times:</p><ul>
-<li><p>removes all touchstone libraries from the library path, adding the one
-corresponding to <code>ref</code>.</p></li>
-<li><p>runs setup code <code>exp_before_ref</code>.</p></li>
-<li><p>benchmarks <code>expr_to_benchmark</code> and writes them to disk.</p></li>
-</ul>
-
-    <h2 class="hasAnchor" id="caution"><a class="anchor" href="#caution"></a>Caution</h2>
-
-    
-
-<p>This function will perform various git operations that affect the state of
-the directory it is ran in, in particular different branches will be checked
-out. Ensure a clean git working directory before invocation.</p>
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

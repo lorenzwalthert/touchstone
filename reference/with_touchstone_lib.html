@@ -118,7 +118,10 @@ git operations like checking out different branches to interfere with the
 script execution (as running the script changes itself through git checkout).</p>
     </div>
 
-    <pre class="usage"><span class='fu'>with_touchstone_lib</span><span class='op'>(</span><span class='va'>path</span>, ref <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/Sys.getenv.html'>Sys.getenv</a></span><span class='op'>(</span><span class='st'>"GITHUB_HEAD_REF"</span><span class='op'>)</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>with_touchstone_lib</span><span class='op'>(</span>
+  <span class='va'>path</span>,
+  ref <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/Sys.getenv.html'>Sys.getenv</a></span><span class='op'>(</span><span class='st'>"GITHUB_HEAD_REF"</span>, <span class='fu'><a href='abort_missing_ref.html'>abort_missing_ref</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span>
+<span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -130,8 +133,10 @@ script execution (as running the script changes itself through git checkout).</p
     </tr>
     <tr>
       <th>ref</th>
-      <td><p>The ref that corresponds to the library that should be prepended
-to the library path when the script at <code>path</code> is executed. Note that during
+      <td><p>The branch that corresponds to the library that should be prepended
+to the library path when the script at <code>path</code> is executed, e.g. because
+you need to call a utility function from the benchmarked package before you
+run the benchmark with <code><a href='benchmark_run_ref.html'>benchmark_run_ref()</a></code>. Note that during
 a benchmark run with <code><a href='benchmark_run_ref.html'>benchmark_run_ref()</a></code>, all touchstone library paths
 are removed and the library path corresponding to the argument <code>ref</code>
 in <code><a href='benchmark_run_ref.html'>benchmark_run_ref()</a></code> is added.</p></td>
