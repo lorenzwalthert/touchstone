@@ -29,3 +29,4 @@ commit, tag, branch etc) of the benchmarking.}
 \description{
 Run a benchmark iteration
 }
+\keyword{internal}

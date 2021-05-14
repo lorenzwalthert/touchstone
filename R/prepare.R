@@ -42,11 +42,12 @@ ref_install <- function(ref = "master",
 #' The global and touchstone library paths
 #' @export
 refs_install <- function(refs = c(
-                           Sys.getenv("GITHUB_BASE_REF"),
-                           Sys.getenv("GITHUB_HEAD_REF")
+                           Sys.getenv("GITHUB_BASE_REF", abort_missing_ref()),
+                           Sys.getenv("GITHUB_HEAD_REF", abort_missing_ref())
                          ),
                          path_pkg = ".",
                          install_dependencies = FALSE) {
+  force(refs)
   assert_no_global_installation(path_pkg)
   usethis::ui_info("Start installing branches into separate libraries.")
   libpaths <- purrr::map(refs, ref_install,

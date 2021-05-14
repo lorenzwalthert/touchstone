@@ -5,7 +5,8 @@
 \title{Turn raw benchmark results into text and figures}
 \usage{
 benchmarks_analyze(
-  refs = c(Sys.getenv("GITHUB_BASE_REF"), Sys.getenv("GITHUB_HEAD_REF"))
+  refs = c(Sys.getenv("GITHUB_BASE_REF", abort_missing_ref()),
+    Sys.getenv("GITHUB_HEAD_REF", abort_missing_ref()))
 )
 }
 \arguments{

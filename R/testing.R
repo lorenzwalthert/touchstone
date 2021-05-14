@@ -28,6 +28,7 @@ path_temp_pkg <- function(name) {
 #'   testing. If `NULL`, nothing is written.
 #' @inheritParams withr::defer
 #' @family testers
+#' @keywords internal
 local_package <- function(pkg_name = fs::path_file(tempfile("pkg")),
                           branches = c("main", "devel"),
                           r_sample = NULL,
