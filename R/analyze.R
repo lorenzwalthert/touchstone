@@ -44,7 +44,7 @@ benchmark_verbalize <- function(benchmark, timings, refs) {
   confint <- confint_relative_get(timings, refs, tbl$mean[1])
 
   text <- glue::glue(
-    "* {benchmark}: {tbl$mean[1]} -> {tbl$mean[2]} {confint}"
+    "* {benchmark}: {tbl$mean[1]}s -> {tbl$mean[2]}s {confint}"
   )
   cat(
     text,
