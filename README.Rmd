@@ -2,6 +2,11 @@
 output: github_document
 ---
 
+<!-- badges: start --> [![Lifecycle:
+experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://www.tidyverse.org/lifecycle/#experimental)
+[![R build
+status](https://github.com/lorenzwalthert/touchstone/workflows/R-CMD-check/badge.svg)](https://github.com/lorenzwalthert/touchstone/actions)
+<!-- badges: end -->
 
 ```{r, include = FALSE}
 knitr::opts_chunk$set(
@@ -14,16 +19,11 @@ knitr::opts_chunk$set(
 
 # touchstone
 
-touchstone is a tool for continuous benchmarking, in particular useful for 
-estimating speed implications of a pull request. 
+{touchstone} is a developer tool for benchmarking R pull requests with a focus
+on reliable relative measurement, uncertainty reporting and user convenience.
+The results are directly reported as a comment in the pull request.
 
-*This is very experimental, don't use for serious things (yet) and expect breaking changes*
-
-<!-- badges: start -->
-[![Lifecycle: experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://www.tidyverse.org/lifecycle/#experimental)
-[![R build
-status](https://github.com/lorenzwalthert/touchstone/workflows/R-CMD-check/badge.svg)](https://github.com/lorenzwalthert/touchstone/actions)
-<!-- badges: end -->
+![](man/figures/screenshot-pr-comment.png)
 
 ## Installation
 
@@ -34,99 +34,113 @@ You can install the package from GitHub:
 devtools::install_github("lorenzwalthert/touchstone")
 ```
 
-## Conceptual 
-
-For your PR branch and the target branch, {touchstone} will: 
-
-* build the repo.
-
-* run the code you want to benchmark, multiple times, in random order.
-
-* Create c/p ready text (because commenting on the PR is not so easy to 
-  implement) that you can manually insert in the PR description
-  
-* Visualizations as Github Action artifacts that show how the distribution of the
- timings for both branches.
-  
-![](man/figures/screenshot-pr-comment.png)
-
-
-
 ## Motivation
 
 The motivation for touchstone is to provide accurate benchmarking results for
 package developers. The following insights were the motivation:
 
-* Often, it does not make sense to only benchmark the feature branch and compare
-  this result with a CI/CD run that only benchmarked th master branch, because
-  compute power available in GitHub Actions generally varies too much. The
-  solution to this is to benchmark the two branches in one CI/CD run and look at
-  *relative difference* between branches. This matters in particular when
-  running one iteration of a benchmark takes long (>> a few seconds) and speed
-  implications are small. Experience with styler showed that a variation [around
+- **Compute power in GitHub Action VMs varies too much for reliable isolated
+  benchmarks**: Experience with styler showed that a variation [around
   30%](https://github.com/r-lib/styler/pull/679) for identical benchmarking code
-  is not unusual.
+  is possible. The solution to this is to benchmark the two branches in one
+  CI/CD run and look at *relative difference* between branches. This matters in
+  particular when running one iteration of a benchmark takes long (>> a few
+  seconds) and speed implications are not huge.
 
-* Maintaining a timeline such as the implementation of r-lib/bench is of limited
-  use because of the first bullet. Speed implications are to be checked between
-  two revisions.
+- **Timelines of absolute changes are mostly noise:** Maintaining a timeline of
+  absolute benchmark times is of limited use because of the first bullet, at
+  least when benchmark results don't vary significantly (> 50%).
 
-* R and package versions must be fixed via RSPM to allow as much continuation as
-  possible anyways. Changing the timestamp of RSPM can happen in PRs that are
-  only dedicated to dependency updates.
+- **Dependencies should be identical across versions:** R and package versions
+  of dependencies must be fixed via [RSPM](http://packagemanager.rstudio.com) to
+  allow as much continuation as possible anyways. Changing the timestamp of RSPM
+  can happen in PRs that are only dedicated to dependency updates.
+
+- **Pull requests are a natural unit for measuring speed:** Linking benchmarking
+  to pull requests make sense because you can easily benchmark any revision
+  against any other. Just open a pull request from one branch on another. You
+  can also easily keep track of how performance of your development version
+  evolves by opening a PR against a branch with the released version. No need to
+  ever merge these. Once you release a new version of you package, you can
+  change the target branch of the pull request to start anew. The pull request
+  comments will preserve the information.
+
+## Conceptual 
+
+For your PR branch and the target branch, {touchstone} will:
+
+* build the two versions of the package in isolated libraries.
+
+* run the code you want to benchmark, many times, in random order. This ensures
+  the accurate relative measurement of relative differences between the
+  branches.
+
+Once done with the measurements, it will
+
+* comment the results of the benchmarking on the PR.
+
+* create visualizations as Github Action artifacts that show how the
+  distribution of the timings for both branches.
 
 ## Proposed Workflow
 
-touchstone makes it easy for you to benchmark PRs. Initialize it in your repo
-with
+Initialize {touchstone} in your repo with
 
 ```{r, eval = FALSE}
 touchstone::use_touchstone()
 ```
 
-This will: 
+This will:
 
 - write `.github/workflows/touchstone.yaml`: The github actions workflow file.
+
 - create a `touchstone` directory in the repo root with:
-  * `config.json` that defines how to run your benchmark. In particular, you
-    can define a benchmarking repo, that is, code you need to run your bench 
-    mark. This repo will be cloned into `benchmarking_path`. The code you want 
-    to benchmark comes from the benchmarked repo, which 
-    in our case is the root from where you call `use_touchstone()` and hence 
-    does not need to be defined explicitly.
+
+  * `config.json` that defines how to run your benchmark. In particular, you can
+    define a benchmarking repo, that is, code you need to run your bench mark.
+    This repo will be cloned into `benchmarking_path`. The code you want to
+    benchmark comes from the benchmarked repo, which in our case is the root
+    from where you call `use_touchstone()` and hence does not need to be defined
+    explicitly.
 
   ```json
-  
+
   {
-    "benchmarking_repo": "lorenzwalthert/here",
-    "benchmarking_ref": "ca9c8e69c727def88d8ba1c8b85b0e0bcea87b3f",
+    "benchmarking_repo": "lorenzwalthert/here", 
+    "benchmarking_ref": "ca9c8e69c727def88d8ba1c8b85b0e0bcea87b3f", 
     "benchmarking_path": "touchstone/sources/here",
-  
     "os": "ubuntu-18.04",
-    "r": "4.0.0",
-    "rspm": "https://packagemanager.rstudio.com/all/__linux__/bionic/291"
+    "r": "4.0.0", 
+    "rspm": "https://packagemanager.rstudio.com/all/__linux__/bionic/291" 
   }
-  
-  ```
-  * `script.R`, the script that runs the benchmark. The below
-  code will run the benchmarking expression `runif(100)`, give it the name
-  `random_test`, and do this twice in total (once for each branch).
-  
-  ```{r, eval = FALSE}
-touchstone::benchmark_run_ref(
-  random_test = "runif(100)", n = 2
-)
+
   ```
 
-This is not particularly useful, since `runif()` is not a function from the
-benchmarked repo. You want to bench mark functions from your package (that don't
-have the same source code in both branches). The script should contain a call to
-`touchstone::benchmarks_analyse()` at the end to write the required artifacts
-that are used downstream in the GitHub Actions workflow.
+  * `script.R`, the script that runs the benchmark.
 
+  ```r
+  touchstone::refs_install() # installs branches to benchmark
+  
+  # benchmark a function call from your package (two calls per branch)
+  touchstone::benchmark_run_ref(
+    random_test = "yourpkg::fun()",
+    n = 2
+  )
+  
+  # create artifacts used downstream in the GitHub Action
+  touchstone::benchmarks_analyze()
+  ```
 
+Note that these files must be committed to the default branch before
+{touchstone} continuous benchmarking will be triggered for new PRs.
+
+If you want to call the script interactively, use `with_touchstone_lib()` (an
+enhanced version of `base::source()`) for various technical reasons described in
+the help file. Note that `benchmark_run_ref()` will check out different branches
+and should therefore be the only process running in the directory and only in a
+clean git working directory.
 
 ## Status
 
-This package is experimental. It is currently used in [styler](https://github.com/r-lib/styler/blob/master/.github/workflows/benchmarking.yaml). We'll further reduce boilerplate code required in the GitHub Actions workflow 
-file and move it to {touchstone}.
+This package is experimental. You can see an example usage in
+[styler](https://github.com/r-lib/styler/blob/master/.github/workflows/touchstone.yaml).

@@ -29,6 +29,9 @@ all \code{refs}.}
 
 \item{path_pkg}{The path to the repository to install.}
 }
+\value{
+Returns all timings.
+}
 \description{
 Run a benchmark for git refs
 }
@@ -40,6 +43,11 @@ corresponding to \code{ref}.
 \item runs setup code \code{exp_before_ref}.
 \item benchmarks \code{expr_to_benchmark} and writes them to disk.
 }
-
-Returns all timings.
 }
+\section{Caution}{
+
+This function will perform various git operations that affect the state of
+the directory it is ran in, in particular different branches will be checked
+out. Ensure a clean git working directory before invocation.
+}
+
