@@ -62,13 +62,13 @@
 
       </header><div class="row">
   <div class="contents col-md-9">
+
+
 <div id="touchstone" class="section level1">
 <div class="page-header"><h1 class="hasAnchor">
 <a href="#touchstone" class="anchor"></a>touchstone</h1></div>
-<p>touchstone is a tool for continuous benchmarking, in particular useful for estimating speed implications of a pull request.</p>
-<p><em>This is very experimental, don’t use for serious things (yet) and expect breaking changes</em></p>
-<!-- badges: start -->
-<p><a href="https://www.tidyverse.org/lifecycle/#experimental"><img src="https://img.shields.io/badge/lifecycle-experimental-orange.svg" alt="Lifecycle: experimental"></a> <a href="https://github.com/lorenzwalthert/touchstone/actions"><img src="https://github.com/lorenzwalthert/touchstone/workflows/R-CMD-check/badge.svg" alt="R build status"></a> <!-- badges: end --></p>
+<p>{touchstone} is a developer tool for benchmarking R pull requests with a focus on reliable relative measurement, uncertainty reporting and user convenience. The results are directly reported as a comment in the pull request.</p>
+<p><img src="reference/figures/screenshot-pr-comment.png"></p>
 <div id="installation" class="section level2">
 <h2 class="hasAnchor">
 <a href="#installation" class="anchor"></a>Installation</h2>
@@ -77,69 +77,81 @@
 <code class="sourceCode R"><span class="co"># install.packages("devtools")</span>
 <span class="fu">devtools</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"lorenzwalthert/touchstone"</span><span class="op">)</span></code></pre></div>
 </div>
-<div id="conceptual" class="section level2">
-<h2 class="hasAnchor">
-<a href="#conceptual" class="anchor"></a>Conceptual</h2>
-<p>For your PR branch and the target branch, {touchstone} will:</p>
-<ul>
-<li><p>build the repo.</p></li>
-<li><p>run the code you want to benchmark, multiple times, in random order.</p></li>
-<li><p>Create c/p ready text (because commenting on the PR is not so easy to implement) that you can manually insert in the PR description</p></li>
-<li><p>Visualizations as Github Action artifacts that show how the distribution of the timings for both branches.</p></li>
-</ul>
-<p><img src="reference/figures/screenshot-pr-comment.png"></p>
-</div>
 <div id="motivation" class="section level2">
 <h2 class="hasAnchor">
 <a href="#motivation" class="anchor"></a>Motivation</h2>
 <p>The motivation for touchstone is to provide accurate benchmarking results for package developers. The following insights were the motivation:</p>
 <ul>
-<li><p>Often, it does not make sense to only benchmark the feature branch and compare this result with a CI/CD run that only benchmarked th master branch, because compute power available in GitHub Actions generally varies too much. The solution to this is to benchmark the two branches in one CI/CD run and look at <em>relative difference</em> between branches. This matters in particular when running one iteration of a benchmark takes long (&gt;&gt; a few seconds) and speed implications are small. Experience with styler showed that a variation <a href="https://github.com/r-lib/styler/pull/679">around 30%</a> for identical benchmarking code is not unusual.</p></li>
-<li><p>Maintaining a timeline such as the implementation of r-lib/bench is of limited use because of the first bullet. Speed implications are to be checked between two revisions.</p></li>
-<li><p>R and package versions must be fixed via RSPM to allow as much continuation as possible anyways. Changing the timestamp of RSPM can happen in PRs that are only dedicated to dependency updates.</p></li>
+<li><p><strong>Compute power in GitHub Action VMs varies too much for reliable isolated benchmarks</strong>: Experience with styler showed that a variation <a href="https://github.com/r-lib/styler/pull/679">around 30%</a> for identical benchmarking code is possible. The solution to this is to benchmark the two branches in one CI/CD run and look at <em>relative difference</em> between branches. This matters in particular when running one iteration of a benchmark takes long (&gt;&gt; a few seconds) and speed implications are not huge.</p></li>
+<li><p><strong>Timelines of absolute changes are mostly noise:</strong> Maintaining a timeline of absolute benchmark times is of limited use because of the first bullet, at least when benchmark results don’t vary significantly (&gt; 50%).</p></li>
+<li><p><strong>Dependencies should be identical across versions:</strong> R and package versions of dependencies must be fixed via <a href="http://packagemanager.rstudio.com">RSPM</a> to allow as much continuation as possible anyways. Changing the timestamp of RSPM can happen in PRs that are only dedicated to dependency updates.</p></li>
+<li><p><strong>Pull requests are a natural unit for measuring speed:</strong> Linking benchmarking to pull requests make sense because you can easily benchmark any revision against any other. Just open a pull request from one branch on another. You can also easily keep track of how performance of your development version evolves by opening a PR against a branch with the released version. No need to ever merge these. Once you release a new version of you package, you can change the target branch of the pull request to start anew. The pull request comments will preserve the information.</p></li>
+</ul>
+</div>
+<div id="conceptual" class="section level2">
+<h2 class="hasAnchor">
+<a href="#conceptual" class="anchor"></a>Conceptual</h2>
+<p>For your PR branch and the target branch, {touchstone} will:</p>
+<ul>
+<li><p>build the two versions of the package in isolated libraries.</p></li>
+<li><p>run the code you want to benchmark, many times, in random order. This ensures the accurate relative measurement of relative differences between the branches.</p></li>
+</ul>
+<p>Once done with the measurements, it will</p>
+<ul>
+<li><p>comment the results of the benchmarking on the PR.</p></li>
+<li><p>create visualizations as Github Action artifacts that show how the distribution of the timings for both branches.</p></li>
 </ul>
 </div>
 <div id="proposed-workflow" class="section level2">
 <h2 class="hasAnchor">
 <a href="#proposed-workflow" class="anchor"></a>Proposed Workflow</h2>
-<p>touchstone makes it easy for you to benchmark PRs. Initialize it in your repo with</p>
+<p>Initialize {touchstone} in your repo with</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">touchstone</span><span class="fu">::</span><span class="fu"><a href="reference/use_touchstone.html">use_touchstone</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
 <p>This will:</p>
 <ul>
-<li>write <code>.github/workflows/touchstone.yaml</code>: The github actions workflow file.</li>
-<li>create a <code>touchstone</code> directory in the repo root with:
+<li><p>write <code>.github/workflows/touchstone.yaml</code>: The github actions workflow file.</p></li>
+<li>
+<p>create a <code>touchstone</code> directory in the repo root with:</p>
 <ul>
 <li>
 <code>config.json</code> that defines how to run your benchmark. In particular, you can define a benchmarking repo, that is, code you need to run your bench mark. This repo will be cloned into <code>benchmarking_path</code>. The code you want to benchmark comes from the benchmarked repo, which in our case is the root from where you call <code><a href="reference/use_touchstone.html">use_touchstone()</a></code> and hence does not need to be defined explicitly.</li>
 </ul>
 <div class="sourceCode" id="cb3"><pre class="sourceCode json"><code class="sourceCode json"><span id="cb3-1"><a href="#cb3-1"></a><span class="fu">{</span></span>
-<span id="cb3-2"><a href="#cb3-2"></a>  <span class="dt">"benchmarking_repo"</span><span class="fu">:</span> <span class="st">"lorenzwalthert/here"</span><span class="fu">,</span></span>
-<span id="cb3-3"><a href="#cb3-3"></a>  <span class="dt">"benchmarking_ref"</span><span class="fu">:</span> <span class="st">"ca9c8e69c727def88d8ba1c8b85b0e0bcea87b3f"</span><span class="fu">,</span></span>
+<span id="cb3-2"><a href="#cb3-2"></a>  <span class="dt">"benchmarking_repo"</span><span class="fu">:</span> <span class="st">"lorenzwalthert/here"</span><span class="fu">,</span> </span>
+<span id="cb3-3"><a href="#cb3-3"></a>  <span class="dt">"benchmarking_ref"</span><span class="fu">:</span> <span class="st">"ca9c8e69c727def88d8ba1c8b85b0e0bcea87b3f"</span><span class="fu">,</span> </span>
 <span id="cb3-4"><a href="#cb3-4"></a>  <span class="dt">"benchmarking_path"</span><span class="fu">:</span> <span class="st">"touchstone/sources/here"</span><span class="fu">,</span></span>
-<span id="cb3-5"><a href="#cb3-5"></a></span>
-<span id="cb3-6"><a href="#cb3-6"></a>  <span class="dt">"os"</span><span class="fu">:</span> <span class="st">"ubuntu-18.04"</span><span class="fu">,</span></span>
-<span id="cb3-7"><a href="#cb3-7"></a>  <span class="dt">"r"</span><span class="fu">:</span> <span class="st">"4.0.0"</span><span class="fu">,</span></span>
-<span id="cb3-8"><a href="#cb3-8"></a>  <span class="dt">"rspm"</span><span class="fu">:</span> <span class="st">"https://packagemanager.rstudio.com/all/__linux__/bionic/291"</span></span>
-<span id="cb3-9"><a href="#cb3-9"></a><span class="fu">}</span></span></code></pre></div>
+<span id="cb3-5"><a href="#cb3-5"></a>  <span class="dt">"os"</span><span class="fu">:</span> <span class="st">"ubuntu-18.04"</span><span class="fu">,</span></span>
+<span id="cb3-6"><a href="#cb3-6"></a>  <span class="dt">"r"</span><span class="fu">:</span> <span class="st">"4.0.0"</span><span class="fu">,</span> </span>
+<span id="cb3-7"><a href="#cb3-7"></a>  <span class="dt">"rspm"</span><span class="fu">:</span> <span class="st">"https://packagemanager.rstudio.com/all/__linux__/bionic/291"</span> </span>
+<span id="cb3-8"><a href="#cb3-8"></a><span class="fu">}</span></span></code></pre></div>
 <ul>
 <li>
-<code>script.R</code>, the script that runs the benchmark. The below code will run the benchmarking expression <code><a href="https://rdrr.io/r/stats/Uniform.html">runif(100)</a></code>, give it the name <code>random_test</code>, and do this twice in total (once for each branch).</li>
+<code>script.R</code>, the script that runs the benchmark.</li>
 </ul>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu">touchstone</span><span class="fu">::</span><span class="fu"><a href="reference/benchmark_run_ref.html">benchmark_run_ref</a></span><span class="op">(</span>
-random_test <span class="op">=</span> <span class="st">"runif(100)"</span>, n <span class="op">=</span> <span class="fl">2</span>
-<span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span class="fu">touchstone</span><span class="fu">::</span><span class="fu"><a href="reference/refs_install.html">refs_install</a></span><span class="op">(</span><span class="op">)</span> <span class="co"># installs branches to benchmark</span>
+
+<span class="co"># benchmark a function call from your package (two calls per branch)</span>
+<span class="fu">touchstone</span><span class="fu">::</span><span class="fu"><a href="reference/benchmark_run_ref.html">benchmark_run_ref</a></span><span class="op">(</span>
+  random_test <span class="op">=</span> <span class="st">"yourpkg::fun()"</span>,
+  n <span class="op">=</span> <span class="fl">2</span>
+<span class="op">)</span>
+
+<span class="co"># create artifacts used downstream in the GitHub Action</span>
+<span class="fu">touchstone</span><span class="fu">::</span><span class="fu"><a href="reference/benchmarks_analyze.html">benchmarks_analyze</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
 </li>
 </ul>
-<p>This is not particularly useful, since <code><a href="https://rdrr.io/r/stats/Uniform.html">runif()</a></code> is not a function from the benchmarked repo. You want to bench mark functions from your package (that don’t have the same source code in both branches). The script should contain a call to <code>touchstone::benchmarks_analyse()</code> at the end to write the required artifacts that are used downstream in the GitHub Actions workflow.</p>
+<p>Note that these files must be committed to the default branch before {touchstone} continuous benchmarking will be triggered for new PRs.</p>
+<p>If you want to call the script interactively, use <code><a href="reference/with_touchstone_lib.html">with_touchstone_lib()</a></code> (an enhanced version of <code><a href="https://rdrr.io/r/base/source.html">base::source()</a></code>) for various technical reasons described in the help file. Note that <code><a href="reference/benchmark_run_ref.html">benchmark_run_ref()</a></code> will check out different branches and should therefore be the only process running in the directory and only in a clean git working directory.</p>
 </div>
 <div id="status" class="section level2">
 <h2 class="hasAnchor">
 <a href="#status" class="anchor"></a>Status</h2>
-<p>This package is experimental. It is currently used in <a href="https://github.com/r-lib/styler/blob/master/.github/workflows/benchmarking.yaml">styler</a>. We’ll further reduce boilerplate code required in the GitHub Actions workflow file and move it to {touchstone}.</p>
+<p>This package is experimental. You can see an example usage in <a href="https://github.com/r-lib/styler/blob/master/.github/workflows/touchstone.yaml">styler</a>.</p>
 </div>
 </div>
+
   </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
@@ -158,7 +170,14 @@ random_test <span class="op">=</span> <span class="st">"runif(100)"</span>, n <s
 </ul>
 </div>
 
-  </div>
+  <div class="dev-status">
+<h2>Dev status</h2>
+<ul class="list-unstyled">
+<li><a href="https://www.tidyverse.org/lifecycle/#experimental"><img src="https://img.shields.io/badge/lifecycle-experimental-orange.svg" alt="Lifecycle: experimental"></a></li>
+<li><a href="https://github.com/lorenzwalthert/touchstone/actions"><img src="https://github.com/lorenzwalthert/touchstone/workflows/R-CMD-check/badge.svg" alt="R build status"></a></li>
+</ul>
+</div>
+</div>
 </div>
 
 

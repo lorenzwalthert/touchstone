@@ -151,6 +151,9 @@ all <code>refs</code>.</p></td>
     </tr>
     </table>
 
+    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
+
+    <p>Returns all timings.</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>Runs the following loop <code>n</code> times:</p><ul>
@@ -160,7 +163,13 @@ corresponding to <code>ref</code>.</p></li>
 <li><p>benchmarks <code>expr_to_benchmark</code> and writes them to disk.</p></li>
 </ul>
 
-<p>Returns all timings.</p>
+    <h2 class="hasAnchor" id="caution"><a class="anchor" href="#caution"></a>Caution</h2>
+
+    
+
+<p>This function will perform various git operations that affect the state of
+the directory it is ran in, in particular different branches will be checked
+out. Ensure a clean git working directory before invocation.</p>
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
