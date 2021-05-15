@@ -61,6 +61,7 @@ test_that("can remove touchstone libpaths", {
 
 
 test_that("Can abort with missing refs for benchmark run", {
+  withr::local_envvar(GITHUB_BASE_REF = NA, GITHUB_HEAD_REF = NA)
   mockery::stub(
     benchmark_run_ref, "force",
     function(...) rlang::abort("12321")
@@ -74,6 +75,7 @@ test_that("Can abort with missing refs for benchmark run", {
 
 
 test_that("Can abort with missing refs for benchmark run", {
+  withr::local_envvar(GITHUB_BASE_REF = NA, GITHUB_HEAD_REF = NA)
   match <- "you want to benchmark against each other"
   expect_error(ref_get_or_fail("SOME_REF"), match)
   expect_error(
