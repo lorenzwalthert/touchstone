@@ -9,12 +9,15 @@ CMD
 config
 Config
 cr
+cran
 cre
+createComment
 deps
 dev
 devtools
 dir
 docType
+downloadArtifact
 dplyr
 env
 envir
@@ -26,6 +29,7 @@ gcc
 gert
 getenv
 getRversion
+getwd
 ggplot
 github
 gitignore
@@ -43,9 +47,11 @@ libpaths
 LIBS
 Lifecycle
 linux
+listWorkflowRunArtifacts
 lorenz
 lorenzwalthert
 magrittr
+matchArtifact
 MERCHANTABILITY
 mkdir
 NONINFRINGEMENT
@@ -60,6 +66,7 @@ prepending
 PRs
 purrr
 Rds
+readFileSync
 repo
 RHUB
 rlang
@@ -75,6 +82,7 @@ rstudio
 runif
 saveRDS
 seealso
+sep
 SHA
 sprintf
 styfle
@@ -89,12 +97,15 @@ testthat
 th
 tibble
 tidyselect
+toString
 ubuntu
 usethis
+va
 vctrs
 VignetteBuilder
 VMs
 walthert
 Walthert
 withr
+writeFileSync
 writeLines

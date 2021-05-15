@@ -1,5 +1,5 @@
-name: Continuous Benchmarks
-on: pull_request_target
+name: Continuous Benchmarks (Receive)
+on: pull_request
 jobs:
   prepare:
     runs-on: ubuntu-latest
@@ -43,8 +43,20 @@ jobs:
           git config --local user.email "actions@github.com"
       - name: Ensure base branch is fetched
         run: |
-          git checkout -b $GITHUB_HEAD_REF
-          # git branch $GITHUB_BASE_REF origin/$GITHUB_BASE_REF
+          echo 'log' #
+          git log
+          echo 'status'
+          git status
+          echo 'branch'
+          git branch # list branches
+          echo 'all branches'
+          git branch -va #
+          echo 'add head and base explicitly'
+          git checkout -b $GITHUB_HEAD_REF # this is current ref. This is required for naming.
+          git branch $GITHUB_BASE_REF remotes/origin/$GITHUB_BASE_REF
+          echo 'all branches'
+          git branch -va
+
       - name: Setup R
         uses: r-lib/actions/setup-r@master
       - name: Query dependencies
@@ -86,15 +98,11 @@ jobs:
           repository: ${{ matrix.config.benchmarking_repo }}
           ref: ${{ matrix.config.benchmarking_ref }}
           path: ${{ matrix.config.benchmarking_path }}
-      - name: Prepare PR comment
-        run: |
-          mkdir -p touchstone/sources
-          mkdir -p touchstone/pr-comment
-          mkdir -p touchstone/plots
-          echo "This is how benchmark results would change (along with a 95% confience interval in relative change) if $(git rev-parse HEAD) and ancestors are merged into $GITHUB_BASE_REF:" > touchstone/pr-comment/info.txt
-          echo "$GITHUB_EVENT_PULL_REQUEST_HEAD_SHA" >> touchstone/pr-comment/info.txt
       - name: Run benchmarks
         run: Rscript -e 'touchstone::with_touchstone_lib("touchstone/script.R")'
+      - name: Save PR number
+        run: |
+          echo ${{ github.event.number }} > ./touchstone/pr-comment/NR
       - uses: actions/upload-artifact@v2
         with:
           name: visual-benchmarks
@@ -108,11 +116,7 @@ jobs:
           name: results
       - name: comment PR
         run: cat touchstone/pr-comment/info.txt
-      - name: c/p text artifact to right location
-        run: |
-          mv touchstone/pr-comment/info.txt .github/workflows/info.txt
-      - uses: harupy/comment-on-pr@master
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - uses: actions/upload-artifact@v2
         with:
-          filename: info.txt
+          name: pr
+          path: touchstone/pr-comment/
