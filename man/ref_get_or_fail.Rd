@@ -2,11 +2,13 @@
 % Please edit documentation in R/utils.R
 \name{ref_get_or_fail}
 \alias{ref_get_or_fail}
-\title{Get the ref from the environment variable or fail if not set.}
+\title{Get the ref from the environment variable or fail if not set}
 \usage{
 ref_get_or_fail(var)
 }
+\arguments{
+\item{var}{The environment variable to retrieve.}
+}
 \description{
 This function is only exported because it is a default argument.
-@export
 }
