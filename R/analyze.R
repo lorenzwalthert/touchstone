@@ -6,7 +6,7 @@
 #' * Density plots for each element in `refs` are written to `touchstone/plots`.
 #' * A text explaining the speed diff is written to
 #'   `touchstone/pr-comment/info.txt` for every registered benchmarking
-#'   expression.
+#'   expression. See `vignette("inference", package = "touchstone")` for details.
 #' @param refs The names of the branches for which analysis should be created.
 #' @param ci The confidence level, defaults to 95%.
 #' @export
@@ -77,7 +77,7 @@ confint_relative_get <- function(timings, refs, reference, ci) {
     dplyr::mutate(
       block = factor(.data$block), ref = factor(.data$ref, levels = refs)
     )
-  fit <- aov(elapsed ~ block + ref, data = timings_with_factors)
+  fit <- stats::aov(elapsed ~ block + ref, data = timings_with_factors)
   var <- paste0("ref", refs[2])
   confint <- confint(fit, var, level = ci)
   paste0("[", paste0(set_sign(round(100 * confint / reference, 2)), collapse = "%, "), "%]")

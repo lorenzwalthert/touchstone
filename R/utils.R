@@ -11,10 +11,11 @@ dir_touchstone <- function() {
   getOption("touchstone.dir", "touchstone")
 }
 
-#' Get the ref from the environment variable or fail if not set.
+#' Get the ref from the environment variable or fail if not set
 #'
 #' This function is only exported because it is a default argument.
-#'  @export
+#' @param var The environment variable to retrieve.
+#' @export
 ref_get_or_fail <- function(var) {
   retrieved <- Sys.getenv(var)
   if (!nzchar(retrieved)) {

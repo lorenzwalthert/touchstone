@@ -1,0 +1,98 @@
+---
+title: "Inference"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Inference}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  eval = FALSE
+)
+```
+
+## Interpretation
+
+We first explain the output of the comment in the PR:
+
+![](../man/figures/screenshot-pr-comment.png)
+
+Every bullet point corresponds to one expression you benchmarked in your
+touchstone script in `touchstone/script.R` with `benchmark_run_ref()`. The
+contents of the former are in this (simplified) example:
+
+```{r}
+library(touchstone)
+refs_install()
+benchmark_run_ref(
+  without_cache = 'styler::style_pkg("touchstone/sources/here")',
+  n = 30
+)
+
+benchmark_run_ref(
+  cache_applying = 'styler::style_pkg("touchstone/sources/here")',
+  n = 30
+)
+
+benchmark_run_ref(
+  cache_recording = c(
+    "gert::git_reset_hard(repo = 'touchstone/sources/here')",
+    'styler::style_pkg("touchstone/sources/here")'
+  ),
+  n = 30
+)
+
+benchmarks_analyze()
+```
+
+* You can see that the expression `cache_applying` took on average 0.1 seconds
+  on both branches.
+
+* And if we merge this pull request, `cache_recording` and `without_cache` will
+  be approximately 0.01 quicker than before the merge.
+
+Imagine we only ran all expressions once per branch. Then, the differences could
+be by chance. To avoid that, we run it `n` times and compute a confidence
+interval, which tells us how certain we can be about our estimated differences.
+A 95% confidence interval tells us that if we were to repeat the benchmarking
+experiment 100 times, our estimated speed change would be in the interval 95 out
+of 100 times. It comes from a simple OLS model where we regress the elapsed time
+on the branch from which the result comes. Like this
+
+```{r}
+fit <- stats::aov(elapsed ~ factor(ref), data = timings)
+confint(fit, ...)
+```
+
+Since changes in percent are more relevant than absolute changes, the confidence
+interval is reported relative to the target branch of the pull request. The
+measured difference is statistically significantly different from zero if the
+confidence interval does not overlap with 0. In the screenshot above, this is
+not the case for any benchmarked expression, as they all range from some
+negative to some positive number. If you increase `n`, you can estimate the
+speed implications of a pull request more precisely, meaning you'll get a more
+narrow confidence interval which more likely does not cover zero. You'll then
+easily reach statistical significance (and the CI run will take longer), but do
+you really care if your code gets 0.000001% slower? Probably not. That's why you
+also need to look at the range of the confidence interval.
+
+## Sampling
+
+We sample both refs in `n` blocks. This is better than completely at random,
+because that can lead to biased results if compute power steadily
+increases/decreases and our sampling is very structured, i.e.:
+
+* We run the PR branch `n` times before we run the target branch, the PR branch
+  is at disadvantage.
+
+* If we always switch branches, the first branch is at disadvantage.
+
+So we sample randomly within blocks:
+
+```{r, eval = TRUE}
+touchstone:::ref_upsample(c("main", "feature"))
+```
