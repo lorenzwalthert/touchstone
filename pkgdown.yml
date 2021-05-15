@@ -1,6 +1,7 @@
 pandoc: 2.7.3
 pkgdown: 1.6.1
 pkgdown_sha: ~
-articles: {}
-last_built: 2021-05-15T00:23Z
+articles:
+  inference: inference.html
+last_built: 2021-05-15T10:19Z
 
