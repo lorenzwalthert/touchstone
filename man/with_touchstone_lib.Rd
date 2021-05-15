@@ -4,10 +4,7 @@
 \alias{with_touchstone_lib}
 \title{Sources a script}
 \usage{
-with_touchstone_lib(
-  path,
-  ref = Sys.getenv("GITHUB_HEAD_REF", abort_missing_ref())
-)
+with_touchstone_lib(path, ref = ref_get_or_fail("GITHUB_HEAD_REF"))
 }
 \arguments{
 \item{path}{The script to run. It must fulfill the requirements of a

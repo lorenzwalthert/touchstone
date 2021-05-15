@@ -33,7 +33,7 @@
 #' contains the installed benchmarked package, and temporarily remove it during
 #' benchmarking if another touchstone library is used.
 #' @export
-with_touchstone_lib <- function(path, ref = Sys.getenv("GITHUB_HEAD_REF", abort_missing_ref())) {
+with_touchstone_lib <- function(path, ref = ref_get_or_fail("GITHUB_HEAD_REF")) {
   lib <- libpath_touchstone(ref)
   fs::dir_create(lib)
   withr::local_libpaths(

@@ -75,7 +75,7 @@ test_that("Can abort with missing refs for benchmark run", {
 
 test_that("Can abort with missing refs for benchmark run", {
   match <- "you want to benchmark against each other"
-  expect_error(abort_missing_ref(), match)
+  expect_error(ref_get_or_fail("SOME_REF"), match)
   expect_error(
     benchmark_run_ref(x1 = "print('hi')"),
     match

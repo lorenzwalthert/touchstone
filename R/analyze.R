@@ -11,8 +11,8 @@
 #' @param ci The confidence level, defaults to 95%.
 #' @export
 benchmarks_analyze <- function(refs = c(
-                                 Sys.getenv("GITHUB_BASE_REF", abort_missing_ref()),
-                                 Sys.getenv("GITHUB_HEAD_REF", abort_missing_ref())
+                                 ref_get_or_fail("GITHUB_BASE_REF"),
+                                 ref_get_or_fail("GITHUB_HEAD_REF")
                                ),
                                ci = 0.95) {
   paste0(
@@ -28,8 +28,8 @@ benchmarks_analyze <- function(refs = c(
 
 #' @importFrom rlang .data
 benchmark_analyze <- function(benchmark, refs = c(
-                                Sys.getenv("GITHUB_BASE_REF", abort_missing_ref()),
-                                Sys.getenv("GITHUB_HEAD_REF", abort_missing_ref())
+                                ref_get_or_fail("GITHUB_BASE_REF"),
+                                ref_get_or_fail("GITHUB_HEAD_REF")
                               ),
                               ci = 0.95) {
   timings <- benchmark_read(benchmark, refs)

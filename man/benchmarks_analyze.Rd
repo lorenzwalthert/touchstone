@@ -5,12 +5,14 @@
 \title{Turn raw benchmark results into text and figures}
 \usage{
 benchmarks_analyze(
-  refs = c(Sys.getenv("GITHUB_BASE_REF", abort_missing_ref()),
-    Sys.getenv("GITHUB_HEAD_REF", abort_missing_ref()))
+  refs = c(ref_get_or_fail("GITHUB_BASE_REF"), ref_get_or_fail("GITHUB_HEAD_REF")),
+  ci = 0.95
 )
 }
 \arguments{
 \item{refs}{The names of the branches for which analysis should be created.}
+
+\item{ci}{The confidence level, defaults to 95\%.}
 }
 \description{
 Turn raw benchmark results into text and figures

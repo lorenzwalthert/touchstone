@@ -69,8 +69,8 @@ benchmark_run_iteration <- function(expr_before_benchmark,
 benchmark_run_ref <- function(expr_before_benchmark,
                               ...,
                               refs = c(
-                                Sys.getenv("GITHUB_BASE_REF", abort_missing_ref()),
-                                Sys.getenv("GITHUB_HEAD_REF", abort_missing_ref())
+                                ref_get_or_fail("GITHUB_BASE_REF"),
+                                ref_get_or_fail("GITHUB_HEAD_REF")
                               ),
                               n = 100,
                               path_pkg = ".") {
