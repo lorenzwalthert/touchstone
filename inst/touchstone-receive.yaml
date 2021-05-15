@@ -43,20 +43,8 @@ jobs:
           git config --local user.email "actions@github.com"
       - name: Ensure base branch is fetched
         run: |
-          echo 'log' #
-          git log
-          echo 'status'
-          git status
-          echo 'branch'
-          git branch # list branches
-          echo 'all branches'
-          git branch -va #
-          echo 'add head and base explicitly'
           git checkout -b $GITHUB_HEAD_REF # this is current ref. This is required for naming.
           git branch $GITHUB_BASE_REF remotes/origin/$GITHUB_BASE_REF
-          echo 'all branches'
-          git branch -va
-
       - name: Setup R
         uses: r-lib/actions/setup-r@master
       - name: Query dependencies
