@@ -15,15 +15,23 @@ benchmarks_analyze <- function(refs = c(
                                  ref_get_or_fail("GITHUB_HEAD_REF")
                                ),
                                ci = 0.95) {
+  path_info <- fs::path(dir_touchstone(), "pr-comment/info.txt")
   paste0(
     "This is how benchmark results would change (along with a ", 100 * ci,
     "% confience interval in relative change) if ",
     system2("git", c("rev-parse", "HEAD"), stdout = TRUE),
-    " and ancestors are merged into ", refs[1], ":"
+    " and ancestors are merged into ", refs[1], ":", "\n"
   ) %>%
-    writeLines(fs::path(dir_touchstone(), "pr-comment/info.txt"))
+    writeLines(path_info)
 
-  purrr::walk(benchmark_ls(), benchmark_analyze, refs = refs, ci = ci)
+  out <- purrr::walk(benchmark_ls(), benchmark_analyze, refs = refs, ci = ci)
+  text <- paste(
+    "\nFurther explanation regarding interpretation and methodology can be found",
+    "in the [documentation](https://lorenzwalthert.github.io/touchstone/articles/inference.html)."
+  )
+  cat(text, fill = TRUE, file = path_info, append = TRUE)
+
+  readLines(path_info)
 }
 
 #' @importFrom rlang .data
