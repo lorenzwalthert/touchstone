@@ -29,16 +29,19 @@ contents of the former are in this (simplified) example:
 library(touchstone)
 refs_install()
 benchmark_run_ref(
+  expr_before_benchmark = c("library(styler)", "cache_deactivate()"),
   without_cache = 'styler::style_pkg("touchstone/sources/here")',
   n = 30
 )
 
 benchmark_run_ref(
+  expr_before_benchmark = c("library(styler)", "cache_activate()"),
   cache_applying = 'styler::style_pkg("touchstone/sources/here")',
   n = 30
 )
 
 benchmark_run_ref(
+  expr_before_benchmark = c("library(styler)", "cache_deactivate()"),
   cache_recording = c(
     "gert::git_reset_hard(repo = 'touchstone/sources/here')",
     'styler::style_pkg("touchstone/sources/here")'

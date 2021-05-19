@@ -24,8 +24,13 @@ use_touchstone <- function(cancel = TRUE) {
   )
   workflows <- fs::dir_create(fs::path(".github", "workflows"))
   copy_if_not_exists(
-    system.file("touchstone.yaml", package = "touchstone"),
-    fs::path(workflows, "touchstone.yaml")
+    system.file("touchstone-receive.yaml", package = "touchstone"),
+    fs::path(workflows, "touchstone-receive.yaml")
+  )
+
+  copy_if_not_exists(
+    system.file("touchstone-comment.yaml", package = "touchstone"),
+    fs::path(workflows, "touchstone-comment.yaml")
   )
   if (cancel) {
     target <- fs::path(workflows, "cancel.yaml")
