@@ -24,3 +24,14 @@ touchstone library and running the script in a temp directory to avoid
 git operations like checking out different branches to interfere with the
 script execution (as running the script changes itself through git checkout).
 }
+\examples{
+\dontrun{
+# assuming you want to compare the branch master with the branch devel
+if (rlang::is_installed("withr")) {
+  withr::with_envvar(
+    c("GITHUB_BASE_REF" = "main", "GITHUB_HEAD_REF" = "devel"),
+    with_touchstone_lib("inst/script.R")
+  )
+}
+}
+}

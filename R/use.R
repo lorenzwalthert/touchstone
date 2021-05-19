@@ -62,6 +62,10 @@ use_touchstone <- function(cancel = TRUE) {
       "create long waiting times until touchstone results are available."
     )
   }
+  usethis::ui_todo(
+    "Replace the mtcars sample code in `touchstone/script.R` with code from your package you want to benchmark."
+  )
+  usethis::ui_todo("Commit and push to GitHub to trigger your first benchmark.")
 }
 
 

@@ -1,17 +1,20 @@
-library(touchstone)
+# see `help(with_touchstone_lib, package = 'touchstone')` on how to run this
+# interactively
 
-refs_install()
+touchstone::refs_install() # installs branches to benchmark
 
-benchmark_run_ref(
-  expr_before_benchmark = c("print(4)"),
-  expr1 = "tail(mtcars)",
+# benchmark a function call from your package (two calls per branch)
+touchstone::benchmark_run_ref(
+  random_test = "yourpkg::fun()",
   n = 2
 )
 
-benchmark_run_ref(
-  expr_before_benchmark = c("print(4)"),
-  expr2 = "head(mtcars)",
-  n = 2
+# benchmark a function call from your package (six calls per branch)
+touchstone::benchmark_run_ref(
+  another_test = "yourpkg::fun2(x = 3)",
+  n = 6
 )
 
-benchmarks_analyze()
+
+# create artifacts used downstream in the GitHub Action
+touchstone::benchmarks_analyze()
