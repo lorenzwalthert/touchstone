@@ -5,13 +5,15 @@ touchstone::refs_install() # installs branches to benchmark
 
 # benchmark a function call from your package (two calls per branch)
 touchstone::benchmark_run_ref(
-  random_test = "yourpkg::fun()",
+  random_test = "yourpkg::f()", #<- TODO put the call you want to benchmark here
   n = 2
 )
 
-# benchmark a function call from your package (six calls per branch)
+# benchmark any R expression (six calls per branch)
 touchstone::benchmark_run_ref(
-  another_test = "yourpkg::fun2(x = 3)",
+  more = "if (TRUE) {
+    y <- yourpkg::f2( x= 3)
+  }", #<- TODO put the call you want to benchmark here
   n = 6
 )
 

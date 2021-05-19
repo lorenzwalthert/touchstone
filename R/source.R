@@ -39,7 +39,7 @@
 #' if (rlang::is_installed("withr")) {
 #'   withr::with_envvar(
 #'     c("GITHUB_BASE_REF" = "main", "GITHUB_HEAD_REF" = "devel"),
-#'     with_touchstone_lib("inst/script.R")
+#'     with_touchstone_lib("touchstone/script.R")
 #'   )
 #' }
 #' }
