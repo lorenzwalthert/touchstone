@@ -9,7 +9,7 @@
 use_touchstone <- function(cancel = TRUE) {
   dir_touchstone <- dir_touchstone()
   fs::dir_create(dir_touchstone)
-  copy_if_not_exists(
+  has_written_script <- copy_if_not_exists(
     system.file("script.R", package = "touchstone"),
     path_touchstone_script()
   )
@@ -62,9 +62,11 @@ use_touchstone <- function(cancel = TRUE) {
       "create long waiting times until touchstone results are available."
     )
   }
-  usethis::ui_todo(
-    "Replace the mtcars sample code in `touchstone/script.R` with code from your package you want to benchmark."
-  )
+  if (has_written_script) {
+    usethis::ui_todo(
+      "Replace the mtcars sample code in `touchstone/script.R` with code from your package you want to benchmark."
+    )
+  }
   usethis::ui_todo("Commit and push to GitHub to trigger your first benchmark.")
 }
 
@@ -75,7 +77,9 @@ copy_if_not_exists <- function(path, new_path) {
       path, new_path
     )
     usethis::ui_done("Populated file {fs::path_file(new_path)} in {fs::path_dir(new_path)}/.")
+    TRUE
   } else {
     usethis::ui_warn("File {fs::path_file(new_path)} already exists at {fs::path_dir(new_path)}/, not copying.")
+    FALSE
   }
 }
