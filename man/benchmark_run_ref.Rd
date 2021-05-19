@@ -27,7 +27,8 @@ the head ref is the source branch of the pull request in a workflow run.}
 \item{n}{Number of times benchmarks should be run. Refers to the total of
 all \code{refs}.}
 
-\item{path_pkg}{The path to the repository to install.}
+\item{path_pkg}{The path to the package to benchmark. Will be used to
+temporarily checkout the branch during benchmarking.}
 }
 \value{
 Returns all timings.

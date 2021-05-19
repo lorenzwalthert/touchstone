@@ -88,9 +88,6 @@ touchstone::use_touchstone()
 
 This will:
 
--   write `.github/workflows/touchstone.yaml`: The github actions
-    workflow file.
-
 -   create a `touchstone` directory in the repo root with:
 
     -   `config.json` that defines how to run your benchmark. In
@@ -126,6 +123,9 @@ This will:
     # create artifacts used downstream in the GitHub Action
     touchstone::benchmarks_analyze()
     ```
+
+-   write the workflow files you need for touchstone into
+    `.github/workflows/` to invoke your touchstone script.
 
 Note that these files must be committed to the default branch before
 {touchstone} continuous benchmarking will be triggered for new PRs.

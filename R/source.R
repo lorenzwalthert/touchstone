@@ -33,6 +33,16 @@
 #' contains the installed benchmarked package, and temporarily remove it during
 #' benchmarking if another touchstone library is used.
 #' @export
+#' @examples
+#' \dontrun{
+#' # assuming you want to compare the branch master with the branch devel
+#' if (rlang::is_installed("withr")) {
+#'   withr::with_envvar(
+#'     c("GITHUB_BASE_REF" = "main", "GITHUB_HEAD_REF" = "devel"),
+#'     with_touchstone_lib("touchstone/script.R")
+#'   )
+#' }
+#' }
 with_touchstone_lib <- function(path, ref = ref_get_or_fail("GITHUB_HEAD_REF")) {
   lib <- libpath_touchstone(ref)
   fs::dir_create(lib)
