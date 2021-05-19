@@ -122,7 +122,6 @@
 <code class="sourceCode R"><span class="fu">touchstone</span><span class="fu">::</span><span class="fu"><a href="reference/use_touchstone.html">use_touchstone</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
 <p>This will:</p>
 <ul>
-<li><p>write <code>.github/workflows/touchstone.yaml</code>: The github actions workflow file.</p></li>
 <li>
 <p>create a <code>touchstone</code> directory in the repo root with:</p>
 <ul>
@@ -153,6 +152,7 @@
 <span class="co"># create artifacts used downstream in the GitHub Action</span>
 <span class="fu">touchstone</span><span class="fu">::</span><span class="fu"><a href="reference/benchmarks_analyze.html">benchmarks_analyze</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
 </li>
+<li><p>write the workflow files you need for touchstone into <code>.github/workflows/</code> to invoke your touchstone script.</p></li>
 </ul>
 <p>Note that these files must be committed to the default branch before {touchstone} continuous benchmarking will be triggered for new PRs.</p>
 <p>If you want to call the script interactively, use <code><a href="reference/with_touchstone_lib.html">with_touchstone_lib()</a></code> (an enhanced version of <code><a href="https://rdrr.io/r/base/source.html">base::source()</a></code>) for various technical reasons described in the help file. Note that <code><a href="reference/benchmark_run_ref.html">benchmark_run_ref()</a></code> will check out different branches and should therefore be the only process running in the directory and only in a clean git working directory.</p>

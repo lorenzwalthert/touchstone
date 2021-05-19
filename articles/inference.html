@@ -92,16 +92,19 @@
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">touchstone</span><span class="op">)</span>
 <span class="fu"><a href="../reference/refs_install.html">refs_install</a></span><span class="op">(</span><span class="op">)</span>
 <span class="fu"><a href="../reference/benchmark_run_ref.html">benchmark_run_ref</a></span><span class="op">(</span>
+  expr_before_benchmark <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"library(styler)"</span>, <span class="st">"cache_deactivate()"</span><span class="op">)</span>,
   without_cache <span class="op">=</span> <span class="st">'styler::style_pkg("touchstone/sources/here")'</span>,
   n <span class="op">=</span> <span class="fl">30</span>
 <span class="op">)</span>
 
 <span class="fu"><a href="../reference/benchmark_run_ref.html">benchmark_run_ref</a></span><span class="op">(</span>
+  expr_before_benchmark <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"library(styler)"</span>, <span class="st">"cache_activate()"</span><span class="op">)</span>,
   cache_applying <span class="op">=</span> <span class="st">'styler::style_pkg("touchstone/sources/here")'</span>,
   n <span class="op">=</span> <span class="fl">30</span>
 <span class="op">)</span>
 
 <span class="fu"><a href="../reference/benchmark_run_ref.html">benchmark_run_ref</a></span><span class="op">(</span>
+  expr_before_benchmark <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"library(styler)"</span>, <span class="st">"cache_deactivate()"</span><span class="op">)</span>,
   cache_recording <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span>
     <span class="st">"gert::git_reset_hard(repo = 'touchstone/sources/here')"</span>,
     <span class="st">'styler::style_pkg("touchstone/sources/here")'</span>
@@ -138,8 +141,8 @@
 <span class="co">#&gt;  2     1 feature</span>
 <span class="co">#&gt;  3     2 feature</span>
 <span class="co">#&gt;  4     2 main   </span>
-<span class="co">#&gt;  5     3 feature</span>
-<span class="co">#&gt;  6     3 main   </span>
+<span class="co">#&gt;  5     3 main   </span>
+<span class="co">#&gt;  6     3 feature</span>
 <span class="co">#&gt;  7     4 main   </span>
 <span class="co">#&gt;  8     4 feature</span>
 <span class="co">#&gt;  9     5 main   </span>
