@@ -59,7 +59,14 @@
   </ul>
 </li>
       </ul>
-<ul class="nav navbar-nav navbar-right"></ul>
+<ul class="nav navbar-nav navbar-right">
+<li>
+  <a href="https://github.com/lorenzwalthert/touchstone/">
+    <span class="fab fa-github fa-lg"></span>
+     
+  </a>
+</li>
+      </ul>
 </div>
 <!--/.nav-collapse -->
   </div>
@@ -75,7 +82,7 @@
       <h1 data-toc-skip>Inference</h1>
             
       
-      
+      <small class="dont-index">Source: <a href="https://github.com/lorenzwalthert/touchstone/blob/master/vignettes/inference.Rmd"><code>vignettes/inference.Rmd</code></a></small>
       <div class="hidden name"><code>inference.Rmd</code></div>
 
     </div>
@@ -89,7 +96,7 @@
 <p><img src="../man/figures/screenshot-pr-comment.png"></p>
 <p>Every bullet point corresponds to one expression you benchmarked in your touchstone script in <code>touchstone/script.R</code> with <code><a href="../reference/benchmark_run_ref.html">benchmark_run_ref()</a></code>. The contents of the former are in this (simplified) example:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">touchstone</span><span class="op">)</span>
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/lorenzwalthert/touchstone">touchstone</a></span><span class="op">)</span>
 <span class="fu"><a href="../reference/refs_install.html">refs_install</a></span><span class="op">(</span><span class="op">)</span>
 <span class="fu"><a href="../reference/benchmark_run_ref.html">benchmark_run_ref</a></span><span class="op">(</span>
   expr_before_benchmark <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"library(styler)"</span>, <span class="st">"cache_deactivate()"</span><span class="op">)</span>,
@@ -138,12 +145,12 @@
 <span class="co">#&gt; # A tibble: 40 x 2</span>
 <span class="co">#&gt;    block ref    </span>
 <span class="co">#&gt;    &lt;int&gt; &lt;chr&gt;  </span>
-<span class="co">#&gt;  1     1 feature</span>
-<span class="co">#&gt;  2     1 main   </span>
+<span class="co">#&gt;  1     1 main   </span>
+<span class="co">#&gt;  2     1 feature</span>
 <span class="co">#&gt;  3     2 feature</span>
 <span class="co">#&gt;  4     2 main   </span>
-<span class="co">#&gt;  5     3 feature</span>
-<span class="co">#&gt;  6     3 main   </span>
+<span class="co">#&gt;  5     3 main   </span>
+<span class="co">#&gt;  6     3 feature</span>
 <span class="co">#&gt;  7     4 feature</span>
 <span class="co">#&gt;  8     4 main   </span>
 <span class="co">#&gt;  9     5 feature</span>
