@@ -12,6 +12,9 @@ Description: A common problem of benchmarking in continuous integration is
     varies over time.  This package allows users to benchmark two git refs
     of the same repo in a random sequence for better comparison.
 License: MIT + file LICENSE
+URL: https://github.com/lorenzwalthert/touchstone,
+    https://lorenzwalthert.github.io/touchstone
+BugReports: https://github.com/lorenzwalthert/touchstone/issues
 Imports: 
     bench,
     callr,
