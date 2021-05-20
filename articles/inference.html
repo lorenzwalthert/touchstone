@@ -121,17 +121,18 @@
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">fit</span> <span class="op">&lt;-</span> <span class="fu">stats</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/stats/aov.html">aov</a></span><span class="op">(</span><span class="va">elapsed</span> <span class="op">~</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">factor</a></span><span class="op">(</span><span class="va">ref</span><span class="op">)</span>, data <span class="op">=</span> <span class="va">timings</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/stats/confint.html">confint</a></span><span class="op">(</span><span class="va">fit</span>, <span class="va">...</span><span class="op">)</span></code></pre></div>
+<p>We could in addition also control for <code>block</code>, but as we only have two observations per block, this required a lot of parameter estimates and would take away statistical power from our parameter of interest. Our estimates are also unbiased without it.</p>
 <p>Since changes in percent are more relevant than absolute changes, the confidence interval is reported relative to the target branch of the pull request. The measured difference is statistically significantly different from zero if the confidence interval does not overlap with 0. In the screenshot above, this is not the case for any benchmarked expression, as they all range from some negative to some positive number. If you increase <code>n</code>, you can estimate the speed implications of a pull request more precisely, meaning you’ll get a more narrow confidence interval which more likely does not cover zero. You’ll then easily reach statistical significance (and the CI run will take longer), but do you really care if your code gets 0.000001% slower? Probably not. That’s why you also need to look at the range of the confidence interval.</p>
 </div>
 <div id="sampling" class="section level2">
 <h2 class="hasAnchor">
 <a href="#sampling" class="anchor"></a>Sampling</h2>
-<p>We sample both refs in <code>n</code> blocks. This is better than completely at random, because that can lead to biased results if compute power steadily increases/decreases and our sampling is very structured, i.e.:</p>
+<p>We sample both refs in <code>n</code> blocks. This gives us a more efficient estimate of the speed difference than the completely at random, because completely at random can result in or close to one of the following scenarios assuming there is an upwards trend in available compute resources over the whole period:</p>
 <ul>
 <li><p>We run the PR branch <code>n</code> times before we run the target branch, the PR branch is at disadvantage.</p></li>
 <li><p>If we always switch branches, the first branch is at disadvantage.</p></li>
 </ul>
-<p>So we sample randomly within blocks:</p>
+<p>The opposite effect occurs when compute power steadily decreases. So we sample randomly within blocks:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">touchstone</span><span class="fu">:::</span><span class="fu"><a href="../reference/ref_upsample.html">ref_upsample</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"main"</span>, <span class="st">"feature"</span><span class="op">)</span><span class="op">)</span>
 <span class="co">#&gt; # A tibble: 40 x 2</span>
@@ -139,12 +140,12 @@
 <span class="co">#&gt;    &lt;int&gt; &lt;chr&gt;  </span>
 <span class="co">#&gt;  1     1 feature</span>
 <span class="co">#&gt;  2     1 main   </span>
-<span class="co">#&gt;  3     2 main   </span>
-<span class="co">#&gt;  4     2 feature</span>
+<span class="co">#&gt;  3     2 feature</span>
+<span class="co">#&gt;  4     2 main   </span>
 <span class="co">#&gt;  5     3 feature</span>
 <span class="co">#&gt;  6     3 main   </span>
-<span class="co">#&gt;  7     4 main   </span>
-<span class="co">#&gt;  8     4 feature</span>
+<span class="co">#&gt;  7     4 feature</span>
+<span class="co">#&gt;  8     4 main   </span>
 <span class="co">#&gt;  9     5 feature</span>
 <span class="co">#&gt; 10     5 main   </span>
 <span class="co">#&gt; # … with 30 more rows</span></code></pre></div>
