@@ -71,6 +71,12 @@ fit <- stats::aov(elapsed ~ factor(ref), data = timings)
 confint(fit, ...)
 ```
 
+We could in addition also control for `block`, but as we only have two 
+observations per block, this required a lot of parameter estimates and would take
+away statistical power from our parameter of interest. Our estimates are also 
+unbiased without it.
+
+
 Since changes in percent are more relevant than absolute changes, the confidence
 interval is reported relative to the target branch of the pull request. The
 measured difference is statistically significantly different from zero if the
@@ -85,16 +91,18 @@ also need to look at the range of the confidence interval.
 
 ## Sampling
 
-We sample both refs in `n` blocks. This is better than completely at random,
-because that can lead to biased results if compute power steadily
-increases/decreases and our sampling is very structured, i.e.:
+We sample both refs in `n` blocks. This gives us a more efficient estimate of
+the speed difference than the completely at random, because completely at random
+can result in or close to one of the following scenarios assuming there is an
+upwards trend in available compute resources over the whole period:
 
 * We run the PR branch `n` times before we run the target branch, the PR branch
   is at disadvantage.
 
 * If we always switch branches, the first branch is at disadvantage.
 
-So we sample randomly within blocks:
+The opposite effect occurs when compute power steadily decreases. So we sample
+randomly within blocks:
 
 ```{r, eval = TRUE}
 touchstone:::ref_upsample(c("main", "feature"))

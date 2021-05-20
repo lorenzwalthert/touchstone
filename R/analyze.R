@@ -85,7 +85,8 @@ confint_relative_get <- function(timings, refs, reference, ci) {
     dplyr::mutate(
       block = factor(.data$block), ref = factor(.data$ref, levels = refs)
     )
-  fit <- stats::aov(elapsed ~ block + ref, data = timings_with_factors)
+  stopifnot(inherits(timings_with_factors$ref, "factor"))
+  fit <- stats::aov(elapsed ~ ref, data = timings_with_factors)
   var <- paste0("ref", refs[2])
   confint <- confint(fit, var, level = ci)
   paste0("[", paste0(set_sign(round(100 * confint / reference, 2)), collapse = "%, "), "%]")
