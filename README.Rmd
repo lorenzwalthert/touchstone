@@ -145,4 +145,4 @@ clean git working directory.
 ## Status
 
 This package is experimental. You can see an example usage in
-[styler](https://github.com/r-lib/styler/blob/master/.github/workflows/touchstone.yaml).
+[{styler}](https://github.com/r-lib/styler/pull/799).
