@@ -67,7 +67,10 @@ use_touchstone <- function(cancel = TRUE) {
       "Replace the mtcars sample code in `touchstone/script.R` with code from your package you want to benchmark."
     )
   }
-  usethis::ui_todo("Commit and push to GitHub to trigger your first benchmark.")
+  usethis::ui_todo(paste0(
+    "Commit and push to GitHub to the default branch to activate the workflow,",
+    "then make a pull request to trigger your first benchmark run."
+  ))
 }
 
 
