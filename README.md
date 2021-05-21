@@ -67,9 +67,10 @@ For your PR branch and the target branch, {touchstone} will:
 
 -   build the two versions of the package in isolated libraries.
 
--   run the code you want to benchmark, many times, in random order.
-    This ensures the accurate relative measurement of relative
-    differences between the branches.
+-   run the code you want to benchmark, many times, in [random
+    order](https://lorenzwalthert.github.io/touchstone/articles/inference.html#sampling).
+    This ensures the accurate measurement of relative differences
+    between the branches.
 
 Once done with the measurements, it will
 
@@ -91,19 +92,24 @@ This will:
 -   create a `touchstone` directory in the repo root with:
 
     -   `config.json` that defines how to run your benchmark. In
-        particular, you can define a benchmarking repo, that is, code
-        you need to run your bench mark. This repo will be cloned into
-        `benchmarking_path`. The code you want to benchmark comes from
+        particular, you can define a `benchmarking_repo`, that is, a
+        repo you need to run your bench mark (use `""` if you don’t need
+        an additional git repo checked out for your benchmark). This
+        repo will be cloned into `benchmarking_path`. For example to
+        benchmark {styler}, we format the {here} package with
+        `style_pkg()` that is not part of the {styler} repo, but with
+        the below config, will be located at `touchstone/sources/here`
+        during benchmarking. The code you want to benchmark comes from
         the benchmarked repo, which in our case is the root from where
         you call `use_touchstone()` and hence does not need to be
         defined explicitly.
 
     ``` json
-    {
+    { 
       "benchmarking_repo": "lorenzwalthert/here", 
       "benchmarking_ref": "ca9c8e69c727def88d8ba1c8b85b0e0bcea87b3f", 
-      "benchmarking_path": "touchstone/sources/here",
-      "os": "ubuntu-18.04",
+      "benchmarking_path": "touchstone/sources/here", 
+      "os": "ubuntu-18.04", 
       "r": "4.0.0", 
       "rspm": "https://packagemanager.rstudio.com/all/__linux__/bionic/291" 
     }
@@ -116,8 +122,8 @@ This will:
 
     # benchmark a function call from your package (two calls per branch)
     touchstone::benchmark_run_ref(
-      random_test = "yourpkg::fun()",
-      n = 2
+    random_test = "yourpkg::fun()",
+    n = 2
     )
 
     # create artifacts used downstream in the GitHub Action
