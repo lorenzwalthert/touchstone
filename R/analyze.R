@@ -20,7 +20,7 @@ benchmarks_analyze <- function(refs = c(
     "This is how benchmark results would change (along with a ", 100 * ci,
     "% confience interval in relative change) if ",
     system2("git", c("rev-parse", "HEAD"), stdout = TRUE),
-    " and ancestors are merged into ", refs[1], ":", "\n"
+    " is merged into ", refs[1], ":", "\n"
   ) %>%
     writeLines(path_info)
 
