@@ -54,7 +54,7 @@ with_touchstone_lib <- function(path, ref = ref_get_or_fail("GITHUB_HEAD_REF")) 
   fs::file_copy(path, tempfile)
   usethis::ui_done(glue::glue(
     "Copied touchstone script to tempdir to prevent branch checkouts to effect",
-    "the script."
+    " the script."
   ))
   source(tempfile, max.deparse.length = Inf)
 }
