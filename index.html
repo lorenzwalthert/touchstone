@@ -113,7 +113,7 @@
 <p>For your PR branch and the target branch, {touchstone} will:</p>
 <ul>
 <li><p>build the two versions of the package in isolated libraries.</p></li>
-<li><p>run the code you want to benchmark, many times, in random order. This ensures the accurate relative measurement of relative differences between the branches.</p></li>
+<li><p>run the code you want to benchmark, many times, in <a href="https://lorenzwalthert.github.io/touchstone/articles/inference.html#sampling">random order</a>. This ensures the accurate measurement of relative differences between the branches.</p></li>
 </ul>
 <p>Once done with the measurements, it will</p>
 <ul>
@@ -133,13 +133,13 @@
 <p>create a <code>touchstone</code> directory in the repo root with:</p>
 <ul>
 <li>
-<code>config.json</code> that defines how to run your benchmark. In particular, you can define a benchmarking repo, that is, code you need to run your bench mark. This repo will be cloned into <code>benchmarking_path</code>. The code you want to benchmark comes from the benchmarked repo, which in our case is the root from where you call <code><a href="reference/use_touchstone.html">use_touchstone()</a></code> and hence does not need to be defined explicitly.</li>
+<code>config.json</code> that defines how to run your benchmark. In particular, you can define a <code>benchmarking_repo</code>, that is, a repo you need to run your bench mark (use <code>""</code> if you don’t need an additional git repo checked out for your benchmark). This repo will be cloned into <code>benchmarking_path</code>. For example to benchmark {styler}, we format the {here} package with <code>style_pkg()</code> that is not part of the {styler} repo, but with the below config, will be located at <code>touchstone/sources/here</code> during benchmarking. The code you want to benchmark comes from the benchmarked repo, which in our case is the root from where you call <code><a href="reference/use_touchstone.html">use_touchstone()</a></code> and hence does not need to be defined explicitly.</li>
 </ul>
-<div class="sourceCode" id="cb3"><pre class="sourceCode json"><code class="sourceCode json"><span id="cb3-1"><a href="#cb3-1"></a><span class="fu">{</span></span>
+<div class="sourceCode" id="cb3"><pre class="sourceCode json"><code class="sourceCode json"><span id="cb3-1"><a href="#cb3-1"></a><span class="fu">{</span> </span>
 <span id="cb3-2"><a href="#cb3-2"></a>  <span class="dt">"benchmarking_repo"</span><span class="fu">:</span> <span class="st">"lorenzwalthert/here"</span><span class="fu">,</span> </span>
 <span id="cb3-3"><a href="#cb3-3"></a>  <span class="dt">"benchmarking_ref"</span><span class="fu">:</span> <span class="st">"ca9c8e69c727def88d8ba1c8b85b0e0bcea87b3f"</span><span class="fu">,</span> </span>
-<span id="cb3-4"><a href="#cb3-4"></a>  <span class="dt">"benchmarking_path"</span><span class="fu">:</span> <span class="st">"touchstone/sources/here"</span><span class="fu">,</span></span>
-<span id="cb3-5"><a href="#cb3-5"></a>  <span class="dt">"os"</span><span class="fu">:</span> <span class="st">"ubuntu-18.04"</span><span class="fu">,</span></span>
+<span id="cb3-4"><a href="#cb3-4"></a>  <span class="dt">"benchmarking_path"</span><span class="fu">:</span> <span class="st">"touchstone/sources/here"</span><span class="fu">,</span> </span>
+<span id="cb3-5"><a href="#cb3-5"></a>  <span class="dt">"os"</span><span class="fu">:</span> <span class="st">"ubuntu-18.04"</span><span class="fu">,</span> </span>
 <span id="cb3-6"><a href="#cb3-6"></a>  <span class="dt">"r"</span><span class="fu">:</span> <span class="st">"4.0.0"</span><span class="fu">,</span> </span>
 <span id="cb3-7"><a href="#cb3-7"></a>  <span class="dt">"rspm"</span><span class="fu">:</span> <span class="st">"https://packagemanager.rstudio.com/all/__linux__/bionic/291"</span> </span>
 <span id="cb3-8"><a href="#cb3-8"></a><span class="fu">}</span></span></code></pre></div>
@@ -152,8 +152,8 @@
 
 <span class="co"># benchmark a function call from your package (two calls per branch)</span>
 <span class="fu">touchstone</span><span class="fu">::</span><span class="fu"><a href="reference/benchmark_run_ref.html">benchmark_run_ref</a></span><span class="op">(</span>
-  random_test <span class="op">=</span> <span class="st">"yourpkg::fun()"</span>,
-  n <span class="op">=</span> <span class="fl">2</span>
+random_test <span class="op">=</span> <span class="st">"yourpkg::fun()"</span>,
+n <span class="op">=</span> <span class="fl">2</span>
 <span class="op">)</span>
 
 <span class="co"># create artifacts used downstream in the GitHub Action</span>
