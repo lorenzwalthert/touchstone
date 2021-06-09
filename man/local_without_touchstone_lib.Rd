@@ -13,11 +13,11 @@ local_without_touchstone_lib(path_pkg = ".", envir = parent.frame())
 destruction.}
 }
 \description{
-This is useful in conjunction with \code{\link[=with_touchstone_lib]{with_touchstone_lib()}}.
+This is useful in conjunction with \code{\link[=run_script]{run_script()}}.
 }
 \details{
 \itemize{
-\item Add a touchstone library to the path with \code{\link[=with_touchstone_lib]{with_touchstone_lib()}} and
+\item Add a touchstone library to the path with \code{\link[=run_script]{run_script()}} and
 run a script. The script hence may contain calls to libraries only installed
 in touchstone libraries.
 \item benchmark code with \code{\link[=benchmark_run_ref]{benchmark_run_ref()}}. At the start, remove all

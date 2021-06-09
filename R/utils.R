@@ -28,7 +28,7 @@ ref_get_or_fail <- function(var) {
       "If you don't specify the argument `ref(s)`, you must set the environment ",
       "variable `", var, "` to tell {touchstone} ",
       "which branches you want to benchmark against each other, see ",
-      "help(with_touchstone_lib, package = 'touchstone')."
+      "help(run_script, package = 'touchstone')."
     ))
   } else {
     retrieved
@@ -109,12 +109,12 @@ local_git_checkout <- function(branch,
 
 #' Temporarily remove all touchstone libraries from the path
 #'
-#' This is useful in conjunction with [with_touchstone_lib()].
+#' This is useful in conjunction with [run_script()].
 #' @param path_pkg The path to the package that contains the touchstone library.
 #' @param envir The environment that triggers the deferred action on
 #'   destruction.
 #' @details
-#' * Add a touchstone library to the path with [with_touchstone_lib()] and
+#' * Add a touchstone library to the path with [run_script()] and
 #'   run a script. The script hence may contain calls to libraries only installed
 #'   in touchstone libraries.
 #' * benchmark code with [benchmark_run_ref()]. At the start, remove all

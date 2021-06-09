@@ -5,7 +5,7 @@
 \title{The script for benchmarking}
 \description{
 The script that contains the code which executes the benchmark. It is
-typically called with \code{\link[=with_touchstone_lib]{with_touchstone_lib()}}.
+typically called with \code{\link[=run_script]{run_script()}}.
 }
 \section{Requirements}{
 

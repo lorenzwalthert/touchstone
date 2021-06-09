@@ -41,11 +41,11 @@
 #' if (rlang::is_installed("withr")) {
 #'   withr::with_envvar(
 #'     c("GITHUB_BASE_REF" = "main", "GITHUB_HEAD_REF" = "devel"),
-#'     with_touchstone_lib("touchstone/script.R")
+#'     run_script("touchstone/script.R")
 #'   )
 #' }
 #' }
-with_touchstone_lib <- function(path, ref = ref_get_or_fail("GITHUB_HEAD_REF")) {
+run_script <- function(path, ref = ref_get_or_fail("GITHUB_HEAD_REF")) {
   lib <- libpath_touchstone(ref)
   fs::dir_create(lib)
   withr::local_libpaths(
@@ -65,7 +65,7 @@ with_touchstone_lib <- function(path, ref = ref_get_or_fail("GITHUB_HEAD_REF")) 
 #' The script for benchmarking
 #'
 #' The script that contains the code which executes the benchmark. It is
-#' typically called with [with_touchstone_lib()].
+#' typically called with [run_script()].
 #'
 #' @name touchstone_script
 #' @section Requirements:

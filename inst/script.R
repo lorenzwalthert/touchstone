@@ -1,4 +1,4 @@
-# see `help(with_touchstone_lib, package = 'touchstone')` on how to run this
+# see `help(run_script, package = 'touchstone')` on how to run this
 # interactively
 
 touchstone::refs_install() # installs branches to benchmark
