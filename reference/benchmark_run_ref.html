@@ -72,7 +72,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">touchstone</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">0.0.0.9000</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">0.0.0.9001</span>
       </span>
     </div>
 
@@ -98,6 +98,9 @@
       <a href="../articles/inference.html">Inference</a>
     </li>
   </ul>
+</li>
+<li>
+  <a href="../news/index.html">Changelog</a>
 </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
@@ -159,8 +162,7 @@ the head ref is the source branch of the pull request in a workflow run.</p></td
     </tr>
     <tr>
       <th>n</th>
-      <td><p>Number of times benchmarks should be run. Refers to the total of
-all <code>refs</code>.</p></td>
+      <td><p>Number of times benchmarks should be run for each <code>ref</code>.</p></td>
     </tr>
     <tr>
       <th>path_pkg</th>
@@ -171,7 +173,7 @@ temporarily checkout the branch during benchmarking.</p></td>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>Returns all timings.</p>
+    <p>All timings in a tibble.</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>Runs the following loop <code>n</code> times:</p><ul>

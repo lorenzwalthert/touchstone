@@ -72,7 +72,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">touchstone</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">0.0.0.9000</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">0.0.0.9001</span>
       </span>
     </div>
 
@@ -98,6 +98,9 @@
       <a href="../articles/inference.html">Inference</a>
     </li>
   </ul>
+</li>
+<li>
+  <a href="../news/index.html">Changelog</a>
 </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
@@ -131,6 +134,7 @@
 
     <pre class="usage"><span class='fu'>benchmarks_analyze</span><span class='op'>(</span>
   refs <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fu'><a href='ref_get_or_fail.html'>ref_get_or_fail</a></span><span class='op'>(</span><span class='st'>"GITHUB_BASE_REF"</span><span class='op'>)</span>, <span class='fu'><a href='ref_get_or_fail.html'>ref_get_or_fail</a></span><span class='op'>(</span><span class='st'>"GITHUB_HEAD_REF"</span><span class='op'>)</span><span class='op'>)</span>,
+  names <span class='op'>=</span> <span class='cn'>NULL</span>,
   ci <span class='op'>=</span> <span class='fl'>0.95</span>
 <span class='op'>)</span></pre>
 
@@ -142,11 +146,19 @@
       <td><p>The names of the branches for which analysis should be created.</p></td>
     </tr>
     <tr>
+      <th>names</th>
+      <td><p>The names of the benchmarks to analyze. If <code>NULL</code>, all
+benchmarks with the <code>refs</code> are taken.</p></td>
+    </tr>
+    <tr>
       <th>ci</th>
       <td><p>The confidence level, defaults to 95%.</p></td>
     </tr>
     </table>
 
+    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
+
+    <p>A character vector that summarizes the benchmarking results.</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>Creates two side effects:</p><ul>

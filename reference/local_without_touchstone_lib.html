@@ -40,7 +40,7 @@
 
 
 <meta property="og:title" content="Temporarily remove all touchstone libraries from the path — local_without_touchstone_lib" />
-<meta property="og:description" content="This is useful in conjunction with with_touchstone_lib()." />
+<meta property="og:description" content="This is useful in conjunction with run_script()." />
 
 
 
@@ -72,7 +72,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">touchstone</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">0.0.0.9000</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">0.0.0.9001</span>
       </span>
     </div>
 
@@ -98,6 +98,9 @@
       <a href="../articles/inference.html">Inference</a>
     </li>
   </ul>
+</li>
+<li>
+  <a href="../news/index.html">Changelog</a>
 </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
@@ -126,7 +129,7 @@
     </div>
 
     <div class="ref-description">
-    <p>This is useful in conjunction with <code><a href='with_touchstone_lib.html'>with_touchstone_lib()</a></code>.</p>
+    <p>This is useful in conjunction with <code><a href='run_script.html'>run_script()</a></code>.</p>
     </div>
 
     <pre class="usage"><span class='fu'>local_without_touchstone_lib</span><span class='op'>(</span>path_pkg <span class='op'>=</span> <span class='st'>"."</span>, envir <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/sys.parent.html'>parent.frame</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span></pre>
@@ -149,7 +152,7 @@ destruction.</p></td>
 
     
 <ul>
-<li><p>Add a touchstone library to the path with <code><a href='with_touchstone_lib.html'>with_touchstone_lib()</a></code> and
+<li><p>Add a touchstone library to the path with <code><a href='run_script.html'>run_script()</a></code> and
 run a script. The script hence may contain calls to libraries only installed
 in touchstone libraries.</p></li>
 <li><p>benchmark code with <code><a href='benchmark_run_ref.html'>benchmark_run_ref()</a></code>. At the start, remove all
