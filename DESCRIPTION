@@ -1,7 +1,7 @@
 Type: Package
 Package: touchstone
 Title: Benchmark Different Git Refs in One Run
-Version: 0.0.0.9001
+Version: 0.1.0
 Authors@R: 
     c(person(given = "Lorenz",
              family = "Walthert",
