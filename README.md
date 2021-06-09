@@ -18,11 +18,10 @@ request.
 
 ## Installation
 
-You can install the package from GitHub:
+You can install the package from CRAN:
 
 ``` r
-# install.packages("devtools")
-devtools::install_github("lorenzwalthert/touchstone")
+install.packages("touchstone")
 ```
 
 ## Motivation
