@@ -19,7 +19,7 @@ test_that("can call package in script", {
     ),
     path_touchstone
   )
-  expect_error(with_touchstone_lib(path_touchstone, ref = refs[2]), NA)
+  expect_error(run_script(path_touchstone, ref = refs[2]), NA)
   withr::local_envvar(GITHUB_HEAD_REF = "main")
-  expect_error(with_touchstone_lib(path_touchstone), NA)
+  expect_error(run_script(path_touchstone), NA)
 })

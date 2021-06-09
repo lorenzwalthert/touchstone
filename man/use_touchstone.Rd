@@ -13,6 +13,9 @@ for canceling old runs when new ones are started. This makes sense because
 touchstone runs can take a lot of time and compute resources and you usually
 don't care about old runs when you pushed new code.}
 }
+\value{
+The function is called for its side effects and returns \code{NULL} (invisibly).
+}
 \description{
 Initiate {touchstone}
 }

@@ -1,7 +1,7 @@
 Type: Package
 Package: touchstone
 Title: Benchmark Different Git Refs in One Run
-Version: 0.0.0.9000
+Version: 0.0.0.9001
 Authors@R: 
     person(given = "Lorenz",
            family = "Walthert",
@@ -21,7 +21,7 @@ Imports:
     fs,
     gert,
     magrittr,
-    mockery (>= 0.4.2.9000),
+    mockery (>= 0.4.2),
     purrr,
     remotes,
     rlang,
@@ -40,8 +40,6 @@ Suggests:
     withr
 VignetteBuilder: 
     knitr
-Remotes: 
-    r-lib/mockery
 Config/testthat/edition: 3
 Config/testthat/parallel: true
 Encoding: UTF-8

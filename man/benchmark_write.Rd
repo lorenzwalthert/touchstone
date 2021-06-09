@@ -29,6 +29,9 @@ refers to. Multiple iterations within a block always benchmark the same
 
 \item{append}{Whether to append the result to the file or not.}
 }
+\value{
+Character vector of lenth one with path to the record written (invisibly).
+}
 \description{
 Write a benchmark
 }

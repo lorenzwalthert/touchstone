@@ -42,6 +42,7 @@ io
 json
 knitr
 LazyData
+lenth
 libcurl
 libgit
 libpaths
@@ -53,6 +54,7 @@ lorenz
 lorenzwalthert
 magrittr
 matchArtifact
+md
 MERCHANTABILITY
 mkdir
 NONINFRINGEMENT
@@ -66,8 +68,10 @@ pkgdown
 prepending
 PRs
 purrr
+rc
 Rds
 readFileSync
+README
 repo
 RHUB
 rlang

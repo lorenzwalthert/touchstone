@@ -6,6 +6,8 @@ NULL
 
 #' @describeIn touchstone_managers returns the directory where the touchstone database lives.
 #' @aliases touchstone_managers
+#' @return
+#' Character vector of length one with th path to the touchstone directory.
 #' @export
 dir_touchstone <- function() {
   getOption("touchstone.dir", "touchstone")
@@ -15,6 +17,9 @@ dir_touchstone <- function() {
 #'
 #' This function is only exported because it is a default argument.
 #' @param var The environment variable to retrieve.
+#' @return
+#' Returns a character vector of length one with the `ref` retrieved from the
+#' environment variable `var`.
 #' @export
 ref_get_or_fail <- function(var) {
   retrieved <- Sys.getenv(var)
@@ -23,7 +28,7 @@ ref_get_or_fail <- function(var) {
       "If you don't specify the argument `ref(s)`, you must set the environment ",
       "variable `", var, "` to tell {touchstone} ",
       "which branches you want to benchmark against each other, see ",
-      "help(with_touchstone_lib, package = 'touchstone')."
+      "help(run_script, package = 'touchstone')."
     ))
   } else {
     retrieved
@@ -38,6 +43,8 @@ path_touchstone_script <- function() {
 #' @aliases touchstone_managers
 #' @param all Whether to clear the whole touchstone directory or just the
 #'   records sub directory.
+#' @return
+#' The deleted paths (invisibly).
 #' @export
 touchstone_clear <- function(all = FALSE) {
   paths <- fs::path(dir_touchstone(), if (!all) c("records", "lib") else "")
@@ -102,12 +109,12 @@ local_git_checkout <- function(branch,
 
 #' Temporarily remove all touchstone libraries from the path
 #'
-#' This is useful in conjunction with [with_touchstone_lib()].
+#' This is useful in conjunction with [run_script()].
 #' @param path_pkg The path to the package that contains the touchstone library.
 #' @param envir The environment that triggers the deferred action on
 #'   destruction.
 #' @details
-#' * Add a touchstone library to the path with [with_touchstone_lib()] and
+#' * Add a touchstone library to the path with [run_script()] and
 #'   run a script. The script hence may contain calls to libraries only installed
 #'   in touchstone libraries.
 #' * benchmark code with [benchmark_run_ref()]. At the start, remove all

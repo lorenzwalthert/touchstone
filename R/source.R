@@ -8,13 +8,9 @@
 #' @param path The script to run. It must fulfill the requirements of a
 #'   [touchstone_script].
 #' @param ref The branch that corresponds to the library that should be prepended
-#'   to the library path when the script at `path` is executed, e.g. because
-#'   you need to call a utility function from the benchmarked package before you
-#'   run the benchmark with [benchmark_run_ref()]. Note that during
-#'   a benchmark run with [benchmark_run_ref()], all touchstone library paths
-#'   are removed and the library path corresponding to the argument `ref`
-#'   in [benchmark_run_ref()] is added.
-#' @section How to run this interactively?
+#'   to the library path when the script at `path` is executed, see 'Why this
+#'   function?' below.
+#' @section How to run this interactively?:
 #' In a GitHub Action workflow, the environment variables `GITHUB_BASE_REF` and
 #' `GITHUB_HEAD_REF` denote the target and source branch of the pull request -
 #' and these are default arguments in [benchmark_run_ref()] (and other functions
@@ -24,14 +20,20 @@
 #' ```
 #' Sys.setenv(GITHUB_BASE_REF = "main", GITHUB_HEAD_REF = "devel")
 #' ```
-#' @section Why this function?
-#' For isolation, it's not allowed to install the
-#' benchmarked package into the global library, as asserted with
-#' [assert_no_global_installation()]. However, this implies that the package
-#' is not available in the touchstone script outside of benchmark runs. To
-#' remove this limitation, we prepend a touchstone library location that
-#' contains the installed benchmarked package, and temporarily remove it during
-#' benchmarking if another touchstone library is used.
+#' @section Why this function?:
+#' For isolation, \{touchstone\} does not allow the benchmarked package to be
+#' installed in the global package library, but only in touchstone libraries, as
+#' asserted with [assert_no_global_installation()]. However, this also implies
+#' that the package is not available in the touchstone script outside of
+#' benchmark runs (i.e. outside of [benchmark_run_ref()]. We sometimes still
+#' want to call that package to prepare a benchmarking run though. To
+#' allow this, we prepend a touchstone library location that
+#' contains the installed benchmarked package for set-up tasks, and temporarily
+#' remove it during benchmarking with [benchmark_run_ref()] so only one
+#' touchstone library is on the library path at any time.
+#' @return
+#' The same as [base::source()], which inherits from [base::withVisible()], i.e.
+#' a list with `value` and `visible` (invisibly).
 #' @export
 #' @examples
 #' \dontrun{
@@ -39,11 +41,11 @@
 #' if (rlang::is_installed("withr")) {
 #'   withr::with_envvar(
 #'     c("GITHUB_BASE_REF" = "main", "GITHUB_HEAD_REF" = "devel"),
-#'     with_touchstone_lib("touchstone/script.R")
+#'     run_script("touchstone/script.R")
 #'   )
 #' }
 #' }
-with_touchstone_lib <- function(path, ref = ref_get_or_fail("GITHUB_HEAD_REF")) {
+run_script <- function(path, ref = ref_get_or_fail("GITHUB_HEAD_REF")) {
   lib <- libpath_touchstone(ref)
   fs::dir_create(lib)
   withr::local_libpaths(
@@ -63,7 +65,7 @@ with_touchstone_lib <- function(path, ref = ref_get_or_fail("GITHUB_HEAD_REF")) 
 #' The script for benchmarking
 #'
 #' The script that contains the code which executes the benchmark. It is
-#' typically called with [with_touchstone_lib()].
+#' typically called with [run_script()].
 #'
 #' @name touchstone_script
 #' @section Requirements:
