@@ -19,9 +19,9 @@ Description: A common problem of benchmarking in continuous integration is
     comparison, either locally or via 'GitHub Actions' and outputs a
     confidence interval for the relative difference.
 License: MIT + file LICENSE
-URL: https://github.com/lorenzwalthert/touchstone,
+URL: https://github.com/lorenzwalthert/touchstone/,
     https://lorenzwalthert.github.io/touchstone/
-BugReports: https://github.com/lorenzwalthert/touchstone/issues
+BugReports: https://github.com/lorenzwalthert/touchstone/issues/
 Imports: 
     bench,
     callr,
