@@ -9,6 +9,9 @@ benchmark_ls(name = "")
 \arguments{
 \item{name}{The name of the benchmark.}
 }
+\value{
+A tibble with name and refs of the existing benchmarks.
+}
 \description{
 List which benchmarks were recorded
 }

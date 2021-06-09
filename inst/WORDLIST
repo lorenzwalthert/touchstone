@@ -42,6 +42,7 @@ io
 json
 knitr
 LazyData
+lenth
 libcurl
 libgit
 libpaths

@@ -11,6 +11,15 @@ A common problem of benchmarking in continuous integration is
     varies over time.  This package allows users to benchmark two git refs
     of the same repo in a random sequence for better comparison.
 }
+\seealso{
+Useful links:
+\itemize{
+  \item \url{https://github.com/lorenzwalthert/touchstone}
+  \item \url{https://lorenzwalthert.github.io/touchstone}
+  \item Report bugs at \url{https://github.com/lorenzwalthert/touchstone/issues}
+}
+
+}
 \author{
 \strong{Maintainer}: Lorenz Walthert \email{lorenz.walthert@icloud.com}
 

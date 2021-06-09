@@ -6,6 +6,8 @@ NULL
 
 #' @describeIn touchstone_managers returns the directory where the touchstone database lives.
 #' @aliases touchstone_managers
+#' @return
+#' Character vector of length one with th path to the touchstone directory.
 #' @export
 dir_touchstone <- function() {
   getOption("touchstone.dir", "touchstone")
@@ -15,6 +17,9 @@ dir_touchstone <- function() {
 #'
 #' This function is only exported because it is a default argument.
 #' @param var The environment variable to retrieve.
+#' @return
+#' Returns a character vector of length one with the `ref` retrieved from the
+#' environment variable `var`.
 #' @export
 ref_get_or_fail <- function(var) {
   retrieved <- Sys.getenv(var)
@@ -38,6 +43,8 @@ path_touchstone_script <- function() {
 #' @aliases touchstone_managers
 #' @param all Whether to clear the whole touchstone directory or just the
 #'   records sub directory.
+#' @return
+#' The deleted paths (invisibly).
 #' @export
 touchstone_clear <- function(all = FALSE) {
   paths <- fs::path(dir_touchstone(), if (!all) c("records", "lib") else "")

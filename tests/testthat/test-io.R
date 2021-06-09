@@ -8,13 +8,13 @@ test_that("can read, write and list benchmark", {
   bm <- benchmark_read(ref, name = "x1")
   schema <- purrr::map_chr(bm, ~ class(.x)[1])
   expect_equal(schema, schema_disk())
-  expect_equal(benchmark_ls(), "x1")
-  expect_equal(benchmark_ls(name = "x1"), "hash")
+  expect_equal(unique(benchmark_ls()$name), "x1")
+  expect_equal(benchmark_ls(name = "x1"), tibble::tibble(name = "x1", ref = "hash"))
 })
 
 test_that("does fail infomatively if there is no benchmark", {
   local_clean_touchstone()
-  expect_equal(benchmark_ls(), character())
+  expect_equal(benchmark_ls(), tibble::tibble(name = character(), ref = character()))
 })
 
 

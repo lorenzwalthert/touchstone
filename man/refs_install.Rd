@@ -18,7 +18,7 @@ refs_install(
 \item{install_dependencies}{Passed to ``}
 }
 \value{
-The global and touchstone library paths
+The global and touchstone library paths in a character vector (invisibly).
 }
 \description{
 Installs each \code{ref} in a separate library for isolation.

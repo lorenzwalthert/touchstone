@@ -48,8 +48,7 @@ benchmark_run_iteration <- function(expr_before_benchmark,
 #'   must be built for each benchmarked branch beforehand with [refs_install()].
 #'   The base ref is the target branch of the pull request in a workflow run,
 #'   the head ref is the source branch of the pull request in a workflow run.
-#' @param n Number of times benchmarks should be run. Refers to the total of
-#'   all `refs`.
+#' @param n Number of times benchmarks should be run for each `ref`.
 #' @param path_pkg The path to the package to benchmark. Will be used to
 #'   temporarily checkout the branch during benchmarking.
 #' @inheritParams refs_install
@@ -62,7 +61,7 @@ benchmark_run_iteration <- function(expr_before_benchmark,
 #'  * benchmarks `expr_to_benchmark` and writes them to disk.
 #'
 #' @return
-#' Returns all timings.
+#' All timings in a tibble.
 #' @section Caution:
 #' This function will perform various git operations that affect the state of
 #' the directory it is ran in, in particular different branches will be checked

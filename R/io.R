@@ -9,6 +9,8 @@
 #' @param iteration An integer indicating to which iteration the benchmark
 #'   refers to. Multiple iterations within a block always benchmark the same
 #'   `ref`.
+#' @return
+#' Character vector of lenth one with path to the record written (invisibly).
 #' @export
 benchmark_write <- function(benchmark, name, ref, block = NA, iteration = NA, append = TRUE) {
   if (benchmark$n_itr > 1) {
@@ -42,11 +44,13 @@ benchmark_write_impl <- function(benchmark, path, append) {
       fileEncoding = "UTF-8", col.names = !file_exists
     )
   )
-  path
+  invisible(path)
 }
 
 #' Read benchmarks
 #' @inheritParams benchmark_write
+#' @return
+#' A tibble with the benchmarks.
 #' @export
 benchmark_read <- function(name, ref) {
   path_outputs <- path_record(name, ref)
@@ -57,17 +61,33 @@ benchmark_read <- function(name, ref) {
   vctrs::vec_rbind(!!!out)
 }
 
+
+new_benchmark_ls_tibble <- function(name = character(), ref = character()) {
+  tibble::tibble(name, ref)
+}
+
 #' List which benchmarks were recorded
 #'
 #' @inheritParams benchmark_write
+#' @return
+#' A tibble with name and refs of the existing benchmarks.
 #' @export
 benchmark_ls <- function(name = "") {
-  path <- path_record(name = name)
-  if (fs::file_exists(path)) {
-    as.character(fs::path_file(fs::dir_ls(path)))
-  } else {
-    character()
+  path_record <- path_record()
+  if (!fs::dir_exists(path_record())) {
+    return(new_benchmark_ls_tibble())
   }
+  path_names <- fs::dir_ls(path_record, type = "directory")
+  if (length(path_names) < 1) {
+    return(new_benchmark_ls_tibble())
+  }
+  all_names <- fs::path_file(path_names)
+  path <- path_record(name = all_names)
+  dirs <- fs::dir_ls(path, type = "file")
+  new_benchmark_ls_tibble(
+    name = fs::path_file(fs::path_dir(dirs)),
+    ref = fs::path_file(dirs)
+  )
 }
 
 path_record <- function(name = "", ref = "") {

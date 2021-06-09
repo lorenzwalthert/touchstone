@@ -9,6 +9,10 @@ ref_get_or_fail(var)
 \arguments{
 \item{var}{The environment variable to retrieve.}
 }
+\value{
+Returns a character vector of length one with the \code{ref} retrieved from the
+environment variable \code{var}.
+}
 \description{
 This function is only exported because it is a default argument.
 }

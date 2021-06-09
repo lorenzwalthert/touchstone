@@ -14,6 +14,11 @@ touchstone_clear(all = FALSE)
 \item{all}{Whether to clear the whole touchstone directory or just the
 records sub directory.}
 }
+\value{
+Character vector of length one with th path to the touchstone directory.
+
+The deleted paths (invisibly).
+}
 \description{
 Utilities to manage the touchstone database.
 }

@@ -12,6 +12,9 @@ benchmark_read(name, ref)
 \item{ref}{A character vector of length one to indicate the git ref (i.e.
 commit, tag, branch etc) of the benchmarking.}
 }
+\value{
+A tibble with the benchmarks.
+}
 \description{
 Read benchmarks
 }

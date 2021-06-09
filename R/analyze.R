@@ -9,12 +9,18 @@
 #'   expression. See `vignette("inference", package = "touchstone")` for details.
 #' @param refs The names of the branches for which analysis should be created.
 #' @param ci The confidence level, defaults to 95%.
+#' @return
+#' A character vector that summarizes the benchmarking results.
 #' @export
 benchmarks_analyze <- function(refs = c(
                                  ref_get_or_fail("GITHUB_BASE_REF"),
                                  ref_get_or_fail("GITHUB_HEAD_REF")
                                ),
+                               names = NULL,
                                ci = 0.95) {
+  if (length(refs) != 2) {
+    rlang::abort("There must be exactly two refs to comare.")
+  }
   path_info <- fs::path(dir_touchstone(), "pr-comment/info.txt")
   paste0(
     "This is how benchmark results would change (along with a ", 100 * ci,
@@ -24,7 +30,26 @@ benchmarks_analyze <- function(refs = c(
   ) %>%
     writeLines(path_info)
 
-  out <- purrr::walk(benchmark_ls(), benchmark_analyze, refs = refs, ci = ci)
+  if (is.null(names)) {
+    # only select names that occur exactly twice
+    names <- benchmark_ls() %>%
+      dplyr::filter(.data$ref %in% !!refs) %>%
+      dplyr::group_by(.data$name) %>%
+      dplyr::count()
+
+    filtered_names <- dplyr::filter(names, .data$n == 2)
+    if (!identical(names, filtered_names)) {
+      rlang::warn(paste0(
+        "All benchmarks to analyse must have the two refs ", refs[1], " and ", refs[2],
+        ". Ignoring all benchmarks that don't have exactly those two refs.",
+        "To avoid this warning, inspect the existing benchmarks with ",
+        "`touchstone::benchmark_ls()`"
+      ))
+      names <- filtered_names
+    }
+  }
+
+  out <- purrr::walk(names$name, benchmark_analyze, refs = refs, ci = ci)
   text <- paste(
     "\nFurther explanation regarding interpretation and methodology can be found",
     "in the [documentation](https://lorenzwalthert.github.io/touchstone/articles/inference.html)."

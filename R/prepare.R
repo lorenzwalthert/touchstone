@@ -39,7 +39,7 @@ ref_install <- function(ref = "master",
 #' @param install_dependencies Passed to ``
 #' @inheritParams ref_install
 #' @return
-#' The global and touchstone library paths
+#' The global and touchstone library paths in a character vector (invisibly).
 #' @export
 refs_install <- function(refs = c(
                            ref_get_or_fail("GITHUB_BASE_REF"),
@@ -61,7 +61,7 @@ refs_install <- function(refs = c(
     sort()
   assert_no_global_installation(path_pkg)
   usethis::ui_done("Completed installations.")
-  libpaths
+  invisible(libpaths)
 }
 
 

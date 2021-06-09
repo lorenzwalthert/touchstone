@@ -24,14 +24,13 @@ must be built for each benchmarked branch beforehand with \code{\link[=refs_inst
 The base ref is the target branch of the pull request in a workflow run,
 the head ref is the source branch of the pull request in a workflow run.}
 
-\item{n}{Number of times benchmarks should be run. Refers to the total of
-all \code{refs}.}
+\item{n}{Number of times benchmarks should be run for each \code{ref}.}
 
 \item{path_pkg}{The path to the package to benchmark. Will be used to
 temporarily checkout the branch during benchmarking.}
 }
 \value{
-Returns all timings.
+All timings in a tibble.
 }
 \description{
 Run a benchmark for git refs
