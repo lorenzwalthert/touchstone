@@ -7,6 +7,12 @@
 
 ## R CMD check results
 
-0 errors | 0 warnings | 1 note
+0 errors | 0 warnings | 2 note
 
 * This is a new release.
+* Found the following calls to attach():
+    File 'touchstone/R/core.R':
+    attach(loadNamespace("touchstone"), name = new_name)
+     See section 'Good practice' in '?attach'.
+
+For the latter, I followed the good practices.
