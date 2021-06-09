@@ -2,7 +2,7 @@
 <!-- badges: start -->
 
 [![Lifecycle:
-experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://www.tidyverse.org/lifecycle/#experimental)
+experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
 [![R build
 status](https://github.com/lorenzwalthert/touchstone/workflows/R-CMD-check/badge.svg)](https://github.com/lorenzwalthert/touchstone/actions)
 <!-- badges: end -->
@@ -46,9 +46,10 @@ motivation:
 
   - **Dependencies should be identical across versions:** R and package
     versions of dependencies must be fixed via
-    [RSPM](http://packagemanager.rstudio.com) to allow as much
-    continuation as possible anyways. Changing the timestamp of RSPM can
-    happen in PRs that are only dedicated to dependency updates.
+    [RSPM](https://packagemanager.rstudio.com/client/#/) to allow as
+    much continuation as possible anyways. Changing the timestamp of
+    RSPM can happen in PRs that are only dedicated to dependency
+    updates.
 
   - **Pull requests are a natural unit for measuring speed:** Linking
     benchmarking to pull requests make sense because you can easily
