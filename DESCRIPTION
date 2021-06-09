@@ -1,6 +1,6 @@
 Type: Package
 Package: touchstone
-Title: Benchmark Different Git Refs in One Run
+Title: Benchmarking Different 'git' Refs with Confidence in One Go
 Version: 0.1.0
 Authors@R: 
     c(person(given = "Lorenz",
@@ -15,7 +15,8 @@ Authors@R:
 Description: A common problem of benchmarking in continuous integration is
     that the computational power of the virtual machines that run the job
     varies over time.  This package allows users to benchmark two git refs
-    of the same repo in a random sequence for better comparison.
+    of the same repo in a random sequence for better comparison, booth
+    locally and via 'GitHub Actions'.
 License: MIT + file LICENSE
 URL: https://github.com/lorenzwalthert/touchstone,
     https://lorenzwalthert.github.io/touchstone
