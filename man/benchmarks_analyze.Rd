@@ -13,6 +13,9 @@ benchmarks_analyze(
 \arguments{
 \item{refs}{The names of the branches for which analysis should be created.}
 
+\item{names}{The names of the benchmarks to analyze. If \code{NULL}, all
+benchmarks with the \code{refs} are taken.}
+
 \item{ci}{The confidence level, defaults to 95\%.}
 }
 \value{

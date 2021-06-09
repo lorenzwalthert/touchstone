@@ -8,6 +8,8 @@
 #'   `touchstone/pr-comment/info.txt` for every registered benchmarking
 #'   expression. See `vignette("inference", package = "touchstone")` for details.
 #' @param refs The names of the branches for which analysis should be created.
+#' @param names The names of the benchmarks to analyze. If `NULL`, all
+#'   benchmarks with the `refs` are taken.
 #' @param ci The confidence level, defaults to 95%.
 #' @return
 #' A character vector that summarizes the benchmarking results.

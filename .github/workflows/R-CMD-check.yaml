@@ -67,6 +67,7 @@ jobs:
         run: |
           remotes::install_cran("rcmdcheck")
           remotes::install_deps(dependencies = TRUE)
+          remotes::install_github('r-lib/mockery')
         shell: Rscript {0}
 
       - name: Check

@@ -1,4 +1,5 @@
 test_that("can analyze results", {
+  skip_if(packageVersion("mockery") < "0.4.2.9000")
   withr::local_options(list(touchstone.skip_install = TRUE))
   branches <- c("devel", "c4")
   path_test_pkg <- local_package(branches = branches)
@@ -27,6 +28,7 @@ test_that("can validate inputs before analysing", {
 })
 
 test_that("can analyze results", {
+  skip_if(packageVersion("mockery") < "0.4.2.9000")
   withr::local_options(list(touchstone.skip_install = TRUE))
   branches <- c("devel", "c4")
   path_test_pkg <- local_package(branches = branches)
