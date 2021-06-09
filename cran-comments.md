@@ -15,4 +15,9 @@
     attach(loadNamespace("touchstone"), name = new_name)
      See section 'Good practice' in '?attach'.
 
-For the latter, I followed the good practices.
+For the latter, I followed the good practices. My package needs to be invoked
+from a separate R process (via the R package callr) because library paths 
+cannot be cleanly removed within an R session and this function requires that
+temporarily. Alternatively, I could have exported `exprs_eval` and called it
+from that sub-process with `::`, but I prefer not to export it since it's not a
+user-facing function.
