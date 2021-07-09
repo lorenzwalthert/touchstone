@@ -18,11 +18,8 @@ path_pr_comment()
 records sub directory.}
 }
 \value{
-Character vector of length one with th path to the touchstone directory.
-
-The deleted paths (invisibly).
-
-Character vector of length one with the path to the pr comment.
+Character vector of length one with the path to the touchstone directory (for
+\code{dir_touchstone()}), path to the deleted files for (\code{touchstone_clear()}).
 }
 \description{
 Utilities to manage the touchstone database.

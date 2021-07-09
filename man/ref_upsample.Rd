@@ -6,6 +6,9 @@
 \usage{
 ref_upsample(ref, n = 20)
 }
+\value{
+A tibble with columns \code{block} and \code{ref}.
+}
 \description{
 A block is a permutation of all unique elements in \code{ref}. Then, we sample
 \code{n} blocks. This is better than repeating one sample a certain number of

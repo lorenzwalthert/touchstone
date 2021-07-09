@@ -4,6 +4,8 @@
 #' @param n Number of iterations to run a benchmark within an iteration.
 #' @param dots list of quoted expressions (length 1).
 #' @inheritParams benchmark_write
+#' @return
+#' A tibble with the benchmarks.
 #' @importFrom tibble lst tibble
 #' @keywords internal
 benchmark_run_iteration <- function(expr_before_benchmark,
@@ -96,6 +98,8 @@ benchmark_run_ref <- function(expr_before_benchmark,
 #'
 #' @param path_pkg The path to the root of the package you want to benchmark.
 #' @inheritParams benchmark_run_iteration
+#' @return
+#' A tibble with the benchmarks.
 #' @keywords internal
 benchmark_run_ref_impl <- function(ref,
                                    block,

@@ -4,6 +4,8 @@
 #' @inheritParams withr::defer
 #' @family testers
 #' @keywords internal
+#' @return
+#' The output of `withr::defer()`, i.e. a list with `expr` and `envir`.
 local_clean_touchstone <- function(envir = parent.frame()) {
   withr::defer(touchstone_clear(all = TRUE), envir = envir)
 }
@@ -27,6 +29,8 @@ path_temp_pkg <- function(name) {
 #'   to validate if the installed package corresponds to source branch for
 #'   testing. If `NULL`, nothing is written.
 #' @inheritParams withr::defer
+#' @return
+#' Character vector of length one with path to package.
 #' @family testers
 #' @keywords internal
 local_package <- function(pkg_name = fs::path_file(tempfile("pkg")),

@@ -15,6 +15,9 @@ exprs_eval(..., env = parent.frame())
 \value{
 The quoted input (invisibly).
 }
+\value{
+The input, parsed and evaluated.
+}
 \description{
 Evaluate an expression for sideeffects
 }

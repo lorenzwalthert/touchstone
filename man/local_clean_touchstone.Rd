@@ -11,6 +11,9 @@ local_clean_touchstone(envir = parent.frame())
 Typically, this should be either the current environment or
 a parent frame (accessed through \code{\link[=parent.frame]{parent.frame()}}).}
 }
+\value{
+The output of \code{withr::defer()}, i.e. a list with \code{expr} and \code{envir}.
+}
 \description{
 Deletes \code{\link[=dir_touchstone]{dir_touchstone()}} when the local frame is destroyed.
 }

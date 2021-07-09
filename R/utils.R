@@ -7,7 +7,8 @@ NULL
 #' @describeIn touchstone_managers returns the directory where the touchstone database lives.
 #' @aliases touchstone_managers
 #' @return
-#' Character vector of length one with th path to the touchstone directory.
+#' Character vector of length one with the path to the touchstone directory (for
+#' `dir_touchstone()`), path to the deleted files for (`touchstone_clear()`).
 #' @export
 dir_touchstone <- function() {
   getOption("touchstone.dir", "touchstone")
@@ -44,8 +45,6 @@ path_touchstone_script <- function() {
 #' @aliases touchstone_managers
 #' @param all Whether to clear the whole touchstone directory or just the
 #'   records sub directory.
-#' @return
-#' The deleted paths (invisibly).
 #' @export
 touchstone_clear <- function(all = FALSE) {
   paths <- fs::path(dir_touchstone(), if (!all) c("records", "lib") else "")
@@ -90,6 +89,8 @@ exprs_eval <- function(..., env = parent.frame()) {
 #' always perform worse than the second, so the order within the blocks must be
 #' random.
 #' @keywords internal
+#' @return
+#' A tibble with columns `block` and `ref`.
 ref_upsample <- function(ref, n = 20) {
   purrr::map_dfr(
     rlang::seq2(1, n),
@@ -143,6 +144,8 @@ local_git_checkout <- function(branch,
 #'
 #' Advantages: Keep benchmarked repo in touchstone library only.
 #' @keywords internal
+#' @return
+#' The old library paths (invisibly).
 local_without_touchstone_lib <- function(path_pkg = ".", envir = parent.frame()) {
   all <- normalizePath(.libPaths())
   is_touchstone <- fs::path_has_parent(
@@ -155,6 +158,9 @@ local_without_touchstone_lib <- function(path_pkg = ".", envir = parent.frame())
 
 #' Make sure there is no installation of the package to benchmark in the global
 #' package library
+#' @param path_pkg The path to the package to check.
+#' @return
+#' `TRUE` invisibly or an error if there is a global installation.
 #' @keywords internal
 assert_no_global_installation <- function(path_pkg = ".") {
   local_without_touchstone_lib()
@@ -173,6 +179,9 @@ assert_no_global_installation <- function(path_pkg = ".") {
 
 
 #' Check if a package is installed and unloading it
+#' @return
+#' A list with `name` of the package to check and `installed`, a boolean to
+#' indicate if the package is installed or not.
 #' @keywords internal
 is_installed <- function(path_pkg = ".") {
   path_desc <- fs::path(path_pkg, "DESCRIPTION")

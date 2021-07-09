@@ -12,6 +12,9 @@ local_without_touchstone_lib(path_pkg = ".", envir = parent.frame())
 \item{envir}{The environment that triggers the deferred action on
 destruction.}
 }
+\value{
+The old library paths (invisibly).
+}
 \description{
 This is useful in conjunction with \code{\link[=run_script]{run_script()}}.
 }
