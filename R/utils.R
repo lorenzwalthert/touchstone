@@ -179,7 +179,7 @@ is_installed <- function(path_pkg = ".") {
   pkg_name <- unname(read.dcf(path_desc)[, "Package"])
   list(
     name = pkg_name,
-    installed = pkg_name %in% rownames(utils::installed.packages())
+    installed = rlang::is_installed(pkg_name)
   )
 }
 
