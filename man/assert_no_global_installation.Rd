@@ -7,6 +7,12 @@ package library}
 \usage{
 assert_no_global_installation(path_pkg = ".")
 }
+\arguments{
+\item{path_pkg}{The path to the package to check.}
+}
+\value{
+\code{TRUE} invisibly or an error if there is a global installation.
+}
 \description{
 Make sure there is no installation of the package to benchmark in the global
 package library

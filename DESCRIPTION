@@ -1,7 +1,7 @@
 Type: Package
 Package: touchstone
-Title: Benchmark Different Git Refs in One Run
-Version: 0.0.0.9001
+Title: Benchmarking Different 'Git' Refs with Confidence in One Go
+Version: 0.1.2
 Authors@R: 
     person(given = "Lorenz",
            family = "Walthert",
@@ -9,12 +9,14 @@ Authors@R:
            email = "lorenz.walthert@icloud.com")
 Description: A common problem of benchmarking in continuous integration is
     that the computational power of the virtual machines that run the job
-    varies over time.  This package allows users to benchmark two git refs
-    of the same repo in a random sequence for better comparison.
+    varies over time. This package runs benchmarking code of two 'Git'
+    refs of the same repository in a random sequence for better
+    comparison, either locally or via 'GitHub Actions' and outputs a
+    confidence interval for the relative difference.
 License: MIT + file LICENSE
-URL: https://github.com/lorenzwalthert/touchstone,
-    https://lorenzwalthert.github.io/touchstone
-BugReports: https://github.com/lorenzwalthert/touchstone/issues
+URL: https://github.com/lorenzwalthert/touchstone/,
+    https://lorenzwalthert.github.io/touchstone/
+BugReports: https://github.com/lorenzwalthert/touchstone/issues/
 Imports: 
     bench,
     callr,
@@ -43,7 +45,6 @@ VignetteBuilder:
 Config/testthat/edition: 3
 Config/testthat/parallel: true
 Encoding: UTF-8
-LazyData: true
 Roxygen: list(markdown = TRUE, roclets = c("rd", "namespace", "collate",
     "pkgapi::api_roclet"))
 RoxygenNote: 7.1.1.9001

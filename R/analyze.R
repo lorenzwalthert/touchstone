@@ -76,6 +76,8 @@ benchmark_analyze <- function(benchmark, refs = c(
 #'
 #' `refs` must be passed because the order is relevant.
 #' @inheritParams benchmark_plot
+#' @return
+#' A character vector with the text that verbalizes the benchmark.
 #' @keywords internal
 benchmark_verbalize <- function(benchmark, timings, refs, ci) {
   tbl <- timings %>%
@@ -122,6 +124,8 @@ confint_relative_get <- function(timings, refs, reference, ci) {
 
 #' @param timing a benchmark read with [benchmark_read()], column `name` must
 #'   only contain one unique value.
+#' @return
+#' The function is called for its side effects and returns `NULL` (invisibly).
 #' @keywords internal
 benchmark_plot <- function(benchmark, timings) {
   timings %>%

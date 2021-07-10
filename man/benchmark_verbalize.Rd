@@ -6,6 +6,9 @@
 \usage{
 benchmark_verbalize(benchmark, timings, refs, ci)
 }
+\value{
+A character vector with the text that verbalizes the benchmark.
+}
 \description{
 \code{refs} must be passed because the order is relevant.
 }

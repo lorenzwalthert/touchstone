@@ -9,6 +9,9 @@ exprs_eval(...)
 \arguments{
 \item{text}{Character vector with code to evaluate.}
 }
+\value{
+The input, parsed and evaluated.
+}
 \description{
 Evaluate an expression
 }

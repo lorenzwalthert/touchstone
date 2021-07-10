@@ -26,6 +26,9 @@ commit, tag, branch etc) of the benchmarking.}
 
 \item{n}{Number of iterations to run a benchmark within an iteration.}
 }
+\value{
+A tibble with the benchmarks.
+}
 \description{
 Run a benchmark iteration
 }

@@ -28,6 +28,9 @@ set to the package root.}
 Typically, this should be either the current environment or
 a parent frame (accessed through \code{\link[=parent.frame]{parent.frame()}}).}
 }
+\value{
+Character vector of length one with path to package.
+}
 \description{
 Creates a package in a temporary directory and sets the working directory
 until the local frame is destroyed.

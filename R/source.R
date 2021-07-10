@@ -38,7 +38,7 @@
 #' @examples
 #' \dontrun{
 #' # assuming you want to compare the branch master with the branch devel
-#' if (rlang::is_installed("withr")) {
+#' if (requireNamespace("withr")) {
 #'   withr::with_envvar(
 #'     c("GITHUB_BASE_REF" = "main", "GITHUB_HEAD_REF" = "devel"),
 #'     run_script("touchstone/script.R")
