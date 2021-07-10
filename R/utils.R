@@ -188,7 +188,22 @@ is_installed <- function(path_pkg = ".") {
   pkg_name <- unname(read.dcf(path_desc)[, "Package"])
   list(
     name = pkg_name,
-    installed = rlang::is_installed(pkg_name)
+    installed = is_installed_impl(pkg_name)
+  )
+}
+
+# When a package is removed from the library with [remove.packages()] and then
+# loaded e.g. with [devtools::load_all()],
+# [rlang::is_installed()] and similar returns `TRUE`,
+# `pkg_name %in% installed.packages()` `FALSE` (but CRAN does not want to see
+# `installed.packages()` used since it may be slow).
+is_installed_impl <- function(pkg_name) {
+  rlang::with_handlers(
+    {
+      find.package(pkg_name, lib.loc = .libPaths())
+      TRUE
+    },
+    error = ~FALSE
   )
 }
 
