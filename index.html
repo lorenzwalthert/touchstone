@@ -164,7 +164,7 @@ n <span class="op">=</span> <span class="fl">2</span>
 <li><p>write the workflow files you need for touchstone into <code>.github/workflows/</code> to invoke your touchstone script.</p></li>
 </ul>
 <p>Note that these files must be committed to the default branch before {touchstone} continuous benchmarking will be triggered for new PRs.</p>
-<p>If you want to call the script interactively, use <code>run_script</code>()<code>(an enhanced version of</code>base::source()<code>) for various technical reasons described in the help file. Note that</code>benchmark_run_ref()` will check out different branches and should therefore be the only process running in the directory and only in a clean git working directory.</p>
+<p>If you want to call the script interactively, use <code><a href="reference/run_script.html">run_script()</a></code> (an enhanced version of<code><a href="https://rdrr.io/r/base/source.html">base::source()</a></code> for various technical reasons described in the help file). Note that <code><a href="reference/benchmark_run_ref.html">benchmark_run_ref()</a></code> will check out different branches and should therefore be the only process running in the directory and only in a clean git working directory.</p>
 </div>
 <div id="status" class="section level2">
 <h2 class="hasAnchor">
