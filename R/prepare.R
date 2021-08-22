@@ -26,8 +26,10 @@ ref_install <- function(ref = "master",
     withr::local_options(warn = 2)
     remotes::install_local(path_pkg,
       upgrade = "never", quiet = TRUE,
-      dependencies = install_dependencies
+      dependencies = install_dependencies,
+      force = !cache_up_to_date(ref, path_pkg)
     )
+    cache_update(ref, path_pkg)
     usethis::ui_done("Installed branch {ref} into {libpath[1]}.")
     libpath
   }
@@ -69,4 +71,50 @@ refs_install <- function(refs = c(
 
 libpath_touchstone <- function(ref) {
   fs::path(dir_touchstone(), "lib", ref)
+}
+
+#' When did the package sources change last?
+#' @inheritParams ref_install
+#' @keywords internal
+hash_pkg <- function(path_pkg) {
+  withr::local_dir(path_pkg)
+  list(
+    tools::md5sum(c(
+      if (fs::dir_exists("R")) fs::dir_ls("R"),
+      if (fs::file_exists("DESCRIPTION")) "DESCRIPTION",
+      if (fs::dir_exists("scr")) fs::dir_info("scr")
+    ))
+  )
+}
+
+#' Cache package sources within a session
+#'
+#' This is required to make sure [remotes::install_local()] installs again
+#' when source code changed.
+#' @inheritParams ref_install
+#' @keywords internal
+cache_up_to_date <- function(ref, path_pkg) {
+  md5_hashes <- hash_pkg(path_pkg)
+  cache <- cache_get()
+  identical(md5_hashes, cache$md5_hashes[cache$ref == ref & cache$path_pkg == path_pkg])
+}
+
+#' @rdname cache_up_to_date
+#' @keywords internal
+cache_update <- function(ref, path_pkg) {
+  md5_hashes <- hash_pkg(path_pkg)
+  cache <- cache_get()
+  stopifnot(sum(cache$ref[cache$path_pkg == path_pkg] == ref) <= 1)
+  cache <- cache[(!(cache$ref == ref) & (cache$path_pkg == path_pkg)), ]
+  cache <- vctrs::vec_rbind(
+    cache, tibble::tibble(ref, md5_hashes, path_pkg)
+  )
+  options("touchstone.hash_source_package" = cache)
+}
+
+
+#' @rdname cache_up_to_date
+#' @keywords internal
+cache_get <- function() {
+  getOption("touchstone.hash_source_package")
 }

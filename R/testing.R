@@ -39,7 +39,10 @@ local_package <- function(pkg_name = fs::path_file(tempfile("pkg")),
   withr::local_options(
     usethis.quiet = TRUE,
     touchstone.n_iterations = 2,
-    .local_envir = envir
+    .local_envir = envir,
+    touchstone.hash_source_package = tibble::tibble(
+      ref = character(), md5_hashes = list(), path_pkg = character()
+    )
   )
   usethis::create_package(path, open = FALSE)
   withr::local_dir(path, .local_envir = if (setwd) envir else rlang::current_env())
