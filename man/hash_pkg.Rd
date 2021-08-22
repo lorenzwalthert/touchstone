@@ -4,7 +4,10 @@
 \alias{hash_pkg}
 \title{When did the package sources change last?}
 \usage{
-hash_pkg()
+hash_pkg(path_pkg)
+}
+\arguments{
+\item{path_pkg}{The path to the repository to install.}
 }
 \description{
 When did the package sources change last?

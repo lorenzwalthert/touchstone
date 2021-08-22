@@ -73,13 +73,14 @@ libpath_touchstone <- function(ref) {
 }
 
 #' When did the package sources change last?
-#'
+#' @inheritParams ref_install
 #' @keywords internal
-hash_pkg <- function() {
+hash_pkg <- function(path_pkg) {
+  withr::local_dir(path_pkg)
   list(
     tools::md5sum(c(
-      fs::dir_ls("R"),
-      "DESCRIPTION",
+      if (fs::dir_exists("R")) fs::dir_ls("R"),
+      if (fs::file_exists("DESCRIPTION")) "DESCRIPTION",
       if (fs::dir_exists("scr")) fs::dir_info("scr")
     ))
   )
@@ -92,7 +93,7 @@ hash_pkg <- function() {
 #' @inheritParams ref_install
 #' @keywords internal
 cache_up_to_date <- function(ref, path_pkg) {
-  md5_hashes <- hash_pkg()
+  md5_hashes <- hash_pkg(path_pkg)
   cache <- cache_get()
   identical(md5_hashes, cache$md5_hashes[cache$ref == ref & cache$path_pkg == path_pkg])
 }
@@ -100,7 +101,7 @@ cache_up_to_date <- function(ref, path_pkg) {
 #' @rdname cache_up_to_date
 #' @keywords internal
 cache_update <- function(ref, path_pkg) {
-  md5_hashes <- hash_pkg()
+  md5_hashes <- hash_pkg(path_pkg)
   cache <- cache_get()
   stopifnot(sum(cache$ref[cache$path_pkg == path_pkg] == ref) <= 1)
   cache <- cache[(!(cache$ref == ref) & (cache$path_pkg == path_pkg)), ]
