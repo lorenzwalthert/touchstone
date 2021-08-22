@@ -1,7 +1,5 @@
 #' Checks out a source branch and install the package
 #'
-#' The installed source package is cached. An installation is forced on source
-#' code change or version number.
 #' @param path_pkg The path to the repository to install.
 #' @param ref A reference to a git commit. Currently, only branch names are
 #'   supported.
@@ -72,7 +70,6 @@ refs_install <- function(refs = c(
 libpath_touchstone <- function(ref) {
   fs::path(dir_touchstone(), "lib", ref)
 }
-
 
 #' When did the package sources change last?
 #'

@@ -19,7 +19,6 @@ supported.}
 A character vector with library paths.
 }
 \description{
-The installed source package is cached. An installation is forced on source
-code change or version number.
+Checks out a source branch and install the package
 }
 \keyword{internal}
