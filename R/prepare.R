@@ -1,5 +1,7 @@
 #' Checks out a source branch and install the package
 #'
+#' The installed source package is cached. An installation is forced on source
+#' code change or version number.
 #' @param path_pkg The path to the repository to install.
 #' @param ref A reference to a git commit. Currently, only branch names are
 #'   supported.
@@ -22,12 +24,16 @@ ref_install <- function(ref = "master",
       fs::dir_create(libpath_touchstone(ref)),
       .libPaths()
     )
+    last_change <- last_source_change()
     withr::local_libpaths(libpath)
     remotes::install_local(path_pkg,
       upgrade = "never", quiet = TRUE,
-      dependencies = install_dependencies
+      dependencies = install_dependencies,
+      force = last_change != getOption("touchstone.timestamp_source_package")
     )
+    options("touchstone.timestamp_source_package" = last_change)
     usethis::ui_done("Installed branch {ref} into {libpath[1]}.")
+
     libpath
   }
 }
@@ -68,4 +74,16 @@ refs_install <- function(refs = c(
 
 libpath_touchstone <- function(ref) {
   fs::path(dir_touchstone(), "lib", ref)
+}
+
+
+#' When did the package sources change last?
+#'
+#' @keywords internal
+last_source_change <- function() {
+  max(vctrs::vec_rbind(
+    fs::dir_info("R"),
+    fs::file_info("DESCRIPTION"),
+    if (fs::dir_exists("scr")) fs::dir_info("scr"),
+  )$modification_time)
 }
