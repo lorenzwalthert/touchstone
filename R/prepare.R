@@ -30,6 +30,7 @@ ref_install <- function(ref = "master",
     )
     cache_update(ref, path_pkg)
     usethis::ui_done("Installed branch {ref} into {libpath[1]}.")
+    libpath
   }
 }
 

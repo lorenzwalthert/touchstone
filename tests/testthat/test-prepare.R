@@ -21,11 +21,6 @@ test_that("can install in isolated repos", {
 
 test_that("cache works", {
   ref <- "devel"
-  withr::local_options(list(
-    "touchstone.hash_source_package" = tibble::tibble(
-      ref = character(), md5_hashes = list(), path_pkg = character()
-    )
-  ))
   name_tmp_pkg <- "bli44"
   path_pkg <- local_package(name_tmp_pkg, r_sample = "x <- 55")
 
@@ -33,7 +28,6 @@ test_that("cache works", {
   expect_false(cache_up_to_date(ref, path_pkg))
   cache_update(ref, path_pkg)
   expect_equal(nrow(cache_get()), 1)
-  print(getwd())
   writeLines(c("x <- 55"), "R/sample.R")
   expect_true(cache_up_to_date(ref, path_pkg))
   writeLines(c("22"), "R/sample.R")
@@ -54,9 +48,11 @@ test_that("cache works", {
   expect_true(cache_up_to_date(ref, path_pkg))
 
   # new root
-  path_pkg <- local_package(name_tmp_pkg, r_sample = "c")
+  cache <- cache_get()
+  path_pkg2 <- local_package(name_tmp_pkg, r_sample = "c")
+  options("touchstone.hash_source_package" = cache)
   expect_equal(nrow(cache_get()), 2)
-  expect_false(cache_up_to_date(ref, path_pkg))
-  cache_update(ref, path_pkg)
-  expect_true(cache_up_to_date(ref, path_pkg))
+  expect_false(cache_up_to_date(ref, path_pkg2))
+  cache_update(ref, path_pkg2)
+  expect_true(cache_up_to_date(ref, path_pkg2))
 })
