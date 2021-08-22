@@ -23,6 +23,7 @@ ref_install <- function(ref = "master",
       .libPaths()
     )
     withr::local_libpaths(libpath)
+    withr::local_options(warn = 2)
     remotes::install_local(path_pkg,
       upgrade = "never", quiet = TRUE,
       dependencies = install_dependencies
