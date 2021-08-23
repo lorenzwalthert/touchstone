@@ -1,6 +1,19 @@
 test_that("can evaluate expressions for benchmarking", {
-  expect_equal(
-    exprs_eval("1 + 2.3"),
+  env <- env()
+  expect_equal({
+    exprs_eval("x <- 1 + 2.3", env = env)
+    env$x},
+    1 + 2.3
+  )
+  expect_equal({
+    exprs_eval(y <- 1 + 2.3, env = env)
+    env$y},
+    1 + 2.3
+  )
+  expect_equal({
+    expr <- quote(z <- 1 + 2.3)
+    exprs_eval(!!expr, env = env)
+    env$z},
     1 + 2.3
   )
 })
