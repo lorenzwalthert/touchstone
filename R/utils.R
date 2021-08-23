@@ -53,12 +53,28 @@ touchstone_clear <- function(all = FALSE) {
   fs::dir_delete(paths)
 }
 
-#' Evaluate an expression
+#' Evaluate an expression for sideeffects
 #'
-#' @param text Character vector with code to evaluate.
+#'
+#' @param ... Character vector  of length 1 or expression with code to evaluate. This will be quoted using
+#' [rlang::enexprs()], so if you want to use `quote`ed expressions you have to unquote them using `!!`
+#' @param env Environment in which the expression will be evaluated.
+#' @return The input (invisibly).
 #' @keywords internal
-exprs_eval <- function(...) {
-  eval(parse(text = unlist(rlang::list2(...))))
+exprs_eval <- function(..., env = rlang::caller_env()) {
+    expr <- rlang::enexprs(...)[[1]]
+
+    if (is.character(expr)) {
+        expr <- rlang::parse_exprs(expr)
+    }
+
+    if (is.list(expr)) {
+      purrr::walk(expr, eval, envir = env)
+    } else {
+      eval(expr, env)
+    }
+
+    invisible(...)
 }
 
 #' Samples `ref`
