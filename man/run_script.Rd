@@ -51,7 +51,7 @@ touchstone library is on the library path at any time.
 
 \examples{
 \dontrun{
-# assuming you want to compare the branch master with the branch devel
+# assuming you want to compare the branch main with the branch devel
 if (rlang::is_installed("withr")) {
   withr::with_envvar(
     c("GITHUB_BASE_REF" = "main", "GITHUB_HEAD_REF" = "devel"),
