@@ -8,7 +8,7 @@
 #' @return
 #' A character vector with library paths.
 #' @keywords internal
-ref_install <- function(ref = "master",
+ref_install <- function(ref = "main",
                         path_pkg = ".",
                         install_dependencies = FALSE) {
   local_git_checkout(ref, path_pkg)

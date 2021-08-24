@@ -17,7 +17,7 @@ test_that("refs can be run", {
   bm <- benchmark_run_ref(
     expr_before_benchmark = "library(testthat)",
     bliblablup = "expect_equal(Sys.sleep(1e-3), NULL)",
-    refs = "master",
+    refs = "main",
     n = 2
   )
   schema <- purrr::map_chr(bm, ~ class(.x)[1])
