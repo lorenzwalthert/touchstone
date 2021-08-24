@@ -74,7 +74,7 @@ exprs_eval <- function(..., env = rlang::caller_env()) {
       eval(expr, env)
     }
 
-    invisible(...)
+    invisible(rlang::list2(...))
 }
 
 #' Samples `ref`
