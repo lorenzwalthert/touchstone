@@ -1,8 +1,10 @@
 test_that("can evaluate expressions for benchmarking", {
   env <- rlang::env()
-  expect_equal({
-    exprs_eval("x <- 1 + 2.3", env = env)
-    env$x},
+  expect_equal(
+    {
+      exprs_eval("x <- 1 + 2.3", env = env)
+      env$x
+    },
     1 + 2.3
   )
   expect_equal(
@@ -14,9 +16,11 @@ test_that("can evaluate expressions for benchmarking", {
   )
 
   expr <- quote(z <- 1 + 2.3)
-  expect_equal({
-    exprs_eval(!!expr, env = env)
-    env$z},
+  expect_equal(
+    {
+      exprs_eval(!!expr, env = env)
+      env$z
+    },
     1 + 2.3
   )
 })
