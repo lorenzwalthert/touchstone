@@ -57,21 +57,26 @@ touchstone_clear <- function(all = FALSE) {
 #'
 #'
 #' @param ... Character vector  of length 1 or expression with code to evaluate. This will be quoted using
-#' [rlang::enexprs()], so if you want to use `quote`ed expressions you have to force them using `!!`
+#' [rlang::enexprs()], so you can use `!!`.
 #' @param env Environment in which the expression will be evaluated.
-#' @return The input (invisibly).
+#' @return The quoted input (invisibly).
 #' @keywords internal
-exprs_eval <- function(..., env = rlang::caller_env()) {
+exprs_eval <- function(..., env = parent.frame()) {
+    
     expr <- rlang::enexprs(...)[[1]]
+
+    if (is.symbol(expr)) {
+    expr <- rlang::eval_tidy(expr, env = env)
+    }
 
     if (is.character(expr)) {
         expr <- rlang::parse_exprs(expr)
     }
 
     if (is.list(expr)) {
-      purrr::walk(expr, eval, envir = env)
+     purrr::map(expr, eval, envir = env)
     } else {
-      eval(expr, env)
+      eval(expr, envir = env)
     }
 
     invisible(expr)

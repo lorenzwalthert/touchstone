@@ -31,7 +31,7 @@ benchmark_run_iteration <- function(expr_before_benchmark,
         attach(loadNamespace("touchstone"), name = new_name)
         on.exit(detach(new_name, character.only = TRUE), add = TRUE)
         exprs_eval(expr_before_benchmark)
-        benchmark <- bench::mark(exprs_eval(...), memory = FALSE, iterations = 1)
+        benchmark <- bench::mark(exprs_eval(!!..1), memory = FALSE, iterations = 1)
         benchmark_write(benchmark, names(rlang::list2(...)), ref = ref, block = block, iteration = iteration)
       },
       args = append(args, lst(iteration)),
