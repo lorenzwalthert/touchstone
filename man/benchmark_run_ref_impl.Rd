@@ -15,6 +15,8 @@ commit, tag, branch etc) of the benchmarking.}
 \item{expr_before_benchmark}{Character vector with code to run before
 the benchmark is ran, will be evaluated with \code{\link[=exprs_eval]{exprs_eval()}}.}
 
+\item{dots}{list of quoted expressions (length 1).}
+
 \item{path_pkg}{The path to the root of the package you want to benchmark.}
 }
 \description{

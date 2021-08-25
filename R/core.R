@@ -1,9 +1,8 @@
 #' Run a benchmark iteration
 #' @param expr_before_benchmark Character vector with code to run before
 #'   the benchmark is ran, will be evaluated with [exprs_eval()].
-#' @param ... Named character vector of length one with code to benchmark, will
-#'   be evaluated with [exprs_eval()].
 #' @param n Number of iterations to run a benchmark within an iteration.
+#' @param dots list of quoted expressions (length 1).
 #' @inheritParams benchmark_write
 #' @importFrom tibble lst tibble
 #' @keywords internal
@@ -42,6 +41,8 @@ benchmark_run_iteration <- function(expr_before_benchmark,
 
 #' Run a benchmark for git refs
 #'
+#' @param ... Named character vector of length one with code to benchmark, will
+#'   be evaluated with [exprs_eval()].
 #' @param refs Character vector with branch names to benchmark. The package
 #'   must be built for each benchmarked branch beforehand with [refs_install()].
 #'   The base ref is the target branch of the pull request in a workflow run,
