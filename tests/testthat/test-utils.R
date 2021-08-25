@@ -23,6 +23,24 @@ test_that("can evaluate expressions for benchmarking", {
     },
     1 + 2.3
   )
+
+  expr <- rlang::expr(zz <- 1 + 2.3)
+  expect_equal(
+    {
+      exprs_eval(!!expr, env = env)
+      env$zz
+    },
+    1 + 2.3
+  )
+
+  expr <- rlang::quo(zzz <- 1 + 2.3)
+  expect_equal(
+    {
+      exprs_eval(!!rlang::get_expr(expr), env = env)
+      env$zzz
+    },
+    1 + 2.3
+  )
 })
 
 test_that("ref can be sampled", {
