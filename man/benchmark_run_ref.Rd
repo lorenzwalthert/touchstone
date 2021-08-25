@@ -16,9 +16,6 @@ benchmark_run_ref(
 \item{expr_before_benchmark}{Character vector with code to run before
 the benchmark is ran, will be evaluated with \code{\link[=exprs_eval]{exprs_eval()}}.}
 
-\item{...}{Named character vector of length one with code to benchmark, will
-be evaluated with \code{\link[=exprs_eval]{exprs_eval()}}.}
-
 \item{refs}{Character vector with branch names to benchmark. The package
 must be built for each benchmarked branch beforehand with \code{\link[=refs_install]{refs_install()}}.
 The base ref is the target branch of the pull request in a workflow run,
