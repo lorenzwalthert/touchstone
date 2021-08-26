@@ -41,7 +41,7 @@ benchmark_run_iteration <- function(expr_before_benchmark,
 
 #' Run a benchmark for git refs
 #'
-#' @param ... Named character vector of length one with code to benchmark, will
+#' @param ... Named epression or named character vector of length one with code to benchmark, will
 #'   be evaluated with [exprs_eval()].
 #' @param refs Character vector with branch names to benchmark. The package
 #'   must be built for each benchmarked branch beforehand with [refs_install()].
