@@ -134,7 +134,7 @@
 
     <pre class="usage"><span class='fu'>benchmark_run_iteration</span><span class='op'>(</span>
   <span class='va'>expr_before_benchmark</span>,
-  <span class='va'>...</span>,
+  <span class='va'>dots</span>,
   <span class='va'>ref</span>,
   <span class='va'>block</span>,
   n <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/options.html'>getOption</a></span><span class='op'>(</span><span class='st'>"touchstone.n_iterations"</span>, <span class='fl'>1</span><span class='op'>)</span>
@@ -149,9 +149,8 @@
 the benchmark is ran, will be evaluated with <code><a href='exprs_eval.html'>exprs_eval()</a></code>.</p></td>
     </tr>
     <tr>
-      <th>...</th>
-      <td><p>Named character vector of length one with code to benchmark, will
-be evaluated with <code><a href='exprs_eval.html'>exprs_eval()</a></code>.</p></td>
+      <th>dots</th>
+      <td><p>list of quoted expressions (length 1).</p></td>
     </tr>
     <tr>
       <th>ref</th>

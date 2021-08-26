@@ -137,24 +137,25 @@
 <li>
 <code>config.json</code> that defines how to run your benchmark. In particular, you can define a <code>benchmarking_repo</code>, that is, a repo you need to run your bench mark (use <code>""</code> if you don’t need an additional git repo checked out for your benchmark). This repo will be cloned into <code>benchmarking_path</code>. For example to benchmark {styler}, we format the {here} package with <code>style_pkg()</code> that is not part of the {styler} repo, but with the below config, will be located at <code>touchstone/sources/here</code> during benchmarking. The code you want to benchmark comes from the benchmarked repo, which in our case is the root from where you call <code><a href="reference/use_touchstone.html">use_touchstone()</a></code> and hence does not need to be defined explicitly.</li>
 </ul>
-<div class="sourceCode" id="cb3"><pre class="sourceCode json"><code class="sourceCode json"><span id="cb3-1"><a href="#cb3-1"></a><span class="fu">{</span> </span>
-<span id="cb3-2"><a href="#cb3-2"></a>  <span class="dt">"benchmarking_repo"</span><span class="fu">:</span> <span class="st">"lorenzwalthert/here"</span><span class="fu">,</span> </span>
-<span id="cb3-3"><a href="#cb3-3"></a>  <span class="dt">"benchmarking_ref"</span><span class="fu">:</span> <span class="st">"ca9c8e69c727def88d8ba1c8b85b0e0bcea87b3f"</span><span class="fu">,</span> </span>
-<span id="cb3-4"><a href="#cb3-4"></a>  <span class="dt">"benchmarking_path"</span><span class="fu">:</span> <span class="st">"touchstone/sources/here"</span><span class="fu">,</span> </span>
-<span id="cb3-5"><a href="#cb3-5"></a>  <span class="dt">"os"</span><span class="fu">:</span> <span class="st">"ubuntu-18.04"</span><span class="fu">,</span> </span>
-<span id="cb3-6"><a href="#cb3-6"></a>  <span class="dt">"r"</span><span class="fu">:</span> <span class="st">"4.0.0"</span><span class="fu">,</span> </span>
-<span id="cb3-7"><a href="#cb3-7"></a>  <span class="dt">"rspm"</span><span class="fu">:</span> <span class="st">"https://packagemanager.rstudio.com/all/__linux__/bionic/291"</span> </span>
-<span id="cb3-8"><a href="#cb3-8"></a><span class="fu">}</span></span></code></pre></div>
+<!-- end list --><div class="sourceCode" id="cb3"><pre class="sourceCode json"><code class="sourceCode json"><span id="cb3-1"><a href="#cb3-1"></a></span>
+<span id="cb3-2"><a href="#cb3-2"></a><span class="fu">{</span> </span>
+<span id="cb3-3"><a href="#cb3-3"></a>  <span class="dt">"benchmarking_repo"</span><span class="fu">:</span> <span class="st">"lorenzwalthert/here"</span><span class="fu">,</span> </span>
+<span id="cb3-4"><a href="#cb3-4"></a>  <span class="dt">"benchmarking_ref"</span><span class="fu">:</span> <span class="st">"ca9c8e69c727def88d8ba1c8b85b0e0bcea87b3f"</span><span class="fu">,</span> </span>
+<span id="cb3-5"><a href="#cb3-5"></a>  <span class="dt">"benchmarking_path"</span><span class="fu">:</span> <span class="st">"touchstone/sources/here"</span><span class="fu">,</span> </span>
+<span id="cb3-6"><a href="#cb3-6"></a>  <span class="dt">"os"</span><span class="fu">:</span> <span class="st">"ubuntu-18.04"</span><span class="fu">,</span> </span>
+<span id="cb3-7"><a href="#cb3-7"></a>  <span class="dt">"r"</span><span class="fu">:</span> <span class="st">"4.0.0"</span><span class="fu">,</span> </span>
+<span id="cb3-8"><a href="#cb3-8"></a>  <span class="dt">"rspm"</span><span class="fu">:</span> <span class="st">"https://packagemanager.rstudio.com/all/__linux__/bionic/291"</span> </span>
+<span id="cb3-9"><a href="#cb3-9"></a><span class="fu">}</span></span></code></pre></div>
 <ul>
 <li>
 <code>script.R</code>, the script that runs the benchmark.</li>
 </ul>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<!-- end list --><div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">touchstone</span><span class="fu">::</span><span class="fu"><a href="reference/refs_install.html">refs_install</a></span><span class="op">(</span><span class="op">)</span> <span class="co"># installs branches to benchmark</span>
 
 <span class="co"># benchmark a function call from your package (two calls per branch)</span>
 <span class="fu">touchstone</span><span class="fu">::</span><span class="fu"><a href="reference/benchmark_run_ref.html">benchmark_run_ref</a></span><span class="op">(</span>
-random_test <span class="op">=</span> <span class="st">"yourpkg::fun()"</span>,
+random_test <span class="op">=</span> <span class="fu">yourpkg</span><span class="fu">::</span><span class="fu">fun</span><span class="op">(</span><span class="op">)</span>,
 n <span class="op">=</span> <span class="fl">2</span>
 <span class="op">)</span>
 
@@ -164,7 +165,7 @@ n <span class="op">=</span> <span class="fl">2</span>
 <li><p>write the workflow files you need for touchstone into <code>.github/workflows/</code> to invoke your touchstone script.</p></li>
 </ul>
 <p>Note that these files must be committed to the default branch before {touchstone} continuous benchmarking will be triggered for new PRs.</p>
-<p>If you want to call the script interactively, use <code><a href="reference/run_script.html">run_script()</a></code> (an enhanced version of<code><a href="https://rdrr.io/r/base/source.html">base::source()</a></code> for various technical reasons described in the help file). Note that <code><a href="reference/benchmark_run_ref.html">benchmark_run_ref()</a></code> will check out different branches and should therefore be the only process running in the directory and only in a clean git working directory.</p>
+<p>If you want to call the script interactively, use <code>run_script</code>()<code>(an enhanced version of</code>base::source()<code>) for various technical reasons described in the help file. Note that</code>benchmark_run_ref()` will check out different branches and should therefore be the only process running in the directory and only in a clean git working directory.</p>
 </div>
 <div id="status" class="section level2">
 <h2 class="hasAnchor">
