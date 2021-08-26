@@ -7,6 +7,19 @@ test_that("can evaluate expressions for benchmarking", {
     },
     1 + 2.3
   )
+
+  expect_equal(
+    {
+      exprs_eval("
+      x <- 1 + 2.3
+      x <- x + 10
+      x
+      ", env = env)
+      env$x
+    },
+    1 + 2.3 + 10
+  )
+
   expect_equal(
     {
       exprs_eval(y <- 1 + 2.3, env = env)
