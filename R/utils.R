@@ -62,24 +62,23 @@ touchstone_clear <- function(all = FALSE) {
 #' @return The quoted input (invisibly).
 #' @keywords internal
 exprs_eval <- function(..., env = parent.frame()) {
-    
-    expr <- rlang::enexprs(...)[[1]]
+  expr <- rlang::enexprs(...)[[1]]
 
-    if (is.symbol(expr)) {
+  if (is.symbol(expr)) {
     expr <- rlang::eval_tidy(expr, env = env)
-    }
+  }
 
-    if (is.character(expr)) {
-        expr <- rlang::parse_exprs(expr)
-    }
+  if (is.character(expr)) {
+    expr <- rlang::parse_exprs(expr)
+  }
 
-    if (is.list(expr)) {
-     purrr::map(expr, eval, envir = env)
-    } else {
-      eval(expr, envir = env)
-    }
+  if (is.list(expr)) {
+    purrr::map(expr, eval, envir = env)
+  } else {
+    eval(expr, envir = env)
+  }
 
-    invisible(expr)
+  invisible(expr)
 }
 
 #' Samples `ref`
