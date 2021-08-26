@@ -6,7 +6,7 @@
 \usage{
 benchmark_run_iteration(
   expr_before_benchmark,
-  ...,
+  dots,
   ref,
   block,
   n = getOption("touchstone.n_iterations", 1)
@@ -16,8 +16,7 @@ benchmark_run_iteration(
 \item{expr_before_benchmark}{Character vector with code to run before
 the benchmark is ran, will be evaluated with \code{\link[=exprs_eval]{exprs_eval()}}.}
 
-\item{...}{Named character vector of length one with code to benchmark, will
-be evaluated with \code{\link[=exprs_eval]{exprs_eval()}}.}
+\item{dots}{list of quoted expressions (length 1).}
 
 \item{ref}{A character vector of length one to indicate the git ref (i.e.
 commit, tag, branch etc) of the benchmarking.}

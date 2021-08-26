@@ -2,14 +2,20 @@
 % Please edit documentation in R/utils.R
 \name{exprs_eval}
 \alias{exprs_eval}
-\title{Evaluate an expression}
+\title{Evaluate an expression for sideeffects}
 \usage{
-exprs_eval(...)
+exprs_eval(..., env = parent.frame())
 }
 \arguments{
-\item{text}{Character vector with code to evaluate.}
+\item{...}{Character vector  of length 1 or expression with code to evaluate. This will be quoted using
+\code{\link[rlang:nse-defuse]{rlang::enexprs()}}, so you can use \verb{!!}.}
+
+\item{env}{Environment in which the expression will be evaluated.}
+}
+\value{
+The quoted input (invisibly).
 }
 \description{
-Evaluate an expression
+Evaluate an expression for sideeffects
 }
 \keyword{internal}

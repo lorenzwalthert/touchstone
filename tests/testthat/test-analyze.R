@@ -5,7 +5,7 @@ test_that("can analyze results", {
   path_test_pkg <- local_package(branches = branches)
   purrr::walk(branches, ~ benchmark_run_iteration(
     "",
-    xx1 = "Sys.sleep(runif(1, 0, 1e-5))",
+    dots = list(xx1 = "Sys.sleep(runif(1, 0, 1e-5))"),
     n = 2,
     ref = .x,
     block = 1
@@ -34,7 +34,7 @@ test_that("can analyze results", {
   path_test_pkg <- local_package(branches = branches)
   purrr::walk(branches, ~ benchmark_run_iteration(
     "",
-    xx1 = "Sys.sleep(runif(1, 0, 1e-5))",
+    dots = list(xx1 = "Sys.sleep(runif(1, 0, 1e-5))"),
     n = 2,
     ref = .x,
     block = 1
@@ -42,7 +42,7 @@ test_that("can analyze results", {
 
   purrr::walk(branches, ~ benchmark_run_iteration(
     "",
-    xx2 = "Sys.sleep(runif(1, 0, 1e-5))",
+    dots = list(xx2 = "Sys.sleep(runif(1, 0, 1e-5))"),
     n = 2,
     ref = .x,
     block = 1

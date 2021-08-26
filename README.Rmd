@@ -128,7 +128,7 @@ touchstone::refs_install() # installs branches to benchmark
 
 # benchmark a function call from your package (two calls per branch)
 touchstone::benchmark_run_ref(
-  random_test = "yourpkg::fun()",
+  random_test = yourpkg::fun(),
   n = 2
 )
 

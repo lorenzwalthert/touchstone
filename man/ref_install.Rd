@@ -4,7 +4,7 @@
 \alias{ref_install}
 \title{Checks out a source branch and install the package}
 \usage{
-ref_install(ref = "master", path_pkg = ".", install_dependencies = FALSE)
+ref_install(ref = "main", path_pkg = ".", install_dependencies = FALSE)
 }
 \arguments{
 \item{ref}{A reference to a git commit. Currently, only branch names are
