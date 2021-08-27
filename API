@@ -2,6 +2,7 @@
 
 ## Exported functions
 
+add_lib_dirs(...)
 benchmark_ls(name)
 benchmark_read(name, ref)
 benchmark_run_ref(expr_before_benchmark, ..., refs = c(ref_get_or_fail("GITHUB_BASE_REF"), ref_get_or_fail("GITHUB_HEAD_REF")), n = 100, path_pkg = ".")

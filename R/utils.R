@@ -207,7 +207,7 @@ is_windows <- function() {
 #'   n = 6
 #' )
 #' }
-#' @exported
+#' @export
 add_lib_dirs <- function(...) {
   temp_dir <- getOption("touchstone.temp_dir")
 
