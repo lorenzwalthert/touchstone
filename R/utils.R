@@ -221,7 +221,7 @@ add_lib_dirs <- function(...) {
   dirs <- rlang::list2(...)
 
   valid_dirs <- dirs %>% purrr::map_lgl(fs::is_dir)
-
+  
   if (!all(valid_dirs)) {
     usethis::ui_warn(c(
       "The following path(s) could not be found",
