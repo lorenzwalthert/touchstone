@@ -212,7 +212,7 @@ add_lib_dirs <- function(...) {
   temp_dir <- getOption("touchstone.temp_dir")
 
   if (is.null(temp_dir)) {
-    rlang::abort(glue::glue(
+    usethis::ui_stop(c(
       "Temporary directory not found. ",
       "This function is only for use within 'script.R'."
     ))
@@ -230,9 +230,14 @@ add_lib_dirs <- function(...) {
     ))
   }
 
-  dirs[valid_dirs] %>% purrr::map(fs::dir_copy, temp_dir, overwrite = TRUE)
+  dirs[valid_dirs] %>% purrr::map(~ fs::dir_copy(.x,
+    fs::path_join(c(temp_dir, fs::path_file(.x))),
+    overwrite = TRUE
+  ))
 
   usethis::ui_done(c(
     "Copied library directories to tempdir to make them available across branch checkouts."
   ))
+
+  invisible(temp_dir)
 }
