@@ -143,3 +143,19 @@ test_that("Can abort with missing refs for benchmark run", {
     match
   )
 })
+
+test_that("library directories work", {
+  dirs <- c("tests", "R")
+  temp_dir <- fs::path_temp()
+
+  expect_error(add_lib_dirs("something"), "Temporary directory not found.")
+
+  withr::with_options(list(
+    touchstone.temp_dir = temp_dir,
+    usethis.quiet = TRUE
+  ), {
+    expect_equal(add_lib_dirs(!!!dirs), temp_dir)
+    expect_true(fs::is_dir(fs::path_join(c(temp_dir, dirs[[1]]))))
+    expect_warning(add_lib_dirs(!!!dirs, "something"), "will not be copied")
+  })
+})
