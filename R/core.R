@@ -77,6 +77,7 @@ benchmark_run_ref <- function(expr_before_benchmark,
   force(refs)
   expr_before_benchmark <- rlang::enexpr(expr_before_benchmark)
   dots <- rlang::enexprs(...)
+  usethis::ui_info("Running benchmark '{ names(dots)[[1]] }'.")
 
   if (length(dots) > 1) {
     rlang::abort("Can only pass one expression to benchmark")
