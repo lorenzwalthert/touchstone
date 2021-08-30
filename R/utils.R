@@ -194,7 +194,7 @@ is_windows <- function() {
 #' touchstone::run_on_change(
 #'   "R/core.R",
 #'   touchstone::benchmark_run_ref(
-#'     expr_before_benchmark = source(c("dir/data.R", "dir/another.R")), 
+#'     expr_before_benchmark = source(c("dir/data.R", "dir/another.R")),
 #'     random_test = yourpkg::f(),
 #'     n = 2
 #'   )
@@ -211,7 +211,7 @@ run_on_change <- function(files, benchmark,
   override <- FALSE
 
   if (inherits(changed_files, "try-error")) {
-    usethis::ui_oops("Could not check for changes. Running benchmark. ")
+    usethis::ui_oops("Could not check for changes. Running benchmark.")
     override <- TRUE
   }
 
@@ -238,10 +238,20 @@ get_changed_files <- function(refs = c(
                                 ref_get_or_fail("GITHUB_BASE_REF"),
                                 ref_get_or_fail("GITHUB_HEAD_REF")
                               )) {
-  try(system(
+                                
+  creat_try_error <- function(...) {
+    structure(
+      "Git Error.",
+      class = c("try-error", "character")
+    )
+  }
+
+  tryCatch(system(
     glue::glue("git diff --name-only {refs[[1]]} {refs[[2]]} --"),
-    intern = TRUE,
-    show.output.on.console = FALSE,
-    ignore.stderr = TRUE
-  ))
+    intern = TRUE
+  ),
+  silent = TRUE,
+  error = creat_try_error(e),
+  warning = creat_try_error(w)
+  )
 }
