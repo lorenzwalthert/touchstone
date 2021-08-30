@@ -182,3 +182,64 @@ is_installed <- function(path_pkg = ".") {
 is_windows <- function() {
   identical(.Platform$OS.type, "windows")
 }
+
+#' Run benchmark on file change
+#'
+#' @description The benchmark will only run if `file` was modified compared to
+#'  `ref`. This allows for shorter commit messages.
+#' @param file Path to file to check for change.
+#' @param benchmark Call to [benchmark_ref_run].
+#' @param refs Git refs to compare.
+#' @examples \dontrun{
+#' touchstone::run_on_change("R/core.R", touchstone::benchmark_run_ref(
+#'   expr_before_benchmark = source("dir/data.R"), #<-- TODO setup before benchmark
+#'   random_test = yourpkg::f(), #<- TODO put the call you want to benchmark here
+#'   n = 2
+#' ))
+#' }
+#' @export
+run_on_change <- function(file, benchmark,
+                          refs = c(
+                            ref_get_or_fail("GITHUB_BASE_REF"),
+                            ref_get_or_fail("GITHUB_HEAD_REF")
+                          )) {
+  benchmark <- rlang::enquo(benchmark)
+  changed_files <- get_changed_files(refs)
+  override <- FALSE
+
+  if (inherits(changed_files, "try-error")) {
+    usethis::ui_oops("Could not check for changes. Running benchmark. ")
+    override <- TRUE
+  }
+
+  if (override || file %in% changed_files) {
+    rlang::eval_tidy(benchmark)
+  } else {
+    f_names <- formalArgs(touchstone::benchmark_run_ref)
+    b_name <- rlang::quo_get_expr(benchmark) %>%
+      names() %>%
+      setdiff(f_names) %>%
+      purrr::keep(nzchar)
+
+    usethis::ui_info("Skipped benchmark '{b_name[[1]]}'")
+  }
+}
+
+#' Get changed files.
+#'
+#' @description description
+#' @param refs  Git refs to compare.
+#' @return Character Vector of file names or an error object.
+#' @keywords internal
+get_changed_files <- function(refs = c(
+                                ref_get_or_fail("GITHUB_BASE_REF"),
+                                ref_get_or_fail("GITHUB_HEAD_REF")
+                              )) {
+  try(system(
+    glue::glue("git diff --name-only {refs[[1]]} {refs[[2]]} --"),
+    intern = TRUE,
+    show.output.on.console = FALSE,
+    ignore.stderr = TRUE
+
+  ))
+}
