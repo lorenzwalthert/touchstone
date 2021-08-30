@@ -5,28 +5,31 @@
 \title{Run benchmark on file change}
 \usage{
 run_on_change(
-  file,
+  files,
   benchmark,
   refs = c(ref_get_or_fail("GITHUB_BASE_REF"), ref_get_or_fail("GITHUB_HEAD_REF"))
 )
 }
 \arguments{
-\item{file}{Path to file to check for change.}
+\item{files}{Character vector with paths to files to check for change.}
 
-\item{benchmark}{Call to \link{benchmark_ref_run}.}
+\item{benchmark}{Call to \link{benchmark_run_ref}.}
 
 \item{refs}{Git refs to compare.}
 }
 \description{
-The benchmark will only run if \code{file} was modified compared to
-\code{ref}. This allows for shorter commit messages.
+The benchmark will only run if \emph{any} file of \code{files} was modified
+compared to \code{ref}. This allows for shorter commit messages.
 }
 \examples{
 \dontrun{
-touchstone::run_on_change("R/core.R", touchstone::benchmark_run_ref(
-  expr_before_benchmark = source("dir/data.R"), #<-- TODO setup before benchmark
-  random_test = yourpkg::f(), #<- TODO put the call you want to benchmark here
-  n = 2
-))
+touchstone::run_on_change(
+  "R/core.R",
+  touchstone::benchmark_run_ref(
+    expr_before_benchmark = source(c("dir/data.R", "dir/another.R")),
+    random_test = yourpkg::f(),
+    n = 2
+  )
+)
 }
 }

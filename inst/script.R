@@ -19,6 +19,11 @@ touchstone::benchmark_run_ref(
   n = 6
 )
 
+# You can run tests only if the relevant file changed
+touchstone::run_on_change("R/utils.R", touchstone::benchmark_run_ref(
+  random_test = yourpkg::f(), #<- TODO put the call you want to benchmark here
+  n = 2
+))
 
 # create artifacts used downstream in the GitHub Action
 touchstone::benchmarks_analyze()
