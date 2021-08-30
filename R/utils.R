@@ -185,20 +185,23 @@ is_windows <- function() {
 
 #' Run benchmark on file change
 #'
-#' @description The benchmark will only run if `file` was modified compared to
-#'  `ref`. This allows for shorter commit messages.
-#' @param file Path to file to check for change.
+#' @description The benchmark will only run if *any* file of `files` was modified
+#' compared to `ref`. This allows for shorter commit messages.
+#' @param files Character vector with paths to files to check for change.
 #' @param benchmark Call to [benchmark_ref_run].
 #' @param refs Git refs to compare.
 #' @examples \dontrun{
-#' touchstone::run_on_change("R/core.R", touchstone::benchmark_run_ref(
-#'   expr_before_benchmark = source("dir/data.R"), #<-- TODO setup before benchmark
-#'   random_test = yourpkg::f(), #<- TODO put the call you want to benchmark here
-#'   n = 2
-#' ))
+#' touchstone::run_on_change(
+#'   "R/core.R",
+#'   touchstone::benchmark_run_ref(
+#'     expr_before_benchmark = source(c("dir/data.R", "dir/another.R")), 
+#'     random_test = yourpkg::f(),
+#'     n = 2
+#'   )
+#' )
 #' }
 #' @export
-run_on_change <- function(file, benchmark,
+run_on_change <- function(files, benchmark,
                           refs = c(
                             ref_get_or_fail("GITHUB_BASE_REF"),
                             ref_get_or_fail("GITHUB_HEAD_REF")
@@ -212,7 +215,7 @@ run_on_change <- function(file, benchmark,
     override <- TRUE
   }
 
-  if (override || file %in% changed_files) {
+  if (override || any(files %in% changed_files)) {
     rlang::eval_tidy(benchmark)
   } else {
     f_names <- formalArgs(touchstone::benchmark_run_ref)
@@ -240,6 +243,5 @@ get_changed_files <- function(refs = c(
     intern = TRUE,
     show.output.on.console = FALSE,
     ignore.stderr = TRUE
-
   ))
 }

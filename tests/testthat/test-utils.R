@@ -143,3 +143,42 @@ test_that("Can abort with missing refs for benchmark run", {
     match
   )
 })
+
+test_that("can run benchmark conditonally", {
+  run_error <- function(...) {
+    stop("Did not Skip")
+  }
+
+  branches <- c("manila_master", "setova_feature")
+  # feature is slower
+  timings <- c(0.4, 0.8) %>%
+    rlang::set_names(branches)
+  local_package(branches = branches)
+  for (branch in branches) {
+    gert::git_branch_checkout(branch)
+    code <- glue::glue(
+      "f <- function() Sys.sleep(runif(1, {timings[branch]} - 0.05, {timings[branch]} + 0.05))"
+    )
+    writeLines(code, "R/core.R")
+    gert::git_add(fs::path_file(fs::dir_ls(all = TRUE)))
+    gert::git_commit_all(
+      glue::glue("setup branch {branch}.")
+    )
+  }
+
+  expect_silent(usethis::ui_silence(
+    run_on_change("a", run_error(skip_me = 23), refs = branches)
+  ))
+
+  expect_error(
+    run_on_change("R/core.R", run_error(skip_me = 23), refs = branches),
+    "not Skip"
+  )
+  expect_error(
+    run_on_change(c("R/core.R", "R/not_changed.R"),
+      run_error(skip_me = 23),
+      refs = branches
+    ),
+    "not Skip"
+  )
+})
