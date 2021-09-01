@@ -93,7 +93,7 @@ benchmark_verbalize <- function(benchmark, timings, refs, ci) {
   confint <- confint_relative_get(timings, refs, tbl$mean[1], ci = ci)
 
   text <- glue::glue(
-    "* {benchmark}: {tbl$mean[1]}s -> {tbl$mean[2]}s {confint}"
+    "* {confint$emoji}{benchmark}: {tbl$mean[1]}s -> {tbl$mean[2]}s {confint$string}"
   )
   cat(
     text,
@@ -108,6 +108,10 @@ set_sign <- function(x) {
 }
 
 confint_relative_get <- function(timings, refs, reference, ci) {
+  no_change <- "&nbsp;&nbsp;:ballot_box_with_check:"
+  slower <- ":exclamation::snail:"
+  faster <- "&nbsp;&nbsp;:rocket:"
+
   timings_with_factors <- timings %>%
     dplyr::mutate(
       block = factor(.data$block), ref = factor(.data$ref, levels = refs)
@@ -116,7 +120,22 @@ confint_relative_get <- function(timings, refs, reference, ci) {
   fit <- stats::aov(elapsed ~ ref, data = timings_with_factors)
   var <- paste0("ref", refs[2])
   confint <- confint(fit, var, level = ci)
-  paste0("[", paste0(set_sign(round(100 * confint / reference, 2)), collapse = "%, "), "%]")
+  confint <- round(100 * confint / reference, 2)
+  emoji <- confint %>%
+    purrr::when(
+      all(. < 0) ~ faster,
+      all(. > 0) ~ slower,
+      ~ no_change
+    )
+
+  list(
+    string = paste0(
+      "[",
+      paste0(set_sign(confint), collapse = "%, "),
+      "%]"
+    ),
+    emoji = emoji
+  )
 }
 
 

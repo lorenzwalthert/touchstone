@@ -11,7 +11,9 @@ test_that("can analyze results", {
     block = 1
   ))
   mockery::stub(
-    benchmark_verbalize, "confint_relative_get", "[x.xx%, y.yy%]",
+    benchmark_verbalize,
+    "confint_relative_get",
+    list(string = "[x.xx%, y.yy%]", emoji = ":rocket:"),
     depth = 2
   )
   benchmarks_analyze(branches)
@@ -49,7 +51,9 @@ test_that("can analyze results", {
   ))
 
   mockery::stub(
-    benchmark_verbalize, "confint_relative_get", "[x.xx%, y.yy%]",
+    benchmark_verbalize,
+    "confint_relative_get",
+    list(string = "[x.xx%, y.yy%]", emoji = ":rocket:"),
     depth = 2
   )
   fs::file_delete(fs::path(dir_touchstone(), "records", "xx1", branches[1]))
