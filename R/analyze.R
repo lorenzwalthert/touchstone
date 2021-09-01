@@ -108,9 +108,9 @@ set_sign <- function(x) {
 }
 
 confint_relative_get <- function(timings, refs, reference, ci) {
-  no_change <- ":ballot_box_with_check:"
+  no_change <- "&nbsp;&nbsp;:ballot_box_with_check:"
   slower <- ":exclamation::snail:"
-  faster <- ":rocket:"
+  faster <- "&nbsp;&nbsp;:rocket:"
 
   timings_with_factors <- timings %>%
     dplyr::mutate(
