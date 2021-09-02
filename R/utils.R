@@ -194,7 +194,7 @@ is_windows <- function() {
 #' @examples
 #' \dontrun{
 #' # In script.R
-#' pin_head_asssets(c("bench", "inst/scripts"))
+#' pin_head_assets(c("bench", "inst/scripts"))
 #'
 #' source("scripts/setup.R")
 #'
@@ -208,7 +208,7 @@ is_windows <- function() {
 #' )
 #' }
 #' @export
-pin_head_asssets <- function(...) {
+pin_head_assets <- function(...) {
   temp_dir <- getOption("touchstone.dir_assets_head")
 
   if (is.null(temp_dir)) {
@@ -289,7 +289,7 @@ path_pinned_asset <- function(...,
   }
 
   path <- fs::path(asset_dir, ...)
-  if (!fs::path_exists(path)) {
+  if (!fs::file_exists(path)) {
     usethis::ui_stop("Asset {fs::path(...)} not pinned at {ref}.")
   }
 

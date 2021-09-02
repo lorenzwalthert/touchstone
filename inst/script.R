@@ -3,7 +3,7 @@
 
 # TODO Add directories you want to be available in this file or during the
 # benchmarks.
-touchstone::pin_head_asssets("some/dir")
+touchstone::pin_head_assets("some/dir")
 
 # installs branches to benchmark
 touchstone::refs_install()
