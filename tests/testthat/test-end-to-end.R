@@ -75,9 +75,12 @@ test_that("end to end run - code", {
 test_that("exp_before_benchmark longer than one (will be parsed as call) is converted", {
   withr::local_envvar(GITHUB_BASE_REF = "main", GITHUB_HEAD_REF = "main")
   local_package()
+  # call a function from a r base not on the search path to make sure it
+  # errors without library()
+  expect_error(arrow)
   out <- benchmark_run_ref(
-    expr_before_benchmark = c("library(styler)", "cache_deactivate()"),
-    main = "style_text('1+1')",
+    expr_before_benchmark = c("library(grid)", "library(stats)"),
+    main = "arrow()",
     n = 1
   )
   expect_s3_class(out, "tbl_df")
@@ -86,9 +89,12 @@ test_that("exp_before_benchmark longer than one (will be parsed as call) is conv
 test_that("main expression longer than one (will be parsed as call) is converted", {
   withr::local_envvar(GITHUB_BASE_REF = "main", GITHUB_HEAD_REF = "main")
   local_package()
+  # call a function from a r base not on the search path to make sure it
+  # errors without library()
+  expect_error(arrow)
   out <- benchmark_run_ref(
-    expr_before_benchmark = c("library(styler)"),
-    main = c("style_text('1+1')", "style_text('1+1')"),
+    expr_before_benchmark = c("library(grid)"),
+    main = c("arrow()", "arrow()"),
     n = 1
   )
   expect_s3_class(out, "tbl_df")
