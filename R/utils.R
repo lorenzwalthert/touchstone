@@ -247,7 +247,7 @@ pin_head_assets <- function(...) {
       usethis::ui_path(as.character(dirs[valid_dirs]))
     ))
   } else {
-    usethis::ui_oops("No valid asset directories found.")
+    usethis::ui_stop("No valid asset directories found.")
   }
 
   invisible(temp_dir)

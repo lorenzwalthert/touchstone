@@ -144,22 +144,40 @@ test_that("Can abort with missing refs for benchmark run", {
   )
 })
 
-test_that("library directories work", {
+test_that("asset directories work", {
   dirs <- c(fs::path_temp("test_pkg", "R"), fs::path_temp("test_pkg", "bench"))
   temp_dir <- fs::path_temp()
   fs::dir_create(dirs)
 
-  withr::with_options(list(
-    touchstone.dir_assets_head  = NULL,
-    usethis.quiet = TRUE
-  ), expect_error(pin_head_asssets("something"), "Temporary directory not found."))
+  withr::with_options(
+    list(
+      touchstone.dir_assets_head = NULL,
+      usethis.quiet = TRUE
+    ),
+    withr::with_envvar(list(
+      GITHUB_BASE_REF = "main",
+      GITHUB_HEAD_REF = "devel"
+    ), {
+      expect_error(pin_head_assets("something"), "Temporary directory not found.")
+      expect_error(path_pinned_asset("something"), "Temporary directory for ref.")
+    })
+  )
 
   withr::with_options(list(
-    touchstone.dir_assets_head  = temp_dir,
+    touchstone.dir_assets_head = temp_dir,
     usethis.quiet = TRUE
   ), {
-    expect_warning(pin_head_asssets("something"), "could not be found")
-    expect_equal(pin_head_asssets(!!!dirs), temp_dir)
+    withr::local_envvar(list(
+      GITHUB_BASE_REF = "main",
+      GITHUB_HEAD_REF = "devel"
+    ))
+    expect_warning(pin_head_assets("something", dirs[[1]]), "could not be found")
+    expect_error(suppressWarnings(pin_head_assets("something")), "No valid")
+    expect_equal(pin_head_assets(!!!dirs), temp_dir)
     expect_true(fs::is_dir(fs::path_join(c(temp_dir, "R"))))
+
+    expect_error(path_pinned_asset("something", ref = "no-branch"), "for head or base")
+    expect_error(path_pinned_asset("something"), "not pinned at")
+    expect_equal(path_pinned_asset("R"), fs::path(temp_dir, "R"))
   })
 })
