@@ -252,3 +252,46 @@ pin_head_asssets <- function(...) {
 
   invisible(temp_dir)
 }
+
+#' Get path to asset
+#'
+#' @description This function is used to get the absolut path to a pinned asset
+#' within `script.R`.
+#' @inheritParams fs::path
+#' @param ref Currently without function as assets can only be oinned from the
+#' head branch. Introduced for API stability.
+#' @return The absolute path to the asset.
+#' @export
+path_pinned_asset <- function(...,
+                              ref = ref_get_or_fail("GITHUB_HEAD_REF")) {
+
+
+  # to be consistent in API, we use `ref` as argument, with possible values for the branches, but internally with the
+  # R option, we only have head and base, so we need to convert.
+  if (ref == ref_get_or_fail("GITHUB_HEAD_REF")) {
+    ref <- "head"
+  } else if (ref == ref_get_or_fail("GITHUB_BASE_REF")) {
+    ref <- "base"
+  } else {
+    usethis::ui_stop("Can only find pinned assets for head or base refs!")
+  }
+
+  asset_dir <- getOption(paste0("touchstone.dir_assets_", ref))
+
+  if (is.null(asset_dir)) {
+    usethis::ui_stop(c(
+      "Temporary directory for ref {ref} not found.",
+      paste0(
+        "This function is only for use within 'script.R',",
+        " which must be called with 'run_script'"
+      )
+    ))
+  }
+
+  path <- fs::path(asset_dir, ...)
+  if (!fs::path_exists(path)) {
+    usethis::ui_stop("Asset {fs::path(...)} not pinned at {ref}.")
+  }
+
+  path
+}
