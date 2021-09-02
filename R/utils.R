@@ -183,18 +183,18 @@ is_windows <- function() {
   identical(.Platform$OS.type, "windows")
 }
 
-#' Add library directory
+#' Pin asset directory
 #'
-#' @description Add directories that need to be available when running
-#'   `script.R`. During [benchmark_run_ref] they will be placed in the
-#'    same directory as `script.R`.
+#' @description Add directories that need to be available on both branches 
+#'    when running`script.R`. During [benchmark_run_ref] they will be placed
+#'     in the same directory as `script.R`.
 #' @param ... A number of directories, as strings in relation to the current
 #'   working directory, that contain scripts you want to source in `script.R`.
 #' @return The temp dir invisibly.
 #' @examples
 #' \dontrun{
 #' # In script.R
-#' add_lib_dirs(c("bench", "inst/scripts"))
+#' pin_head_asssets(c("bench", "inst/scripts"))
 #'
 #' source("scripts/setup.R")
 #'
@@ -208,13 +208,16 @@ is_windows <- function() {
 #' )
 #' }
 #' @export
-add_lib_dirs <- function(...) {
-  temp_dir <- getOption("touchstone.temp_dir")
+pin_head_asssets <- function(...) {
+  temp_dir <- getOption("touchstone.dir_assets_head")
 
   if (is.null(temp_dir)) {
     usethis::ui_stop(c(
       "Temporary directory not found. ",
-      "This function is only for use within 'script.R'."
+      paste0(
+        "This function is only for use within 'script.R',",
+        " which must be called with 'run_script'"
+      )
     ))
   }
 

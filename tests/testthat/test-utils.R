@@ -152,14 +152,14 @@ test_that("library directories work", {
   withr::with_options(list(
     touchstone.temp_dir = NULL,
     usethis.quiet = TRUE
-  ), expect_error(add_lib_dirs("something"), "Temporary directory not found."))
+  ), expect_error(pin_head_asssets("something"), "Temporary directory not found."))
 
   withr::with_options(list(
     touchstone.temp_dir = temp_dir,
     usethis.quiet = TRUE
   ), {
-    expect_warning(add_lib_dirs("something"), "could not be found")
-    expect_equal(add_lib_dirs(!!!dirs), temp_dir)
+    expect_warning(pin_head_asssets("something"), "could not be found")
+    expect_equal(pin_head_asssets(!!!dirs), temp_dir)
     expect_true(fs::is_dir(fs::path_join(c(temp_dir, "R"))))
   })
 })

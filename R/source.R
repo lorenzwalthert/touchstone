@@ -54,7 +54,7 @@ run_script <- function(path, ref = ref_get_or_fail("GITHUB_HEAD_REF")) {
   )
 
   temp_dir <- fs::path_temp()
-  options(touchstone.temp_dir = temp_dir)
+  options(touchstone.dir_assets_head = temp_dir)
   temp_file <- fs::file_temp()
   fs::file_copy(path, temp_file)
 
