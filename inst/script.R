@@ -1,11 +1,12 @@
 # see `help(run_script, package = 'touchstone')` on how to run this
 # interactively
 
+# TODO Add directories you want to be available in this file or during the
+# benchmarks.
+touchstone::pin_head_asssets("some/dir")
 
-touchstone::add_lib_dirs("some/dir") #<-- TODO Add directories you want to
-                                     # source in this file or the benchmarks
-
-touchstone::refs_install() # installs branches to benchmark
+# installs branches to benchmark
+touchstone::refs_install()
 
 # benchmark a function call from your package (two calls per branch)
 touchstone::benchmark_run_ref(
