@@ -185,7 +185,7 @@ is_windows <- function() {
 
 #' Pin asset directory
 #'
-#' @description Add directories that need to be available on both branches 
+#' @description Add directories that need to be available on both branches
 #'    when running`script.R`. During [benchmark_run_ref] they will be placed
 #'     in the same directory as `script.R`.
 #' @param ... A number of directories, as strings in relation to the current
@@ -238,9 +238,17 @@ pin_head_asssets <- function(...) {
     overwrite = TRUE
   ))
 
-  usethis::ui_done(c(
-    "Copied library directories to tempdir to make them available across branch checkouts."
-  ))
+  if (any(valid_dirs)) {
+    usethis::ui_done(c(
+      paste0(
+        "Pinned the following asset directories ",
+        "to make them available across branch checkouts:"
+      ),
+      usethis::ui_path(as.character(dirs[valid_dirs]))
+    ))
+  } else {
+    usethis::ui_oops("No valid asset directories found.")
+  }
 
   invisible(temp_dir)
 }

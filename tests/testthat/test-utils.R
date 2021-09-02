@@ -150,12 +150,12 @@ test_that("library directories work", {
   fs::dir_create(dirs)
 
   withr::with_options(list(
-    touchstone.temp_dir = NULL,
+    touchstone.dir_assets_head  = NULL,
     usethis.quiet = TRUE
   ), expect_error(pin_head_asssets("something"), "Temporary directory not found."))
 
   withr::with_options(list(
-    touchstone.temp_dir = temp_dir,
+    touchstone.dir_assets_head  = temp_dir,
     usethis.quiet = TRUE
   ), {
     expect_warning(pin_head_asssets("something"), "could not be found")
