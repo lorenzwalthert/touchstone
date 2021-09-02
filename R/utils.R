@@ -67,6 +67,9 @@ exprs_eval <- function(..., env = parent.frame()) {
   if (is.symbol(expr)) {
     expr <- rlang::eval_tidy(expr, env = env)
   }
+  if (is.call(expr)) {
+    expr <- eval(expr)
+  }
 
   if (is.character(expr)) {
     expr <- rlang::parse_exprs(expr)

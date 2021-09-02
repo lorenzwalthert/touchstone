@@ -53,7 +53,7 @@ test_that("end to end run - code", {
     )
   }
   bm <- benchmark_run_ref(
-    expr_before_benchmark = source('R/core.R'),
+    expr_before_benchmark = source("R/core.R"),
     bliblablup = f(),
     refs = branches,
     n = 2
@@ -70,4 +70,26 @@ test_that("end to end run - code", {
     out,
     glue::glue("bliblablup: .* -> .*\\[.*%, .*\\]")
   )
+})
+
+test_that("exp_before_benchmark longer than one (will be parsed as call) is converted", {
+  withr::local_envvar(GITHUB_BASE_REF = "main", GITHUB_HEAD_REF = "main")
+  local_package()
+  out <- benchmark_run_ref(
+    expr_before_benchmark = c("library(styler)", "cache_deactivate()"),
+    main = "style_text('1+1')",
+    n = 1
+  )
+  expect_s3_class(out, "tbl_df")
+})
+
+test_that("main expression longer than one (will be parsed as call) is converted", {
+  withr::local_envvar(GITHUB_BASE_REF = "main", GITHUB_HEAD_REF = "main")
+  local_package()
+  out <- benchmark_run_ref(
+    expr_before_benchmark = c("library(styler)"),
+    main = c("style_text('1+1')", "style_text('1+1')"),
+    n = 1
+  )
+  expect_s3_class(out, "tbl_df")
 })
