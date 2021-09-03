@@ -14,9 +14,9 @@ working directory, that contain scripts you want to source in \code{script.R}.}
 The temp dir invisibly.
 }
 \description{
-Add directories that need to be available on both branches
-when running\code{script.R}. During \link{benchmark_run_ref} they will be placed
-in the same directory as \code{script.R}.
+Add directories that need to be available on both branches when
+running\code{script.R}. During \link{benchmark_run_ref} they will be placed in the
+same directory as \code{script.R}.
 }
 \examples{
 \dontrun{

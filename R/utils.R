@@ -185,9 +185,9 @@ is_windows <- function() {
 
 #' Pin asset directory
 #'
-#' @description Add directories that need to be available on both branches
-#'    when running`script.R`. During [benchmark_run_ref] they will be placed
-#'     in the same directory as `script.R`.
+#' Add directories that need to be available on both branches when
+#' running`script.R`. During [benchmark_run_ref] they will be placed in the
+#' same directory as `script.R`.
 #' @param ... A number of directories, as strings in relation to the current
 #'   working directory, that contain scripts you want to source in `script.R`.
 #' @return The temp dir invisibly.
@@ -255,19 +255,20 @@ pin_head_assets <- function(...) {
 
 #' Get path to asset
 #'
-#' @description This function is used to get the absolut path to a pinned asset
+#' This function is used to get the absolut path to a pinned asset
 #' within `script.R`.
 #' @inheritParams fs::path
 #' @param ref Currently without function as assets can only be oinned from the
-#' head branch. Introduced for API stability.
+#'   head branch. Introduced for API stability.
 #' @return The absolute path to the asset.
 #' @export
 path_pinned_asset <- function(...,
                               ref = ref_get_or_fail("GITHUB_HEAD_REF")) {
 
 
-  # to be consistent in API, we use `ref` as argument, with possible values for the branches, but internally with the
-  # R option, we only have head and base, so we need to convert.
+  # to be consistent in API, we use `ref` as argument, with possible values for
+  # the branches, but internally with the R option, we only have head and base,
+  # so we need to convert.
   if (ref == ref_get_or_fail("GITHUB_HEAD_REF")) {
     ref <- "head"
   } else if (ref == ref_get_or_fail("GITHUB_BASE_REF")) {
