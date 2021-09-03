@@ -184,5 +184,6 @@ test_that("assets work", {
     expect_error(path_pinned_asset("something", ref = "no-branch"), "for head or base")
     expect_error(path_pinned_asset("something"), "not pinned at")
     expect_equal(path_pinned_asset("R"), fs::path(temp_dir, "R"))
+    expect_equal(path_pinned_asset("data.R"), fs::path(temp_dir, "data.R"))
   })
 })
