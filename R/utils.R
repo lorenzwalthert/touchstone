@@ -185,7 +185,7 @@ is_windows <- function() {
 
 #' Pin asset directory
 #'
-#' Add directories that need to be available on both branches when
+#' Pin files or directories that need to be available on both branches when
 #' running`script.R`. During [benchmark_run_ref] they will be placed in the
 #' same directory as `script.R`.
 #' @param ... A number of directories, as strings in relation to the current
@@ -223,25 +223,34 @@ pin_head_assets <- function(...) {
 
   dirs <- rlang::list2(...)
 
-  valid_dirs <- dirs %>% purrr::map_lgl(fs::is_dir)
+  valid_dirs <- dirs %>% purrr::map_lgl(fs::file_exists)
 
   if (!all(valid_dirs)) {
     usethis::ui_warn(c(
-      "The following path(s) could not be found",
+      "The following asset(s) could not be found",
       " and will not be copied:",
       usethis::ui_path(unlist(dirs[!valid_dirs]))
     ))
   }
 
-  dirs[valid_dirs] %>% purrr::map(~ fs::dir_copy(.x,
-    fs::path_join(c(temp_dir, fs::path_file(.x))),
-    overwrite = TRUE
-  ))
+  dirs[valid_dirs] %>% purrr::walk(
+    ~ purrr::when(
+      .x,
+      fs::is_dir(.)[[1]] ~ fs::dir_copy(.x,
+        fs::path_join(c(temp_dir, fs::path_file(.x))),
+        overwrite = TRUE
+      ),
+      fs::is_file(.)[[1]] ~ fs::file_copy(.x,
+        fs::path_join(c(temp_dir, fs::path_file(.x))),
+        overwrite = TRUE
+      )
+    )
+  )
 
   if (any(valid_dirs)) {
     usethis::ui_done(c(
       paste0(
-        "Pinned the following asset directories ",
+        "Pinned the following assets ",
         "to make them available across branch checkouts:"
       ),
       usethis::ui_path(as.character(dirs[valid_dirs]))

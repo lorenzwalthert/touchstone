@@ -144,10 +144,13 @@ test_that("Can abort with missing refs for benchmark run", {
   )
 })
 
-test_that("asset directories work", {
+test_that("assets work", {
   dirs <- c(fs::path_temp("test_pkg", "R"), fs::path_temp("test_pkg", "bench"))
+  files <- c(fs::path_temp("test_pkg", "data.R"), fs::path_temp("test_pkg", "utils.R"))
+
   temp_dir <- fs::path_temp()
   fs::dir_create(dirs)
+  fs::file_create(files)
 
   withr::with_options(
     list(
@@ -174,7 +177,9 @@ test_that("asset directories work", {
     expect_warning(pin_head_assets("something", dirs[[1]]), "could not be found")
     expect_error(suppressWarnings(pin_head_assets("something")), "No valid")
     expect_equal(pin_head_assets(!!!dirs), temp_dir)
+    expect_equal(pin_head_assets(!!!files), temp_dir)
     expect_true(fs::is_dir(fs::path_join(c(temp_dir, "R"))))
+    expect_true(fs::is_file(fs::path_join(c(temp_dir, "data.R"))))
 
     expect_error(path_pinned_asset("something", ref = "no-branch"), "for head or base")
     expect_error(path_pinned_asset("something"), "not pinned at")
