@@ -144,7 +144,8 @@ test_that("Can abort with missing refs for benchmark run", {
   )
 })
 
-test_that("assets work", {
+test_that("assets work on HEAD", {
+  mockery::stub(pin_assets, "local_git_checkout", TRUE)
   dirs <- c(fs::path_temp("test_pkg", "R"), fs::path_temp("test_pkg", "bench"))
   files <- c(fs::path_temp("test_pkg", "data.R"), fs::path_temp("test_pkg", "utils.R"))
 
@@ -161,8 +162,8 @@ test_that("assets work", {
       GITHUB_BASE_REF = "main",
       GITHUB_HEAD_REF = "devel"
     ), {
-      expect_error(pin_head_assets("something"), "Temporary directory not found.")
-      expect_error(path_pinned_asset("something"), "Temporary directory for ref.")
+      expect_error(pin_assets("something"), "Temporary directory not found.")
+      expect_error(path_pinned_asset("something"), "Temporary directory ")
     })
   )
 
@@ -174,10 +175,10 @@ test_that("assets work", {
       GITHUB_BASE_REF = "main",
       GITHUB_HEAD_REF = "devel"
     ))
-    expect_warning(pin_head_assets("something", dirs[[1]]), "could not be found")
-    expect_error(suppressWarnings(pin_head_assets("something")), "No valid")
-    expect_equal(pin_head_assets(!!!dirs), temp_dir)
-    expect_equal(pin_head_assets(!!!files), temp_dir)
+    expect_warning(pin_assets("something", dirs[[1]]), "could not be found")
+    expect_error(suppressWarnings(pin_assets("something")), "No valid")
+    expect_equal(pin_assets(!!!dirs), temp_dir)
+    expect_equal(pin_assets(!!!files), temp_dir)
     expect_true(fs::is_dir(fs::path_join(c(temp_dir, "R"))))
     expect_true(fs::is_file(fs::path_join(c(temp_dir, "data.R"))))
 
@@ -186,4 +187,58 @@ test_that("assets work", {
     expect_equal(path_pinned_asset("R"), fs::path(temp_dir, "R"))
     expect_equal(path_pinned_asset("data.R"), fs::path(temp_dir, "data.R"))
   })
+})
+
+test_that("assets work HEAD and BASE", {
+  head_asset_dir <- fs::path_temp("head")
+  base_asset_dir <- fs::path_temp("base")
+  withr::local_options(list(
+    touchstone.dir_assets_head = head_asset_dir,
+    touchstone.dir_assets_base = base_asset_dir
+  ))
+
+  branches <- c("rc-1.0", "feat")
+  local_package(branches = branches)
+  dirs <- c("R", "bench") %>% rlang::set_names(branches)
+  files <- c("data.Rdata", "utils.R") %>% rlang::set_names(branches)
+
+  for (branch in branches) {
+    gert::git_branch_checkout(branch)
+    fs::dir_create(dirs[branch])
+    fs::file_create(files[branch])
+  }
+
+  withr::local_envvar(list(
+    GITHUB_BASE_REF = branches[[1]],
+    GITHUB_HEAD_REF = branches[[2]]
+  ))
+
+  for (branch in branches) {
+    pin_assets(dirs[branch], files[branch], ref = branch)
+  }
+
+  expect_true(
+    fs::file_exists(
+      path_pinned_asset("data.Rdata", ref = branches[[1]])
+    )[[1]]
+  )
+  expect_true(
+    fs::file_exists(
+      path_pinned_asset("utils.R", ref = branches[[2]])
+    )[[1]]
+  )
+})
+
+test_that("asset paths are fetched correctly", {
+  withr::local_options(list(
+    touchstone.dir_assets_head = "asset/dir"
+  ))
+
+  withr::local_envvar(list(
+    GITHUB_BASE_REF = "main",
+    GITHUB_HEAD_REF = "devel"
+  ))
+  expect_error(get_asset_dir("not-main"), "head or base")
+  expect_error(get_asset_dir("main"), "directory not found")
+  expect_equal(get_asset_dir("devel"), "asset/dir")
 })
