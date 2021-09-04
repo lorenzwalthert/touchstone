@@ -186,43 +186,42 @@ is_windows <- function() {
 #' Pin asset directory
 #'
 #' Pin files or directories that need to be available on both branches when
-#' running`script.R`. During [benchmark_run_ref] they will be placed in the
-#' same directory as `script.R`.
-#' @param ... A number of directories, as strings in relation to the current
-#'   working directory, that contain scripts you want to source in `script.R`.
-#' @return The temp dir invisibly.
+#' running`script.R`. During [benchmark_run_ref] they will available via
+#' [path_pinned_asset].
+#' @param ... Any number of directories or files, as strings, that you want to
+#'   access in `script.R`.
+#' @param ref The branch the passed assets are copied from.
+#' @inheritParams fs::path
+#' @details When passing nested directories or files within nested directories
+#'   only the file/last directory will be copied. Directories will be copied
+#'   recursively. See examples.
+#' @return The asset directory invisibly.
 #' @examples
 #' \dontrun{
 #' # In script.R
-#' pin_head_assets(c("bench", "inst/scripts"))
 #'
-#' source("scripts/setup.R")
+#' pin_assets(c("bench", "inst/setup.R", "some/nested/dir"))
+#'
+#' source(path_pinned_asset("setup.R"))
+#' load(path_pinned_asset("dir/data.RData"))
 #'
 #' touchstone::benchmark_run_ref(
 #'   expr_before_benchmark = {
 #'     !!setup
-#'     source("bench/exprs.R")
+#'     source(path_pinned_asset("bench/exprs.R"))
 #'   },
 #'   run_me = some_exprs(),
 #'   n = 6
 #' )
 #' }
 #' @export
-pin_head_assets <- function(...) {
-  temp_dir <- getOption("touchstone.dir_assets_head")
+pin_assets <- function(...,
+                       ref = ref_get_or_fail("GITHUB_HEAD_REF"),
+                       overwrite = TRUE) {
+  asset_dir <- get_asset_dir(ref, "pin")
 
-  if (is.null(temp_dir)) {
-    usethis::ui_stop(c(
-      "Temporary directory not found. ",
-      paste0(
-        "This function is only for use within 'script.R',",
-        " which must be called with 'run_script'"
-      )
-    ))
-  }
-
+  local_git_checkout(ref)
   dirs <- rlang::list2(...)
-
   valid_dirs <- dirs %>% purrr::map_lgl(fs::file_exists)
 
   if (!all(valid_dirs)) {
@@ -237,12 +236,12 @@ pin_head_assets <- function(...) {
     ~ purrr::when(
       .x,
       fs::is_dir(.)[[1]] ~ fs::dir_copy(.x,
-        fs::path_join(c(temp_dir, fs::path_file(.x))),
-        overwrite = TRUE
+        fs::path_join(c(asset_dir, fs::path_file(.x))),
+        overwrite = overwrite
       ),
       fs::is_file(.)[[1]] ~ fs::file_copy(.x,
-        fs::path_join(c(temp_dir, fs::path_file(.x))),
-        overwrite = TRUE
+        fs::path_join(c(asset_dir, fs::path_file(.x))),
+        overwrite = overwrite
       )
     )
   )
@@ -259,44 +258,21 @@ pin_head_assets <- function(...) {
     usethis::ui_stop("No valid asset directories found.")
   }
 
-  invisible(temp_dir)
+  invisible(asset_dir)
 }
 
 #' Get path to asset
 #'
-#' This function is used to get the absolut path to a pinned asset
+#' This function is used to get the path to a pinned asset
 #' within `script.R`.
 #' @inheritParams fs::path
-#' @param ref Currently without function as assets can only be oinned from the
-#'   head branch. Introduced for API stability.
+#' @param ref The branch the passed asset was copied from.
 #' @return The absolute path to the asset.
+#' @seealso pin_assets
 #' @export
 path_pinned_asset <- function(...,
                               ref = ref_get_or_fail("GITHUB_HEAD_REF")) {
-
-
-  # to be consistent in API, we use `ref` as argument, with possible values for
-  # the branches, but internally with the R option, we only have head and base,
-  # so we need to convert.
-  if (ref == ref_get_or_fail("GITHUB_HEAD_REF")) {
-    ref <- "head"
-  } else if (ref == ref_get_or_fail("GITHUB_BASE_REF")) {
-    ref <- "base"
-  } else {
-    usethis::ui_stop("Can only find pinned assets for head or base refs!")
-  }
-
-  asset_dir <- getOption(paste0("touchstone.dir_assets_", ref))
-
-  if (is.null(asset_dir)) {
-    usethis::ui_stop(c(
-      "Temporary directory for ref {ref} not found.",
-      paste0(
-        "This function is only for use within 'script.R',",
-        " which must be called with 'run_script'"
-      )
-    ))
-  }
+  asset_dir <- get_asset_dir(ref)
 
   path <- fs::path(asset_dir, ...)
   if (!fs::file_exists(path)) {
@@ -304,4 +280,28 @@ path_pinned_asset <- function(...,
   }
 
   path
+}
+
+get_asset_dir <- function(ref, verb = "find") {
+  if (ref == ref_get_or_fail("GITHUB_HEAD_REF")) {
+    ref <- "head"
+  } else if (ref == ref_get_or_fail("GITHUB_BASE_REF")) {
+    ref <- "base"
+  } else {
+    usethis::ui_stop("Can only {verb} assets for head or base refs!")
+  }
+
+  asset_dir <- getOption(paste0("touchstone.dir_assets_", ref))
+
+  if (is.null(asset_dir)) {
+    usethis::ui_stop(c(
+      "Temporary directory not found. ",
+      paste0(
+        "This function is only for use within 'script.R',",
+        " which must be called with 'run_script'"
+      )
+    ))
+  }
+
+  asset_dir
 }

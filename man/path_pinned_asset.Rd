@@ -11,13 +11,15 @@ path_pinned_asset(..., ref = ref_get_or_fail("GITHUB_HEAD_REF"))
 NA. The paths follow the recycling rules used in the tibble package,
 namely that only length 1 arguments are recycled.}
 
-\item{ref}{Currently without function as assets can only be oinned from the
-head branch. Introduced for API stability.}
+\item{ref}{The branch the passed asset was copied from.}
 }
 \value{
 The absolute path to the asset.
 }
 \description{
-This function is used to get the absolut path to a pinned asset
+This function is used to get the path to a pinned asset
 within \code{script.R}.
+}
+\seealso{
+pin_assets
 }
