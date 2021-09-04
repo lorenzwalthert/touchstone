@@ -186,7 +186,7 @@ is_windows <- function() {
 #' Pin asset directory
 #'
 #' Pin files or directories that need to be available on both branches when
-#' running`script.R`. During [benchmark_run_ref] they will available via
+#'  running`script.R`. During [benchmark_run_ref] they will available via
 #' [path_pinned_asset].
 #' @param ... Any number of directories or files, as strings, that you want to
 #'   access in `script.R`.
@@ -263,12 +263,11 @@ pin_assets <- function(...,
 
 #' Get path to asset
 #'
-#' This function is used to get the path to a pinned asset
-#' within `script.R`.
+#' Get the path to a pinned asset within `script.R`.
 #' @inheritParams fs::path
 #' @param ref The branch the passed asset was copied from.
 #' @return The absolute path to the asset.
-#' @seealso pin_assets
+#' @seealso [pin_assets()]
 #' @export
 path_pinned_asset <- function(...,
                               ref = ref_get_or_fail("GITHUB_HEAD_REF")) {

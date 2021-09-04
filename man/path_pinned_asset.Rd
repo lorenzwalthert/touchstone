@@ -17,9 +17,8 @@ namely that only length 1 arguments are recycled.}
 The absolute path to the asset.
 }
 \description{
-This function is used to get the path to a pinned asset
-within \code{script.R}.
+Get the path to a pinned asset within \code{script.R}.
 }
 \seealso{
-pin_assets
+\code{\link[=pin_assets]{pin_assets()}}
 }
