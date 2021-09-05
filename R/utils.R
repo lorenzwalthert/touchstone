@@ -192,6 +192,7 @@ is_windows <- function() {
 #'   access in `script.R`.
 #' @param ref The branch the passed assets are copied from.
 #' @inheritParams fs::path
+#' @inheritParams fs::dir_copy
 #' @details When passing nested directories or files within nested directories
 #'   only the file/last directory will be copied. Directories will be copied
 #'   recursively. See examples.

@@ -11,6 +11,9 @@ pin_assets(..., ref = ref_get_or_fail("GITHUB_HEAD_REF"), overwrite = TRUE)
 access in \code{script.R}.}
 
 \item{ref}{The branch the passed assets are copied from.}
+
+\item{overwrite}{Overwrite files if they exist. If this is \code{FALSE} and the
+file exists an error will be thrown.}
 }
 \value{
 The asset directory invisibly.
