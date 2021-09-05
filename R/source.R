@@ -52,13 +52,21 @@ run_script <- function(path, ref = ref_get_or_fail("GITHUB_HEAD_REF")) {
     list(lib),
     action = "prefix"
   )
-  tempfile <- fs::file_temp()
-  fs::file_copy(path, tempfile)
+
+  head_asset_dir <- fs::path_temp("head")
+  base_asset_dir <- fs::path_temp("base")
+  options(
+    touchstone.dir_assets_head = head_asset_dir,
+    touchstone.dir_assets_base = base_asset_dir
+  )
+  temp_file <- fs::file_temp()
+  fs::file_copy(path, temp_file)
+
   usethis::ui_done(glue::glue(
     "Copied touchstone script to tempdir to prevent branch checkouts to effect",
     " the script."
   ))
-  source(tempfile, max.deparse.length = Inf)
+  source(temp_file, max.deparse.length = Inf)
 }
 
 
