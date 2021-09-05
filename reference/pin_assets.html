@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Function reference • touchstone</title>
+<title>Pin asset directory — pin_assets • touchstone</title>
 
 
 <!-- jquery -->
@@ -39,7 +39,10 @@
 
 
 
-<meta property="og:title" content="Function reference" />
+<meta property="og:title" content="Pin asset directory — pin_assets" />
+<meta property="og:description" content="Pin files or directories that need to be available on both branches when
+running the touchstone_script. During benchmark_run_ref() they will
+available via path_pinned_asset()." />
 
 
 
@@ -58,7 +61,7 @@
   </head>
 
   <body data-spy="scroll" data-target="#toc">
-    <div class="container template-reference-index">
+    <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -120,114 +123,69 @@
       </header>
 
 <div class="row">
-  <div class="contents col-md-9">
+  <div class="col-md-9 contents">
     <div class="page-header">
-      <h1>Reference</h1>
+    <h1>Pin asset directory</h1>
+    <small class="dont-index">Source: <a href='https://github.com/lorenzwalthert/touchstone/blob/master/R/utils.R'><code>R/utils.R</code></a></small>
+    <div class="hidden name"><code>pin_assets.Rd</code></div>
     </div>
 
-    <table class="ref-index">
+    <div class="ref-description">
+    <p>Pin files or directories that need to be available on both branches when
+running the <code>touchstone_script</code>. During <code><a href='benchmark_run_ref.html'>benchmark_run_ref()</a></code> they will
+available via <code><a href='path_pinned_asset.html'>path_pinned_asset()</a></code>.</p>
+    </div>
 
-    <colgroup>
-      
-      <col class="alias" />
-      <col class="title" />
-    </colgroup>
+    <pre class="usage"><span class='fu'>pin_assets</span><span class='op'>(</span><span class='va'>...</span>, ref <span class='op'>=</span> <span class='fu'><a href='ref_get_or_fail.html'>ref_get_or_fail</a></span><span class='op'>(</span><span class='st'>"GITHUB_HEAD_REF"</span><span class='op'>)</span>, overwrite <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span></pre>
 
-    <tbody>
-      <tr>
-        <th colspan="2">
-          <h2 id="section-all-functions" class="hasAnchor"><a href="#section-all-functions" class="anchor"></a>All functions</h2>
-          <p class="section-desc"></p>
-        </th>
-      </tr>
-      
-      
-    </tbody><tbody>
-      
-      
-      <tr>
-        
-        <td>
-          <p><code><a href="benchmark_ls.html">benchmark_ls()</a></code> </p>
-        </td>
-        <td><p>List which benchmarks were recorded</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="benchmark_read.html">benchmark_read()</a></code> </p>
-        </td>
-        <td><p>Read benchmarks</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="benchmark_run_ref.html">benchmark_run_ref()</a></code> </p>
-        </td>
-        <td><p>Run a benchmark for git refs</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="benchmark_write.html">benchmark_write()</a></code> </p>
-        </td>
-        <td><p>Write a benchmark</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="benchmarks_analyze.html">benchmarks_analyze()</a></code> </p>
-        </td>
-        <td><p>Turn raw benchmark results into text and figures</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="path_pinned_asset.html">path_pinned_asset()</a></code> </p>
-        </td>
-        <td><p>Get path to asset</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="pin_assets.html">pin_assets()</a></code> </p>
-        </td>
-        <td><p>Pin asset directory</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="ref_get_or_fail.html">ref_get_or_fail()</a></code> </p>
-        </td>
-        <td><p>Get the ref from the environment variable or fail if not set</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="refs_install.html">refs_install()</a></code> </p>
-        </td>
-        <td><p>Install branches</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="run_script.html">run_script()</a></code> </p>
-        </td>
-        <td><p>Sources a script</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="touchstone_managers.html">dir_touchstone()</a></code> <code><a href="touchstone_managers.html">touchstone_clear()</a></code> </p>
-        </td>
-        <td><p>Touchstone managers</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="touchstone_script.html">touchstone_script</a></code> </p>
-        </td>
-        <td><p>The script for benchmarking</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="use_touchstone.html">use_touchstone()</a></code> </p>
-        </td>
-        <td><p>Initiate touchstone</p></td>
-      </tr>
-    </tbody>
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
+    <table class="ref-arguments">
+    <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>...</th>
+      <td><p>Any number of directories or files, as strings, that you want to
+access in <code>script.R</code>.</p></td>
+    </tr>
+    <tr>
+      <th>ref</th>
+      <td><p>The branch the passed assets are copied from.</p></td>
+    </tr>
+    <tr>
+      <th>overwrite</th>
+      <td><p>Overwrite files if they exist. If this is <code>FALSE</code> and the
+file exists an error will be thrown.</p></td>
+    </tr>
     </table>
-  </div>
 
+    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
+
+    <p>The asset directory invisibly.</p>
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+
+    <p>When passing nested directories or files within nested directories
+only the file/last directory will be copied. Directories will be copied
+recursively. See examples.</p>
+
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span>
+<span class='co'># In script.R</span>
+
+<span class='fu'>pin_assets</span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"bench"</span>, <span class='st'>"inst/setup.R"</span>, <span class='st'>"some/nested/dir"</span><span class='op'>)</span><span class='op'>)</span>
+
+<span class='kw'><a href='https://rdrr.io/r/base/source.html'>source</a></span><span class='op'>(</span><span class='fu'><a href='path_pinned_asset.html'>path_pinned_asset</a></span><span class='op'>(</span><span class='st'>"setup.R"</span><span class='op'>)</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/base/load.html'>load</a></span><span class='op'>(</span><span class='fu'><a href='path_pinned_asset.html'>path_pinned_asset</a></span><span class='op'>(</span><span class='st'>"dir/data.RData"</span><span class='op'>)</span><span class='op'>)</span>
+
+<span class='fu'>touchstone</span><span class='fu'>::</span><span class='fu'><a href='benchmark_run_ref.html'>benchmark_run_ref</a></span><span class='op'>(</span>
+  expr_before_benchmark <span class='op'>=</span> <span class='op'>{</span>
+    <span class='op'>!</span><span class='op'>!</span><span class='va'>setup</span>
+    <span class='kw'><a href='https://rdrr.io/r/base/source.html'>source</a></span><span class='op'>(</span><span class='fu'><a href='path_pinned_asset.html'>path_pinned_asset</a></span><span class='op'>(</span><span class='st'>"bench/exprs.R"</span><span class='op'>)</span><span class='op'>)</span>
+  <span class='op'>}</span>,
+  run_me <span class='op'>=</span> <span class='fu'>some_exprs</span><span class='op'>(</span><span class='op'>)</span>,
+  n <span class='op'>=</span> <span class='fl'>6</span>
+<span class='op'>)</span>
+<span class='op'>}</span>
+</div></pre>
+  </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
       <h2 data-toc-skip>Contents</h2>
