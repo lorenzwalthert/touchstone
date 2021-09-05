@@ -9,7 +9,7 @@ local_clean_touchstone <- function(envir = parent.frame()) {
 }
 
 path_temp_pkg <- function(name) {
-  fs::path(tempdir(), digest::digest(Sys.time()), name)
+  fs::path_temp(openssl::md5(as.character(Sys.time())), name)
 }
 
 
