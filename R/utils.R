@@ -186,8 +186,8 @@ is_windows <- function() {
 #' Pin asset directory
 #'
 #' Pin files or directories that need to be available on both branches when
-#'  running`script.R`. During [benchmark_run_ref] they will available via
-#' [path_pinned_asset].
+#' running the `touchstone_script`. During [benchmark_run_ref()] they will
+#' available via [path_pinned_asset()].
 #' @param ... Any number of directories or files, as strings, that you want to
 #'   access in `script.R`.
 #' @param ref The branch the passed assets are copied from.

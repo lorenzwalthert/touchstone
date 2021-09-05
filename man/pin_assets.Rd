@@ -20,8 +20,8 @@ The asset directory invisibly.
 }
 \description{
 Pin files or directories that need to be available on both branches when
-running\code{script.R}. During \link{benchmark_run_ref} they will available via
-\link{path_pinned_asset}.
+running the \code{touchstone_script}. During \code{\link[=benchmark_run_ref]{benchmark_run_ref()}} they will
+available via \code{\link[=path_pinned_asset]{path_pinned_asset()}}.
 }
 \details{
 When passing nested directories or files within nested directories
