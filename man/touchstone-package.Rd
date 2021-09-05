@@ -23,5 +23,10 @@ Useful links:
 \author{
 \strong{Maintainer}: Lorenz Walthert \email{lorenz.walthert@icloud.com}
 
+Authors:
+\itemize{
+  \item Jacob Wujciak-Jens \email{jacob@wujciak.de} (\href{https://orcid.org/0000-0002-7281-3989}{ORCID})
+}
+
 }
 \keyword{internal}

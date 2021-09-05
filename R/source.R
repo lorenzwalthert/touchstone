@@ -45,7 +45,8 @@
 #'   )
 #' }
 #' }
-run_script <- function(path, ref = ref_get_or_fail("GITHUB_HEAD_REF")) {
+run_script <- function(path = "touchstone/script.R",
+                       ref = ref_get_or_fail("GITHUB_HEAD_REF")) {
   lib <- libpath_touchstone(ref)
   fs::dir_create(lib)
   withr::local_libpaths(

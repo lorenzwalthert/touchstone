@@ -17,7 +17,7 @@ namely that only length 1 arguments are recycled.}
 The absolute path to the asset.
 }
 \description{
-Get the path to a pinned asset within \code{script.R}.
+Get the path to a pinned asset within a \link{touchstone_script}.
 }
 \seealso{
 \code{\link[=pin_assets]{pin_assets()}}

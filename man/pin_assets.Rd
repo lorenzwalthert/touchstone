@@ -8,7 +8,7 @@ pin_assets(..., ref = ref_get_or_fail("GITHUB_HEAD_REF"), overwrite = TRUE)
 }
 \arguments{
 \item{...}{Any number of directories or files, as strings, that you want to
-access in \code{script.R}.}
+access in your \link{touchstone_script}.}
 
 \item{ref}{The branch the passed assets are copied from.}
 
@@ -30,7 +30,7 @@ recursively. See examples.
 }
 \examples{
 \dontrun{
-# In script.R
+# In the touchstone script
 
 pin_assets(c("bench", "inst/setup.R", "some/nested/dir"))
 
