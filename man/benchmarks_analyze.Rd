@@ -32,4 +32,6 @@ Creates two side effects:
 \code{touchstone/pr-comment/info.txt} for every registered benchmarking
 expression. See \code{vignette("inference", package = "touchstone")} for details.
 }
+
+Requires \link[dplyr:dplyr-package]{dplyr::dplyr}, \link[ggplot2:ggplot2-package]{ggplot2::ggplot2} and \link[glue:glue]{glue::glue}.
 }

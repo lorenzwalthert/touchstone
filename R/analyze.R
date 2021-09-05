@@ -11,6 +11,7 @@
 #' @param names The names of the benchmarks to analyze. If `NULL`, all
 #'   benchmarks with the `refs` are taken.
 #' @param ci The confidence level, defaults to 95%.
+#' @details Requires [dplyr::dplyr], [ggplot2::ggplot2] and [glue::glue].
 #' @return
 #' A character vector that summarizes the benchmarking results.
 #' @export
@@ -20,6 +21,26 @@ benchmarks_analyze <- function(refs = c(
                                ),
                                names = NULL,
                                ci = 0.95) {
+  suggested_pkgs <- c("dplyr", "ggplot2", "glue")
+  suggests_available <- purrr::map_lgl(
+    suggested_pkgs,
+    requireNamespace,
+    quietly = TRUE
+  )
+
+  if (!all(suggests_available)) {
+    missing_pkgs <- paste0("'",
+      suggested_pkgs[!suggests_available],
+      "'",
+      collapse = ", "
+    )
+
+    usethis::ui_stop(c(
+      "Analysing the benchmarks requires additional packages!",
+      "Install them with `install.packages(c({missing_pkgs}))`"
+    ))
+  }
+
   if (length(refs) != 2) {
     rlang::abort("There must be exactly two refs to comare.")
   }
@@ -125,7 +146,7 @@ confint_relative_get <- function(timings, refs, reference, ci) {
     purrr::when(
       all(. < 0) ~ faster,
       all(. > 0) ~ slower,
-      ~ no_change
+      ~no_change
     )
 
   list(

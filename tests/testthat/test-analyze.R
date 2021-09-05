@@ -67,3 +67,9 @@ test_that("can analyze results", {
   )
   expect_true(fs::file_exists("touchstone/plots/xx2.png"))
 })
+
+test_that("missing package throws error", {
+  skip_if(packageVersion("mockery") < "0.4.2.9000")
+  mockery::stub(benchmarks_analyze, "requireNamespace", FALSE)
+  expect_error(benchmarks_analyze(), "requires additional packages")
+})
