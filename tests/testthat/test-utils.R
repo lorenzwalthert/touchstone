@@ -231,7 +231,8 @@ test_that("assets work HEAD and BASE", {
 
 test_that("asset paths are fetched correctly", {
   withr::local_options(list(
-    touchstone.dir_assets_head = "asset/dir"
+    touchstone.dir_assets_head = "asset/dir",
+    touchstone.dir_assets_base = NULL
   ))
 
   withr::local_envvar(list(
