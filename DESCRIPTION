@@ -3,10 +3,15 @@ Package: touchstone
 Title: Benchmark Different Git Refs in One Run
 Version: 0.0.0.9001
 Authors@R: 
-    person(given = "Lorenz",
-           family = "Walthert",
-           role = c("aut", "cre"),
-           email = "lorenz.walthert@icloud.com")
+    c(person(given = "Lorenz",
+             family = "Walthert",
+             role = c("aut", "cre"),
+             email = "lorenz.walthert@icloud.com"),
+      person(given = "Jacob",
+             family = "Wujciak-Jens",
+             role = "aut",
+             email = "jacob@wujciak.de",
+             comment = c(ORCID = "0000-0002-7281-3989")))
 Description: A common problem of benchmarking in continuous integration is
     that the computational power of the virtual machines that run the job
     varies over time.  This package allows users to benchmark two git refs
@@ -21,23 +26,23 @@ Imports:
     fs,
     gert,
     magrittr,
-    mockery (>= 0.4.2),
     purrr,
     remotes,
     rlang,
     tibble,
-    tidyselect,
     usethis,
-    vctrs
+    vctrs,
+    withr
 Suggests: 
-    digest,
     dplyr,
     ggplot2,
     glue,
     knitr,
+    mockery (>= 0.4.2),
+    openssl (>= 1.4.1),
     rmarkdown,
     testthat (>= 3.0.0),
-    withr
+    tidyselect
 VignetteBuilder: 
     knitr
 Config/testthat/edition: 3

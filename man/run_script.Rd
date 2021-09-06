@@ -4,7 +4,10 @@
 \alias{run_script}
 \title{Sources a script}
 \usage{
-run_script(path, ref = ref_get_or_fail("GITHUB_HEAD_REF"))
+run_script(
+  path = "touchstone/script.R",
+  ref = ref_get_or_fail("GITHUB_HEAD_REF")
+)
 }
 \arguments{
 \item{path}{The script to run. It must fulfill the requirements of a

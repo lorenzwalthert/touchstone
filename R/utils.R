@@ -189,7 +189,7 @@ is_windows <- function() {
 #' running the `touchstone_script`. During [benchmark_run_ref()] they will
 #' available via [path_pinned_asset()].
 #' @param ... Any number of directories or files, as strings, that you want to
-#'   access in `script.R`.
+#'   access in your [touchstone_script].
 #' @param ref The branch the passed assets are copied from.
 #' @inheritParams fs::path
 #' @inheritParams fs::dir_copy
@@ -199,7 +199,7 @@ is_windows <- function() {
 #' @return The asset directory invisibly.
 #' @examples
 #' \dontrun{
-#' # In script.R
+#' # In the touchstone script
 #'
 #' pin_assets(c("bench", "inst/setup.R", "some/nested/dir"))
 #'
@@ -264,7 +264,7 @@ pin_assets <- function(...,
 
 #' Get path to asset
 #'
-#' Get the path to a pinned asset within `script.R`.
+#' Get the path to a pinned asset within a [touchstone_script].
 #' @inheritParams fs::path
 #' @param ref The branch the passed asset was copied from.
 #' @return The absolute path to the asset.
@@ -297,7 +297,7 @@ get_asset_dir <- function(ref, verb = "find") {
     usethis::ui_stop(c(
       "Temporary directory not found. ",
       paste0(
-        "This function is only for use within 'script.R',",
+        "This function is only for use within the 'touchstone_script',",
         " which must be called with 'run_script'"
       )
     ))
