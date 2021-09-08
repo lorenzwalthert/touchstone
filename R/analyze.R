@@ -44,7 +44,7 @@ benchmarks_analyze <- function(refs = c(
   path_info <- fs::path(dir_touchstone(), "pr-comment/info.txt")
   paste0(
     "This is how benchmark results would change (along with a ", 100 * ci,
-    "% confience interval in relative change) if ",
+    "% confidence interval in relative change) if ",
     system2("git", c("rev-parse", "HEAD"), stdout = TRUE),
     " is merged into ", refs[1], ":", "\n"
   ) %>%
