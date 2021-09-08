@@ -63,7 +63,7 @@ run_script <- function(path = "touchstone/script.R",
   temp_file <- fs::file_temp()
   fs::file_copy(path, temp_file)
 
-  usethis::ui_done(paste0(
+  cli::cli_alert_success(paste0(
     "Copied touchstone script to tempdir to prevent branch checkouts to effect",
     " the script."
   ))

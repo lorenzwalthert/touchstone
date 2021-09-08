@@ -14,7 +14,7 @@
 #' @export
 benchmark_write <- function(benchmark, name, ref, block = NA, iteration = NA, append = TRUE) {
   if (benchmark$n_itr > 1) {
-    rlang::abort("This package only supports benchmarks with `bench::mark(..., iterations = 1`.")
+    cli::cli_abort("This package only supports benchmarks with {.code bench::mark(..., iterations = 1)}.")
   }
   path <- path_record(name, ref)
   init_touchstone()

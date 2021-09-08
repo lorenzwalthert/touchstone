@@ -13,8 +13,8 @@ ref_install <- function(ref = "main",
                         install_dependencies = FALSE) {
   local_git_checkout(ref, path_pkg)
   if (getOption("touchstone.skip_install", FALSE)) {
-    usethis::ui_info(
-      "R option `touchstone.skip_install` is set, skipping installation."
+    cli::cli_alert_info(
+      "R option {.envvar touchstone.skip_install} is set, skipping installation."
     )
     NULL
   } else {
@@ -30,7 +30,7 @@ ref_install <- function(ref = "main",
       force = !cache_up_to_date(ref, path_pkg)
     )
     cache_update(ref, path_pkg)
-    usethis::ui_done("Installed branch {ref} into {libpath[1]}.")
+    cli::cli_alert_success("Installed branch {.val {ref}} into {.path {libpath[1]}}.")
     libpath
   }
 }
@@ -52,7 +52,7 @@ refs_install <- function(refs = c(
                          install_dependencies = FALSE) {
   force(refs)
   assert_no_global_installation(path_pkg)
-  usethis::ui_info("Start installing branches into separate libraries.")
+  cli::cli_alert_info("Start installing branches into separate libraries.")
   libpaths <- purrr::map(refs, ref_install,
     path_pkg = path_pkg,
     install_dependencies = install_dependencies
@@ -63,7 +63,7 @@ refs_install <- function(refs = c(
     as.character() %>%
     sort()
   assert_no_global_installation(path_pkg)
-  usethis::ui_done("Completed installations.")
+  cli::cli_alert_success("Completed installations.")
   invisible(libpaths)
 }
 

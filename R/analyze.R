@@ -35,14 +35,16 @@ benchmarks_analyze <- function(refs = c(
       collapse = ", "
     )
 
-    usethis::ui_stop(c(
-      "Analysing the benchmarks requires additional packages!",
-      "Install them with `install.packages(c({missing_pkgs}))`"
+    n_pkgs <- length(missing_pkgs)
+    pkgs_str <- paste0('"', missing_pkgs, '"', collapse = ",")
+    cli::cli_abort(c(
+      "Analysing the benchmarks requires {n_pkgs} additional package{?s}!",
+      "i" = "To install use {.code install.packages(c({pkgs_str}))}"
     ))
   }
 
   if (length(refs) != 2) {
-    rlang::abort("There must be exactly two refs to comare.")
+    cli::cli_abort("There must be exactly two refs to comare.")
   }
   path_info <- fs::path(dir_touchstone(), "pr-comment/info.txt")
   paste0(
@@ -62,11 +64,10 @@ benchmarks_analyze <- function(refs = c(
 
     filtered_names <- dplyr::filter(names, .data$n == 2)
     if (!identical(names, filtered_names)) {
-      rlang::warn(paste0(
-        "All benchmarks to analyse must have the two refs ", refs[1], " and ", refs[2],
-        ". Ignoring all benchmarks that don't have exactly those two refs.",
-        "To avoid this warning, inspect the existing benchmarks with ",
-        "`touchstone::benchmark_ls()`"
+      cli::cli_warn(c(
+        "All benchmarks to analyse must have the two refs  {.val {refs[[1]]}} and {.val {refs[[2]]}}",
+        "!" = "Ignoring all benchmarks that don't have exactly those two refs.",
+        "i" = "To avoid this warning, inspect the existing benchmarks with {.fun touchstone::benchmark_ls}"
       ))
       names <- filtered_names
     }
@@ -109,7 +110,7 @@ benchmark_verbalize <- function(benchmark, timings, refs, ci) {
     dplyr::inner_join(tibble::tibble(ref = refs), ., by = "ref")
 
   if (nrow(tbl) > 2) {
-    rlang::abort("Benchmarks with more than two `refs` cannot be verbalized.")
+    cli::cli_abort("Benchmarks with more than two {.val refs} cannot be verbalized.")
   }
   confint <- confint_relative_get(timings, refs, tbl$mean[1], ci = ci)
 

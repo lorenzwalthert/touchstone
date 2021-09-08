@@ -35,7 +35,7 @@ benchmark_run_iteration <- function(expr_before_benchmark,
       libpath = c(libpath_touchstone(ref), .libPaths())
     )
   }
-  usethis::ui_done("Ran {n} iterations of ref `{ref}`.")
+  cli::cli_alert_success("Ran {n} iteration{?s} of ref {.val {ref}}.")
   benchmark_read(names(dots), ref)
 }
 
@@ -79,7 +79,7 @@ benchmark_run_ref <- function(expr_before_benchmark,
   dots <- rlang::enexprs(...)
 
   if (length(dots) > 1) {
-    rlang::abort("Can only pass one expression to benchmark")
+    cli::cli_abort("Can only pass one expression to benchmark")
   }
   # touchstone libraries must be removed from the path temporarily
   # and the one to benchmark will be added in benchmark_run_ref_impl()

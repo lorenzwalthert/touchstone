@@ -1,10 +1,5 @@
-test_that("can initialize", {
+cli::test_that_cli("can initialize with cli", {
   local_package()
-  withr::with_tempdir(
-    expect_silent(use_touchstone())
-  )
-  withr::with_tempdir({
-    use_touchstone()
-    expect_match(conditionMessage(capture_warning(use_touchstone())), "not cop")
-  })
+  expect_snapshot(use_touchstone())
+  expect_match(conditionMessage(capture_warning(use_touchstone())), "already exists")
 })
