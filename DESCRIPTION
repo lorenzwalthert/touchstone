@@ -42,7 +42,6 @@ Suggests:
     openssl (>= 1.4.1),
     rmarkdown,
     testthat (>= 3.0.0),
-    tidyselect,
     usethis
 VignetteBuilder: 
     knitr
