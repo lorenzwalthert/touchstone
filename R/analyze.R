@@ -140,7 +140,7 @@ confint_relative_get <- function(timings, refs, reference, ci) {
   fit <- stats::aov(elapsed ~ ref, data = timings_with_factors)
   var <- paste0("ref", refs[2])
   confint <- confint(fit, var, level = ci)
-  confint <- round(100 * confint / reference, 2)
+  confint <- as.numeric(round(100 * confint / reference, 2))
   emoji <- confint %>%
     purrr::when(
       all(. < 0) ~ faster,
