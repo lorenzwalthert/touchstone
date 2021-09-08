@@ -98,10 +98,9 @@ benchmark_verbalize <- function(benchmark, timings, refs, ci) {
   tbl <- timings %>%
     dplyr::group_by(.data$ref) %>%
     dplyr::summarise(
-      mean = mean(.data$elapsed),
+      mean = bench::as_bench_time(mean(.data$elapsed)),
       sd = stats::sd(.data$elapsed)
     ) %>%
-    dplyr::mutate(dplyr::across(tidyselect::vars_select_helpers$where(is.numeric), round, 2)) %>%
     dplyr::inner_join(tibble::tibble(ref = refs), ., by = "ref")
 
   if (nrow(tbl) > 2) {
@@ -110,7 +109,7 @@ benchmark_verbalize <- function(benchmark, timings, refs, ci) {
   confint <- confint_relative_get(timings, refs, tbl$mean[1], ci = ci)
 
   text <- glue::glue(
-    "* {confint$emoji}{benchmark}: {tbl$mean[1]}s -> {tbl$mean[2]}s {confint$string}"
+    "* {confint$emoji}{benchmark}: {tbl$mean[1]} -> {tbl$mean[2]} {confint$string}"
   )
   cat(
     text,
@@ -137,7 +136,7 @@ confint_relative_get <- function(timings, refs, reference, ci) {
   fit <- stats::aov(elapsed ~ ref, data = timings_with_factors)
   var <- paste0("ref", refs[2])
   confint <- confint(fit, var, level = ci)
-  confint <- round(100 * confint / reference, 2)
+  confint <- as.numeric(round(100 * confint / reference, 2))
   emoji <- confint %>%
     purrr::when(
       all(. < 0) ~ faster,
