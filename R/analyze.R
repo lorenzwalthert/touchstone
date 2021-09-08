@@ -29,12 +29,7 @@ benchmarks_analyze <- function(refs = c(
   )
 
   if (!all(suggests_available)) {
-    missing_pkgs <- paste0("'",
-      suggested_pkgs[!suggests_available],
-      "'",
-      collapse = ", "
-    )
-
+    missing_pkgs <- suggested_pkgs[!suggests_available]
     n_pkgs <- length(missing_pkgs)
     pkgs_str <- paste0('"', missing_pkgs, '"', collapse = ",")
     cli::cli_abort(c(
