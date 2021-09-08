@@ -41,8 +41,7 @@ Suggests:
     mockery (>= 0.4.2),
     openssl (>= 1.4.1),
     rmarkdown,
-    testthat (>= 3.0.0),
-    tidyselect
+    testthat (>= 3.0.0)
 VignetteBuilder: 
     knitr
 Config/testthat/edition: 3
