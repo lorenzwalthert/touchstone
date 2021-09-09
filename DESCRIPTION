@@ -23,6 +23,7 @@ BugReports: https://github.com/lorenzwalthert/touchstone/issues
 Imports: 
     bench,
     callr,
+    cli,
     fs,
     gert,
     magrittr,
@@ -30,7 +31,6 @@ Imports:
     remotes,
     rlang,
     tibble,
-    usethis,
     vctrs,
     withr
 Suggests: 
@@ -41,7 +41,8 @@ Suggests:
     mockery (>= 0.4.2),
     openssl (>= 1.4.1),
     rmarkdown,
-    testthat (>= 3.0.0)
+    testthat (>= 3.0.0),
+    usethis
 VignetteBuilder: 
     knitr
 Config/testthat/edition: 3

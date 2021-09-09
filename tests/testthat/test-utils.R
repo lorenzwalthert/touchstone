@@ -115,7 +115,7 @@ test_that("Can abort with missing refs for benchmark run", {
   withr::local_envvar(GITHUB_BASE_REF = NA, GITHUB_HEAD_REF = NA)
   mockery::stub(
     benchmark_run_ref, "force",
-    function(...) rlang::abort("12321")
+    function(...) cli::cli_abort("12321")
   )
   withr::local_envvar(list(GITHUB_HEAD_REF = "feature1", GITHUB_BASE_REF = "mastero"))
   expect_error(
@@ -127,7 +127,7 @@ test_that("Can abort with missing refs for benchmark run", {
 
 test_that("Can abort with missing refs for benchmark run", {
   withr::local_envvar(GITHUB_BASE_REF = NA, GITHUB_HEAD_REF = NA)
-  match <- "you want to benchmark against each other"
+  match <- "^If you don't specify"
   expect_error(ref_get_or_fail("SOME_REF"), match)
   expect_error(
     benchmark_run_ref(x1 = "print('hi')"),

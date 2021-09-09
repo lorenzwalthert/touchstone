@@ -71,5 +71,5 @@ test_that("can analyze results", {
 test_that("missing package throws error", {
   skip_if(packageVersion("mockery") < "0.4.2.9000")
   mockery::stub(benchmarks_analyze, "requireNamespace", FALSE)
-  expect_error(benchmarks_analyze(), "requires additional packages")
+  expect_error(benchmarks_analyze(), "additional package")
 })

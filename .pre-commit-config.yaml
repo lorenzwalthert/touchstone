@@ -57,6 +57,7 @@ repos:
           \.github/workflows/.*\.yaml|
           inst/touchstone\.yaml|
           inst/config\.json|
+          tests/testthat/_snaps/.*|
           API
           )$
     -   id: readme-rmd-rendered
@@ -65,7 +66,7 @@ repos:
     -   id: deps-in-desc
         exclude:  >
           (?x)^(
-          tests/testthat/test-prepare\.R
+          tests/testthat/test-prepare\.R|
           inst/script\.R
           )$
 -   repo: https://github.com/pre-commit/pre-commit-hooks

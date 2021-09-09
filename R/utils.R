@@ -24,11 +24,12 @@ dir_touchstone <- function() {
 ref_get_or_fail <- function(var) {
   retrieved <- Sys.getenv(var)
   if (!nzchar(retrieved)) {
-    rlang::abort(paste0(
-      "If you don't specify the argument `ref(s)`, you must set the environment ",
-      "variable `", var, "` to tell {touchstone} ",
-      "which branches you want to benchmark against each other, see ",
-      "help(run_script, package = 'touchstone')."
+    cli::cli_abort(c(paste0(
+      "If you don't specify the argument {.arg ref(s)}, you must set the environment ",
+      "variable {.envvar {var}} to tell {.pkg touchstone} ",
+      "which branches you want to benchmark against each other."
+    ),
+    "i" = "See {.code ?touchstone::run_script}."
     ))
   } else {
     retrieved
@@ -120,10 +121,10 @@ local_git_checkout <- function(branch,
     envir = envir
   )
   if (!(branch %in% gert::git_branch_list(repo = path_pkg)$name)) {
-    usethis::ui_stop("Branch {branch} does not exist, create it and add commits before you can switch on it.")
+    cli::cli_abort("Branch {.val {branch}} does not exist, create it and add commits before you can switch on it.")
   }
   gert::git_branch_checkout(branch, repo = path_pkg)
-  usethis::ui_done("Temporarily checked out branch {branch}.")
+  cli::cli_alert_success("Temporarily checked out branch {.val {branch}}.")
 }
 
 
@@ -159,10 +160,13 @@ assert_no_global_installation <- function(path_pkg = ".") {
   local_without_touchstone_lib()
   check <- is_installed(path_pkg)
   if (check$installed) {
-    usethis::ui_stop(paste0(
-      "Package {check$name} can be found on a non-touchstone library path. ",
-      "This should not be the case - as the package should be installed in ",
-      "dedicated library paths for benchmarking."
+    cli::cli_abort(c(
+      "Package {.pkg {check$name}} can be found on a non-touchstone library path. ",
+      "!" = paste0(
+        "This should not be the case - as the package should be installed in ",
+        "dedicated library paths for benchmarking."
+      ),
+      "*" = 'To uninstall use {.code remove.packages("{check$name}")}.'
     ))
   }
 }
@@ -226,10 +230,9 @@ pin_assets <- function(...,
   valid_dirs <- dirs %>% purrr::map_lgl(fs::file_exists)
 
   if (!all(valid_dirs)) {
-    usethis::ui_warn(c(
-      "The following asset(s) could not be found",
-      " and will not be copied:",
-      usethis::ui_path(unlist(dirs[!valid_dirs]))
+    cli::cli_warn(paste0(
+      "The following asset{?s} could not be found and will ",
+      "not be copied: {.path {dirs[!valid_dirs]}}"
     ))
   }
 
@@ -248,15 +251,15 @@ pin_assets <- function(...,
   )
 
   if (any(valid_dirs)) {
-    usethis::ui_done(c(
+    cli::cli_alert_success(
       paste0(
-        "Pinned the following assets ",
-        "to make them available across branch checkouts:"
-      ),
-      usethis::ui_path(as.character(dirs[valid_dirs]))
-    ))
+        "Pinned the following asset{?s} ",
+        "to make {?it/them} available across branch checkouts: ",
+        "{.path {dirs[valid_dirs]}}"
+      )
+    )
   } else {
-    usethis::ui_stop("No valid asset directories found.")
+    cli::cli_abort("No valid assets found.")
   }
 
   invisible(asset_dir)
@@ -276,7 +279,7 @@ path_pinned_asset <- function(...,
 
   path <- fs::path(asset_dir, ...)
   if (!fs::file_exists(path)) {
-    usethis::ui_stop("Asset {fs::path(...)} not pinned at {ref}.")
+    cli::cli_abort("Asset {.path {fs::path(...)}} not pinned at {.val {ref}}.")
   }
 
   path
@@ -288,17 +291,17 @@ get_asset_dir <- function(ref, verb = "find") {
   } else if (ref == ref_get_or_fail("GITHUB_BASE_REF")) {
     ref <- "base"
   } else {
-    usethis::ui_stop("Can only {verb} assets for head or base refs!")
+    cli::cli_abort("Can only {verb} assets for head or base refs!")
   }
 
   asset_dir <- getOption(paste0("touchstone.dir_assets_", ref))
 
   if (is.null(asset_dir)) {
-    usethis::ui_stop(c(
+    cli::cli_abort(c(
       "Temporary directory not found. ",
-      paste0(
-        "This function is only for use within the 'touchstone_script',",
-        " which must be called with 'run_script'"
+      "i" = paste0(
+        "This function is only for use within the {.code ?touchstone_script},",
+        " which must be called with {.fun run_script}"
       )
     ))
   }

@@ -25,6 +25,6 @@ test_that("fails on corrupt benchmark", {
   multiple <- bench::mark(1 + 1, iterations = 5)
   expect_error(
     benchmark_write(multiple, ref = ref),
-    "iterations = 1"
+    "only supports"
   )
 })

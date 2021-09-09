@@ -37,11 +37,15 @@ use_touchstone <- function(cancel = TRUE) {
   if (cancel) {
     target <- fs::path(workflows, "cancel.yaml")
     if (fs::file_exists(target)) {
-      usethis::ui_warn(paste0(
-        "Could not add a file `cancel.yaml` to",
-        "`.github/workflows/` as there is already a file with this name. ",
+      cli::cli_warn(c(paste0(
+        "Could not add a file {.file cancel.yaml} to ",
+        "{.path .github/workflows/} as there is already a file with this name. "
+      ),
+      "i" = paste0(
         "Please rename it and try again if you want to make sure outdated ",
-        "runs get cancelled. See `use_touchstone()` for details. Proceeding. "
+        "runs get cancelled."
+      ),
+      " " = "See {.fun use_touchstone} for details.", ">" = "Proceeding. "
       ))
     } else {
       copy_if_not_exists(
@@ -49,28 +53,31 @@ use_touchstone <- function(cancel = TRUE) {
         target
       )
 
-      usethis::ui_done(paste(
-        "Added a cancelling action for the touchstone workflow. A new push to a ",
-        "branch will stop the current benchmarking run and start benchmarking ",
+
+      cli::cli_bullets(c("v" = "Added a cancelling action for the touchstone workflow. ", "i" = paste0(
+        "A new push to a branch will stop the current",
+        " benchmarking run and start benchmarking ",
         "your latest push (instead of queuing it until the previous completed). ",
         "You can manually list other Github Actions workflows in the cancel workflow ",
         "to stop running outdated actions to save compute resources and time."
-      ))
+      )))
     }
   } else {
-    usethis::ui_info(
-      "Not adding a cancelling workflow. Frequent pushes to the same branch ",
-      "will queue and potentially consume unnecessary energy, built time and ",
-      "create long waiting times until touchstone results are available."
-    )
+    cli::cli_bullets(c(
+      "i" = "Not adding a cancelling workflow. ", "!" = paste0(
+        "Frequent pushes to the same branch ",
+        "will queue and potentially consume unnecessary energy, built time and ",
+        "create long waiting times until touchstone results are available."
+      )
+    ))
   }
   if (has_written_script) {
-    usethis::ui_todo(
+    cli::cli_ul(
       "Replace the mtcars sample code in `touchstone/script.R` with code from your package you want to benchmark."
     )
   }
-  usethis::ui_todo(paste0(
-    "Commit and push to GitHub to the default branch to activate the workflow,",
+  cli::cli_ul(paste0(
+    "Commit and push to GitHub to the default branch to activate the workflow, ",
     "then make a pull request to trigger your first benchmark run."
   ))
   invisible(NULL)
@@ -82,10 +89,10 @@ copy_if_not_exists <- function(path, new_path) {
     fs::file_copy(
       path, new_path
     )
-    usethis::ui_done("Populated file {fs::path_file(new_path)} in {fs::path_dir(new_path)}/.")
+    cli::cli_alert_success("Populated file {.file {fs::path_file(new_path)}} in {.path {fs::path_dir(new_path)}/}.")
     TRUE
   } else {
-    usethis::ui_warn("File {fs::path_file(new_path)} already exists at {fs::path_dir(new_path)}/, not copying.")
+    cli::cli_warn("File {.file {fs::path_file(new_path)}} already exists at {.path {fs::path_dir(new_path)}/}, not copying.")
     FALSE
   }
 }
