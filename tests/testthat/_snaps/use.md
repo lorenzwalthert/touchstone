@@ -4,6 +4,8 @@
       use_touchstone()
     Message <cliMessage>
       v Populated file 'script.R' in 'touchstone/'.
+      v Populated file 'header.R' in 'touchstone/'.
+      v Populated file 'footer.R' in 'touchstone/'.
       v Populated file 'config.json' in 'touchstone/'.
       v Populated file '.gitignore' in 'touchstone/'.
       v Populated file 'touchstone-receive.yaml' in '.github/workflows/'.
@@ -17,6 +19,7 @@
         and time.
       * Replace the mtcars sample code in `touchstone/script.R` with code from your
       package you want to benchmark.
+      i You can modify the PR comment, see `?touchstone::pr_comment`.
       * Commit and push to GitHub to the default branch to activate the workflow,
       then make a pull request to trigger your first benchmark run.
 
@@ -26,6 +29,8 @@
       use_touchstone()
     Message <cliMessage>
       [32mv[39m Populated file [34m[34mscript.R[34m[39m in [34m[34m[34mtouchstone[34m/[34m[39m.
+      [32mv[39m Populated file [34m[34mheader.R[34m[39m in [34m[34m[34mtouchstone[34m/[34m[39m.
+      [32mv[39m Populated file [34m[34mfooter.R[34m[39m in [34m[34m[34mtouchstone[34m/[34m[39m.
       [32mv[39m Populated file [34m[34mconfig.json[34m[39m in [34m[34m[34mtouchstone[34m/[34m[39m.
       [32mv[39m Populated file [34m[34m.gitignore[34m[39m in [34m[34m[34mtouchstone[34m/[34m[39m.
       [32mv[39m Populated file [34m[34mtouchstone-receive.yaml[34m[39m in [34m[34m[34m.github/workflows[34m/[34m[39m.
@@ -39,6 +44,7 @@
         and time.
       * Replace the mtcars sample code in `touchstone/script.R` with code from your
       package you want to benchmark.
+      [36mi[39m You can modify the PR comment, see [30m[47m[30m[47m`?touchstone::pr_comment`[47m[30m[49m[39m.
       * Commit and push to GitHub to the default branch to activate the workflow,
       then make a pull request to trigger your first benchmark run.
 
