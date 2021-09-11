@@ -308,3 +308,14 @@ get_asset_dir <- function(ref, verb = "find") {
 
   asset_dir
 }
+
+
+#' @describeIn touchstone_managers returns the path to the file containing the pr comment.
+#' @aliases touchstone_managers
+#' @return
+#' Character vector of length one with the path to the pr comment.
+#' @export
+#' @seealso [pr_comment]
+path_pr_comment <- function() {
+  fs::path(dir_touchstone(), "pr-comment/info.txt")
+}

@@ -4,11 +4,14 @@
 \alias{touchstone_managers}
 \alias{dir_touchstone}
 \alias{touchstone_clear}
+\alias{path_pr_comment}
 \title{Touchstone managers}
 \usage{
 dir_touchstone()
 
 touchstone_clear(all = FALSE)
+
+path_pr_comment()
 }
 \arguments{
 \item{all}{Whether to clear the whole touchstone directory or just the
@@ -18,6 +21,8 @@ records sub directory.}
 Character vector of length one with th path to the touchstone directory.
 
 The deleted paths (invisibly).
+
+Character vector of length one with the path to the pr comment.
 }
 \description{
 Utilities to manage the touchstone database.
@@ -27,5 +32,10 @@ Utilities to manage the touchstone database.
 \item \code{dir_touchstone}: returns the directory where the touchstone database lives.
 
 \item \code{touchstone_clear}: clears the touchstone database.
+
+\item \code{path_pr_comment}: returns the path to the file containing the pr comment.
 }}
 
+\seealso{
+\link{pr_comment}
+}

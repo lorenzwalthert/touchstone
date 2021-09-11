@@ -41,13 +41,15 @@ benchmarks_analyze <- function(refs = c(
   if (length(refs) != 2) {
     cli::cli_abort("There must be exactly two refs to comare.")
   }
-  path_info <- fs::path(dir_touchstone(), "pr-comment/info.txt")
-  paste0(
+  path_info <- path_pr_comment()
+  default_header <- paste0(
     "This is how benchmark results would change (along with a ", 100 * ci,
     "% confidence interval in relative change) if ",
     system2("git", c("rev-parse", "HEAD"), stdout = TRUE),
     " is merged into ", refs[1], ":", "\n"
-  ) %>%
+  )
+
+  get_comment_text("header", default_header) %>%
     writeLines(path_info)
 
   if (is.null(names)) {
@@ -69,10 +71,11 @@ benchmarks_analyze <- function(refs = c(
   }
 
   out <- purrr::walk(names$name, benchmark_analyze, refs = refs, ci = ci)
-  text <- paste(
+  default_footer <- paste(
     "\nFurther explanation regarding interpretation and methodology can be found",
     "in the [documentation](https://lorenzwalthert.github.io/touchstone/articles/inference.html)."
   )
+  text <- get_comment_text("footer", default_footer)
   cat(text, fill = TRUE, file = path_info, append = TRUE)
 
   readLines(path_info)
@@ -113,7 +116,7 @@ benchmark_verbalize <- function(benchmark, timings, refs, ci) {
   )
   cat(
     text,
-    fill = TRUE, file = fs::path(dir_touchstone(), "pr-comment/info.txt"),
+    fill = TRUE, file = path_pr_comment(),
     append = TRUE
   )
   text
@@ -165,4 +168,48 @@ benchmark_plot <- function(benchmark, timings) {
   fs::path(dir_touchstone(), "plots", benchmark) %>%
     fs::path_ext_set("png") %>%
     ggplot2::ggsave()
+}
+
+
+#' Modifying the PR Comment
+#'
+#' The files `touchstone/header.R` and `touchstone/footer.R` allow you to modify
+#' the PR comment. The files will be evaluated in the context of
+#' [benchmarks_analyze()] and should return one string containing the text.
+#' You can use github markdown e.g. emojis like :tada: in the string.
+#'
+#' @section Header:
+#' Available variables for glue substitution:
+#' * ci: confidence interval
+#' * refs: BASE and HEAD refs benchmarked against each other.
+#'
+#' @section Footer:
+#'   There are no special variables available in the footer.
+#'   You can access the benchmark results via [path_pr_comment()].
+#'
+#' @name pr_comment
+#' @seealso [base::eval()] [base::parse()]
+NULL
+
+get_comment_text <- function(part = c("footer", "header"), default, env = parent.frame()) {
+  part <- match.arg(part)
+  file <- glue::glue("{part}.R")
+  path <- fs::path(dir_touchstone(), file)
+
+  if (!fs::file_exists(path)) {
+    cli::cli_alert_info("No comment {part} found. Using default.")
+    text <- default
+  } else {
+    text <- eval(parse(path), envir = env)
+    if (!is.character(text)) {
+      cli::cli_warn(
+        c("Parsed comment {part} is not a valid string. Using default.",
+          "i" = "See {.code ?touchstone::pr_comment} for more information."
+        )
+      )
+      text <- default
+    }
+  }
+
+  text
 }
