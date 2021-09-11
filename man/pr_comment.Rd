@@ -3,9 +3,27 @@
 \name{pr_comment}
 \alias{pr_comment}
 \title{Modifying the PR Comment}
-\value{
-
-}
 \description{
-The files \code{touchstone/header.R} and \code{touchstone/footer.R} allow you to modify the PR comment.
+The files \code{touchstone/header.R} and \code{touchstone/footer.R} allow you to modify
+the PR comment. The files will be evaluated in the context of
+\code{\link[=benchmarks_analyse]{benchmarks_analyse()}} and should return one string containing the text.
+You can use github markdown e.g. emojis like :tada: in the string.
+}
+\section{Header}{
+
+Available variables for glue substitution:
+\itemize{
+\item ci: confidence interval
+\item refs: BASE and HEAD refs benchmarked against each other.
+}
+}
+
+\section{Footer}{
+
+There are no special variables available in the footer.
+You can access the benchmark results via \code{\link[=path_pr_comment]{path_pr_comment()}}.
+}
+
+\seealso{
+\code{\link[base:eval]{base::eval()}} \code{\link[base:parse]{base::parse()}}
 }

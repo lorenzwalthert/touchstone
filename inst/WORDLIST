@@ -29,6 +29,7 @@ bcea
 benchmarked
 benchmarking
 callr
+ci
 cli
 config
 cr
@@ -106,6 +107,7 @@ sublicense
 sudo
 sysreq
 sysreqs
+tada
 testpkg
 testthat
 th

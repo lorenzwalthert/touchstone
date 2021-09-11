@@ -3,7 +3,7 @@
 # This file will be parsed and evaluate within the context of
 # `benchmarks_analyze` and should return the comment text as the last value.
 # Available variables for glue substitution:
-# * ci: confiden interval
+# * ci: confidence interval
 # * refs: BASE and HEAD refs benchmarked against each other.
 # See `?touchstone::pr_comment`
 glue::glue(

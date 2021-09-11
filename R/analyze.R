@@ -41,7 +41,7 @@ benchmarks_analyze <- function(refs = c(
   if (length(refs) != 2) {
     cli::cli_abort("There must be exactly two refs to comare.")
   }
-  path_info <- fs::path(dir_touchstone(), "pr-comment/info.txt")
+  path_info <- path_pr_comment()
   default_header <- paste0(
     "This is how benchmark results would change (along with a ", 100 * ci,
     "% confidence interval in relative change) if ",
@@ -116,7 +116,7 @@ benchmark_verbalize <- function(benchmark, timings, refs, ci) {
   )
   cat(
     text,
-    fill = TRUE, file = fs::path(dir_touchstone(), "pr-comment/info.txt"),
+    fill = TRUE, file = path_pr_comment(),
     append = TRUE
   )
   text
@@ -173,9 +173,22 @@ benchmark_plot <- function(benchmark, timings) {
 
 #' Modifying the PR Comment
 #'
-#' The files `touchstone/header.R` and `touchstone/footer.R` allow you to modify the PR comment.
+#' The files `touchstone/header.R` and `touchstone/footer.R` allow you to modify
+#' the PR comment. The files will be evaluated in the context of
+#' [benchmarks_analyse()] and should return one string containing the text.
+#' You can use github markdown e.g. emojis like :tada: in the string.
+#'
+#' @section Header:
+#' Available variables for glue substitution:
+#' * ci: confidence interval
+#' * refs: BASE and HEAD refs benchmarked against each other.
+#'
+#' @section Footer:
+#'   There are no special variables available in the footer.
+#'   You can access the benchmark results via [path_pr_comment()].
+#'
 #' @name pr_comment
-#' @return
+#' @seealso [base::eval()] [base::parse()]
 NULL
 
 get_comment_text <- function(part = c("footer", "header"), default, env = parent.frame()) {
