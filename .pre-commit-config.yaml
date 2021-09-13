@@ -67,7 +67,8 @@ repos:
         exclude:  >
           (?x)^(
           tests/testthat/test-prepare\.R|
-          inst/script\.R
+          inst/script\.R|
+          vignettes/touchstone\.R
           )$
 -   repo: https://github.com/pre-commit/pre-commit-hooks
     rev: v4.0.1

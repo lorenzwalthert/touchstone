@@ -86,6 +86,7 @@ pkgapi
 pkgdown
 prepending
 purrr
+quasiquotation
 rc
 readFileSync
 repo
@@ -104,6 +105,7 @@ sprintf
 styfle
 styler
 sublicense
+subprocess
 sudo
 sysreq
 sysreqs
@@ -114,6 +116,9 @@ th
 tibble
 tidyselect
 toString
+touchstone<U+0092>
+touchstone<U+0092>
+touchstone’
 ubuntu
 usethis
 va
