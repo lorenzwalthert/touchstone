@@ -319,3 +319,18 @@ get_asset_dir <- function(ref, verb = "find") {
 path_pr_comment <- function() {
   fs::path(dir_touchstone(), "pr-comment/info.txt")
 }
+
+append_rbuildignore <- function(dir) {
+  ignore <- ".Rbuildignore"
+  if (fs::file_exists(ignore)) {
+    cat(
+      glue::glue("^{dir}$"),
+      sep = "\n", file = ignore, append = TRUE
+    )
+    cli::cli_alert_success("Added {.path {dir}} to {.file {ignore}}.")
+  } else {
+    cli::cli_alert_warning(
+      "Could not find {.file {ignore}} to add {.path {dir}}."
+    )
+  }
+}
