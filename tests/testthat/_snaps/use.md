@@ -10,6 +10,7 @@
       v Populated file '.gitignore' in 'touchstone/'.
       v Populated file 'touchstone-receive.yaml' in '.github/workflows/'.
       v Populated file 'touchstone-comment.yaml' in '.github/workflows/'.
+      ! Could not find '.Rbuildignore' to add 'touchstone'.
       v Populated file 'cancel.yaml' in '.github/workflows/'.
       v Added a cancelling action for the touchstone workflow.
       i A new push to a branch will stop the current benchmarking run and start
@@ -35,6 +36,7 @@
       [32mv[39m Populated file [34m[34m.gitignore[34m[39m in [34m[34m[34mtouchstone[34m/[34m[39m.
       [32mv[39m Populated file [34m[34mtouchstone-receive.yaml[34m[39m in [34m[34m[34m.github/workflows[34m/[34m[39m.
       [32mv[39m Populated file [34m[34mtouchstone-comment.yaml[34m[39m in [34m[34m[34m.github/workflows[34m/[34m[39m.
+      [33m![39m Could not find [34m[34m.Rbuildignore[34m[39m to add [34m[34mtouchstone[34m[39m.
       [32mv[39m Populated file [34m[34mcancel.yaml[34m[39m in [34m[34m[34m.github/workflows[34m/[34m[39m.
       [32mv[39m Added a cancelling action for the touchstone workflow.
       [36mi[39m A new push to a branch will stop the current benchmarking run and start
