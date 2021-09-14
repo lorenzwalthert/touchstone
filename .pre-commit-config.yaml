@@ -68,7 +68,7 @@ repos:
           (?x)^(
           tests/testthat/test-prepare\.R|
           inst/script\.R|
-          vignettes/touchstone\.R
+          vignettes/touchstone\.Rmd
           )$
 -   repo: https://github.com/pre-commit/pre-commit-hooks
     rev: v4.0.1

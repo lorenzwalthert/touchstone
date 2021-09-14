@@ -90,6 +90,7 @@ quasiquotation
 rc
 readFileSync
 repo
+rightarrow
 rlang
 rmarkdown
 roclet
@@ -118,7 +119,6 @@ tidyselect
 toString
 touchstone<U+0092>
 touchstone<U+0092>
-touchstone’
 ubuntu
 usethis
 va

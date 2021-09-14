@@ -108,3 +108,14 @@ enhanced version of `base::source()`) for various technical reasons described in
 the help file. Note that `benchmark_run_ref()` will check out different branches
 and should therefore be the only process running in the directory and only in a
 clean git working directory.
+
+## The Results
+When the github action successfully completes, the main result you will see is the comment posted on the pull request, it will look something like this:
+
+![](../man/figures/screenshot-pr-comment.png)
+
+You can change the header and footer, see `?touchstone::pr_comment`. The main body is the list of benchmarks and their results. First the mean elapsed time of all iterations of that benchmark (BASE $\rightarrow$ HEAD) and a 95% confidence interval.
+
+To make it easier to spot benchmarks that need closer attention, we prefix the benchmarks with emojis indicating if there was a statistically significant change (see [inference](https://lorenzwalthert.github.io/touchstone/articles/inference.html)) in the timing or not. In this example the HEAD version of `func1` is significantly faster, `func3` is slower than BASE while there is no significant change for `func2`.
+
+The github action will also upload this text and plots of the timings as artifacts.
