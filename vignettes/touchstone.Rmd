@@ -61,7 +61,7 @@ The file consists of three parts, two of which you will need to modify to fit yo
 
 ### Setup
 
-We first install the different package versions in separate libraries with `refs_install()`, this is mandatory for any `script.R`. If you want to access some directory or file which only exists on one of the branches you can use `pin_assets(..., ref = "branch")` to make them usable across branches. You can of course also run arbitrary code to prepare for the benchmarks. 
+We first install the different package versions in separate libraries with `refs_install()`, this is mandatory for any `script.R`. If you want to access some directory or file which only exists on one of the branches you can use `pin_assets(..., ref = "your-branch-name")` to make them available across branches. You can of course also run arbitrary code to prepare for the benchmarks. 
 ```{r}
 touchstone::refs_install() # installs branches to benchmark
 touchstone::pin_assets("data/all.Rdata", "inst/scripts") # pin files and directories
@@ -103,14 +103,14 @@ touchstone::benchmarks_analyze()
 ## Running the script
 After you have committed the workflow files to your default branch the benchmarks will be run on new pull requests and on each commit while that pull request is open.
 
-If you want to call the script interactively, use `run_script`()` (an
+If you want to call the script interactively, use `run_script()` (an
 enhanced version of `base::source()`) for various technical reasons described in
 the help file. Note that `benchmark_run_ref()` will check out different branches
 and should therefore be the only process running in the directory and only in a
 clean git working directory.
 
 ## The Results
-When the github action successfully completes, the main result you will see is the comment posted on the pull request, it will look something like this:
+When the GitHub Action successfully completes, the main result you will see is the comment posted on the pull request, it will look something like this:
 
 ![](../man/figures/screenshot-pr-comment.png)
 
@@ -118,4 +118,4 @@ You can change the header and footer, see `?touchstone::pr_comment`. The main bo
 
 To make it easier to spot benchmarks that need closer attention, we prefix the benchmarks with emojis indicating if there was a statistically significant change (see [inference](https://lorenzwalthert.github.io/touchstone/articles/inference.html)) in the timing or not. In this example the HEAD version of `func1` is significantly faster, `func3` is slower than BASE while there is no significant change for `func2`.
 
-The github action will also upload this text and plots of the timings as artifacts.
+The GitHub Action will also upload this text and plots of the timings as artifacts.
