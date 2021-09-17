@@ -140,9 +140,9 @@ This will:
 Note that these files must be committed to the default branch before
 {touchstone} continuous benchmarking will be triggered for new PRs.
 
-If you want to call the script interactively, use `run_script`()`(an
-enhanced version of`base::source()`) for various technical reasons
-described in the help file. Note that`benchmark\_run\_ref()\` will check
+If you want to call the script interactively, use `run_script()`(an
+enhanced version of `base::source()`) for various technical reasons
+described in the help file. Note that `benchmark_run_ref()` will check
 out different branches and should therefore be the only process running
 in the directory and only in a clean git working directory.
 
