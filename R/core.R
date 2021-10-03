@@ -24,9 +24,7 @@ benchmark_run_iteration <- function(expr_before_benchmark,
   for (iteration in seq_len(n)) { # iterations
     callr::r(
       function(expr_before_benchmark, dots, ref, block, iteration) {
-        new_name <- "masked_touchstone"
-        attach(loadNamespace("touchstone"), name = new_name)
-        on.exit(detach(new_name, character.only = TRUE), add = TRUE)
+        withr::local_namespace("touchstone")
         exprs_eval(!!expr_before_benchmark)
         benchmark <- bench::mark(exprs_eval(!!dots[[1]]), memory = FALSE, iterations = 1)
         benchmark_write(benchmark, names(dots), ref = ref, block = block, iteration = iteration)
