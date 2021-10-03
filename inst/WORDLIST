@@ -78,6 +78,7 @@ magrittr
 matchArtifact
 md
 mkdir
+netlify
 openssl
 orcid
 os
@@ -100,6 +101,7 @@ runif
 saveRDS
 seealso
 sep
+sideeffects
 sprintf
 styfle
 styler
