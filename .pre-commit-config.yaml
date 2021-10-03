@@ -55,8 +55,10 @@ repos:
           .*\.RData|
           .*\.png|
           \.github/workflows/.*\.yaml|
+          API|
           inst/touchstone\.yaml|
           inst/config\.json|
+          LICENCE\.md|
           tests/testthat/_snaps/.*|
           API
           )$
@@ -66,8 +68,9 @@ repos:
     -   id: deps-in-desc
         exclude:  >
           (?x)^(
+          inst/script\.R|
+          README\.Rmd|
           tests/testthat/test-prepare\.R|
-          inst/script\.R
           )$
 -   repo: https://github.com/pre-commit/pre-commit-hooks
     rev: v4.0.1

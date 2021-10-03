@@ -53,7 +53,7 @@ test_that("end to end run - code", {
     )
   }
   bm <- benchmark_run_ref(
-    expr_before_benchmark = source('R/core.R'),
+    expr_before_benchmark = source("R/core.R"),
     bliblablup = f(),
     refs = branches,
     n = 2
