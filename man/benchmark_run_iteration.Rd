@@ -13,7 +13,7 @@ benchmark_run_iteration(
 )
 }
 \arguments{
-\item{expr_before_benchmark}{Character vector with code to run before
+\item{expr_before_benchmark}{Expression to run before
 the benchmark is ran, will be evaluated with \code{\link[=exprs_eval]{exprs_eval()}}.}
 
 \item{dots}{list of quoted expressions (length 1).}

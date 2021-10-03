@@ -1,5 +1,5 @@
 #' Run a benchmark iteration
-#' @param expr_before_benchmark Character vector with code to run before
+#' @param expr_before_benchmark Expression to run before
 #'   the benchmark is ran, will be evaluated with [exprs_eval()].
 #' @param n Number of iterations to run a benchmark within an iteration.
 #' @param dots list of quoted expressions (length 1).
@@ -12,7 +12,7 @@ benchmark_run_iteration <- function(expr_before_benchmark,
                                     block,
                                     n = getOption("touchstone.n_iterations", 1)) {
   if (rlang::is_missing(expr_before_benchmark)) {
-    expr_before_benchmark <- ""
+    expr_before_benchmark <- rlang::expr({})
   }
 
   args <- rlang::list2(
@@ -39,7 +39,7 @@ benchmark_run_iteration <- function(expr_before_benchmark,
 
 #' Run a benchmark for git refs
 #'
-#' @param ... Named expression or named character vector of length one with code to benchmark, will
+#' @param ... Named expression of length one with code to benchmark, will
 #'   be evaluated with [exprs_eval()].
 #' @param refs Character vector with branch names to benchmark. The package
 #'   must be built for each benchmarked branch beforehand with [refs_install()].
@@ -64,17 +64,25 @@ benchmark_run_iteration <- function(expr_before_benchmark,
 #' the directory it is ran in, in particular different branches will be checked
 #' out. Ensure a clean git working directory before invocation.
 #' @export
-benchmark_run_ref <- function(expr_before_benchmark,
+benchmark_run_ref <- function(expr_before_benchmark =
+                                {},
                               ...,
                               refs = c(
                                 ref_get_or_fail("GITHUB_BASE_REF"),
                                 ref_get_or_fail("GITHUB_HEAD_REF")
                               ),
                               n = 100,
-                              path_pkg = ".") {
+                              path_pkg = ".")
+{
   force(refs)
   expr_before_benchmark <- rlang::enexpr(expr_before_benchmark)
   dots <- rlang::enexprs(...)
+  if (length(dots) > 1) {
+    rlang::abort("Expression to benchmark cannot have length greater than one.")
+  }
+  if (rlang::is_string(dots[[1]]) || rlang::is_string(expr_before_benchmark[[1]])) {
+    abort_string()
+  }
 
   if (length(dots) > 1) {
     cli::cli_abort("Can only pass one expression to benchmark")

@@ -2,7 +2,7 @@ test_that("can evaluate expressions for benchmarking", {
   env <- rlang::env()
   expect_equal(
     {
-      exprs_eval("x <- 1 + 2.3", env = env)
+      exprs_eval(x <- 1 + 2.3, env = env)
       env$x
     },
     1 + 2.3
@@ -10,11 +10,14 @@ test_that("can evaluate expressions for benchmarking", {
 
   expect_equal(
     {
-      exprs_eval("
-      x <- 1 + 2.3
-      x <- x + 10
-      x
-      ", env = env)
+      exprs_eval(
+        {
+          x <- 1 + 2.3
+          x <- x + 10
+          x
+        },
+        env = env
+      )
       env$x
     },
     1 + 2.3 + 10
@@ -119,7 +122,7 @@ test_that("Can abort with missing refs for benchmark run", {
   )
   withr::local_envvar(list(GITHUB_HEAD_REF = "feature1", GITHUB_BASE_REF = "mastero"))
   expect_error(
-    benchmark_run_ref(x1 = "print('hi')"),
+    benchmark_run_ref(x1 = print("hi")),
     "12321"
   )
 })
@@ -130,7 +133,7 @@ test_that("Can abort with missing refs for benchmark run", {
   match <- "^If you don't specify"
   expect_error(ref_get_or_fail("SOME_REF"), match)
   expect_error(
-    benchmark_run_ref(x1 = "print('hi')"),
+    benchmark_run_ref(x1 = print("hi")),
     match
   )
   expect_error(

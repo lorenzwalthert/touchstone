@@ -69,10 +69,6 @@ exprs_eval <- function(..., env = parent.frame()) {
     expr <- rlang::eval_tidy(expr, env = env)
   }
 
-  if (is.character(expr)) {
-    expr <- rlang::parse_exprs(expr)
-  }
-
   if (is.list(expr)) {
     purrr::map(expr, eval, envir = env)
   } else {
@@ -318,4 +314,11 @@ get_asset_dir <- function(ref, verb = "find") {
 #' @seealso [pr_comment]
 path_pr_comment <- function() {
   fs::path(dir_touchstone(), "pr-comment/info.txt")
+}
+
+abort_string <- function() {
+  rlang::abort(paste0(
+    "Using a string as the named expression to benchmark or ",
+    "`expr_before_benchmark` is deprecated."
+  ))
 }

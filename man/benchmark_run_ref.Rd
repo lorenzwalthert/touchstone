@@ -5,7 +5,7 @@
 \title{Run a benchmark for git refs}
 \usage{
 benchmark_run_ref(
-  expr_before_benchmark,
+  expr_before_benchmark = { },
   ...,
   refs = c(ref_get_or_fail("GITHUB_BASE_REF"), ref_get_or_fail("GITHUB_HEAD_REF")),
   n = 100,
@@ -13,10 +13,10 @@ benchmark_run_ref(
 )
 }
 \arguments{
-\item{expr_before_benchmark}{Character vector with code to run before
+\item{expr_before_benchmark}{Expression to run before
 the benchmark is ran, will be evaluated with \code{\link[=exprs_eval]{exprs_eval()}}.}
 
-\item{...}{Named expression or named character vector of length one with code to benchmark, will
+\item{...}{Named expression of length one with code to benchmark, will
 be evaluated with \code{\link[=exprs_eval]{exprs_eval()}}.}
 
 \item{refs}{Character vector with branch names to benchmark. The package
