@@ -8,7 +8,8 @@ NULL
 #' @aliases touchstone_managers
 #' @return
 #' Character vector of length one with the path to the touchstone directory (for
-#' `dir_touchstone()`), path to the deleted files for (`touchstone_clear()`).
+#' `dir_touchstone()`), path to the deleted files (for `touchstone_clear()`) or
+#' path to the file containing the pull request comment (for `path_pr_comment()`).
 #' @export
 dir_touchstone <- function() {
   getOption("touchstone.dir", "touchstone")
@@ -334,10 +335,8 @@ get_asset_dir <- function(ref, verb = "find") {
 }
 
 
-#' @describeIn touchstone_managers returns the path to the file containing the pr comment.
+#' @describeIn touchstone_managers Returns the path to the file containing the pull request comment.
 #' @aliases touchstone_managers
-#' @return
-#' Character vector of length one with the path to the pr comment.
 #' @export
 #' @seealso [pr_comment]
 path_pr_comment <- function() {
