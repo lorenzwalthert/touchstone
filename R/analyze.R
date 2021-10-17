@@ -109,7 +109,7 @@ benchmark_verbalize <- function(benchmark, timings, refs, ci) {
   if (nrow(tbl) > 2) {
     cli::cli_abort("Benchmarks with more than two {.val refs} cannot be verbalized.")
   }
-  confint <- confint_relative_get(timings, refs, tbl$mean[1], ci = ci)
+  confint <- confint_relative_get(timings, refs, as.numeric(tbl$mean[1]), ci = ci)
 
   text <- glue::glue(
     "* {confint$emoji}{benchmark}: {tbl$mean[1]} -> {tbl$mean[2]} {confint$string}"
@@ -139,7 +139,7 @@ confint_relative_get <- function(timings, refs, reference, ci) {
   fit <- stats::aov(elapsed ~ ref, data = timings_with_factors)
   var <- paste0("ref", refs[2])
   confint <- confint(fit, var, level = ci)
-  confint <- as.numeric(round(100 * confint / reference, 2))
+  confint <- round(100 * confint / reference, 2)
   emoji <- confint %>%
     purrr::when(
       all(. < 0) ~ faster,

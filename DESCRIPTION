@@ -50,5 +50,7 @@ Config/testthat/parallel: true
 Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE, roclets = c("rd", "namespace", "collate",
-    "pkgapi::api_roclet"))
-RoxygenNote: 7.1.1.9001
+    if (rlang::is_installed("pkgapi")) "pkgapi::api_roclet" else {
+    warning("Please install r-lib/pkgapi to make sure the file API is kept
+    up to date"); NULL}))
+RoxygenNote: 7.1.2
