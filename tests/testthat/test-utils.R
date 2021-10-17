@@ -156,6 +156,7 @@ test_that("assets work on HEAD", {
   withr::with_options(
     list(
       touchstone.dir_assets_head = NULL,
+      touchstone.git_root = fs::path_temp("test_pkg", "R"),
       usethis.quiet = TRUE
     ),
     withr::with_envvar(list(
@@ -169,6 +170,7 @@ test_that("assets work on HEAD", {
 
   withr::with_options(list(
     touchstone.dir_assets_head = temp_dir,
+    touchstone.git_root = fs::path_temp("test_pkg"),
     usethis.quiet = TRUE
   ), {
     withr::local_envvar(list(
@@ -198,7 +200,7 @@ test_that("assets work HEAD and BASE", {
   ))
 
   branches <- c("rc-1.0", "feat")
-  local_package(branches = branches)
+  git_root <- local_package(branches = branches)
   dirs <- c("R", "bench") %>% rlang::set_names(branches)
   files <- c("data.Rdata", "utils.R") %>% rlang::set_names(branches)
 
@@ -208,6 +210,7 @@ test_that("assets work HEAD and BASE", {
     fs::file_create(files[branch])
   }
 
+  withr::local_options(list(touchstone.git_root = git_root))
   withr::local_envvar(list(
     GITHUB_BASE_REF = branches[[1]],
     GITHUB_HEAD_REF = branches[[2]]
@@ -242,4 +245,18 @@ test_that("asset paths are fetched correctly", {
   expect_error(get_asset_dir("not-main"), "head or base")
   expect_error(get_asset_dir("main"), "directory not found")
   expect_equal(get_asset_dir("devel"), "asset/dir")
+})
+
+cli::test_that_cli("git root is found correctly", {
+  no_git <- fs::path_temp("no-git")
+  with_git <- fs::path_temp("with-git")
+  deeper_git <- fs::path_temp("with-git", "deep", "deeper")
+  fs::dir_create(c(no_git, with_git, deeper_git))
+  withr::with_dir(with_git, {
+    gert::git_init()
+  })
+
+  expect_snapshot(find_git_root(no_git))
+  expect_equal(find_git_root(with_git), as.character(with_git))
+  expect_equal(find_git_root(deeper_git), as.character(with_git))
 })
