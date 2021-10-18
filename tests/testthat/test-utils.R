@@ -164,7 +164,7 @@ test_that("assets work on HEAD", {
   withr::with_options(
     list(
       touchstone.dir_assets_head = NULL,
-      touchstone.git_root = fs::path_temp("test_pkg", "R"),
+      touchstone.git_root = fs::path_temp("test_pkg"),
       usethis.quiet = TRUE
     ),
     {
