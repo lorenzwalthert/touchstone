@@ -117,7 +117,11 @@ test_that("Can abort with missing refs for benchmark run", {
     benchmark_run_ref, "force",
     function(...) cli::cli_abort("12321")
   )
-  withr::local_envvar(list(GITHUB_HEAD_REF = "feature1", GITHUB_BASE_REF = "mastero"))
+  withr::local_envvar(list(
+    GITHUB_HEAD_REF = "feature1",
+    GITHUB_BASE_REF = "mastero"
+  ))
+
   expect_error(
     benchmark_run_ref(x1 = "print('hi')"),
     "12321"
@@ -152,6 +156,10 @@ test_that("assets work on HEAD", {
   temp_dir <- fs::path_temp()
   fs::dir_create(dirs)
   fs::file_create(files)
+  withr::local_envvar(list(
+    GITHUB_BASE_REF = "main",
+    GITHUB_HEAD_REF = "devel"
+  ))
 
   withr::with_options(
     list(
@@ -159,13 +167,10 @@ test_that("assets work on HEAD", {
       touchstone.git_root = fs::path_temp("test_pkg", "R"),
       usethis.quiet = TRUE
     ),
-    withr::with_envvar(list(
-      GITHUB_BASE_REF = "main",
-      GITHUB_HEAD_REF = "devel"
-    ), {
+    {
       expect_error(pin_assets("something"), "Temporary directory not found.")
       expect_error(path_pinned_asset("something"), "Temporary directory ")
-    })
+    }
   )
 
   withr::with_options(list(
@@ -173,10 +178,6 @@ test_that("assets work on HEAD", {
     touchstone.git_root = fs::path_temp("test_pkg"),
     usethis.quiet = TRUE
   ), {
-    withr::local_envvar(list(
-      GITHUB_BASE_REF = "main",
-      GITHUB_HEAD_REF = "devel"
-    ))
     expect_warning(pin_assets("something", dirs[[1]]), "could not be found")
     expect_error(suppressWarnings(pin_assets("something")), "No valid")
     expect_equal(pin_assets(!!!dirs), temp_dir)
@@ -194,15 +195,17 @@ test_that("assets work on HEAD", {
 test_that("assets work HEAD and BASE", {
   head_asset_dir <- fs::path_temp("head")
   base_asset_dir <- fs::path_temp("base")
-  withr::local_options(list(
-    touchstone.dir_assets_head = head_asset_dir,
-    touchstone.dir_assets_base = base_asset_dir
-  ))
+
 
   branches <- c("rc-1.0", "feat")
   git_root <- local_package(branches = branches)
   dirs <- c("R", "bench") %>% rlang::set_names(branches)
   files <- c("data.Rdata", "utils.R") %>% rlang::set_names(branches)
+  withr::local_options(list(
+    touchstone.dir_assets_head = head_asset_dir,
+    touchstone.dir_assets_base = base_asset_dir,
+    touchstone.git_root = git_root
+  ))
 
   for (branch in branches) {
     gert::git_branch_checkout(branch)
@@ -210,7 +213,6 @@ test_that("assets work HEAD and BASE", {
     fs::file_create(files[branch])
   }
 
-  withr::local_options(list(touchstone.git_root = git_root))
   withr::local_envvar(list(
     GITHUB_BASE_REF = branches[[1]],
     GITHUB_HEAD_REF = branches[[2]]
@@ -242,6 +244,7 @@ test_that("asset paths are fetched correctly", {
     GITHUB_BASE_REF = "main",
     GITHUB_HEAD_REF = "devel"
   ))
+
   expect_error(get_asset_dir("not-main"), "head or base")
   expect_error(get_asset_dir("main"), "directory not found")
   expect_equal(get_asset_dir("devel"), "asset/dir")
