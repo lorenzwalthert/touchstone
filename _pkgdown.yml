@@ -2,5 +2,13 @@ authors:
   Lorenz Walthert:
     href: https://lorenzwalthert.netlify.com
 
+articles:
+- title: Get started
+  navbar: ~
+  contents:
+  - touchstone
+  - inference
+
+
 development:
   mode: auto

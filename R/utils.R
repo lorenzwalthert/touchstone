@@ -191,24 +191,24 @@ is_windows <- function() {
 #'
 #' Pin files or directories that need to be available on both branches when
 #' running the `touchstone_script`. During [benchmark_run_ref()] they will
-#' available via [path_pinned_asset()].
+#' available via [path_pinned_asset()]. This is only possible for assets
+#'  *within* the git repository.
 #' @param ... Any number of directories or files, as strings, that you want to
 #'   access in your [touchstone_script].
 #' @param ref The branch the passed assets are copied from.
 #' @inheritParams fs::path
 #' @inheritParams fs::dir_copy
 #' @details When passing nested directories or files within nested directories
-#'   only the file/last directory will be copied. Directories will be copied
-#'   recursively. See examples.
+#'   the path will be copied recursively. See examples.
 #' @return The asset directory invisibly.
 #' @examples
 #' \dontrun{
-#' # In the touchstone script
+#' # In the touchstone script within the repo "/home/user/pkg"
 #'
-#' pin_assets(c("bench", "inst/setup.R", "some/nested/dir"))
+#' pin_assets(c("/home/user/pkg/bench", "inst/setup.R", "some/nested/dir"))
 #'
-#' source(path_pinned_asset("setup.R"))
-#' load(path_pinned_asset("dir/data.RData"))
+#' source(path_pinned_asset("inst/setup.R"))
+#' load(path_pinned_asset("some/nested/dir/data.RData"))
 #'
 #' touchstone::benchmark_run_ref(
 #'   expr_before_benchmark = {
@@ -236,19 +236,53 @@ pin_assets <- function(...,
     ))
   }
 
-  dirs[valid_dirs] %>% purrr::walk(
-    ~ purrr::when(
-      .x,
-      fs::is_dir(.)[[1]] ~ fs::dir_copy(.x,
-        fs::path_join(c(asset_dir, fs::path_file(.x))),
-        overwrite = overwrite
-      ),
-      fs::is_file(.)[[1]] ~ fs::file_copy(.x,
-        fs::path_join(c(asset_dir, fs::path_file(.x))),
+  create_and_copy <- function(asset) {
+    git_root <- get_git_root()
+    asset <- fs::path_real(asset)
+
+    if (!fs::path_has_parent(asset, git_root)) {
+      cli::cli_abort(c(
+        "Can only pin assets within the git repository!",
+        "i" = "Current repo: {.path {git_root}}"
+      ))
+    }
+
+    rel_asset <- fs::path_rel(asset, git_root)
+    new_path <- fs::path_join(c(asset_dir, rel_asset))
+
+    if (fs::is_dir(asset)[[1]]) {
+      fs::dir_copy(
+        asset,
+        new_path,
         overwrite = overwrite
       )
-    )
+    } else if (fs::is_file(asset)[[1]]) {
+      fs::path_dir(rel_asset) %>%
+        fs::path(asset_dir, .) %>%
+        fs::dir_create()
+
+      fs::file_copy(
+        asset,
+        new_path,
+        overwrite = overwrite
+      )
+    }
+  }
+
+  dirs[valid_dirs] %>% purrr::walk(
+    create_and_copy
+    # ~ purrr::when(
+    #   .x,
+    #   fs::is_dir(.)[[1]] ~ fs::dir_copy(.x,
+    #     fs::path_join(c(asset_dir, fs::path_file(.x))),
+    #     overwrite = overwrite
+    #   ),
+    #   fs::is_file(.)[[1]] ~ fs::file_copy(.x,
+    #     fs::path_join(c(asset_dir, fs::path_file(.x))),
+    #     overwrite = overwrite
+    #   )
   )
+
 
   if (any(valid_dirs)) {
     cli::cli_alert_success(
@@ -318,4 +352,46 @@ get_asset_dir <- function(ref, verb = "find") {
 #' @seealso [pr_comment]
 path_pr_comment <- function() {
   fs::path(dir_touchstone(), "pr-comment/info.txt")
+}
+
+append_rbuildignore <- function(dir) {
+  ignore <- ".Rbuildignore"
+  if (fs::file_exists(ignore)) {
+    cat(
+      glue::glue("^{dir}$"),
+      sep = "\n", file = ignore, append = TRUE
+    )
+    cli::cli_alert_success("Added {.path {dir}} to {.file {ignore}}.")
+  } else {
+    cli::cli_alert_warning(
+      "Could not find {.file {ignore}} to add {.path {dir}}."
+    )
+  }
+}
+
+find_git_root <- function(path = ".") {
+  tryCatch(
+    gert::git_find(path),
+    error = function(err) {
+      cli::cli_alert_danger(
+        "Could not find git repository from current working directory!"
+      )
+      cli::cli_alert_info(
+        "Please manually set the option {.val touchstone.git_root}."
+      )
+      NULL
+    }
+  )
+}
+
+get_git_root <- function() {
+  git_root <- getOption("touchstone.git_root")
+
+  if (is.null(git_root)) {
+    cli::cli_abort(c("Option {.val touchstone.git_root} not set!",
+      "i" = 'Set it with {.code options(touchstone.git_root = "path to repo")}'
+    ))
+  }
+
+  git_root
 }

@@ -78,6 +78,7 @@ magrittr
 matchArtifact
 md
 mkdir
+navbar
 netlify
 openssl
 orcid
@@ -87,9 +88,11 @@ pkgapi
 pkgdown
 prepending
 purrr
+quasiquotation
 rc
 readFileSync
 repo
+rightarrow
 rlang
 rmarkdown
 roclet
@@ -106,6 +109,7 @@ sprintf
 styfle
 styler
 sublicense
+subprocess
 sudo
 sysreq
 sysreqs
@@ -116,6 +120,7 @@ th
 tibble
 tidyselect
 toString
+touchstone<U+0092>
 ubuntu
 usethis
 va
