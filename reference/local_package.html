@@ -86,6 +86,9 @@ until the local frame is destroyed." />
   </a>
 </li>
 <li>
+  <a href="../articles/touchstone.html">Get started</a>
+</li>
+<li>
   <a href="../reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
@@ -135,7 +138,7 @@ until the local frame is destroyed.</p>
     </div>
 
     <pre class="usage"><span class='fu'>local_package</span><span class='op'>(</span>
-  pkg_name <span class='op'>=</span> <span class='fu'>fs</span><span class='fu'>::</span><span class='fu'><a href='http://fs.r-lib.org/reference/path_file.html'>path_file</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/tempfile.html'>tempfile</a></span><span class='op'>(</span><span class='st'>"pkg"</span><span class='op'>)</span><span class='op'>)</span>,
+  pkg_name <span class='op'>=</span> <span class='fu'>fs</span><span class='fu'>::</span><span class='fu'><a href='http://fs.r-lib.org/reference/path_file.html'>path_file</a></span><span class='op'>(</span><span class='fu'>fs</span><span class='fu'>::</span><span class='fu'><a href='http://fs.r-lib.org/reference/file_temp.html'>file_temp</a></span><span class='op'>(</span><span class='st'>"pkg"</span><span class='op'>)</span><span class='op'>)</span>,
   branches <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"main"</span>, <span class='st'>"devel"</span><span class='op'>)</span>,
   r_sample <span class='op'>=</span> <span class='cn'>NULL</span>,
   setwd <span class='op'>=</span> <span class='cn'>TRUE</span>,
