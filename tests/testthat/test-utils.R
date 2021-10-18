@@ -156,6 +156,8 @@ test_that("assets work on HEAD", {
   temp_dir <- fs::path_temp()
   fs::dir_create(dirs)
   fs::file_create(files)
+  dirs <- fs::path_real(dirs)
+  files <- fs::path_real(files)
   withr::local_envvar(list(
     GITHUB_BASE_REF = "main",
     GITHUB_HEAD_REF = "devel"
@@ -164,7 +166,7 @@ test_that("assets work on HEAD", {
   withr::with_options(
     list(
       touchstone.dir_assets_head = NULL,
-      touchstone.git_root = fs::path_temp("test_pkg"),
+      touchstone.git_root = fs::path_real(fs::path_temp("test_pkg")),
       usethis.quiet = TRUE
     ),
     {
@@ -175,7 +177,7 @@ test_that("assets work on HEAD", {
 
   withr::with_options(list(
     touchstone.dir_assets_head = temp_dir,
-    touchstone.git_root = fs::path_temp("test_pkg"),
+    touchstone.git_root = fs::path_real(fs::path_temp("test_pkg")),
     usethis.quiet = TRUE
   ), {
     expect_warning(pin_assets("something", dirs[[1]]), "could not be found")
@@ -204,7 +206,7 @@ test_that("assets work HEAD and BASE", {
   withr::local_options(list(
     touchstone.dir_assets_head = head_asset_dir,
     touchstone.dir_assets_base = base_asset_dir,
-    touchstone.git_root = git_root
+    touchstone.git_root = fs::path_real(git_root)
   ))
 
   for (branch in branches) {
@@ -255,6 +257,11 @@ cli::test_that_cli("git root is found correctly", {
   with_git <- fs::path_temp("with-git")
   deeper_git <- fs::path_temp("with-git", "deep", "deeper")
   fs::dir_create(c(no_git, with_git, deeper_git))
+
+  no_git <- fs::path_real(no_git)
+  with_git <- fs::path_real(with_git)
+  deeper_git <- fs::path_real(deeper_git)
+
   withr::with_dir(with_git, {
     gert::git_init()
   })
