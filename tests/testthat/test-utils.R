@@ -155,6 +155,7 @@ test_that("assets work on HEAD", {
 
   temp_dir <- fs::path_temp()
   fs::dir_create(dirs)
+  writeLines("", fs::path(dirs[1], "sample.R"))
   fs::file_create(files)
   dirs <- fs::path_real(dirs)
   files <- fs::path_real(files)
@@ -183,6 +184,7 @@ test_that("assets work on HEAD", {
     expect_warning(pin_assets("something", dirs[[1]]), "could not be found")
     expect_error(suppressWarnings(pin_assets("something")), "No valid")
     expect_equal(pin_assets(!!!dirs), temp_dir)
+    expect_equal(readLines(path_pinned_asset(dirs[1]), ""))
     expect_equal(pin_assets(!!!files), temp_dir)
     expect_true(fs::is_dir(fs::path_join(c(temp_dir, "R"))))
     expect_true(fs::is_file(fs::path_join(c(temp_dir, "data.R"))))
