@@ -5,13 +5,20 @@ test_that("can call package in script", {
   # install refs, so ref[1] will be available outside benchmark_run_ref,
   # not modifying libpath permanently
   path_touchstone <- path_touchstone_script()
+  withr::local_options(touchstone.git_root = path_test_pkg)
   fs::dir_create(fs::path_dir(path_touchstone))
   refs_dput <- capture.output(dput(refs))
+  path_wordlist <- fs::path(path_test_pkg, "inst", "WORDLIST")
+  ensure_dir(fs::path_dir(path_wordlist))
+  writeLines("a\n\nc", path_wordlist)
   writeLines(
     glue::glue(
       "refs_install({refs_dput}, '{path_test_pkg}', install_dependencies = FALSE)",
       "library({pkg_name})", # can call package
+      "path <- 'inst/WORDLIST'",
+      "touchstone::pin_assets(path)",
       "touchstone::benchmark_run_ref(",
+      "  expr_before_benchmark = readLines(touchstone::path_pinned_asset(!! path)),",
       "  refs = {refs_dput}, x = '2', path_pkg = '{path_test_pkg}',",
       "  n = 1",
       ")",
