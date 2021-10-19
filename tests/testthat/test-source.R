@@ -16,9 +16,9 @@ test_that("can call package in script", {
       "refs_install({refs_dput}, '{path_test_pkg}', install_dependencies = FALSE)",
       "library({pkg_name})", # can call package
       "path <- 'inst/WORDLIST'",
-      "touchstone::pin_assets(path)",
+      "touchstone::pin_assets(path, ref = 'main')",
       "touchstone::benchmark_run_ref(",
-      "  expr_before_benchmark = readLines(touchstone::path_pinned_asset(!! path)),",
+      "  expr_before_benchmark = readLines(touchstone::path_pinned_asset(!! path, ref = 'main')),",
       "  refs = {refs_dput}, x = '2', path_pkg = '{path_test_pkg}',",
       "  n = 1",
       ")",
