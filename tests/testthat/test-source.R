@@ -11,22 +11,33 @@ test_that("can call package in script", {
   path_wordlist <- fs::path(path_test_pkg, "inst", "WORDLIST")
   ensure_dir(fs::path_dir(path_wordlist))
   writeLines("a\n\nc", path_wordlist)
-  writeLines(
-    glue::glue(
-      "refs_install({refs_dput}, '{path_test_pkg}', install_dependencies = FALSE)",
-      "library({pkg_name})", # can call package
-      "path <- 'inst/WORDLIST'",
-      "touchstone::pin_assets(path, ref = 'main')",
-      "touchstone::benchmark_run_ref(",
-      "  expr_before_benchmark = readLines(touchstone::path_pinned_asset(!! path, ref = 'main')),",
-      "  refs = {refs_dput}, x = '2', path_pkg = '{path_test_pkg}',",
-      "  n = 1",
-      ")",
-      .sep = "\n"
-    ),
-    path_touchstone
+
+  no_assets <- glue::glue(
+    "refs_install({refs_dput}, '{path_test_pkg}', install_dependencies = FALSE)",
+    "library({pkg_name})", # can call package
+    "touchstone::benchmark_run_ref(",
+    "  refs = {refs_dput}, x = '2', path_pkg = '{path_test_pkg}',",
+    "  n = 1",
+    ")",
+    .sep = "\n"
   )
+
+  with_assets <- glue::glue(
+    "refs_install({refs_dput}, '{path_test_pkg}', install_dependencies = FALSE)",
+    "library({pkg_name})", # can call package
+    "path <- 'inst/WORDLIST'",
+    "touchstone::pin_assets(path, ref = 'main')",
+    "touchstone::benchmark_run_ref(",
+    "  expr_before_benchmark = readLines(touchstone::path_pinned_asset(!! path, ref = 'main')),",
+    "  refs = {refs_dput}, x = '2', path_pkg = '{path_test_pkg}',",
+    "  n = 1",
+    ")",
+    .sep = "\n"
+  )
+
+  writeLines(no_assets, path_touchstone)
   expect_error(run_script(path_touchstone, ref = refs[2]), NA)
   withr::local_envvar(GITHUB_HEAD_REF = "main")
+  writeLines(with_assets, path_touchstone)
   expect_error(run_script(path_touchstone), NA)
 })
