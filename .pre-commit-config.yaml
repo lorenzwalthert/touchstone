@@ -71,7 +71,7 @@ repos:
           inst/script\.R|
           README\.Rmd|
           tests/testthat/test-prepare\.R|
-          inst/script\.R
+          inst/script\.R|
           vignettes/touchstone\.Rmd
           )$
 -   repo: https://github.com/pre-commit/pre-commit-hooks
