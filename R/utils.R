@@ -237,9 +237,9 @@ pin_assets <- function(...,
   }
 
   create_and_copy <- function(asset) {
-    git_root <- get_git_root()
-    asset <- fs::path_real(asset)
+    git_root <- fs::path_real(get_git_root())
 
+    asset <- fs::path_real(asset)
     if (!fs::path_has_parent(asset, git_root)) {
       cli::cli_abort(c(
         "Can only pin assets within the git repository!",

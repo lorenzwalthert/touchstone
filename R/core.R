@@ -19,12 +19,18 @@ benchmark_run_iteration <- function(expr_before_benchmark,
     expr_before_benchmark = expr_before_benchmark,
     dots = dots,
     ref = ref,
-    block = block
+    block = block,
+    base_assets = getOption("touchstone.dir_assets_base"),
+    head_assets = getOption("touchstone.dir_assets_head")
   )
   for (iteration in seq_len(n)) { # iterations
     callr::r(
-      function(expr_before_benchmark, dots, ref, block, iteration) {
+      function(expr_before_benchmark, dots, ref, block, iteration, base_assets, head_assets) {
         withr::local_namespace("touchstone")
+        withr::local_options(list(
+          touchstone.dir_assets_base = base_assets,
+          touchstone.dir_assets_head = head_assets
+        ))
         exprs_eval(!!expr_before_benchmark)
         benchmark <- bench::mark(exprs_eval(!!dots[[1]]), memory = FALSE, iterations = 1)
         benchmark_write(benchmark, names(dots), ref = ref, block = block, iteration = iteration)
