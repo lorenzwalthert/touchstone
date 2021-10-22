@@ -36,7 +36,7 @@ test_that("can call package in script", {
   )
 
   writeLines(no_assets, path_touchstone)
-  expect_error(run_script(path_touchstone, refs = refs), NA)
+  expect_error(run_script(path_touchstone, refs = refs[[2]]), NA)
   withr::local_envvar(list(GITHUB_BASE_REF = "main", GITHUB_HEAD_REF = "devel"))
 
   writeLines(with_assets, path_touchstone)
