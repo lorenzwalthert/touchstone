@@ -46,13 +46,11 @@
 #' }
 #' }
 run_script <- function(path = "touchstone/script.R",
-                       ref = ref_get_or_fail("GITHUB_HEAD_REF")) {
-  lib <- libpath_touchstone(ref)
-  fs::dir_create(lib)
-  withr::local_libpaths(
-    list(lib),
-    action = "prefix"
-  )
+                       refs = c(
+                         ref_get_or_fail("GITHUB_BASE_REF"),
+                         ref_get_or_fail("GITHUB_HEAD_REF")
+                       )) {
+  activate(refs[[2]], refs[[1]])
 
   temp_file <- fs::file_temp()
   fs::file_copy(path, temp_file)
@@ -61,7 +59,44 @@ run_script <- function(path = "touchstone/script.R",
     "Copied touchstone script to tempdir to prevent branch checkouts to effect",
     " the script."
   ))
-  source(temp_file, max.deparse.length = Inf)
+  
+  source(temp_file, max.deparse.length = Inf, local = TRUE)
+}
+
+activate <- function(head_ref = gert::git_branch(),
+                     base_ref = getOption(
+                       "touchstone.default_base_ref",
+                       "main"
+                     ),
+                     env = parent.frame()) {
+  withr::local_envvar(list(
+    GITHUB_BASE_REF = base_ref,
+    GITHUB_HEAD_REF = head_ref
+  ), .local_envir = env)
+
+  lib <- libpath_touchstone(head_ref)
+  fs::dir_create(lib)
+  withr::local_libpaths(
+    list(lib),
+    action = "prefix",
+    .local_envir = env
+  )
+
+  set_asset_dir(base_ref, head_ref, env = env)
+
+  if (identical(env, .GlobalEnv)) {
+    cli::cli_alert_success(
+      "Environment ready to interactivley execute your {.path touchstone/script.R}"
+    )
+    cli::cli_alert_info(
+      "Use {.fun touchstone::deactivate} to restore original environment."
+    )
+  }
+}
+
+deactivate <- function(env = parent.frame()) {
+  withr::deferred_clear(envir = env)
+  cli::cli_alert_success("Original environment restored!")
 }
 
 

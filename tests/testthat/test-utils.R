@@ -166,18 +166,18 @@ test_that("assets work on HEAD", {
 
   withr::with_options(
     list(
-      touchstone.dir_assets_head = NULL,
+      touchstone.dir_assets_devel = NULL,
       touchstone.git_root = fs::path_real(fs::path_temp("test_pkg")),
       usethis.quiet = TRUE
     ),
     {
-      expect_error(pin_assets("something"), "Temporary directory not found.")
+      expect_error(pin_assets("something"), "Temporary directory for ref")
       expect_error(path_pinned_asset("something"), "Temporary directory ")
     }
   )
 
   withr::with_options(list(
-    touchstone.dir_assets_head = temp_dir,
+    touchstone.dir_assets_devel = temp_dir,
     touchstone.git_root = fs::path_real(fs::path_temp("test_pkg")),
     usethis.quiet = TRUE
   ), {
@@ -199,7 +199,7 @@ test_that("assets work on HEAD", {
     expect_true(fs::is_dir(fs::path_join(c(temp_dir, "R"))))
     expect_true(fs::is_file(fs::path_join(c(temp_dir, "data.R"))))
 
-    expect_error(path_pinned_asset("something", ref = "no-branch"), "for head or base")
+    #expect_error(path_pinned_asset("something", ref = "no-branch"), "for head or base")
     expect_error(path_pinned_asset("something"), "not pinned at")
     expect_equal(path_pinned_asset("R"), fs::path(temp_dir, "R"))
     expect_equal(path_pinned_asset("data.R"), fs::path(temp_dir, "data.R"))
@@ -207,17 +207,12 @@ test_that("assets work on HEAD", {
 })
 
 test_that("assets work HEAD and BASE", {
-  head_asset_dir <- fs::path_temp("head")
-  base_asset_dir <- fs::path_temp("base")
-
-
   branches <- c("rc-1.0", "feat")
+  set_asset_dir(!!!branches)
   git_root <- local_package(branches = branches)
   dirs <- c("R", "bench") %>% rlang::set_names(branches)
   files <- c("data.Rdata", "utils.R") %>% rlang::set_names(branches)
   withr::local_options(list(
-    touchstone.dir_assets_head = head_asset_dir,
-    touchstone.dir_assets_base = base_asset_dir,
     touchstone.git_root = fs::path_real(git_root)
   ))
 
@@ -250,8 +245,8 @@ test_that("assets work HEAD and BASE", {
 
 test_that("asset paths are fetched correctly", {
   withr::local_options(list(
-    touchstone.dir_assets_head = "asset/dir",
-    touchstone.dir_assets_base = NULL
+    touchstone.dir_assets_devel = "asset/dir",
+    touchstone.dir_assets_main = NULL
   ))
 
   withr::local_envvar(list(
@@ -259,8 +254,8 @@ test_that("asset paths are fetched correctly", {
     GITHUB_HEAD_REF = "devel"
   ))
 
-  expect_error(get_asset_dir("not-main"), "head or base")
-  expect_error(get_asset_dir("main"), "directory not found")
+  #expect_error(get_asset_dir("not-main"), "head or base")
+  expect_error(get_asset_dir("main"), "directory for ref")
   expect_equal(get_asset_dir("devel"), "asset/dir")
 })
 

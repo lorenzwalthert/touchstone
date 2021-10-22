@@ -223,7 +223,7 @@ is_windows <- function() {
 pin_assets <- function(...,
                        ref = ref_get_or_fail("GITHUB_HEAD_REF"),
                        overwrite = TRUE) {
-  asset_dir <- get_asset_dir(ref, "pin")
+  asset_dir <- get_asset_dir(ref)
 
   local_git_checkout(ref)
   dirs <- rlang::list2(...)
@@ -269,20 +269,7 @@ pin_assets <- function(...,
     }
   }
 
-  dirs[valid_dirs] %>% purrr::walk(
-    create_and_copy
-    # ~ purrr::when(
-    #   .x,
-    #   fs::is_dir(.)[[1]] ~ fs::dir_copy(.x,
-    #     fs::path_join(c(asset_dir, fs::path_file(.x))),
-    #     overwrite = overwrite
-    #   ),
-    #   fs::is_file(.)[[1]] ~ fs::file_copy(.x,
-    #     fs::path_join(c(asset_dir, fs::path_file(.x))),
-    #     overwrite = overwrite
-    #   )
-  )
-
+  dirs[valid_dirs] %>% purrr::walk(create_and_copy)
 
   if (any(valid_dirs)) {
     cli::cli_alert_success(
@@ -319,23 +306,25 @@ path_pinned_asset <- function(...,
   path
 }
 
-get_asset_dir <- function(ref, verb = "find") {
-  if (ref == ref_get_or_fail("GITHUB_HEAD_REF")) {
-    ref <- "head"
-  } else if (ref == ref_get_or_fail("GITHUB_BASE_REF")) {
-    ref <- "base"
-  } else {
-    cli::cli_abort("Can only {verb} assets for head or base refs!")
-  }
+set_asset_dir <- function(..., env = parent.frame()) {
+  refs <- rlang::list2(...)
+  opts <- purrr::map(refs, fs::path_temp)
+  names(opts) <- purrr::map_chr(refs, ~ paste0("touchstone.dir_assets_", .x))
+  withr::local_options(opts, .local_envir = env)
 
+  invisible(opts)
+}
+
+get_asset_dir <- function(ref) {
   asset_dir <- getOption(paste0("touchstone.dir_assets_", ref))
 
   if (is.null(asset_dir)) {
     cli::cli_abort(c(
-      "Temporary directory not found. ",
+      "Temporary directory for ref {.arg {ref}} not found. ",
       "i" = paste0(
         "This function is only for use within the {.code ?touchstone_script},",
-        " which must be called with {.fun run_script}"
+        " which must be called with {.fun run_script}",
+        "or after running {.fun touchstone::activate}"
       )
     ))
   }

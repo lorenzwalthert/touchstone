@@ -1,5 +1,5 @@
 test_that("can call package in script", {
-  refs <- c("devel", "main")
+  refs <- c("main", "devel")
   pkg_name <- "b32jk"
   path_test_pkg <- local_package(pkg_name, branches = refs)
   # install refs, so ref[1] will be available outside benchmark_run_ref,
@@ -36,8 +36,9 @@ test_that("can call package in script", {
   )
 
   writeLines(no_assets, path_touchstone)
-  expect_error(run_script(path_touchstone, ref = refs[2]), NA)
-  withr::local_envvar(GITHUB_HEAD_REF = "main")
+  expect_error(run_script(path_touchstone, refs = refs), NA)
+  withr::local_envvar(list(GITHUB_BASE_REF = "main", GITHUB_HEAD_REF = "devel"))
+
   writeLines(with_assets, path_touchstone)
   expect_error(run_script(path_touchstone), NA)
 })
