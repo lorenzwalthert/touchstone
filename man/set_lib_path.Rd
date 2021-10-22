@@ -12,7 +12,7 @@ set_lib_path(ref, env = parent.frame())
 \item{env}{Environment in which the change should be applied.}
 }
 \description{
-Prefixes \link{.libPath} with the library containing the \code{ref}
+Prefixes \code{\link[=.libPaths]{.libPaths()}} with the library containing the \code{ref}
 version of the package. Can be used in \link{touchstone_script}
 to prepare benchmarks etc..
 }

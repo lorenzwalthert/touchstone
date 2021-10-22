@@ -103,7 +103,7 @@ activate <- function(head_ref = gert::git_branch(),
 
 #' Set Library Path
 #'
-#' Prefixes [.libPath] with the library containing the `ref`
+#' Prefixes [.libPaths()] with the library containing the `ref`
 #'  version of the package. Can be used in [touchstone_script]
 #'  to prepare benchmarks etc..
 #' @param ref Git ref to use, e.g. HEAD or BASE ref.
