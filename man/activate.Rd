@@ -17,8 +17,8 @@ deactivate(env = parent.frame())
 \item{head_ref}{Git ref to be used as the HEAD ref when running benchmarks.
 Defaults to the current branch.}
 
-\item{base_ref}{Git ref for the baselin ref when running benchmarks. Defaults
-'main' if the option \code{touchstone.default_base_ref}is not set.}
+\item{base_ref}{Git ref for the baseline ref when running benchmarks.
+Defaults 'main' if the option \code{touchstone.default_base_ref}is not set.}
 
 \item{env}{In which environment the temporary changes should be made.
 For use within functions.}

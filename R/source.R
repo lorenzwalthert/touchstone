@@ -45,11 +45,8 @@
 #' }
 #' }
 run_script <- function(path = "touchstone/script.R",
-                       refs = c(
-                         ref_get_or_fail("GITHUB_BASE_REF"),
-                         ref_get_or_fail("GITHUB_HEAD_REF")
-                       )) {
-  activate(refs[[2]], refs[[1]])
+                       ref = ref_get_or_fail("GITHUB_HEAD_REF")) {
+  activate(ref, ref_get_or_fail("GITHUB_BASE_REF"))
 
   temp_file <- fs::file_temp()
   fs::file_copy(path, temp_file)
@@ -68,8 +65,8 @@ run_script <- function(path = "touchstone/script.R",
 #'  [touchstone_script] possible.
 #' @param head_ref Git ref to be used as the HEAD ref when running benchmarks.
 #'  Defaults to the current branch.
-#' @param base_ref Git ref for the baselin ref when running benchmarks. Defaults
-#'  'main' if the option `touchstone.default_base_ref`is not set.
+#' @param base_ref Git ref for the baseline ref when running benchmarks.
+#' Defaults 'main' if the option `touchstone.default_base_ref`is not set.
 #' @param env In which environment the temporary changes should be made.
 #'  For use within functions.
 #' @examples
