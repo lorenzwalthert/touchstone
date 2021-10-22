@@ -36,9 +36,11 @@ test_that("can call package in script", {
   )
 
   writeLines(no_assets, path_touchstone)
-  expect_error(run_script(path_touchstone, ref = refs[[2]]), NA)
-  withr::local_envvar(list(GITHUB_BASE_REF = "main", GITHUB_HEAD_REF = "devel"))
+  withr::local_envvar(GITHUB_BASE_REF = "")
+  expect_error(run_script(path_touchstone, ref = refs[[2]]), "you must set the environment variable `GITHUB_BASE_REF`")
 
+  withr::local_envvar(list(GITHUB_BASE_REF = "main", GITHUB_HEAD_REF = "devel"))
+  expect_error(run_script(path_touchstone, ref = refs[[2]]), NA)
   writeLines(with_assets, path_touchstone)
   expect_error(run_script(path_touchstone), NA)
 })
