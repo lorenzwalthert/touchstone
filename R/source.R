@@ -88,14 +88,7 @@ activate <- function(head_ref = gert::git_branch(),
     GITHUB_HEAD_REF = head_ref
   ), .local_envir = env)
 
-  lib <- libpath_touchstone(head_ref)
-  fs::dir_create(lib)
-  withr::local_libpaths(
-    list(lib),
-    action = "prefix",
-    .local_envir = env
-  )
-
+  set_lib_path(head_ref, env = env)
   set_asset_dir(base_ref, head_ref, env = env)
 
   if (identical(env, .GlobalEnv)) {
@@ -106,6 +99,25 @@ activate <- function(head_ref = gert::git_branch(),
       "Use {.fun touchstone::deactivate} to restore original environment."
     )
   }
+}
+
+#' Set Library Path
+#'
+#' Prefixes [.libPath] with the library containing the `ref`
+#'  version of the package. Can be used in [touchstone_script]
+#'  to prepare benchmarks etc..
+#' @param ref Git ref to use, e.g. HEAD or BASE ref.
+#' @param env Environment in which the change should be applied.
+#' @seealso [run_script()]
+#' @export
+set_lib_path <- function(ref, env = parent.frame()) {
+  lib <- libpath_touchstone(ref)
+  fs::dir_create(lib)
+  withr::local_libpaths(
+    list(lib),
+    action = "prefix",
+    .local_envir = env
+  )
 }
 
 #' @describeIn activate Restore the original environment state.
