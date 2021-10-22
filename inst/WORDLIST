@@ -25,6 +25,7 @@ Wujciak
 api
 aut
 ba
+baselin
 bcea
 benchmarked
 benchmarking
@@ -46,6 +47,8 @@ downloadArtifact
 dplyr
 env
 envir
+envrionment
+envvars
 eval
 expr
 fromJson
@@ -62,6 +65,7 @@ hashFiles
 href
 https
 icloud
+interactivley
 io
 jacob
 json
