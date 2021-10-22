@@ -21,9 +21,9 @@ benchmark_run_iteration <- function(expr_before_benchmark,
     ref = ref,
     block = block,
     asset_dirs = options() %>%
-                  names() %>%
-                  grep("touchstone.dir_assets_", .) %>%
-                  options()[.]
+      names() %>%
+      grep("touchstone.dir_assets_", .) %>%
+      options()[.]
   )
 
   for (iteration in seq_len(n)) { # iterations
