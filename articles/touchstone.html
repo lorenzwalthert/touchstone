@@ -116,7 +116,7 @@
 <span id="cb2-8"><a href="#cb2-8"></a>  <span class="fu">}</span></span></code></pre></div>
 <ul>
 <li>
-<code>script.R</code>, the script that runs the benchmark.</li>
+<code>script.R</code>, the script that runs the benchmark, also called the <code>touchstone_script</code>.</li>
 <li>
 <code>header.R</code>, the script containing the default PR comment header, see <code><a href="../reference/pr_comment.html">?touchstone::pr_comment</a></code>.</li>
 <li>
@@ -130,7 +130,8 @@
 <div id="script-r" class="section level2">
 <h2 class="hasAnchor">
 <a href="#script-r" class="anchor"></a>script.R</h2>
-<p>The file consists of three parts, two of which you will need to modify to fit your needs. Within the github action {touchstone} will always run the <code>script.R</code> from the <code>HEAD</code> branch, so you can modify or extend the benchmarks if needed to fit your current branch.</p>
+<p>The file consists of three parts, two of which you will need to modify to fit your needs. Within the GitHub Action {touchstone} will always run the <code>script.R</code> from the <code>HEAD</code> branch, so you can modify or extend the benchmarks if needed to fit your current branch. Please beware that a few functions such as <code><a href="../reference/refs_install.html">refs_install()</a></code>, <code>pin_assets</code> or <code><a href="../reference/benchmark_run_ref.html">benchmark_run_ref()</a></code> will perform local git checkouts and therefore the git status should be clean and no other processes should run in the directory.</p>
+<p>The touchstone script will be run with <code><a href="../reference/run_script.html">run_script()</a></code> on GitHub Actions with the required environment variables <code>GITHUB_HEAD_REF</code> and GITHUB_BASE_REF<code>set for  various reasons explained in the help file. If you want to interactively work on your touchstone script, i.e. running it line by line, you must activate touchstone first with</code>activate()`, which sets environment variables, R options and library paths.</p>
 <div id="setup" class="section level3">
 <h3 class="hasAnchor">
 <a href="#setup" class="anchor"></a>Setup</h3>
@@ -176,8 +177,8 @@
 <div id="running-the-script" class="section level2">
 <h2 class="hasAnchor">
 <a href="#running-the-script" class="anchor"></a>Running the script</h2>
-<p>After you have committed the workflow files to your default branch the benchmarks will be run on new pull requests and on each commit while that pull request is open.</p>
-<p>If you want to call the script interactively, use <code><a href="../reference/run_script.html">run_script()</a></code> (an enhanced version of <code><a href="https://rdrr.io/r/base/source.html">base::source()</a></code>) for various technical reasons described in the help file. Note that <code><a href="../reference/benchmark_run_ref.html">benchmark_run_ref()</a></code> will check out different branches and should therefore be the only process running in the directory and only in a clean git working directory.</p>
+<p>After you have committed and pushed the workflow files to your default branch the benchmarks will be run on new pull requests and on each commit while that pull request is open.</p>
+<p>Note that various functions such as <code><a href="../reference/refs_install.html">refs_install()</a></code> <code><a href="../reference/pin_assets.html">pin_assets()</a></code> and <code><a href="../reference/benchmark_run_ref.html">benchmark_run_ref()</a></code> will check out different branches and should therefore be the only process running in the directory and with a clean git status.</p>
 </div>
 <div id="the-results" class="section level2">
 <h2 class="hasAnchor">
