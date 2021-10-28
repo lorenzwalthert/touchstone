@@ -58,3 +58,23 @@
     Output
       NULL
 
+# git root is found correctly [unicode]
+
+    Code
+      find_git_root(no_git)
+    Message <cliMessage>
+      ✖ Could not find git repository from current working directory!
+      ℹ Please manually set the option "touchstone.git_root".
+    Output
+      NULL
+
+# git root is found correctly [fancy]
+
+    Code
+      find_git_root(no_git)
+    Message <cliMessage>
+      [31m✖[39m Could not find git repository from current working directory!
+      [36mℹ[39m Please manually set the option [34m[34m"touchstone.git_root"[34m[39m.
+    Output
+      NULL
+

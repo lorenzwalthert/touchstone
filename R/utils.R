@@ -24,6 +24,11 @@ dir_touchstone <- function() {
 ref_get_or_fail <- function(var) {
   retrieved <- Sys.getenv(var)
   if (!nzchar(retrieved)) {
+    cli::cli_alert_info(c(paste0(
+      "touchstone not activated. Most likely, you want to run ",
+      "{.code touchstone::activate()} if you are working interactivley and ",
+      "the below error should go away."
+    )))
     cli::cli_abort(c(paste0(
       "If you don't specify the argument {.arg ref(s)}, you must set the environment ",
       "variable {.envvar {var}} to tell {.pkg touchstone} ",
@@ -117,7 +122,10 @@ local_git_checkout <- function(branch,
                                envir = parent.frame()) {
   current_branch <- gert::git_branch(repo = path_pkg)
   withr::defer(
-    gert::git_branch_checkout(current_branch, repo = path_pkg),
+    {
+      gert::git_branch_checkout(current_branch, repo = path_pkg)
+      cli::cli_alert_success("Switched back to branch {.val {current_branch}}.")
+    },
     envir = envir
   )
   if (!(branch %in% gert::git_branch_list(repo = path_pkg)$name)) {
@@ -166,7 +174,7 @@ assert_no_global_installation <- function(path_pkg = ".") {
         "This should not be the case - as the package should be installed in ",
         "dedicated library paths for benchmarking."
       ),
-      "*" = 'To uninstall use {.code remove.packages("{check$name}")}.'
+      "*" = 'To uninstall use {.code remove.packages("{check$name}", lib = "{.libPaths()[1]}")}.'
     ))
   }
 }
@@ -190,7 +198,7 @@ is_windows <- function() {
 #' Pin asset directory
 #'
 #' Pin files or directories that need to be available on both branches when
-#' running the `touchstone_script`. During [benchmark_run_ref()] they will
+#' running the [touchstone_script]. During [benchmark_run_ref()] they will
 #' available via [path_pinned_asset()]. This is only possible for assets
 #'  *within* the git repository.
 #' @param ... Any number of directories or files, as strings, that you want to
@@ -223,7 +231,7 @@ is_windows <- function() {
 pin_assets <- function(...,
                        ref = ref_get_or_fail("GITHUB_HEAD_REF"),
                        overwrite = TRUE) {
-  asset_dir <- get_asset_dir(ref, "pin")
+  asset_dir <- get_asset_dir(ref)
 
   local_git_checkout(ref)
   dirs <- rlang::list2(...)
@@ -269,20 +277,7 @@ pin_assets <- function(...,
     }
   }
 
-  dirs[valid_dirs] %>% purrr::walk(
-    create_and_copy
-    # ~ purrr::when(
-    #   .x,
-    #   fs::is_dir(.)[[1]] ~ fs::dir_copy(.x,
-    #     fs::path_join(c(asset_dir, fs::path_file(.x))),
-    #     overwrite = overwrite
-    #   ),
-    #   fs::is_file(.)[[1]] ~ fs::file_copy(.x,
-    #     fs::path_join(c(asset_dir, fs::path_file(.x))),
-    #     overwrite = overwrite
-    #   )
-  )
-
+  dirs[valid_dirs] %>% purrr::walk(create_and_copy)
 
   if (any(valid_dirs)) {
     cli::cli_alert_success(
@@ -319,23 +314,25 @@ path_pinned_asset <- function(...,
   path
 }
 
-get_asset_dir <- function(ref, verb = "find") {
-  if (ref == ref_get_or_fail("GITHUB_HEAD_REF")) {
-    ref <- "head"
-  } else if (ref == ref_get_or_fail("GITHUB_BASE_REF")) {
-    ref <- "base"
-  } else {
-    cli::cli_abort("Can only {verb} assets for head or base refs!")
-  }
+local_asset_dir <- function(..., env = parent.frame()) {
+  refs <- rlang::list2(...)
+  opts <- purrr::map(refs, fs::path_temp)
+  names(opts) <- purrr::map_chr(refs, ~ paste0("touchstone.dir_assets_", .x))
+  withr::local_options(opts, .local_envir = env)
 
+  invisible(opts)
+}
+
+get_asset_dir <- function(ref) {
   asset_dir <- getOption(paste0("touchstone.dir_assets_", ref))
 
   if (is.null(asset_dir)) {
     cli::cli_abort(c(
-      "Temporary directory not found. ",
+      "Temporary directory for ref {.arg {ref}} not found. ",
       "i" = paste0(
         "This function is only for use within the {.code ?touchstone_script},",
-        " which must be called with {.fun run_script}"
+        " which must be called with {.fun run_script}",
+        "or after running {.fun touchstone::activate}"
       )
     ))
   }

@@ -20,7 +20,7 @@ The asset directory invisibly.
 }
 \description{
 Pin files or directories that need to be available on both branches when
-running the \code{touchstone_script}. During \code{\link[=benchmark_run_ref]{benchmark_run_ref()}} they will
+running the \link{touchstone_script}. During \code{\link[=benchmark_run_ref]{benchmark_run_ref()}} they will
 available via \code{\link[=path_pinned_asset]{path_pinned_asset()}}. This is only possible for assets
 \emph{within} the git repository.
 }

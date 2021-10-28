@@ -46,6 +46,8 @@ downloadArtifact
 dplyr
 env
 envir
+envrionment
+envvars
 eval
 expr
 fromJson
@@ -62,6 +64,7 @@ hashFiles
 href
 https
 icloud
+interactivley
 io
 jacob
 json
