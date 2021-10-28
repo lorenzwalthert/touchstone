@@ -117,14 +117,15 @@ activate <- function(head_ref = gert::git_branch(),
 local_touchstone_libpath <- function(ref, env = parent.frame()) {
   lib <- libpath_touchstone(ref)
   fs::dir_create(lib)
-  current <- .libPaths()
+  current <- fs::path_real(.libPaths())
+
   current_is_touchstone <- purrr::map_lgl(current,
     fs::path_has_parent,
-    parent = dir_touchstone()
+    parent = fs::path_real(dir_touchstone())
   )
   current <- current[!current_is_touchstone]
   withr::local_libpaths(
-    list(lib),
+    c(lib, current),
     action = "replace",
     .local_envir = env
   )
