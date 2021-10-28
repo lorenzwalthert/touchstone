@@ -166,7 +166,7 @@ assert_no_global_installation <- function(path_pkg = ".") {
         "This should not be the case - as the package should be installed in ",
         "dedicated library paths for benchmarking."
       ),
-      "*" = 'To uninstall use {.code remove.packages("{check$name}")}.'
+      "*" = 'To uninstall use {.code remove.packages("{check$name}", lib = "{.libPaths()[1]}")}.'
     ))
   }
 }
