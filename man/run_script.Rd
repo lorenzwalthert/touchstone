@@ -29,7 +29,7 @@ script execution (as running the script changes itself through git checkout).
 }
 \section{How to run this interactively?}{
 
-You can use \code{\link[=activate]{activate()}} to setup the envrionment to interactivley run your
+You can use \code{\link[=activate]{activate()}} to setup the environment to interactively run your
 script, as there are some adjustments needed to mirror the Github Action
 environment.
 In a GitHub Action workflow, the environment variables \code{GITHUB_BASE_REF} and
