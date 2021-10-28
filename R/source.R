@@ -61,39 +61,43 @@ run_script <- function(path = "touchstone/script.R",
 
 #' Activate touchstone environment
 #'
-#' This sets envvars and options to make interactivley running
-#'  [touchstone_script] possible.
-#' @param head_ref Git ref to be used as the HEAD ref when running benchmarks.
-#'  Defaults to the current branch.
-#' @param base_ref Git ref for the baseline ref when running benchmarks.
-#' Defaults 'main' if the option `touchstone.default_base_ref`is not set.
+#' This sets environment variables, R options and library paths to work
+#' interactively on the [touchstone_script].
+#' @param head_ref Git ref to be used as the `GITHUB_HEAD_REF` ref (i.e. the
+#'   branch with new changes) when running benchmarks. Defaults to the current
+#'   branch.
+#' @param base_ref Git ref for the `GITHUB_BASE_REF` (i.e. the branch you want
+#'   to merge your changes into) when running benchmarks.
+#'   Defaults to 'main' if the option `touchstone.default_base_ref`is not set.
 #' @param env In which environment the temporary changes should be made.
-#'  For use within functions.
+#'   For use within functions.
 #' @examples
 #' \dontrun{
 #' activate()
-#' # You can now test parts of your touchstone/script.R
+#' # You can now test parts of your touchstone script, e.g. touchstone/script.R
 #' deactivate()
 #' }
 #' @export
-#' @md
 activate <- function(head_ref = gert::git_branch(),
                      base_ref = getOption(
                        "touchstone.default_base_ref",
                        "main"
                      ),
                      env = parent.frame()) {
-  withr::local_envvar(list(
-    GITHUB_BASE_REF = base_ref,
-    GITHUB_HEAD_REF = head_ref
-  ), .local_envir = env)
+  suppressMessages({
+    withr::local_envvar(
+      GITHUB_BASE_REF = base_ref,
+      GITHUB_HEAD_REF = head_ref,
+      .local_envir = env
+    )
 
-  set_lib_path(head_ref, env = env)
-  set_asset_dir(base_ref, head_ref, env = env)
+    local_touchstone_libpath(head_ref, env = env)
+    local_asset_dir(base_ref, head_ref, env = env)
+  })
 
   if (identical(env, .GlobalEnv)) {
     cli::cli_alert_success(
-      "Environment ready to interactivley execute your {.path touchstone/script.R}"
+      "Environment ready to interactivley execute your touchstone script."
     )
     cli::cli_alert_info(
       "Use {.fun touchstone::deactivate} to restore original environment."
@@ -103,19 +107,25 @@ activate <- function(head_ref = gert::git_branch(),
 
 #' Set Library Path
 #'
-#' Prefixes [.libPaths()] with the library containing the `ref`
-#'  version of the package. Can be used in [touchstone_script]
-#'  to prepare benchmarks etc..
+#' Temporarily add a touchstone library to the path, so it can be found by
+#' [.libPaths()] and friends. Can be used in [touchstone_script]
+#'  to prepare benchmarks etc. If there are touchstone libraries on the path
+#'  when this function is called, they will be removed.
 #' @param ref Git ref to use, e.g. HEAD or BASE ref.
 #' @param env Environment in which the change should be applied.
 #' @seealso [run_script()]
-#' @export
-set_lib_path <- function(ref, env = parent.frame()) {
+local_touchstone_libpath <- function(ref, env = parent.frame()) {
   lib <- libpath_touchstone(ref)
   fs::dir_create(lib)
+  current <- .libPaths()
+  current_is_touchstone <- purrr::map_lgl(current,
+    fs::path_has_parent,
+    parent = dir_touchstone()
+  )
+  current <- current[!current_is_touchstone]
   withr::local_libpaths(
     list(lib),
-    action = "prefix",
+    action = "replace",
     .local_envir = env
   )
 }

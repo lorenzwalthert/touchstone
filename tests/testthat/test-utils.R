@@ -208,7 +208,7 @@ test_that("assets work on HEAD", {
 
 test_that("assets work HEAD and BASE", {
   branches <- c("rc-1.0", "feat")
-  set_asset_dir(!!!branches)
+  local_asset_dir(!!!branches)
   git_root <- local_package(branches = branches)
   dirs <- c("R", "bench") %>% rlang::set_names(branches)
   files <- c("data.Rdata", "utils.R") %>% rlang::set_names(branches)
