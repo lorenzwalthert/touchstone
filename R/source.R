@@ -118,27 +118,27 @@ local_touchstone_libpath <- function(ref, env = parent.frame()) {
   lib <- libpath_touchstone(ref)
   fs::dir_create(lib)
   current <- fs::path_real(.libPaths())
-  print("current libpaths\n")
+  # print("current libpaths\n")
   # stop("\n", paste0(current, sep = "\n"))
-  print("\n")
+  # print("\n")
 
   current_is_touchstone <- purrr::map_lgl(current,
     fs::path_has_parent,
     parent = fs::path_real(dir_touchstone())
   )
   current <- current[!current_is_touchstone]
-  print("short list\n")
-  print(current)
-  print("\n")
+  # print("short list\n")
+  # print(current)
+  # print("\n")
   out <- withr::local_libpaths(
-    lib,
+    c(lib, current),
     action = "replace",
     .local_envir = env
   )
-  print("new list:\n")
-  # stop(paste0(.libPaths(), sep = "\n"))
-  print("\n")
-  out
+  # print("new list:\n")
+  # print(paste0(.libPaths(), sep = "\n"))
+  # print("\n")
+  invisible(out)
 }
 
 #' @describeIn activate Restore the original environment state.
