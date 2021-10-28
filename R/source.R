@@ -119,7 +119,7 @@ local_touchstone_libpath <- function(ref, env = parent.frame()) {
   fs::dir_create(lib)
   current <- fs::path_real(.libPaths())
   print("current libpaths\n")
-  print(current, sep = "\n")
+  stop("\n", paste0(current, sep = "\n"))
   print("\n")
 
   current_is_touchstone <- purrr::map_lgl(current,
