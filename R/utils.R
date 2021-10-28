@@ -117,7 +117,10 @@ local_git_checkout <- function(branch,
                                envir = parent.frame()) {
   current_branch <- gert::git_branch(repo = path_pkg)
   withr::defer(
-    gert::git_branch_checkout(current_branch, repo = path_pkg),
+    {
+      gert::git_branch_checkout(current_branch, repo = path_pkg)
+      cli::cli_alert_success("Switched back to branch {.val {current_branch}}.")
+    },
     envir = envir
   )
   if (!(branch %in% gert::git_branch_list(repo = path_pkg)$name)) {
