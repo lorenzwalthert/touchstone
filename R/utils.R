@@ -24,6 +24,11 @@ dir_touchstone <- function() {
 ref_get_or_fail <- function(var) {
   retrieved <- Sys.getenv(var)
   if (!nzchar(retrieved)) {
+    cli::cli_alert_info(c(paste0(
+      "touchstone not activated. Most likely, you want to run ",
+      "{.code touchstone::activate()} if you are working interactivley and ",
+      "the below error should go away."
+    )))
     cli::cli_abort(c(paste0(
       "If you don't specify the argument {.arg ref(s)}, you must set the environment ",
       "variable {.envvar {var}} to tell {.pkg touchstone} ",
