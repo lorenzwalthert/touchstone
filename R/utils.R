@@ -198,7 +198,7 @@ is_windows <- function() {
 #' Pin asset directory
 #'
 #' Pin files or directories that need to be available on both branches when
-#' running the `touchstone_script`. During [benchmark_run_ref()] they will
+#' running the [touchstone_script]. During [benchmark_run_ref()] they will
 #' available via [path_pinned_asset()]. This is only possible for assets
 #'  *within* the git repository.
 #' @param ... Any number of directories or files, as strings, that you want to
