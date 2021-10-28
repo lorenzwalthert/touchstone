@@ -11,7 +11,7 @@
 #'   to the library path when the script at `path` is executed, see 'Why this
 #'   function?' below.
 #' @section How to run this interactively?:
-#' You can use [activate()] to setup the envrionment to interactivley run your
+#' You can use [activate()] to setup the environment to interactively run your
 #'  script, as there are some adjustments needed to mirror the Github Action
 #'  environment.
 #' In a GitHub Action workflow, the environment variables `GITHUB_BASE_REF` and
