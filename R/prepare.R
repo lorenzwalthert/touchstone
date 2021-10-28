@@ -18,7 +18,7 @@ ref_install <- function(ref = "main",
     )
     NULL
   } else {
-    set_lib_path(ref)
+    local_touchstone_libpath(ref)
     libpath <- .libPaths()
     withr::local_options(warn = 2)
     remotes::install_local(path_pkg,

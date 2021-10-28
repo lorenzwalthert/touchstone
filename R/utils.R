@@ -314,7 +314,7 @@ path_pinned_asset <- function(...,
   path
 }
 
-set_asset_dir <- function(..., env = parent.frame()) {
+local_asset_dir <- function(..., env = parent.frame()) {
   refs <- rlang::list2(...)
   opts <- purrr::map(refs, fs::path_temp)
   names(opts) <- purrr::map_chr(refs, ~ paste0("touchstone.dir_assets_", .x))

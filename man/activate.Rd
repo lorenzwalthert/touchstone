@@ -14,18 +14,20 @@ activate(
 deactivate(env = parent.frame())
 }
 \arguments{
-\item{head_ref}{Git ref to be used as the HEAD ref when running benchmarks.
-Defaults to the current branch.}
+\item{head_ref}{Git ref to be used as the \code{GITHUB_HEAD_REF} ref (i.e. the
+branch with new changes) when running benchmarks. Defaults to the current
+branch.}
 
-\item{base_ref}{Git ref for the baseline ref when running benchmarks.
-Defaults 'main' if the option \code{touchstone.default_base_ref}is not set.}
+\item{base_ref}{Git ref for the \code{GITHUB_BASE_REF} (i.e. the branch you want
+to merge your changes into) when running benchmarks.
+Defaults to 'main' if the option \code{touchstone.default_base_ref}is not set.}
 
 \item{env}{In which environment the temporary changes should be made.
 For use within functions.}
 }
 \description{
-This sets envvars and options to make interactivley running
-\link{touchstone_script} possible.
+This sets environment variables, R options and library paths to work
+interactively on the \link{touchstone_script}.
 }
 \section{Functions}{
 \itemize{
@@ -35,7 +37,7 @@ This sets envvars and options to make interactivley running
 \examples{
 \dontrun{
 activate()
-# You can now test parts of your touchstone/script.R
+# You can now test parts of your touchstone script, e.g. touchstone/script.R
 deactivate()
 }
 }
