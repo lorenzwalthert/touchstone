@@ -131,12 +131,12 @@ local_touchstone_libpath <- function(ref, env = parent.frame()) {
   print(current)
   print("\n")
   out <- withr::local_libpaths(
-    list(lib),
+    lib,
     action = "replace",
     .local_envir = env
   )
   print("new list:\n")
-  stop(paste0(.libPaths(), sep = "\n"))
+  # stop(paste0(.libPaths(), sep = "\n"))
   print("\n")
   out
 }
