@@ -354,7 +354,7 @@ abort_string <- function() {
     "`expr_before_benchmark` is deprecated."
   ))
 }
-                    
+
 append_rbuildignore <- function(dir) {
   ignore <- ".Rbuildignore"
   if (fs::file_exists(ignore)) {
