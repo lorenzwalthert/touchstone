@@ -14,10 +14,11 @@ benchmark_run_ref(
 }
 \arguments{
 \item{expr_before_benchmark}{Expression to run before
-the benchmark is ran, will be evaluated with \code{\link[=exprs_eval]{exprs_eval()}}.}
+the benchmark is ran, will be captured with \code{\link[rlang:nse-defuse]{rlang::enexpr()}}.
+So you can use quasiquotation.}
 
-\item{...}{Named expression of length one with code to benchmark, will
-be evaluated with \code{\link[=exprs_eval]{exprs_eval()}}.}
+\item{...}{Named expression of length one with code to benchmark,
+will be captured with \code{\link[rlang:nse-defuse]{rlang::enexprs()}}. So you can use quasiquotation.}
 
 \item{refs}{Character vector with branch names to benchmark. The package
 must be built for each benchmarked branch beforehand with \code{\link[=refs_install]{refs_install()}}.
