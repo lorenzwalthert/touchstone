@@ -29,12 +29,12 @@ path_temp_pkg <- function(name) {
 #' @inheritParams withr::defer
 #' @family testers
 #' @keywords internal
-local_package <- function(pkg_name = fs::path_file(tempfile("pkg")),
+local_package <- function(pkg_name = fs::path_file(fs::file_temp("pkg")),
                           branches = c("main", "devel"),
                           r_sample = NULL,
                           setwd = TRUE,
                           envir = parent.frame()) {
-  path <- fs::path(tempfile(""), pkg_name)
+  path <- fs::path(fs::file_temp(""), pkg_name)
   fs::dir_create(path)
   withr::local_options(
     usethis.quiet = TRUE,

@@ -29,13 +29,14 @@ script execution (as running the script changes itself through git checkout).
 }
 \section{How to run this interactively?}{
 
+You can use \code{\link[=activate]{activate()}} to setup the environment to interactively run your
+script, as there are some adjustments needed to mirror the Github Action
+environment.
 In a GitHub Action workflow, the environment variables \code{GITHUB_BASE_REF} and
 \code{GITHUB_HEAD_REF} denote the target and source branch of the pull request -
 and these are default arguments in \code{\link[=benchmark_run_ref]{benchmark_run_ref()}} (and other functions
 you probably want to call in your benchmarking script) to determinate the
-branches to use. Hence, you must set these with \code{\link[base:Sys.setenv]{base::Sys.setenv()}}, e.g. if
-you want to benchmark the local branch \code{devel} against \code{main}\preformatted{Sys.setenv(GITHUB_BASE_REF = "main", GITHUB_HEAD_REF = "devel")
-}
+branches to use.
 }
 
 \section{Why this function?}{

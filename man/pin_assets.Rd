@@ -20,22 +20,22 @@ The asset directory invisibly.
 }
 \description{
 Pin files or directories that need to be available on both branches when
-running the \code{touchstone_script}. During \code{\link[=benchmark_run_ref]{benchmark_run_ref()}} they will
-available via \code{\link[=path_pinned_asset]{path_pinned_asset()}}.
+running the \link{touchstone_script}. During \code{\link[=benchmark_run_ref]{benchmark_run_ref()}} they will
+available via \code{\link[=path_pinned_asset]{path_pinned_asset()}}. This is only possible for assets
+\emph{within} the git repository.
 }
 \details{
 When passing nested directories or files within nested directories
-only the file/last directory will be copied. Directories will be copied
-recursively. See examples.
+the path will be copied recursively. See examples.
 }
 \examples{
 \dontrun{
-# In the touchstone script
+# In the touchstone script within the repo "/home/user/pkg"
 
-pin_assets(c("bench", "inst/setup.R", "some/nested/dir"))
+pin_assets(c("/home/user/pkg/bench", "inst/setup.R", "some/nested/dir"))
 
-source(path_pinned_asset("setup.R"))
-load(path_pinned_asset("dir/data.RData"))
+source(path_pinned_asset("inst/setup.R"))
+load(path_pinned_asset("some/nested/dir/data.RData"))
 
 touchstone::benchmark_run_ref(
   expr_before_benchmark = {

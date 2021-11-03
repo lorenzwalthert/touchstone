@@ -8,7 +8,6 @@ test_that("can install in isolated repos", {
   # with root != "."
   name_tmp_pkg <- "bli44"
   path_pkg <- local_package(name_tmp_pkg, r_sample = "x <- 55")
-  # browser()
   expect_error(
     withr::with_libpaths(lib_path1, bli44:::x),
     "[Tt]here is no package"

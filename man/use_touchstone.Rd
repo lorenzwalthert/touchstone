@@ -17,5 +17,10 @@ don't care about old runs when you pushed new code.}
 The function is called for its side effects and returns \code{NULL} (invisibly).
 }
 \description{
-Initiate {touchstone}
+This function will initialize {touchstone} in your package repository, use
+from root directory.
+}
+\details{
+For more information see the 'Using touchstone' vignette:
+`vignette("touchstone", package = "touchstone")
 }

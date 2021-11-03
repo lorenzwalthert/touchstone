@@ -18,11 +18,8 @@ ref_install <- function(ref = "main",
     )
     NULL
   } else {
-    libpath <- c(
-      fs::dir_create(libpath_touchstone(ref)),
-      .libPaths()
-    )
-    withr::local_libpaths(libpath)
+    local_touchstone_libpath(ref)
+    libpath <- .libPaths()
     withr::local_options(warn = 2)
     remotes::install_local(path_pkg,
       upgrade = "never", quiet = TRUE,

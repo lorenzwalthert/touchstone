@@ -1,10 +1,15 @@
 #' Initiate {touchstone}
 #'
+#' This function will initialize {touchstone} in your package repository, use
+#' from root directory.
 #' @param cancel Whether or not to also introduce a GitHub Actions
 #' [cancel workflow](https://github.com/marketplace/actions/cancel-workflow-action)
 #' for canceling old runs when new ones are started. This makes sense because
 #' touchstone runs can take a lot of time and compute resources and you usually
 #' don't care about old runs when you pushed new code.
+#' @details
+#' For more information see the 'Using touchstone' vignette:
+#'  `vignette("touchstone", package = "touchstone")
 #' @return
 #' The function is called for its side effects and returns `NULL` (invisibly).
 #' @export
@@ -46,6 +51,8 @@ use_touchstone <- function(cancel = TRUE) {
     system.file("touchstone-comment.yaml", package = "touchstone"),
     fs::path(workflows, "touchstone-comment.yaml")
   )
+
+  append_rbuildignore("touchstone")
 
   if (cancel) {
     target <- fs::path(workflows, "cancel.yaml")
