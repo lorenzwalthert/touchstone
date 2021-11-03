@@ -136,7 +136,7 @@
     </div>
 
     <pre class="usage"><span class='fu'>benchmark_run_ref</span><span class='op'>(</span>
-  <span class='va'>expr_before_benchmark</span>,
+  expr_before_benchmark <span class='op'>=</span> <span class='op'>{</span> <span class='op'>}</span>,
   <span class='va'>...</span>,
   refs <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fu'><a href='ref_get_or_fail.html'>ref_get_or_fail</a></span><span class='op'>(</span><span class='st'>"GITHUB_BASE_REF"</span><span class='op'>)</span>, <span class='fu'><a href='ref_get_or_fail.html'>ref_get_or_fail</a></span><span class='op'>(</span><span class='st'>"GITHUB_HEAD_REF"</span><span class='op'>)</span><span class='op'>)</span>,
   n <span class='op'>=</span> <span class='fl'>100</span>,
@@ -148,13 +148,14 @@
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>expr_before_benchmark</th>
-      <td><p>Character vector with code to run before
-the benchmark is ran, will be evaluated with <code><a href='exprs_eval.html'>exprs_eval()</a></code>.</p></td>
+      <td><p>Expression to run before
+the benchmark is ran, will be captured with <code><a href='https://rlang.r-lib.org/reference/nse-defuse.html'>rlang::enexpr()</a></code>.
+So you can use quasiquotation.</p></td>
     </tr>
     <tr>
       <th>...</th>
-      <td><p>Named expression or named character vector of length one with code to benchmark, will
-be evaluated with <code><a href='exprs_eval.html'>exprs_eval()</a></code>.</p></td>
+      <td><p>Named expression of length one with code to benchmark,
+will be captured with <code><a href='https://rlang.r-lib.org/reference/nse-defuse.html'>rlang::enexprs()</a></code>. So you can use quasiquotation.</p></td>
     </tr>
     <tr>
       <th>refs</th>

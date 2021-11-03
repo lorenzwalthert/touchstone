@@ -151,8 +151,9 @@ commit, tag, branch etc) of the benchmarking.</p></td>
     </tr>
     <tr>
       <th>expr_before_benchmark</th>
-      <td><p>Character vector with code to run before
-the benchmark is ran, will be evaluated with <code><a href='exprs_eval.html'>exprs_eval()</a></code>.</p></td>
+      <td><p>Expression to run before
+the benchmark is ran, will be captured with <code><a href='https://rlang.r-lib.org/reference/nse-defuse.html'>rlang::enexpr()</a></code>.
+So you can use quasiquotation.</p></td>
     </tr>
     <tr>
       <th>dots</th>
