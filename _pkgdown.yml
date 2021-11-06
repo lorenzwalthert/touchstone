@@ -35,7 +35,7 @@ reference:
 - contents:
   - pin_assets
   - path_pinned_asset
-- title: "Non-functional documentation"
+- title: "Non-function documentation"
   desc: >
     Not functions, but worth documenting anyways.
 - contents:
