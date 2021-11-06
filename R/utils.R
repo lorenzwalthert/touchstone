@@ -26,6 +26,11 @@ dir_touchstone <- function() {
 ref_get_or_fail <- function(var) {
   retrieved <- Sys.getenv(var)
   if (!nzchar(retrieved)) {
+    cli::cli_alert_info(c(paste0(
+      "touchstone not activated. Most likely, you want to run ",
+      "{.code touchstone::activate()} if you are working interactivley and ",
+      "the below error should go away."
+    )))
     cli::cli_abort(c(paste0(
       "If you don't specify the argument {.arg ref(s)}, you must set the environment ",
       "variable {.envvar {var}} to tell {.pkg touchstone} ",
@@ -54,34 +59,6 @@ touchstone_clear <- function(all = FALSE) {
   fs::dir_delete(paths)
 }
 
-#' Evaluate an expression for sideeffects
-#'
-#'
-#' @param ... Character vector  of length 1 or expression with code to evaluate. This will be quoted using
-#' [rlang::enexprs()], so you can use `!!`.
-#' @param env Environment in which the expression will be evaluated.
-#' @return The quoted input (invisibly).
-#' @keywords internal
-exprs_eval <- function(..., env = parent.frame()) {
-  expr <- rlang::enexprs(...)[[1]]
-
-  if (is.symbol(expr)) {
-    expr <- rlang::eval_tidy(expr, env = env)
-  }
-
-  if (is.character(expr)) {
-    expr <- rlang::parse_exprs(expr)
-  }
-
-  if (is.list(expr)) {
-    purrr::map(expr, eval, envir = env)
-  } else {
-    eval(expr, envir = env)
-  }
-
-  invisible(expr)
-}
-
 #' Samples `ref`
 #'
 #' A block is a permutation of all unique elements in `ref`. Then, we sample
@@ -103,8 +80,6 @@ ensure_dir <- function(...) {
   fs::dir_create(...)
 }
 
-
-
 schema_disk <- function() {
   c(
     elapsed = "numeric", iteration = "integer", ref = "character",
@@ -119,7 +94,10 @@ local_git_checkout <- function(branch,
                                envir = parent.frame()) {
   current_branch <- gert::git_branch(repo = path_pkg)
   withr::defer(
-    gert::git_branch_checkout(current_branch, repo = path_pkg),
+    {
+      gert::git_branch_checkout(current_branch, repo = path_pkg)
+      cli::cli_alert_success("Switched back to branch {.val {current_branch}}.")
+    },
     envir = envir
   )
   if (!(branch %in% gert::git_branch_list(repo = path_pkg)$name)) {
@@ -173,7 +151,7 @@ assert_no_global_installation <- function(path_pkg = ".") {
         "This should not be the case - as the package should be installed in ",
         "dedicated library paths for benchmarking."
       ),
-      "*" = 'To uninstall use {.code remove.packages("{check$name}")}.'
+      "*" = 'To uninstall use {.code remove.packages("{check$name}", lib = "{.libPaths()[1]}")}.'
     ))
   }
 }
@@ -215,25 +193,25 @@ is_windows <- function() {
 #' Pin asset directory
 #'
 #' Pin files or directories that need to be available on both branches when
-#' running the `touchstone_script`. During [benchmark_run_ref()] they will
-#' available via [path_pinned_asset()].
+#' running the [touchstone_script]. During [benchmark_run_ref()] they will
+#' available via [path_pinned_asset()]. This is only possible for assets
+#'  *within* the git repository.
 #' @param ... Any number of directories or files, as strings, that you want to
 #'   access in your [touchstone_script].
 #' @param ref The branch the passed assets are copied from.
 #' @inheritParams fs::path
 #' @inheritParams fs::dir_copy
 #' @details When passing nested directories or files within nested directories
-#'   only the file/last directory will be copied. Directories will be copied
-#'   recursively. See examples.
+#'   the path will be copied recursively. See examples.
 #' @return The asset directory invisibly.
 #' @examples
 #' \dontrun{
-#' # In the touchstone script
+#' # In the touchstone script within the repo "/home/user/pkg"
 #'
-#' pin_assets(c("bench", "inst/setup.R", "some/nested/dir"))
+#' pin_assets(c("/home/user/pkg/bench", "inst/setup.R", "some/nested/dir"))
 #'
-#' source(path_pinned_asset("setup.R"))
-#' load(path_pinned_asset("dir/data.RData"))
+#' source(path_pinned_asset("inst/setup.R"))
+#' load(path_pinned_asset("some/nested/dir/data.RData"))
 #'
 #' touchstone::benchmark_run_ref(
 #'   expr_before_benchmark = {
@@ -248,7 +226,7 @@ is_windows <- function() {
 pin_assets <- function(...,
                        ref = ref_get_or_fail("GITHUB_HEAD_REF"),
                        overwrite = TRUE) {
-  asset_dir <- get_asset_dir(ref, "pin")
+  asset_dir <- get_asset_dir(ref)
 
   local_git_checkout(ref)
   dirs <- rlang::list2(...)
@@ -261,19 +239,40 @@ pin_assets <- function(...,
     ))
   }
 
-  dirs[valid_dirs] %>% purrr::walk(
-    ~ purrr::when(
-      .x,
-      fs::is_dir(.)[[1]] ~ fs::dir_copy(.x,
-        fs::path_join(c(asset_dir, fs::path_file(.x))),
-        overwrite = overwrite
-      ),
-      fs::is_file(.)[[1]] ~ fs::file_copy(.x,
-        fs::path_join(c(asset_dir, fs::path_file(.x))),
+  create_and_copy <- function(asset) {
+    git_root <- fs::path_real(get_git_root())
+
+    asset <- fs::path_real(asset)
+    if (!fs::path_has_parent(asset, git_root)) {
+      cli::cli_abort(c(
+        "Can only pin assets within the git repository!",
+        "i" = "Current repo: {.path {git_root}}"
+      ))
+    }
+
+    rel_asset <- fs::path_rel(asset, git_root)
+    new_path <- fs::path_join(c(asset_dir, rel_asset))
+
+    if (fs::is_dir(asset)[[1]]) {
+      fs::dir_copy(
+        asset,
+        new_path,
         overwrite = overwrite
       )
-    )
-  )
+    } else if (fs::is_file(asset)[[1]]) {
+      fs::path_dir(rel_asset) %>%
+        fs::path(asset_dir, .) %>%
+        fs::dir_create()
+
+      fs::file_copy(
+        asset,
+        new_path,
+        overwrite = overwrite
+      )
+    }
+  }
+
+  dirs[valid_dirs] %>% purrr::walk(create_and_copy)
 
   if (any(valid_dirs)) {
     cli::cli_alert_success(
@@ -310,23 +309,25 @@ path_pinned_asset <- function(...,
   path
 }
 
-get_asset_dir <- function(ref, verb = "find") {
-  if (ref == ref_get_or_fail("GITHUB_HEAD_REF")) {
-    ref <- "head"
-  } else if (ref == ref_get_or_fail("GITHUB_BASE_REF")) {
-    ref <- "base"
-  } else {
-    cli::cli_abort("Can only {verb} assets for head or base refs!")
-  }
+local_asset_dir <- function(..., env = parent.frame()) {
+  refs <- rlang::list2(...)
+  opts <- purrr::map(refs, fs::path_temp)
+  names(opts) <- purrr::map_chr(refs, ~ paste0("touchstone.dir_assets_", .x))
+  withr::local_options(opts, .local_envir = env)
 
+  invisible(opts)
+}
+
+get_asset_dir <- function(ref) {
   asset_dir <- getOption(paste0("touchstone.dir_assets_", ref))
 
   if (is.null(asset_dir)) {
     cli::cli_abort(c(
-      "Temporary directory not found. ",
+      "Temporary directory for ref {.arg {ref}} not found. ",
       "i" = paste0(
         "This function is only for use within the {.code ?touchstone_script},",
-        " which must be called with {.fun run_script}"
+        " which must be called with {.fun run_script}",
+        "or after running {.fun touchstone::activate}"
       )
     ))
   }
@@ -341,4 +342,54 @@ get_asset_dir <- function(ref, verb = "find") {
 #' @seealso [pr_comment]
 path_pr_comment <- function() {
   fs::path(dir_touchstone(), "pr-comment/info.txt")
+}
+
+
+abort_string <- function() {
+  rlang::abort(paste0(
+    "Using a string as the named expression to benchmark or ",
+    "`expr_before_benchmark` is deprecated."
+  ))
+}
+
+append_rbuildignore <- function(dir) {
+  ignore <- ".Rbuildignore"
+  if (fs::file_exists(ignore)) {
+    cat(
+      glue::glue("^{dir}$"),
+      sep = "\n", file = ignore, append = TRUE
+    )
+    cli::cli_alert_success("Added {.path {dir}} to {.file {ignore}}.")
+  } else {
+    cli::cli_alert_warning(
+      "Could not find {.file {ignore}} to add {.path {dir}}."
+    )
+  }
+}
+
+find_git_root <- function(path = ".") {
+  tryCatch(
+    gert::git_find(path),
+    error = function(err) {
+      cli::cli_alert_danger(
+        "Could not find git repository from current working directory!"
+      )
+      cli::cli_alert_info(
+        "Please manually set the option {.val touchstone.git_root}."
+      )
+      NULL
+    }
+  )
+}
+
+get_git_root <- function() {
+  git_root <- getOption("touchstone.git_root")
+
+  if (is.null(git_root)) {
+    cli::cli_abort(c("Option {.val touchstone.git_root} not set!",
+      "i" = 'Set it with {.code options(touchstone.git_root = "path to repo")}'
+    ))
+  }
+
+  git_root
 }

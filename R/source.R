@@ -11,15 +11,14 @@
 #'   to the library path when the script at `path` is executed, see 'Why this
 #'   function?' below.
 #' @section How to run this interactively?:
+#' You can use [activate()] to setup the environment to interactively run your
+#'  script, as there are some adjustments needed to mirror the Github Action
+#'  environment.
 #' In a GitHub Action workflow, the environment variables `GITHUB_BASE_REF` and
 #' `GITHUB_HEAD_REF` denote the target and source branch of the pull request -
 #' and these are default arguments in [benchmark_run_ref()] (and other functions
 #' you probably want to call in your benchmarking script) to determinate the
-#' branches to use. Hence, you must set these with [base::Sys.setenv()], e.g. if
-#' you want to benchmark the local branch `devel` against `main`
-#' ```
-#' Sys.setenv(GITHUB_BASE_REF = "main", GITHUB_HEAD_REF = "devel")
-#' ```
+#' branches to use.
 #' @section Why this function?:
 #' For isolation, \{touchstone\} does not allow the benchmarked package to be
 #' installed in the global package library, but only in touchstone libraries, as
@@ -47,19 +46,8 @@
 #' }
 run_script <- function(path = "touchstone/script.R",
                        ref = ref_get_or_fail("GITHUB_HEAD_REF")) {
-  lib <- libpath_touchstone(ref)
-  fs::dir_create(lib)
-  withr::local_libpaths(
-    list(lib),
-    action = "prefix"
-  )
+  activate(ref, ref_get_or_fail("GITHUB_BASE_REF"))
 
-  head_asset_dir <- fs::path_temp("head")
-  base_asset_dir <- fs::path_temp("base")
-  options(
-    touchstone.dir_assets_head = head_asset_dir,
-    touchstone.dir_assets_base = base_asset_dir
-  )
   temp_file <- fs::file_temp()
   fs::file_copy(path, temp_file)
 
@@ -67,7 +55,88 @@ run_script <- function(path = "touchstone/script.R",
     "Copied touchstone script to tempdir to prevent branch checkouts to effect",
     " the script."
   ))
-  source(temp_file, max.deparse.length = Inf)
+
+  source(temp_file, max.deparse.length = Inf, local = TRUE)
+}
+
+#' Activate touchstone environment
+#'
+#' This sets environment variables, R options and library paths to work
+#' interactively on the [touchstone_script].
+#' @param head_ref Git ref to be used as the `GITHUB_HEAD_REF` ref (i.e. the
+#'   branch with new changes) when running benchmarks. Defaults to the current
+#'   branch.
+#' @param base_ref Git ref for the `GITHUB_BASE_REF` (i.e. the branch you want
+#'   to merge your changes into) when running benchmarks.
+#'   Defaults to 'main' if the option `touchstone.default_base_ref`is not set.
+#' @param env In which environment the temporary changes should be made.
+#'   For use within functions.
+#' @examples
+#' \dontrun{
+#' activate()
+#' # You can now test parts of your touchstone script, e.g. touchstone/script.R
+#' deactivate()
+#' }
+#' @export
+activate <- function(head_ref = gert::git_branch(),
+                     base_ref = getOption(
+                       "touchstone.default_base_ref",
+                       "main"
+                     ),
+                     env = parent.frame()) {
+  suppressMessages({
+    withr::local_envvar(
+      GITHUB_BASE_REF = base_ref,
+      GITHUB_HEAD_REF = head_ref,
+      .local_envir = env
+    )
+
+    local_touchstone_libpath(head_ref, env = env)
+    local_asset_dir(base_ref, head_ref, env = env)
+  })
+
+  if (identical(env, .GlobalEnv)) {
+    cli::cli_alert_success(
+      "Environment ready to interactivley execute your touchstone script."
+    )
+    cli::cli_alert_info(
+      "Use {.fun touchstone::deactivate} to restore original environment."
+    )
+  }
+}
+
+#' Set Library Path
+#'
+#' Temporarily add a touchstone library to the path, so it can be found by
+#' [.libPaths()] and friends. Can be used in [touchstone_script]
+#'  to prepare benchmarks etc. If there are touchstone libraries on the path
+#'  when this function is called, they will be removed.
+#' @param ref Git ref to use, e.g. HEAD or BASE ref.
+#' @param env Environment in which the change should be applied.
+#' @seealso [run_script()]
+#' @keywords internal
+local_touchstone_libpath <- function(ref, env = parent.frame()) {
+  lib <- libpath_touchstone(ref)
+  fs::dir_create(lib)
+  current <- fs::path_real(.libPaths())
+
+  current_is_touchstone <- purrr::map_lgl(current,
+    fs::path_has_parent,
+    parent = fs::path_real(dir_touchstone())
+  )
+  current <- current[!current_is_touchstone]
+  withr::local_libpaths(
+    c(lib, current),
+    action = "replace",
+    .local_envir = env
+  )
+}
+
+#' @describeIn activate Restore the original environment state.
+#' @export
+deactivate <- function(env = parent.frame()) {
+  withr::deferred_clear(envir = env)
+  cli::cli_alert_success("Original environment restored!")
 }
 
 

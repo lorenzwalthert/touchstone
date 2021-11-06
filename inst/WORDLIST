@@ -15,8 +15,10 @@ cr
 cran
 cre
 createComment
+datastore
 de
 deps
+desc
 dev
 devtools
 dir
@@ -64,6 +66,7 @@ matchArtifact
 md
 MERCHANTABILITY
 mkdir
+navbar
 netlify
 NONINFRINGEMENT
 openssl
@@ -76,12 +79,14 @@ pkgdown
 prepending
 PRs
 purrr
+quasiquotation
 rc
 Rds
 readFileSync
 README
 repo
 RHUB
+rightarrow
 rlang
 rmarkdown
 roclet
@@ -104,6 +109,7 @@ sprintf
 styfle
 styler
 sublicense
+subprocess
 sudo
 Sys
 sysreq
@@ -115,6 +121,7 @@ th
 tibble
 tidyselect
 toString
+touchstone<U+0092>
 ubuntu
 usethis
 va

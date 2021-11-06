@@ -2,7 +2,7 @@
 # R specific hooks: https://github.com/lorenzwalthert/precommit
 repos:
 -   repo: https://github.com/lorenzwalthert/precommit
-    rev: v0.1.3.9131
+    rev: v0.1.3.9133
     hooks:
     -   id: style-files
         args: [--style_pkg=styler, --style_fun=tidyverse_style]
@@ -29,6 +29,7 @@ repos:
         -    usethis@2.0.1
         -    vctrs@0.3.8
         -    withr@2.4.2
+        require_serial: True # https://github.com/pre-commit-ci/runner-image/issues/93#issuecomment-927257158
     # codemeta must be above use-tidy-description when both are used
     # -   id: codemeta-description-updated
     -   id: use-tidy-description
@@ -71,6 +72,8 @@ repos:
           inst/script\.R|
           README\.Rmd|
           tests/testthat/test-prepare\.R|
+          inst/script\.R|
+          vignettes/touchstone\.Rmd
           )$
 -   repo: https://github.com/pre-commit/pre-commit-hooks
     rev: v4.0.1

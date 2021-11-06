@@ -2,5 +2,52 @@ authors:
   Lorenz Walthert:
     href: https://lorenzwalthert.netlify.com
 
+articles:
+- title: Get started
+  navbar: ~
+  contents:
+  - touchstone
+  - inference
+
+
 development:
   mode: auto
+
+reference:
+- title: "Getting started"
+  desc: >
+    Setup, interactive workflow and touchstone script execution.
+- contents:
+  - use_touchstone
+  - activate
+  - deactivate
+  - run_script
+- title: "Scripting functionality"
+  desc: >
+    Functions you usually want to call in your touchstone script.
+- contents:
+  - refs_install
+  - benchmark_run_ref
+  - benchmarks_analyze
+- title: "Pinning"
+  desc: >
+    Working with assets across branches.
+- contents:
+  - pin_assets
+  - path_pinned_asset
+- title: "Non-function documentation"
+  desc: >
+    Not functions, but worth documenting anyways.
+- contents:
+  - touchstone_script
+  - pr_comment
+- title: "Touchstone i/o"
+  desc: >
+    Low-level tools for accessing the touchstone datastore.
+- contents:
+  - benchmark_ls
+  - benchmark_read
+  - benchmark_write
+  - dir_touchstone
+  - touchstone_clear
+  - path_pr_comment

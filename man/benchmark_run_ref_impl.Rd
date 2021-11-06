@@ -12,8 +12,9 @@ commit, tag, branch etc) of the benchmarking.}
 
 \item{block}{All refs appear once in a block.}
 
-\item{expr_before_benchmark}{Character vector with code to run before
-the benchmark is ran, will be evaluated with \code{\link[=exprs_eval]{exprs_eval()}}.}
+\item{expr_before_benchmark}{Expression to run before
+the benchmark is ran, will be captured with \code{\link[rlang:nse-defuse]{rlang::enexpr()}}.
+So you can use quasiquotation.}
 
 \item{dots}{list of quoted expressions (length 1).}
 

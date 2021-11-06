@@ -1,6 +1,6 @@
 # ref can be sampled
 
-    WAoAAAACAAQABQACAwAAAAMTAAAAAgAAAA0AAAAoAAAAAQAAAAEAAAACAAAAAgAAAAMAAAAD
+    WAoAAAACAAQBAQACAwAAAAMTAAAAAgAAAA0AAAAoAAAAAQAAAAEAAAACAAAAAgAAAAMAAAAD
     AAAABAAAAAQAAAAFAAAABQAAAAYAAAAGAAAABwAAAAcAAAAIAAAACAAAAAkAAAAJAAAACgAA
     AAoAAAALAAAACwAAAAwAAAAMAAAADQAAAA0AAAAOAAAADgAAAA8AAAAPAAAAEAAAABAAAAAR
     AAAAEQAAABIAAAASAAAAEwAAABMAAAAUAAAAFAAAABAAAAAoAAQACQAAAARtYWluAAQACQAA
@@ -20,7 +20,7 @@
 
 ---
 
-    WAoAAAACAAQABQACAwAAAAMTAAAAAgAAAA0AAAA0AAAAAQAAAAEAAAABAAAAAQAAAAEAAAAB
+    WAoAAAACAAQBAQACAwAAAAMTAAAAAgAAAA0AAAA0AAAAAQAAAAEAAAABAAAAAQAAAAEAAAAB
     AAAAAQAAAAEAAAABAAAAAQAAAAEAAAABAAAAAQAAAAEAAAABAAAAAQAAAAEAAAABAAAAAQAA
     AAEAAAABAAAAAQAAAAEAAAABAAAAAQAAAAEAAAACAAAAAgAAAAIAAAACAAAAAgAAAAIAAAAC
     AAAAAgAAAAIAAAACAAAAAgAAAAIAAAACAAAAAgAAAAIAAAACAAAAAgAAAAIAAAACAAAAAgAA
@@ -37,4 +37,44 @@
     AAQACQAAAANyZWYAAAQCAAAAAQAEAAkAAAAJcm93Lm5hbWVzAAAADQAAAAKAAAAA////zAAA
     BAIAAAABAAQACQAAAAVjbGFzcwAAABAAAAADAAQACQAAAAZ0YmxfZGYABAAJAAAAA3RibAAE
     AAkAAAAKZGF0YS5mcmFtZQAAAP4=
+
+# git root is found correctly [plain]
+
+    Code
+      find_git_root(no_git)
+    Message <cliMessage>
+      x Could not find git repository from current working directory!
+      i Please manually set the option "touchstone.git_root".
+    Output
+      NULL
+
+# git root is found correctly [ansi]
+
+    Code
+      find_git_root(no_git)
+    Message <cliMessage>
+      [31mx[39m Could not find git repository from current working directory!
+      [36mi[39m Please manually set the option [34m[34m"touchstone.git_root"[34m[39m.
+    Output
+      NULL
+
+# git root is found correctly [unicode]
+
+    Code
+      find_git_root(no_git)
+    Message <cliMessage>
+      ✖ Could not find git repository from current working directory!
+      ℹ Please manually set the option "touchstone.git_root".
+    Output
+      NULL
+
+# git root is found correctly [fancy]
+
+    Code
+      find_git_root(no_git)
+    Message <cliMessage>
+      [31m✖[39m Could not find git repository from current working directory!
+      [36mℹ[39m Please manually set the option [34m[34m"touchstone.git_root"[34m[39m.
+    Output
+      NULL
 
