@@ -139,8 +139,8 @@
     <tbody>
       <tr>
         <th colspan="2">
-          <h2 id="section-all-functions" class="hasAnchor"><a href="#section-all-functions" class="anchor"></a>All functions</h2>
-          <p class="section-desc"></p>
+          <h2 id="section-getting-started" class="hasAnchor"><a href="#section-getting-started" class="anchor"></a>Getting started</h2>
+          <p class="section-desc"><p>Setup, interactive workflow and touchstone script execution.</p></p>
         </th>
       </tr>
       
@@ -151,10 +151,116 @@
       <tr>
         
         <td>
+          <p><code><a href="use_touchstone.html">use_touchstone()</a></code> </p>
+        </td>
+        <td><p>Initiate touchstone</p></td>
+      </tr><tr>
+        
+        <td>
           <p><code><a href="activate.html">activate()</a></code> <code><a href="activate.html">deactivate()</a></code> </p>
         </td>
         <td><p>Activate touchstone environment</p></td>
       </tr><tr>
+        
+        <td>
+          <p><code><a href="run_script.html">run_script()</a></code> </p>
+        </td>
+        <td><p>Sources a script</p></td>
+      </tr>
+    </tbody><tbody>
+      <tr>
+        <th colspan="2">
+          <h2 id="section-scripting-functionality" class="hasAnchor"><a href="#section-scripting-functionality" class="anchor"></a>Scripting functionality</h2>
+          <p class="section-desc"><p>Functions you usually want to call in your touchstone script.</p></p>
+        </th>
+      </tr>
+      
+      
+    </tbody><tbody>
+      
+      
+      <tr>
+        
+        <td>
+          <p><code><a href="refs_install.html">refs_install()</a></code> </p>
+        </td>
+        <td><p>Install branches</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="benchmark_run_ref.html">benchmark_run_ref()</a></code> </p>
+        </td>
+        <td><p>Run a benchmark for git refs</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="benchmarks_analyze.html">benchmarks_analyze()</a></code> </p>
+        </td>
+        <td><p>Turn raw benchmark results into text and figures</p></td>
+      </tr>
+    </tbody><tbody>
+      <tr>
+        <th colspan="2">
+          <h2 id="section-pinning" class="hasAnchor"><a href="#section-pinning" class="anchor"></a>Pinning</h2>
+          <p class="section-desc"><p>Working with assets accross branches.</p></p>
+        </th>
+      </tr>
+      
+      
+    </tbody><tbody>
+      
+      
+      <tr>
+        
+        <td>
+          <p><code><a href="pin_assets.html">pin_assets()</a></code> </p>
+        </td>
+        <td><p>Pin asset directory</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="path_pinned_asset.html">path_pinned_asset()</a></code> </p>
+        </td>
+        <td><p>Get path to asset</p></td>
+      </tr>
+    </tbody><tbody>
+      <tr>
+        <th colspan="2">
+          <h2 id="section-non-function-documentation" class="hasAnchor"><a href="#section-non-function-documentation" class="anchor"></a>Non-function documentation</h2>
+          <p class="section-desc"><p>Not functions, but worth documenting anyways.</p></p>
+        </th>
+      </tr>
+      
+      
+    </tbody><tbody>
+      
+      
+      <tr>
+        
+        <td>
+          <p><code><a href="touchstone_script.html">touchstone_script</a></code> </p>
+        </td>
+        <td><p>The script for benchmarking</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="pr_comment.html">pr_comment</a></code> </p>
+        </td>
+        <td><p>Modifying the PR Comment</p></td>
+      </tr>
+    </tbody><tbody>
+      <tr>
+        <th colspan="2">
+          <h2 id="section-touchstone-i-o" class="hasAnchor"><a href="#section-touchstone-i-o" class="anchor"></a>Touchstone i/o</h2>
+          <p class="section-desc"><p>Low-level tools for accessing the touchstone datastore.</p></p>
+        </th>
+      </tr>
+      
+      
+    </tbody><tbody>
+      
+      
+      <tr>
         
         <td>
           <p><code><a href="benchmark_ls.html">benchmark_ls()</a></code> </p>
@@ -169,81 +275,15 @@
       </tr><tr>
         
         <td>
-          <p><code><a href="benchmark_run_ref.html">benchmark_run_ref()</a></code> </p>
-        </td>
-        <td><p>Run a benchmark for git refs</p></td>
-      </tr><tr>
-        
-        <td>
           <p><code><a href="benchmark_write.html">benchmark_write()</a></code> </p>
         </td>
         <td><p>Write a benchmark</p></td>
       </tr><tr>
         
         <td>
-          <p><code><a href="benchmarks_analyze.html">benchmarks_analyze()</a></code> </p>
-        </td>
-        <td><p>Turn raw benchmark results into text and figures</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="local_touchstone_libpath.html">local_touchstone_libpath()</a></code> </p>
-        </td>
-        <td><p>Set Library Path</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="path_pinned_asset.html">path_pinned_asset()</a></code> </p>
-        </td>
-        <td><p>Get path to asset</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="pin_assets.html">pin_assets()</a></code> </p>
-        </td>
-        <td><p>Pin asset directory</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="pr_comment.html">pr_comment</a></code> </p>
-        </td>
-        <td><p>Modifying the PR Comment</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="ref_get_or_fail.html">ref_get_or_fail()</a></code> </p>
-        </td>
-        <td><p>Get the ref from the environment variable or fail if not set</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="refs_install.html">refs_install()</a></code> </p>
-        </td>
-        <td><p>Install branches</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="run_script.html">run_script()</a></code> </p>
-        </td>
-        <td><p>Sources a script</p></td>
-      </tr><tr>
-        
-        <td>
           <p><code><a href="touchstone_managers.html">dir_touchstone()</a></code> <code><a href="touchstone_managers.html">touchstone_clear()</a></code> <code><a href="touchstone_managers.html">path_pr_comment()</a></code> </p>
         </td>
         <td><p>Touchstone managers</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="touchstone_script.html">touchstone_script</a></code> </p>
-        </td>
-        <td><p>The script for benchmarking</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="use_touchstone.html">use_touchstone()</a></code> </p>
-        </td>
-        <td><p>Initiate touchstone</p></td>
       </tr>
     </tbody>
     </table>
