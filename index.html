@@ -5,13 +5,13 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Benchmark Different Git Refs in One Run • touchstone</title>
+<title>Continuous Benchmarking with statistical confidence based on Git branches • touchstone</title>
 <!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script><!-- Bootstrap --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha256-bZLfwXAP04zRMK2BjiO8iu9pf4FbLqX6zitd+tIvLhE=" crossorigin="anonymous">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script><!-- bootstrap-toc --><link rel="stylesheet" href="bootstrap-toc.css">
 <script src="bootstrap-toc.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
 <!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- pkgdown --><link href="pkgdown.css" rel="stylesheet">
-<script src="pkgdown.js"></script><meta property="og:title" content="Benchmark Different Git Refs in One Run">
+<script src="pkgdown.js"></script><meta property="og:title" content="Continuous Benchmarking with statistical confidence based on Git branches">
 <meta property="og:description" content="A common problem of benchmarking in continuous integration is
     that the computational power of the virtual machines that run the job
     varies over time.  This package allows users to benchmark two git refs
@@ -92,7 +92,7 @@
 <div id="touchstone" class="section level1">
 <div class="page-header"><h1 class="hasAnchor">
 <a href="#touchstone" class="anchor"></a>touchstone</h1></div>
-<p>{touchstone} is a developer tool for benchmarking R pull requests with a focus on reliable relative measurement, uncertainty reporting and user convenience. The results are directly reported as a comment in the pull request.</p>
+<p>{touchstone} is a developer tool for continuous benchmarking with a focus on reliable relative measurement, uncertainty reporting and user convenience. The results are directly reported as a comment in GitHub Pull Requests.</p>
 <p><img src="reference/figures/screenshot-pr-comment.png"></p>
 <div id="installation" class="section level2">
 <h2 class="hasAnchor">
@@ -100,7 +100,7 @@
 <p>You can install the package from CRAN:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op">(</span><span class="st">"touchstone"</span><span class="op">)</span></code></pre></div>
-<p>And the development version from <a href="https://github.com/lorenzwalthert/touchstone">GitHub</a> with:</p>
+<p>And the development version from <a href="https://github.com/lorenzwalthert/touchstone" target="_blank">GitHub</a> with:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># install.packages("devtools")</span>
 <span class="fu">devtools</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"lorenzwalthert/touchstone"</span><span class="op">)</span></code></pre></div>
