@@ -20,9 +20,9 @@ knitr::opts_chunk$set(
 
 # touchstone
 
-{touchstone} is a developer tool for benchmarking R pull requests with a focus
+{touchstone} is a developer tool for continuous benchmarking with a focus
 on reliable relative measurement, uncertainty reporting and user convenience.
-The results are directly reported as a comment in the pull request.
+The results are directly reported as a comment in GitHub Pull Requests.
 
 ![](man/figures/screenshot-pr-comment.png)
 

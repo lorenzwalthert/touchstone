@@ -1,6 +1,6 @@
 Type: Package
 Package: touchstone
-Title: Benchmarking Different 'Git' Refs with Confidence in One Go
+Title: Continuous Benchmarking with statistical confidence based on 'Git' branches
 Version: 0.1.3
 Authors@R: 
     c(person(given = "Lorenz",

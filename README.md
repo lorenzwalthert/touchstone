@@ -9,10 +9,10 @@ status](https://github.com/lorenzwalthert/touchstone/workflows/R-CMD-check/badge
 
 # touchstone
 
-{touchstone} is a developer tool for benchmarking R pull requests with a
+{touchstone} is a developer tool for continuous benchmarking with a
 focus on reliable relative measurement, uncertainty reporting and user
-convenience. The results are directly reported as a comment in the pull
-request.
+convenience. The results are directly reported as a comment in GitHub
+Pull Requests.
 
 ![](man/figures/screenshot-pr-comment.png)
 
