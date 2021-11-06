@@ -114,6 +114,7 @@ activate <- function(head_ref = gert::git_branch(),
 #' @param ref Git ref to use, e.g. HEAD or BASE ref.
 #' @param env Environment in which the change should be applied.
 #' @seealso [run_script()]
+#' @keywords internal
 local_touchstone_libpath <- function(ref, env = parent.frame()) {
   lib <- libpath_touchstone(ref)
   fs::dir_create(lib)

@@ -20,3 +20,4 @@ when this function is called, they will be removed.
 \seealso{
 \code{\link[=run_script]{run_script()}}
 }
+\keyword{internal}
