@@ -31,7 +31,7 @@ reference:
   - benchmarks_analyze
 - title: "Pinning"
   desc: >
-    Working with assets accross branches.
+    Working with assets across branches.
 - contents:
   - pin_assets
   - path_pinned_asset
