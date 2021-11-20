@@ -20,11 +20,18 @@ ref_install <- function(ref = "main",
   } else {
     local_touchstone_libpath(ref)
     libpath <- .libPaths()
-    withr::local_options(warn = 2)
-    remotes::install_local(path_pkg,
-      upgrade = "never", quiet = TRUE,
+    install_local <- purrr::partial(remotes::install_local, path_pkg,
+      upgrade = "never",
       dependencies = install_dependencies,
       force = !cache_up_to_date(ref, path_pkg)
+    )
+
+    withr::local_options(warn = 2)
+    rlang::with_handlers(
+      install_local(quiet = TRUE),
+      error = function(e) {
+        install_local(quiet = FALSE)
+      }
     )
     cache_update(ref, path_pkg)
     cli::cli_alert_success("Installed branch {.val {ref}} into {.path {libpath[1]}}.")
