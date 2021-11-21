@@ -63,12 +63,12 @@ run_script <- function(path = "touchstone/script.R",
 #'
 #' This sets environment variables, R options and library paths to work
 #' interactively on the [touchstone_script].
-#' @param head_ref Git ref to be used as the `GITHUB_HEAD_REF` ref (i.e. the
+#' @param head_branch Git ref to be used as the `GITHUB_HEAD_REF` ref (i.e. the
 #'   branch with new changes) when running benchmarks. Defaults to the current
 #'   branch.
-#' @param base_ref Git ref for the `GITHUB_BASE_REF` (i.e. the branch you want
+#' @param base_branch Git ref for the `GITHUB_BASE_REF` (i.e. the branch you want
 #'   to merge your changes into) when running benchmarks.
-#'   Defaults to 'main' if the option `touchstone.default_base_ref`is not set.
+#'   Defaults to 'main' if the option `touchstone.default_base_branch`is not set.
 #' @param env In which environment the temporary changes should be made.
 #'   For use within functions.
 #' @examples
@@ -78,21 +78,21 @@ run_script <- function(path = "touchstone/script.R",
 #' deactivate()
 #' }
 #' @export
-activate <- function(head_ref = gert::git_branch(),
-                     base_ref = getOption(
-                       "touchstone.default_base_ref",
+activate <- function(head_branch = gert::git_branch(),
+                     base_branch = getOption(
+                       "touchstone.default_base_branch",
                        "main"
                      ),
                      env = parent.frame()) {
   suppressMessages({
     withr::local_envvar(
-      GITHUB_BASE_REF = base_ref,
-      GITHUB_HEAD_REF = head_ref,
+      GITHUB_BASE_REF = base_branch,
+      GITHUB_HEAD_REF = head_branch,
       .local_envir = env
     )
 
-    local_touchstone_libpath(head_ref, env = env)
-    local_asset_dir(base_ref, head_ref, env = env)
+    local_touchstone_libpath(head_branch, env = env)
+    local_asset_dir(base_branch, head_branch, env = env)
   })
 
   if (identical(env, .GlobalEnv)) {
