@@ -13,7 +13,7 @@ test_that("can call package in script", {
   writeLines("a\n\nc", path_wordlist)
 
   no_assets <- glue::glue(
-    "refs_install({refs_dput}, '{path_test_pkg}', install_dependencies = FALSE)",
+    "branches_install({refs_dput}, '{path_test_pkg}', install_dependencies = FALSE)",
     "library({pkg_name})", # can call package
     "touchstone::benchmark_run(",
     "  refs = {refs_dput}, x = 2, path_pkg = '{path_test_pkg}',",
@@ -23,7 +23,7 @@ test_that("can call package in script", {
   )
 
   with_assets <- glue::glue(
-    "refs_install({refs_dput}, '{path_test_pkg}', install_dependencies = FALSE)",
+    "branches_install({refs_dput}, '{path_test_pkg}', install_dependencies = FALSE)",
     "library({pkg_name})", # can call package
     "path <- 'inst/WORDLIST'",
     "touchstone::pin_assets(path, ref = 'main')",

@@ -51,12 +51,12 @@ ref_install <- function(ref = "main",
 #' @return
 #' The global and touchstone library paths in a character vector (invisibly).
 #' @export
-refs_install <- function(refs = c(
-                           ref_get_or_fail("GITHUB_BASE_REF"),
-                           ref_get_or_fail("GITHUB_HEAD_REF")
-                         ),
-                         path_pkg = ".",
-                         install_dependencies = FALSE) {
+branches_install <- function(refs = c(
+                               ref_get_or_fail("GITHUB_BASE_REF"),
+                               ref_get_or_fail("GITHUB_HEAD_REF")
+                             ),
+                             path_pkg = ".",
+                             install_dependencies = FALSE) {
   force(refs)
   assert_no_global_installation(path_pkg)
   cli::cli_alert_info("Start installing branches into separate libraries.")

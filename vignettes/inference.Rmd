@@ -27,7 +27,7 @@ contents of the former are in this (simplified) example:
 
 ```{r}
 library(touchstone)
-refs_install()
+branches_install()
 benchmark_run(
   expr_before_benchmark = c("library(styler)", "cache_deactivate()"),
   without_cache = 'styler::style_pkg("touchstone/sources/here")',

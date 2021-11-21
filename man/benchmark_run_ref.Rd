@@ -21,7 +21,7 @@ So you can use quasiquotation.}
 will be captured with \code{\link[rlang:nse-defuse]{rlang::enexprs()}}. So you can use quasiquotation.}
 
 \item{refs}{Character vector with branch names to benchmark. The package
-must be built for each benchmarked branch beforehand with \code{\link[=refs_install]{refs_install()}}.
+must be built for each benchmarked branch beforehand with \code{\link[=branches_install]{branches_install()}}.
 The base ref is the target branch of the pull request in a workflow run,
 the head ref is the source branch of the pull request in a workflow run.}
 

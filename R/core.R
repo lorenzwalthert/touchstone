@@ -49,13 +49,13 @@ benchmark_run_iteration <- function(expr_before_benchmark,
 #' @param ... Named expression of length one with code to benchmark,
 #'   will be captured with [rlang::enexprs()]. So you can use quasiquotation.
 #' @param refs Character vector with branch names to benchmark. The package
-#'   must be built for each benchmarked branch beforehand with [refs_install()].
+#'   must be built for each benchmarked branch beforehand with [branches_install()].
 #'   The base ref is the target branch of the pull request in a workflow run,
 #'   the head ref is the source branch of the pull request in a workflow run.
 #' @param n Number of times benchmarks should be run for each `ref`.
 #' @param path_pkg The path to the package to benchmark. Will be used to
 #'   temporarily checkout the branch during benchmarking.
-#' @inheritParams refs_install
+#' @inheritParams branches_install
 #' @inheritParams benchmark_run_impl
 #' @details
 #' Runs the following loop `n` times:
