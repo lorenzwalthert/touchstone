@@ -15,7 +15,7 @@ test_that("end to end run - code", {
       glue::glue("setup branch {branch}.")
     )
   }
-  bm <- benchmark_run_ref(
+  bm <- benchmark_run(
     expr_before_benchmark = source("R/core.R"),
     bliblablup = f(),
     refs = branches,

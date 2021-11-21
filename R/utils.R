@@ -116,7 +116,7 @@ local_git_checkout <- function(branch,
 #' * Add a touchstone library to the path with [run_script()] and
 #'   run a script. The script hence may contain calls to libraries only installed
 #'   in touchstone libraries.
-#' * benchmark code with [benchmark_run_ref()]. At the start, remove all
+#' * benchmark code with [benchmark_run()]. At the start, remove all
 #'   all touchstone libraries from path and add the touchstone library we need.
 #'
 #' Advantages: Keep benchmarked repo in touchstone library only.
@@ -168,7 +168,7 @@ is_windows <- function() {
 #' Pin asset directory
 #'
 #' Pin files or directories that need to be available on both branches when
-#' running the [touchstone_script]. During [benchmark_run_ref()] they will
+#' running the [touchstone_script]. During [benchmark_run()] they will
 #' available via [path_pinned_asset()]. This is only possible for assets
 #'  *within* the git repository.
 #' @param ... Any number of directories or files, as strings, that you want to
@@ -188,7 +188,7 @@ is_windows <- function() {
 #' source(path_pinned_asset("inst/setup.R"))
 #' load(path_pinned_asset("some/nested/dir/data.RData"))
 #'
-#' touchstone::benchmark_run_ref(
+#' touchstone::benchmark_run(
 #'   expr_before_benchmark = {
 #'     !!setup
 #'     source(path_pinned_asset("bench/exprs.R"))

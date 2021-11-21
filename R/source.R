@@ -16,7 +16,7 @@
 #'  environment.
 #' In a GitHub Action workflow, the environment variables `GITHUB_BASE_REF` and
 #' `GITHUB_HEAD_REF` denote the target and source branch of the pull request -
-#' and these are default arguments in [benchmark_run_ref()] (and other functions
+#' and these are default arguments in [benchmark_run()] (and other functions
 #' you probably want to call in your benchmarking script) to determinate the
 #' branches to use.
 #' @section Why this function?:
@@ -24,11 +24,11 @@
 #' installed in the global package library, but only in touchstone libraries, as
 #' asserted with [assert_no_global_installation()]. However, this also implies
 #' that the package is not available in the touchstone script outside of
-#' benchmark runs (i.e. outside of [benchmark_run_ref()]. We sometimes still
+#' benchmark runs (i.e. outside of [benchmark_run()]. We sometimes still
 #' want to call that package to prepare a benchmarking run though. To
 #' allow this, we prepend a touchstone library location that
 #' contains the installed benchmarked package for set-up tasks, and temporarily
-#' remove it during benchmarking with [benchmark_run_ref()] so only one
+#' remove it during benchmarking with [benchmark_run()] so only one
 #' touchstone library is on the library path at any time.
 #' @return
 #' The same as [base::source()], which inherits from [base::withVisible()], i.e.
@@ -151,7 +151,7 @@ deactivate <- function(env = parent.frame()) {
 #' A touchstone script must:
 #'
 #' * install all versions of the benchmarked repository with [refs_install()].
-#' * create benchmarks with one or more calls to [benchmark_run_ref()].
+#' * create benchmarks with one or more calls to [benchmark_run()].
 #' * produce the artifacts required in the GitHub workflow with
 #'   [benchmarks_analyze()].
 NULL

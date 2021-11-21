@@ -3,7 +3,7 @@
 export(activate)
 export(benchmark_ls)
 export(benchmark_read)
-export(benchmark_run_ref)
+export(benchmark_run)
 export(benchmark_write)
 export(benchmarks_analyze)
 export(deactivate)

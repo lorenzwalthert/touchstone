@@ -56,7 +56,7 @@ benchmark_run_iteration <- function(expr_before_benchmark,
 #' @param path_pkg The path to the package to benchmark. Will be used to
 #'   temporarily checkout the branch during benchmarking.
 #' @inheritParams refs_install
-#' @inheritParams benchmark_run_ref_impl
+#' @inheritParams benchmark_run_impl
 #' @details
 #' Runs the following loop `n` times:
 #'  * removes all touchstone libraries from the library path, adding the one
@@ -71,15 +71,15 @@ benchmark_run_iteration <- function(expr_before_benchmark,
 #' the directory it is ran in, in particular different branches will be checked
 #' out. Ensure a clean git working directory before invocation.
 #' @export
-benchmark_run_ref <- function(expr_before_benchmark =
-                                {},
-                              ...,
-                              refs = c(
-                                ref_get_or_fail("GITHUB_BASE_REF"),
-                                ref_get_or_fail("GITHUB_HEAD_REF")
-                              ),
-                              n = 100,
-                              path_pkg = ".")
+benchmark_run <- function(expr_before_benchmark =
+                            {},
+                          ...,
+                          refs = c(
+                            ref_get_or_fail("GITHUB_BASE_REF"),
+                            ref_get_or_fail("GITHUB_HEAD_REF")
+                          ),
+                          n = 100,
+                          path_pkg = ".")
 {
   force(refs)
   expr_before_benchmark <- rlang::enexpr(expr_before_benchmark)
@@ -94,10 +94,10 @@ benchmark_run_ref <- function(expr_before_benchmark =
   }
 
   # touchstone libraries must be removed from the path temporarily
-  # and the one to benchmark will be added in benchmark_run_ref_impl()
+  # and the one to benchmark will be added in benchmark_run_impl()
   local_without_touchstone_lib()
   refs <- ref_upsample(refs, n = n)
-  out_list <- purrr::pmap(refs, benchmark_run_ref_impl,
+  out_list <- purrr::pmap(refs, benchmark_run_impl,
     expr_before_benchmark = expr_before_benchmark,
     dots = dots,
     path_pkg = path_pkg
@@ -110,11 +110,11 @@ benchmark_run_ref <- function(expr_before_benchmark =
 #' @param path_pkg The path to the root of the package you want to benchmark.
 #' @inheritParams benchmark_run_iteration
 #' @keywords internal
-benchmark_run_ref_impl <- function(ref,
-                                   block,
-                                   expr_before_benchmark,
-                                   dots,
-                                   path_pkg) {
+benchmark_run_impl <- function(ref,
+                               block,
+                               expr_before_benchmark,
+                               dots,
+                               path_pkg) {
   local_git_checkout(ref, path_pkg)
   benchmark_run_iteration(
     expr_before_benchmark = expr_before_benchmark,

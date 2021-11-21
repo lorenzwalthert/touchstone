@@ -20,7 +20,7 @@ The asset directory invisibly.
 }
 \description{
 Pin files or directories that need to be available on both branches when
-running the \link{touchstone_script}. During \code{\link[=benchmark_run_ref]{benchmark_run_ref()}} they will
+running the \link{touchstone_script}. During \code{\link[=benchmark_run]{benchmark_run()}} they will
 available via \code{\link[=path_pinned_asset]{path_pinned_asset()}}. This is only possible for assets
 \emph{within} the git repository.
 }
@@ -37,7 +37,7 @@ pin_assets(c("/home/user/pkg/bench", "inst/setup.R", "some/nested/dir"))
 source(path_pinned_asset("inst/setup.R"))
 load(path_pinned_asset("some/nested/dir/data.RData"))
 
-touchstone::benchmark_run_ref(
+touchstone::benchmark_run(
   expr_before_benchmark = {
     !!setup
     source(path_pinned_asset("bench/exprs.R"))

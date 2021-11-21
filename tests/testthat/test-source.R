@@ -2,7 +2,7 @@ test_that("can call package in script", {
   refs <- c("main", "devel")
   pkg_name <- "b32jk"
   path_test_pkg <- local_package(pkg_name, branches = refs)
-  # install refs, so ref[1] will be available outside benchmark_run_ref,
+  # install refs, so ref[1] will be available outside benchmark_run,
   # not modifying libpath permanently
   path_touchstone <- path_touchstone_script()
   withr::local_options(touchstone.git_root = path_test_pkg)
@@ -15,7 +15,7 @@ test_that("can call package in script", {
   no_assets <- glue::glue(
     "refs_install({refs_dput}, '{path_test_pkg}', install_dependencies = FALSE)",
     "library({pkg_name})", # can call package
-    "touchstone::benchmark_run_ref(",
+    "touchstone::benchmark_run(",
     "  refs = {refs_dput}, x = 2, path_pkg = '{path_test_pkg}',",
     "  n = 1",
     ")",
@@ -27,7 +27,7 @@ test_that("can call package in script", {
     "library({pkg_name})", # can call package
     "path <- 'inst/WORDLIST'",
     "touchstone::pin_assets(path, ref = 'main')",
-    "touchstone::benchmark_run_ref(",
+    "touchstone::benchmark_run(",
     "  expr_before_benchmark = readLines(touchstone::path_pinned_asset(!! path, ref = 'main')),",
     "  refs = {refs_dput}, x = 2, path_pkg = '{path_test_pkg}',",
     "  n = 1",

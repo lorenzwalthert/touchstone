@@ -22,25 +22,25 @@ We first explain the output of the comment in the PR:
 ![](../man/figures/screenshot-pr-comment.png)
 
 Every bullet point corresponds to one expression you benchmarked in your
-touchstone script in `touchstone/script.R` with `benchmark_run_ref()`. The
+touchstone script in `touchstone/script.R` with `benchmark_run()`. The
 contents of the former are in this (simplified) example:
 
 ```{r}
 library(touchstone)
 refs_install()
-benchmark_run_ref(
+benchmark_run(
   expr_before_benchmark = c("library(styler)", "cache_deactivate()"),
   without_cache = 'styler::style_pkg("touchstone/sources/here")',
   n = 30
 )
 
-benchmark_run_ref(
+benchmark_run(
   expr_before_benchmark = c("library(styler)", "cache_activate()"),
   cache_applying = 'styler::style_pkg("touchstone/sources/here")',
   n = 30
 )
 
-benchmark_run_ref(
+benchmark_run(
   expr_before_benchmark = c("library(styler)", "cache_deactivate()"),
   cache_recording = c(
     "gert::git_reset_hard(repo = 'touchstone/sources/here')",

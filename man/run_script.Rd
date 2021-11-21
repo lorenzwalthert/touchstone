@@ -34,7 +34,7 @@ script, as there are some adjustments needed to mirror the Github Action
 environment.
 In a GitHub Action workflow, the environment variables \code{GITHUB_BASE_REF} and
 \code{GITHUB_HEAD_REF} denote the target and source branch of the pull request -
-and these are default arguments in \code{\link[=benchmark_run_ref]{benchmark_run_ref()}} (and other functions
+and these are default arguments in \code{\link[=benchmark_run]{benchmark_run()}} (and other functions
 you probably want to call in your benchmarking script) to determinate the
 branches to use.
 }
@@ -45,11 +45,11 @@ For isolation, \{touchstone\} does not allow the benchmarked package to be
 installed in the global package library, but only in touchstone libraries, as
 asserted with \code{\link[=assert_no_global_installation]{assert_no_global_installation()}}. However, this also implies
 that the package is not available in the touchstone script outside of
-benchmark runs (i.e. outside of \code{\link[=benchmark_run_ref]{benchmark_run_ref()}}. We sometimes still
+benchmark runs (i.e. outside of \code{\link[=benchmark_run]{benchmark_run()}}. We sometimes still
 want to call that package to prepare a benchmarking run though. To
 allow this, we prepend a touchstone library location that
 contains the installed benchmarked package for set-up tasks, and temporarily
-remove it during benchmarking with \code{\link[=benchmark_run_ref]{benchmark_run_ref()}} so only one
+remove it during benchmarking with \code{\link[=benchmark_run]{benchmark_run()}} so only one
 touchstone library is on the library path at any time.
 }
 

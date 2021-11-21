@@ -27,7 +27,7 @@ reference:
     Functions you usually want to call in your touchstone script.
 - contents:
   - refs_install
-  - benchmark_run_ref
+  - benchmark_run
   - benchmarks_analyze
 - title: "Pinning"
   desc: >

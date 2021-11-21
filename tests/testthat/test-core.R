@@ -14,7 +14,7 @@ test_that("iterations can be run", {
 
 test_that("refs can be run", {
   path_test_pkg <- local_package()
-  bm <- benchmark_run_ref(
+  bm <- benchmark_run(
     expr_before_benchmark = library(testthat),
     bliblablup = expect_equal(Sys.sleep(1e-3), NULL),
     refs = "main",
@@ -28,7 +28,7 @@ test_that("refs can be run", {
 test_that("string input gives error", {
   path_test_pkg <- local_package()
   expect_error(
-    benchmark_run_ref(
+    benchmark_run(
       expr_before_benchmark = "library(testthat)",
       bliblablup = expect_equal(Sys.sleep(1e-3), NULL),
       refs = "main",
@@ -41,7 +41,7 @@ test_that("string input gives error", {
 test_that("string input gives error", {
   path_test_pkg <- local_package()
   expect_error(
-    benchmark_run_ref(
+    benchmark_run(
       expr_before_benchmark = library(testthat),
       bliblablup = "expect_equal(Sys.sleep(1e-3), NULL)",
       refs = "main",
@@ -55,7 +55,7 @@ test_that("string input gives error", {
 test_that("dynamic dots are supported", {
   path_test_pkg <- local_package()
   x <- "cc"
-  bm <- benchmark_run_ref(
+  bm <- benchmark_run(
     expr_before_benchmark = {},
     !!x := rlang::expr(Sys.sleep(0)),
     refs = "main",
@@ -64,7 +64,7 @@ test_that("dynamic dots are supported", {
   schema <- purrr::map_chr(bm, ~ class(.x)[1])
   expect_equal(schema, schema_disk())
   vec <- c(xzy = rlang::expr(Sys.sleep(0)))
-  bm <- benchmark_run_ref(
+  bm <- benchmark_run(
     expr_before_benchmark = {},
     !!!vec,
     refs = "main",
