@@ -25,11 +25,14 @@ ref_install <- function(ref = "main",
       dependencies = install_dependencies,
       force = !cache_up_to_date(ref, path_pkg)
     )
-    install_missing_deps(path_pkg = path_pkg)
     withr::local_options(warn = 2)
     rlang::with_handlers(
-      install_local(quiet = TRUE),
+      {
+        install_missing_deps(path_pkg = path_pkg, quiet = TRUE)
+        install_local(quiet = TRUE)
+      },
       error = function(e) {
+        install_missing_deps(path_pkg = path_pkg, quiet = FALSE)
         install_local(quiet = FALSE)
       }
     )
@@ -134,6 +137,6 @@ cache_get <- function() {
 #' into the respective {touchstone} library. Prepend the local touchstone
 #' library to the library path with [local_touchstone_libpath()].
 #' @keywords internal
-install_missing_deps <- function(path_pkg) {
-  remotes::install_deps(pkgdir = path_pkg, upgrade = "always")
+install_missing_deps <- function(path_pkg, quiet = FALSE) {
+  remotes::install_deps(pkgdir = path_pkg, upgrade = "always", quiet = quiet)
 }
