@@ -48,12 +48,14 @@ repos:
           (.*/|)\.pre-commit-.*|
           .*\.[rR]|
           .*\.Rproj|
+          .*\.pdf|
           .*\.py|
           .*\.feather|
           .*\.rds|
           .*\.Rds|
           .*\.sh|
           .*\.RData|
+          .*\.odt|
           .*\.png|
           \.github/workflows/.*\.yaml|
           API|
