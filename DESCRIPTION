@@ -1,6 +1,6 @@
 Type: Package
 Package: touchstone
-Title: Continuous Benchmarking with statistical confidence based on 'Git' branches
+Title: Continuous Benchmarking with Statistical Confidence Based on 'Git' Branches
 Version: 0.0.0.9001
 Authors@R: 
     c(person(given = "Lorenz",

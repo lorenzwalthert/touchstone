@@ -7,7 +7,7 @@
 benchmark_write(
   benchmark,
   name,
-  ref,
+  branch,
   block = NA,
   iteration = NA,
   append = TRUE
@@ -18,14 +18,14 @@ benchmark_write(
 
 \item{name}{The name of the benchmark.}
 
-\item{ref}{A character vector of length one to indicate the git ref (i.e.
+\item{branch}{A character vector of length one to indicate the git branch (i.e.
 commit, tag, branch etc) of the benchmarking.}
 
 \item{block}{All branches that appear once in a block.}
 
 \item{iteration}{An integer indicating to which iteration the benchmark
 refers to. Multiple iterations within a block always benchmark the same
-\code{ref}.}
+\code{branch}.}
 
 \item{append}{Whether to append the result to the file or not.}
 }
