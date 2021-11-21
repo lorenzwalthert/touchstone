@@ -4,10 +4,10 @@
 \alias{local_touchstone_libpath}
 \title{Set Library Path}
 \usage{
-local_touchstone_libpath(ref, env = parent.frame())
+local_touchstone_libpath(branch, env = parent.frame())
 }
 \arguments{
-\item{ref}{Git ref to use, e.g. HEAD or BASE ref.}
+\item{branch}{Git branch to use, e.g. HEAD or BASE branch.}
 
 \item{env}{Environment in which the change should be applied.}
 }

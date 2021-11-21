@@ -22,7 +22,7 @@ test_that("end to end run - code", {
     n = 2
   )
   out <- benchmark_read("bliblablup", branches) %>%
-    dplyr::group_by(.data$ref) %>%
+    dplyr::group_by(.data$branch) %>%
     dplyr::summarise(mean = mean(elapsed), sd = sd(elapsed))
   # expect diff around 2
   diff <- max(out$mean) / min(out$mean)

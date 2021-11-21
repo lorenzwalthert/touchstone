@@ -7,7 +7,7 @@
 benchmark_run_iteration(
   expr_before_benchmark,
   dots,
-  ref,
+  branch,
   block,
   n = getOption("touchstone.n_iterations", 1)
 )
@@ -19,10 +19,7 @@ So you can use quasiquotation.}
 
 \item{dots}{list of quoted expressions (length 1).}
 
-\item{ref}{A character vector of length one to indicate the git ref (i.e.
-commit, tag, branch etc) of the benchmarking.}
-
-\item{block}{All refs appear once in a block.}
+\item{block}{All branches that appear once in a block.}
 
 \item{n}{Number of iterations to run a benchmark within an iteration.}
 }

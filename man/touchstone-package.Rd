@@ -6,7 +6,7 @@
 \alias{touchstone-package}
 \title{touchstone: Continuous Benchmarking with statistical confidence based on 'Git' branches}
 \description{
-A common problem of benchmarking in continuous integration is that the computational power of the virtual machines that run the job varies over time. This package allows users to benchmark two git refs of the same repo in a random sequence for better comparison.
+A common problem of benchmarking in continuous integration is that the computational power of the virtual machines that run the job varies over time. This package allows users to benchmark two branches of the same repo in a random sequence for better comparison.
 }
 \seealso{
 Useful links:

@@ -4,14 +4,14 @@
 \alias{path_pinned_asset}
 \title{Get path to asset}
 \usage{
-path_pinned_asset(..., ref = ref_get_or_fail("GITHUB_HEAD_REF"))
+path_pinned_asset(..., branch = branch_get_or_fail("GITHUB_HEAD_REF"))
 }
 \arguments{
 \item{...}{character vectors, if any values are NA, the result will also be
 NA. The paths follow the recycling rules used in the tibble package,
 namely that only length 1 arguments are recycled.}
 
-\item{ref}{The branch the passed asset was copied from.}
+\item{branch}{The branch the passed asset was copied from.}
 }
 \value{
 The absolute path to the asset.

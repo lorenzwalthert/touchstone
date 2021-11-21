@@ -2,12 +2,13 @@
 % Please edit documentation in R/core.R
 \name{benchmark_run}
 \alias{benchmark_run}
-\title{Run a benchmark for git refs}
+\title{Run a benchmark for git branches}
 \usage{
 benchmark_run(
   expr_before_benchmark = { },
   ...,
-  branches =  c(ref_get_or_fail("GITHUB_BASE_REF"), ref_get_or_fail("GITHUB_HEAD_REF")),
+  branches = c(branch_get_or_fail("GITHUB_BASE_REF"),
+    branch_get_or_fail("GITHUB_HEAD_REF")),
   n = 100,
   path_pkg = "."
 )
@@ -20,12 +21,12 @@ So you can use quasiquotation.}
 \item{...}{Named expression of length one with code to benchmark,
 will be captured with \code{\link[rlang:nse-defuse]{rlang::enexprs()}}. So you can use quasiquotation.}
 
-\item{refs}{Character vector with branch names to benchmark. The package
+\item{branches}{Character vector with branch names to benchmark. The package
 must be built for each benchmarked branch beforehand with \code{\link[=branches_install]{branches_install()}}.
-The base ref is the target branch of the pull request in a workflow run,
-the head ref is the source branch of the pull request in a workflow run.}
+The base branch is the target branch of the pull request in a workflow run,
+the head branch is the source branch of the pull request in a workflow run.}
 
-\item{n}{Number of times benchmarks should be run for each \code{ref}.}
+\item{n}{Number of times benchmarks should be run for each \code{branch}.}
 
 \item{path_pkg}{The path to the package to benchmark. Will be used to
 temporarily checkout the branch during benchmarking.}
@@ -34,14 +35,14 @@ temporarily checkout the branch during benchmarking.}
 All timings in a tibble.
 }
 \description{
-Run a benchmark for git refs
+Run a benchmark for git branches
 }
 \details{
 Runs the following loop \code{n} times:
 \itemize{
 \item removes all touchstone libraries from the library path, adding the one
-corresponding to \code{ref}.
-\item runs setup code \code{exp_before_ref}.
+corresponding to \code{branch}.
+\item runs setup code \code{exp_before_branch}.
 \item benchmarks \code{expr_to_benchmark} and writes them to disk.
 }
 }

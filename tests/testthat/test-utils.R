@@ -1,11 +1,11 @@
-test_that("ref can be sampled", {
+test_that("branch can be sampled", {
   withr::with_seed(
     3,
-    expect_snapshot_value(ref_upsample(c("main", "issue-3")), style = "serialize")
+    expect_snapshot_value(branches_upsample(c("main", "issue-3")), style = "serialize")
   )
   withr::with_seed(
     3,
-    expect_snapshot_value(ref_upsample(letters, n = 2), style = "serialize")
+    expect_snapshot_value(branches_upsample(letters, n = 2), style = "serialize")
   )
 })
 
@@ -31,14 +31,14 @@ test_that("can checkout locally", {
 })
 
 test_that("can remove touchstone libpaths", {
-  refs <- c("devel", "main")
+  branches <- c("devel", "main")
   if (is_windows()) {
     # cannot have touchstone library in temp, as lib path comparison becomes
     # unfeasible due to short/name notation
     withr::local_options(dir_touchstone = fs::path_file(fs::file_temp()))
   }
   path_pkg <- local_package(setwd = !is_windows())
-  new_libpaths <- branches_install(refs, path_pkg, install_dependencies = FALSE)
+  new_libpaths <- branches_install(branches, path_pkg, install_dependencies = FALSE)
 
   withr::local_libpaths(new_libpaths)
 
@@ -46,14 +46,14 @@ test_that("can remove touchstone libpaths", {
   local_without_touchstone_lib(path_pkg)
   after_removal <- setdiff(
     new_libpaths,
-    as.character(fs::path_abs(libpath_touchstone(refs)))
+    as.character(fs::path_abs(libpath_touchstone(branches)))
   )
 
   expect_equal(after_removal, .libPaths())
 })
 
 
-test_that("Can abort with missing refs for benchmark run", {
+test_that("Can abort with missing branches for benchmark run", {
   withr::local_envvar(GITHUB_BASE_REF = NA, GITHUB_HEAD_REF = NA)
   mockery::stub(
     benchmark_run, "force",
@@ -71,10 +71,10 @@ test_that("Can abort with missing refs for benchmark run", {
 })
 
 
-test_that("Can abort with missing refs for benchmark run", {
+test_that("Can abort with missing branches for benchmark run", {
   withr::local_envvar(GITHUB_BASE_REF = NA, GITHUB_HEAD_REF = NA)
   match <- "^If you don't specify"
-  expect_error(ref_get_or_fail("SOME_REF"), match)
+  expect_error(branch_get_or_fail("SOME_REF"), match)
   expect_error(
     benchmark_run(x1 = print("hi")),
     match
@@ -113,7 +113,7 @@ test_that("assets work on HEAD", {
       usethis.quiet = TRUE
     ),
     {
-      expect_error(pin_assets("something"), "Temporary directory for ref")
+      expect_error(pin_assets("something"), "Temporary directory for branch")
       expect_error(path_pinned_asset("something"), "Temporary directory ")
     }
   )
@@ -141,7 +141,7 @@ test_that("assets work on HEAD", {
     expect_true(fs::is_dir(fs::path_join(c(temp_dir, "R"))))
     expect_true(fs::is_file(fs::path_join(c(temp_dir, "data.R"))))
 
-    # expect_error(path_pinned_asset("something", ref = "no-branch"), "for head or base")
+    # expect_error(path_pinned_asset("something", branch = "no-branch"), "for head or base")
     expect_error(path_pinned_asset("something"), "not pinned at")
     expect_equal(path_pinned_asset("R"), fs::path(temp_dir, "R"))
     expect_equal(path_pinned_asset("data.R"), fs::path(temp_dir, "data.R"))
@@ -170,17 +170,17 @@ test_that("assets work HEAD and BASE", {
   ))
 
   for (branch in branches) {
-    pin_assets(dirs[branch], files[branch], ref = branch)
+    pin_assets(dirs[branch], files[branch], branch = branch)
   }
 
   expect_true(
     fs::file_exists(
-      path_pinned_asset("data.Rdata", ref = branches[[1]])
+      path_pinned_asset("data.Rdata", branch = branches[[1]])
     )[[1]]
   )
   expect_true(
     fs::file_exists(
-      path_pinned_asset("utils.R", ref = branches[[2]])
+      path_pinned_asset("utils.R", branch = branches[[2]])
     )[[1]]
   )
 })
@@ -197,7 +197,7 @@ test_that("asset paths are fetched correctly", {
   ))
 
   # expect_error(get_asset_dir("not-main"), "head or base")
-  expect_error(get_asset_dir("main"), "directory for ref")
+  expect_error(get_asset_dir("main"), "directory for branch")
   expect_equal(get_asset_dir("devel"), "asset/dir")
 })
 

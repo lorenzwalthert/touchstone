@@ -1,7 +1,7 @@
 .onLoad <- function(libname, pkgname) {
   op <- options()
   cache <- tibble::tibble(
-    ref = character(), md5_hashes = list(), path_pkg = character()
+    branch = character(), md5_hashes = list(), path_pkg = character()
   )
 
   op.touchstone <- list(

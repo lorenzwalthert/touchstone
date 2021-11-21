@@ -6,14 +6,14 @@
 \usage{
 run_script(
   path = "touchstone/script.R",
-  ref = ref_get_or_fail("GITHUB_HEAD_REF")
+  branch = branch_get_or_fail("GITHUB_HEAD_REF")
 )
 }
 \arguments{
 \item{path}{The script to run. It must fulfill the requirements of a
 \link{touchstone_script}.}
 
-\item{ref}{The branch that corresponds to the library that should be prepended
+\item{branch}{The branch that corresponds to the library that should be prepended
 to the library path when the script at \code{path} is executed, see 'Why this
 function?' below.}
 }

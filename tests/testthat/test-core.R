@@ -3,7 +3,7 @@ test_that("iterations can be run", {
   bm <- benchmark_run_iteration(
     expr_before_benchmark = library(testthat),
     dots = list(expr_to_benchmark = expect_equal(Sys.sleep(1e-3), NULL)),
-    ref = "benchmark_run_iteration",
+    branch = "benchmark_run_iteration",
     block = 1,
     n = 2
   )
@@ -12,7 +12,7 @@ test_that("iterations can be run", {
 })
 
 
-test_that("refs can be run", {
+test_that("branches can be run", {
   path_test_pkg <- local_package()
   bm <- benchmark_run(
     expr_before_benchmark = library(testthat),

@@ -6,15 +6,14 @@
 \alias{cache_get}
 \title{Cache package sources within a session}
 \usage{
-cache_up_to_date(ref, path_pkg)
+cache_up_to_date(branch, path_pkg)
 
-cache_update(ref, path_pkg)
+cache_update(branch, path_pkg)
 
 cache_get()
 }
 \arguments{
-\item{ref}{A reference to a git commit. Currently, only branch names are
-supported.}
+\item{branch}{The name of the branch which should be installed.}
 
 \item{path_pkg}{The path to the repository to install.}
 }

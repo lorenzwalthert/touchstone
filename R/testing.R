@@ -41,7 +41,7 @@ local_package <- function(pkg_name = fs::path_file(fs::file_temp("pkg")),
     touchstone.n_iterations = 2,
     .local_envir = envir,
     touchstone.hash_source_package = tibble::tibble(
-      ref = character(), md5_hashes = list(), path_pkg = character()
+      branch = character(), md5_hashes = list(), path_pkg = character()
     )
   )
   usethis::create_package(path, open = FALSE)

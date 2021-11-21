@@ -7,7 +7,7 @@ test_that("can analyze results", {
     "",
     dots = list(xx1 = "Sys.sleep(runif(1, 0, 1e-5))"),
     n = 2,
-    ref = .x,
+    branch = .x,
     block = 1
   ))
   mockery::stub(
@@ -26,7 +26,7 @@ test_that("can analyze results", {
 
 
 test_that("can validate inputs before analysing", {
-  expect_error(benchmarks_analyze(branches = "just-one"), "exactly two refs")
+  expect_error(benchmarks_analyze(branches = "just-one"), "exactly two branches")
 })
 
 test_that("can analyze results", {
@@ -38,7 +38,7 @@ test_that("can analyze results", {
     "",
     dots = list(xx1 = "Sys.sleep(runif(1, 0, 1e-5))"),
     n = 2,
-    ref = .x,
+    branch = .x,
     block = 1
   ))
 
@@ -46,7 +46,7 @@ test_that("can analyze results", {
     "",
     dots = list(xx2 = "Sys.sleep(runif(1, 0, 1e-5))"),
     n = 2,
-    ref = .x,
+    branch = .x,
     block = 1
   ))
 
@@ -59,7 +59,7 @@ test_that("can analyze results", {
   fs::file_delete(fs::path(dir_touchstone(), "records", "xx1", branches[1]))
   expect_warning(
     out <- benchmarks_analyze(branches),
-    "All benchmarks to analyse must have the two refs"
+    "All benchmarks to analyse must have the two branches"
   )
   expect_match(
     out[3],

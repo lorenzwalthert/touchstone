@@ -5,16 +5,17 @@
 \title{Turn raw benchmark results into text and figures}
 \usage{
 benchmarks_analyze(
-  branches =  c(ref_get_or_fail("GITHUB_BASE_REF"), ref_get_or_fail("GITHUB_HEAD_REF")),
+  branches = c(branch_get_or_fail("GITHUB_BASE_REF"),
+    branch_get_or_fail("GITHUB_HEAD_REF")),
   names = NULL,
   ci = 0.95
 )
 }
 \arguments{
-\item{refs}{The names of the branches for which analysis should be created.}
+\item{branches}{The names of the branches for which analysis should be created.}
 
 \item{names}{The names of the benchmarks to analyze. If \code{NULL}, all
-benchmarks with the \code{refs} are taken.}
+benchmarks with the \code{branches} are taken.}
 
 \item{ci}{The confidence level, defaults to 95\%.}
 }
@@ -27,7 +28,7 @@ Turn raw benchmark results into text and figures
 \details{
 Creates two side effects:
 \itemize{
-\item Density plots for each element in \code{refs} are written to \code{touchstone/plots}.
+\item Density plots for each element in \code{branches} are written to \code{touchstone/plots}.
 \item A text explaining the speed diff is written to
 \code{touchstone/pr-comment/info.txt} for every registered benchmarking
 expression. See \code{vignette("inference", package = "touchstone")} for details.

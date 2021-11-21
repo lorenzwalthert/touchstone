@@ -7,7 +7,7 @@
 #'
 #' @param path The script to run. It must fulfill the requirements of a
 #'   [touchstone_script].
-#' @param ref The branch that corresponds to the library that should be prepended
+#' @param branch The branch that corresponds to the library that should be prepended
 #'   to the library path when the script at `path` is executed, see 'Why this
 #'   function?' below.
 #' @section How to run this interactively?:
@@ -45,8 +45,8 @@
 #' }
 #' }
 run_script <- function(path = "touchstone/script.R",
-                       ref = ref_get_or_fail("GITHUB_HEAD_REF")) {
-  activate(ref, ref_get_or_fail("GITHUB_BASE_REF"))
+                       branch = branch_get_or_fail("GITHUB_HEAD_REF")) {
+  activate(branch, branch_get_or_fail("GITHUB_BASE_REF"))
 
   temp_file <- fs::file_temp()
   fs::file_copy(path, temp_file)
@@ -63,10 +63,10 @@ run_script <- function(path = "touchstone/script.R",
 #'
 #' This sets environment variables, R options and library paths to work
 #' interactively on the [touchstone_script].
-#' @param head_branch Git ref to be used as the `GITHUB_HEAD_REF` ref (i.e. the
+#' @param head_branch Git branch to be used as the `GITHUB_HEAD_REF` branch (i.e. the
 #'   branch with new changes) when running benchmarks. Defaults to the current
 #'   branch.
-#' @param base_branch Git ref for the `GITHUB_BASE_REF` (i.e. the branch you want
+#' @param base_branch Git branch for the `GITHUB_BASE_REF` (i.e. the branch you want
 #'   to merge your changes into) when running benchmarks.
 #'   Defaults to 'main' if the option `touchstone.default_base_branch`is not set.
 #' @param env In which environment the temporary changes should be made.
@@ -111,12 +111,12 @@ activate <- function(head_branch = gert::git_branch(),
 #' [.libPaths()] and friends. Can be used in [touchstone_script]
 #'  to prepare benchmarks etc. If there are touchstone libraries on the path
 #'  when this function is called, they will be removed.
-#' @param ref Git ref to use, e.g. HEAD or BASE ref.
+#' @param branch Git branch to use, e.g. HEAD or BASE branch.
 #' @param env Environment in which the change should be applied.
 #' @seealso [run_script()]
 #' @keywords internal
-local_touchstone_libpath <- function(ref, env = parent.frame()) {
-  lib <- libpath_touchstone(ref)
+local_touchstone_libpath <- function(branch, env = parent.frame()) {
+  lib <- libpath_touchstone(branch)
   fs::dir_create(lib)
   current <- fs::path_real(.libPaths())
 

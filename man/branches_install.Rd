@@ -5,13 +5,14 @@
 \title{Install branches}
 \usage{
 branches_install(
-  branches =  c(ref_get_or_fail("GITHUB_BASE_REF"), ref_get_or_fail("GITHUB_HEAD_REF")),
+  branches = c(branch_get_or_fail("GITHUB_BASE_REF"),
+    branch_get_or_fail("GITHUB_HEAD_REF")),
   path_pkg = ".",
   install_dependencies = FALSE
 )
 }
 \arguments{
-\item{refs}{The names of the branches in a character vector.}
+\item{branches}{The names of the branches in a character vector.}
 
 \item{path_pkg}{The path to the repository to install.}
 
@@ -21,5 +22,5 @@ branches_install(
 The global and touchstone library paths in a character vector (invisibly).
 }
 \description{
-Installs each \code{ref} in a separate library for isolation.
+Installs each \code{branch} in a separate library for isolation.
 }

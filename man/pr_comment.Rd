@@ -14,7 +14,7 @@ You can use github markdown e.g. emojis like :tada: in the string.
 Available variables for glue substitution:
 \itemize{
 \item ci: confidence interval
-\item refs: BASE and HEAD refs benchmarked against each other.
+\item branches: BASE and HEAD branches benchmarked against each other.
 }
 }
 

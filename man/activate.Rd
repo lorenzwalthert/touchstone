@@ -14,11 +14,11 @@ activate(
 deactivate(env = parent.frame())
 }
 \arguments{
-\item{head_branch}{Git ref to be used as the \code{GITHUB_HEAD_REF} ref (i.e. the
+\item{head_branch}{Git branch to be used as the \code{GITHUB_HEAD_REF} branch (i.e. the
 branch with new changes) when running benchmarks. Defaults to the current
 branch.}
 
-\item{base_branch}{Git ref for the \code{GITHUB_BASE_REF} (i.e. the branch you want
+\item{base_branch}{Git branch for the \code{GITHUB_BASE_REF} (i.e. the branch you want
 to merge your changes into) when running benchmarks.
 Defaults to 'main' if the option \code{touchstone.default_base_branch}is not set.}
 

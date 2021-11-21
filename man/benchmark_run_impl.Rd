@@ -4,13 +4,10 @@
 \alias{benchmark_run_impl}
 \title{Checkout a branch from a repo and run an iteration}
 \usage{
-benchmark_run_impl(ref, block, expr_before_benchmark, dots, path_pkg)
+benchmark_run_impl(branch, block, expr_before_benchmark, dots, path_pkg)
 }
 \arguments{
-\item{ref}{A character vector of length one to indicate the git ref (i.e.
-commit, tag, branch etc) of the benchmarking.}
-
-\item{block}{All refs appear once in a block.}
+\item{block}{All branches that appear once in a block.}
 
 \item{expr_before_benchmark}{Expression to run before
 the benchmark is ran, will be captured with \code{\link[rlang:nse-defuse]{rlang::enexpr()}}.
