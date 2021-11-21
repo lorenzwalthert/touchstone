@@ -20,11 +20,21 @@ ref_install <- function(ref = "main",
   } else {
     local_touchstone_libpath(ref)
     libpath <- .libPaths()
-    withr::local_options(warn = 2)
-    remotes::install_local(path_pkg,
-      upgrade = "never", quiet = TRUE,
+    install_local <- purrr::partial(remotes::install_local, path_pkg,
+      upgrade = "never",
       dependencies = install_dependencies,
       force = !cache_up_to_date(ref, path_pkg)
+    )
+    withr::local_options(warn = 2)
+    rlang::with_handlers(
+      {
+        install_missing_deps(path_pkg = path_pkg, quiet = TRUE)
+        install_local(quiet = TRUE)
+      },
+      error = function(e) {
+        install_missing_deps(path_pkg = path_pkg, quiet = FALSE)
+        install_local(quiet = FALSE)
+      }
     )
     cache_update(ref, path_pkg)
     cli::cli_alert_success("Installed branch {.val {ref}} into {.path {libpath[1]}}.")
@@ -114,4 +124,19 @@ cache_update <- function(ref, path_pkg) {
 #' @keywords internal
 cache_get <- function() {
   getOption("touchstone.hash_source_package")
+}
+
+#' Install missing BASE dependencies
+#'
+#' If the HEAD branch removes dependencies (compared to BASE), installing the
+#' package from the BASE branch will fail due to missing dependencies, as
+#' dependencies were installed in the GitHub Action based on the `DESCRIPTION`
+#' of the HEAD branch. The simplest way to
+#' ensure all required dependencies are present (including specification of
+#' remotes) is by simply installing them
+#' into the respective {touchstone} library. Prepend the local touchstone
+#' library to the library path with [local_touchstone_libpath()].
+#' @keywords internal
+install_missing_deps <- function(path_pkg, quiet = FALSE) {
+  remotes::install_deps(pkgdir = path_pkg, upgrade = "always", quiet = quiet)
 }
