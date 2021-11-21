@@ -74,7 +74,7 @@ benchmark_run_iteration <- function(expr_before_benchmark,
 benchmark_run <- function(expr_before_benchmark =
                             {},
                           ...,
-                          refs = c(
+                          branches = c(
                             ref_get_or_fail("GITHUB_BASE_REF"),
                             ref_get_or_fail("GITHUB_HEAD_REF")
                           ),

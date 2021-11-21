@@ -17,7 +17,7 @@ test_that("refs can be run", {
   bm <- benchmark_run(
     expr_before_benchmark = library(testthat),
     bliblablup = expect_equal(Sys.sleep(1e-3), NULL),
-    refs = "main",
+    branches = "main",
     n = 2
   )
   schema <- purrr::map_chr(bm, ~ class(.x)[1])
@@ -31,7 +31,7 @@ test_that("string input gives error", {
     benchmark_run(
       expr_before_benchmark = "library(testthat)",
       bliblablup = expect_equal(Sys.sleep(1e-3), NULL),
-      refs = "main",
+      branches = "main",
       n = 2
     ),
     "is deprecated."
@@ -44,7 +44,7 @@ test_that("string input gives error", {
     benchmark_run(
       expr_before_benchmark = library(testthat),
       bliblablup = "expect_equal(Sys.sleep(1e-3), NULL)",
-      refs = "main",
+      branches = "main",
       n = 2
     ),
     "is deprecated."
@@ -58,7 +58,7 @@ test_that("dynamic dots are supported", {
   bm <- benchmark_run(
     expr_before_benchmark = {},
     !!x := rlang::expr(Sys.sleep(0)),
-    refs = "main",
+    branches =  "main",
     n = 1
   )
   schema <- purrr::map_chr(bm, ~ class(.x)[1])
@@ -67,7 +67,7 @@ test_that("dynamic dots are supported", {
   bm <- benchmark_run(
     expr_before_benchmark = {},
     !!!vec,
-    refs = "main",
+    branches =  "main",
     n = 1,
     path_pkg = path_test_pkg
   )

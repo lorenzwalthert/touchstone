@@ -26,7 +26,7 @@ test_that("can analyze results", {
 
 
 test_that("can validate inputs before analysing", {
-  expect_error(benchmarks_analyze(refs = "just-one"), "exactly two refs")
+  expect_error(benchmarks_analyze(branches = "just-one"), "exactly two refs")
 })
 
 test_that("can analyze results", {

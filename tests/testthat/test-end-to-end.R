@@ -18,7 +18,7 @@ test_that("end to end run - code", {
   bm <- benchmark_run(
     expr_before_benchmark = source("R/core.R"),
     bliblablup = f(),
-    refs = branches,
+    branches = branches,
     n = 2
   )
   out <- benchmark_read("bliblablup", branches) %>%

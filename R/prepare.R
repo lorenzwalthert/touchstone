@@ -51,7 +51,7 @@ ref_install <- function(ref = "main",
 #' @return
 #' The global and touchstone library paths in a character vector (invisibly).
 #' @export
-branches_install <- function(refs = c(
+branches_install <- function(branches = c(
                                ref_get_or_fail("GITHUB_BASE_REF"),
                                ref_get_or_fail("GITHUB_HEAD_REF")
                              ),

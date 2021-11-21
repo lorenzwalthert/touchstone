@@ -7,7 +7,7 @@
 benchmark_run(
   expr_before_benchmark = { },
   ...,
-  refs = c(ref_get_or_fail("GITHUB_BASE_REF"), ref_get_or_fail("GITHUB_HEAD_REF")),
+  branches =  c(ref_get_or_fail("GITHUB_BASE_REF"), ref_get_or_fail("GITHUB_HEAD_REF")),
   n = 100,
   path_pkg = "."
 )

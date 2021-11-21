@@ -15,7 +15,7 @@
 #' @return
 #' A character vector that summarizes the benchmarking results.
 #' @export
-benchmarks_analyze <- function(refs = c(
+benchmarks_analyze <- function(branches = c(
                                  ref_get_or_fail("GITHUB_BASE_REF"),
                                  ref_get_or_fail("GITHUB_HEAD_REF")
                                ),
@@ -70,7 +70,7 @@ benchmarks_analyze <- function(refs = c(
     }
   }
 
-  out <- purrr::walk(names$name, benchmark_analyze, refs = refs, ci = ci)
+  out <- purrr::walk(names$name, benchmark_analyze, branches = refs, ci = ci)
   default_footer <- paste(
     "\nFurther explanation regarding interpretation and methodology can be found",
     "in the [documentation](https://lorenzwalthert.github.io/touchstone/articles/inference.html)."
@@ -82,14 +82,14 @@ benchmarks_analyze <- function(refs = c(
 }
 
 #' @importFrom rlang .data
-benchmark_analyze <- function(benchmark, refs = c(
+benchmark_analyze <- function(benchmark, branches = c(
                                 ref_get_or_fail("GITHUB_BASE_REF"),
                                 ref_get_or_fail("GITHUB_HEAD_REF")
                               ),
                               ci = 0.95) {
   timings <- benchmark_read(benchmark, refs)
   benchmark_plot(benchmark, timings)
-  benchmark_verbalize(benchmark, timings = timings, refs = refs, ci = ci)
+  benchmark_verbalize(benchmark, timings = timings, branches = refs, ci = ci)
 }
 
 #' Create nice text from benchmarks

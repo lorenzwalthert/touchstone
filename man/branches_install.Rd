@@ -5,7 +5,7 @@
 \title{Install branches}
 \usage{
 branches_install(
-  refs = c(ref_get_or_fail("GITHUB_BASE_REF"), ref_get_or_fail("GITHUB_HEAD_REF")),
+  branches =  c(ref_get_or_fail("GITHUB_BASE_REF"), ref_get_or_fail("GITHUB_HEAD_REF")),
   path_pkg = ".",
   install_dependencies = FALSE
 )
