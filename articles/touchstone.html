@@ -135,7 +135,7 @@
 <div id="setup" class="section level3">
 <h3 class="hasAnchor">
 <a href="#setup" class="anchor"></a>Setup</h3>
-<p>We first install the different package versions in separate libraries with <code><a href="../reference/refs_install.html">refs_install()</a></code>, this is mandatory for any <code>script.R</code>. If you want to access some directory or file which only exists on one of the branches you can use <code><a href="../reference/pin_assets.html">pin_assets(..., ref = "your-branch-name")</a></code> to make them available across branches. You can of course also run arbitrary code to prepare for the benchmarks.</p>
+<p>We first install the different package versions in separate libraries with <code><a href="../reference/refs_install.html">refs_install()</a></code>, this is mandatory for any <code>script.R</code>. If you want to access some directory or file which only exists on one of the branches you can use <code>pin_assets(..., ref = "your-branch-name")</code> to make them available across branches. You can of course also run arbitrary code to prepare for the benchmarks.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">touchstone</span><span class="fu">::</span><span class="fu"><a href="../reference/refs_install.html">refs_install</a></span><span class="op">(</span><span class="op">)</span> <span class="co"># installs branches to benchmark</span>
 <span class="fu">touchstone</span><span class="fu">::</span><span class="fu"><a href="../reference/pin_assets.html">pin_assets</a></span><span class="op">(</span><span class="st">"data/all.Rdata"</span>, <span class="st">"inst/scripts"</span><span class="op">)</span> <span class="co"># pin files and directories</span>
