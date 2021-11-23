@@ -16,6 +16,7 @@ cran
 cre
 createComment
 datastore
+dcf
 de
 deps
 desc
@@ -120,6 +121,7 @@ tidyselect
 toString
 touchstone<U+0092>
 ubuntu
+unlist
 usethis
 va
 vctrs
