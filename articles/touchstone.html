@@ -95,6 +95,9 @@
 
     
     
+<div id="initialization" class="section level1">
+<h1 class="hasAnchor">
+<a href="#initialization" class="anchor"></a>Initialization</h1>
 <p>Start by initializing {touchstone} in your package repository with:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">touchstone</span><span class="fu">::</span><span class="fu"><a href="../reference/use_touchstone.html">use_touchstone</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
@@ -126,11 +129,19 @@
 <li><p>add the <code>touchstone</code> directory to <code>.Rbuildignore</code>.</p></li>
 <li><p>write the workflow files<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a> you need to invoke touchstone in new pull requests into <code>.github/workflows/</code>.</p></li>
 </ul>
-<p>Now you just need to modify <code>script.R</code> to run the benchmarks you are interested in.</p>
-<div id="script-r" class="section level2">
+<p>Now you just need to modify the touchstone script <code>touchstone/script.R</code> to run the benchmarks you are interested in.</p>
+</div>
+<div id="workflow-overview" class="section level1">
+<h1 class="hasAnchor">
+<a href="#workflow-overview" class="anchor"></a>Workflow overview</h1>
+<p>While you eventually want to run your benchmarks on GitHub Actions for every pull request, it is handy to develop interactively and locally first to avoid long feedback cycles with trivial errors. The below diagram shows these two different workflows and what they entail.</p>
+<p><img src="../inst/workflow-visualization.pdf"></p>
+<p>Note that there are two GitHub Action workflow files in <code>.github/workflows/</code> due to <a href="https://securitylab.github.com/research/github-actions-preventing-pwn-requests/">security reasons</a>.</p>
+<p>In the remainder, we’ll explain how to adapt the touchstone script, which is the most important script you need to customize.</p>
+<div id="adapting-the-touchstone-script" class="section level2">
 <h2 class="hasAnchor">
-<a href="#script-r" class="anchor"></a>script.R</h2>
-<p>The file consists of three parts, two of which you will need to modify to fit your needs. Within the GitHub Action {touchstone} will always run the <code>script.R</code> from the <code>HEAD</code> branch, so you can modify or extend the benchmarks if needed to fit your current branch. Please beware that a few functions such as <code><a href="../reference/refs_install.html">refs_install()</a></code>, <code>pin_assets</code> or <code><a href="../reference/benchmark_run_ref.html">benchmark_run_ref()</a></code> will perform local git checkouts and therefore the git status should be clean and no other processes should run in the directory.</p>
+<a href="#adapting-the-touchstone-script" class="anchor"></a>Adapting the touchstone script</h2>
+<p>The file consists of three parts, two of which you will need to modify to fit your needs. Within the GitHub Action {touchstone} will always run the <code>touchstone/script.R</code> from the <code>HEAD</code> branch, so you can modify or extend the benchmarks if needed to fit your current branch. Please beware that a few functions such as <code><a href="../reference/refs_install.html">refs_install()</a></code>, <code>pin_assets</code> or <code><a href="../reference/benchmark_run_ref.html">benchmark_run_ref()</a></code> will perform local git checkouts and therefore the git status should be clean and no other processes should run in the directory.</p>
 <p>The touchstone script will be run with <code><a href="../reference/run_script.html">run_script()</a></code> on GitHub Actions with the required environment variables <code>GITHUB_HEAD_REF</code> and <code>GITHUB_BASE_REF</code> set for various reasons explained in the help file. If you want to interactively work on your touchstone script, i.e. running it line by line, you must activate touchstone first with <code><a href="../reference/activate.html">activate()</a></code>, which sets environment variables, R options and library paths.</p>
 <div id="setup" class="section level3">
 <h3 class="hasAnchor">
@@ -188,6 +199,7 @@
 <p>You can change the header and footer, see <code><a href="../reference/pr_comment.html">?touchstone::pr_comment</a></code>. The main body is the list of benchmarks and their results. First the mean elapsed time of all iterations of that benchmark (BASE <span class="math inline">\(\rightarrow\)</span> HEAD) and a 95% confidence interval.</p>
 <p>To make it easier to spot benchmarks that need closer attention, we prefix the benchmarks with emojis indicating if there was a statistically significant change (see <a href="https://lorenzwalthert.github.io/touchstone/articles/inference.html">inference</a>) in the timing or not. In this example the HEAD version of <code>func1</code> is significantly faster, <code>func3</code> is slower than BASE while there is no significant change for <code>func2</code>.</p>
 <p>The GitHub Action will also upload this text and plots of the timings as artifacts.</p>
+</div>
 </div>
 <div class="footnotes">
 <hr>
