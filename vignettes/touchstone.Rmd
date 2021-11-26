@@ -70,7 +70,8 @@ below diagram shows these two different workflows and what they entail.
 
 <img src="../inst/workflow-visualization.pdf">
 
-Note that there are two GitHub Action workflows due to [security reasons](https://securitylab.github.com/research/github-actions-preventing-pwn-requests/).
+Note that there are two GitHub Action workflow files in `.github/workflows/` due
+to [security reasons](https://securitylab.github.com/research/github-actions-preventing-pwn-requests/).
 
 In the remainder, we'll explain how to adapt the touchstone script, which is the
 most important script you need to customize.
