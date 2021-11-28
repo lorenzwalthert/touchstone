@@ -68,7 +68,10 @@ long feedback cycles with trivial errors. The
 below diagram shows these two different workflows and what they entail.
 
 
-<img src="../inst/workflow-visualization.pdf">
+```{r, eval = TRUE, include = TRUE, echo = FALSE, out.width="100%"}
+knitr::include_graphics("../inst/workflow-visualization.png")
+```
+
 
 Note that there are two GitHub Action workflow files in `.github/workflows/` due
 to [security reasons](https://securitylab.github.com/research/github-actions-preventing-pwn-requests/).
