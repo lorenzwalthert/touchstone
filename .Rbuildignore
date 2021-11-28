@@ -10,3 +10,5 @@
 ^pkgdown$
 ^doc$
 ^Meta$
+^cran-comments\.md$
+^touchstone$

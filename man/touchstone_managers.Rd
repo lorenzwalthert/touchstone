@@ -18,11 +18,9 @@ path_pr_comment()
 records sub directory.}
 }
 \value{
-Character vector of length one with th path to the touchstone directory.
-
-The deleted paths (invisibly).
-
-Character vector of length one with the path to the pr comment.
+Character vector of length one with the path to the touchstone directory (for
+\code{dir_touchstone()}), path to the deleted files (for \code{touchstone_clear()}) or
+path to the file containing the pull request comment (for \code{path_pr_comment()}).
 }
 \description{
 Utilities to manage the touchstone database.
@@ -33,7 +31,7 @@ Utilities to manage the touchstone database.
 
 \item \code{touchstone_clear}: clears the touchstone database.
 
-\item \code{path_pr_comment}: returns the path to the file containing the pr comment.
+\item \code{path_pr_comment}: Returns the path to the file containing the pull request comment.
 }}
 
 \seealso{

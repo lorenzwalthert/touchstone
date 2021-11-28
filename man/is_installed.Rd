@@ -6,6 +6,10 @@
 \usage{
 is_installed(path_pkg = ".")
 }
+\value{
+A list with \code{name} of the package to check and \code{installed}, a boolean to
+indicate if the package is installed or not.
+}
 \description{
 Check if a package is installed and unloading it
 }

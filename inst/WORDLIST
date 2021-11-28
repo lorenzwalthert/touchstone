@@ -40,6 +40,7 @@ getwd
 ggplot
 github
 gitignore
+Gregor
 hashFiles
 href
 https
@@ -58,6 +59,7 @@ LIBS
 Lifecycle
 linux
 listWorkflowRunArtifacts
+loadNamespace
 lorenz
 lorenzwalthert
 magrittr
@@ -101,6 +103,7 @@ runif
 saveRDS
 seealso
 sep
+Seyer
 SHA
 sideeffects
 sprintf

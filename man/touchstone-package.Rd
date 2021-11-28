@@ -4,16 +4,21 @@
 \name{touchstone-package}
 \alias{touchstone}
 \alias{touchstone-package}
-\title{touchstone: Benchmark Different Git Refs in One Run}
+\title{touchstone: Benchmarking Different 'Git' Refs with Confidence in One Go}
 \description{
-A common problem of benchmarking in continuous integration is that the computational power of the virtual machines that run the job varies over time. This package allows users to benchmark two git refs of the same repo in a random sequence for better comparison.
+A common problem of benchmarking in continuous integration is
+    that the computational power of the virtual machines that run the job
+    varies over time. This package runs benchmarking code of two 'Git'
+    refs of the same repository in a random sequence for better
+    comparison, either locally or via 'GitHub Actions' and outputs a
+    confidence interval for the relative difference.
 }
 \seealso{
 Useful links:
 \itemize{
-  \item \url{https://github.com/lorenzwalthert/touchstone}
-  \item \url{https://lorenzwalthert.github.io/touchstone}
-  \item Report bugs at \url{https://github.com/lorenzwalthert/touchstone/issues}
+  \item \url{https://github.com/lorenzwalthert/touchstone/}
+  \item \url{https://lorenzwalthert.github.io/touchstone/}
+  \item Report bugs at \url{https://github.com/lorenzwalthert/touchstone/issues/}
 }
 
 }

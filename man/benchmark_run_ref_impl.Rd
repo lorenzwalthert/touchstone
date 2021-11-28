@@ -20,6 +20,9 @@ So you can use quasiquotation.}
 
 \item{path_pkg}{The path to the root of the package you want to benchmark.}
 }
+\value{
+A tibble with the benchmarks.
+}
 \description{
 Checkout a branch from a repo and run an iteration
 }
