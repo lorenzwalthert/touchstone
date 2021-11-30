@@ -15,6 +15,8 @@ knitr::opts_chunk$set(
 )
 ```
 
+# Initialization
+
 Start by initializing {touchstone} in your package repository with:
 
 ```{r, eval = FALSE}
@@ -55,11 +57,31 @@ This will:
 {touchstone} continuous benchmarking will be triggered for new PRs.] you need to
   invoke touchstone in new pull requests into `.github/workflows/`. 
 
-Now you just need to modify `script.R` to run the benchmarks you are interested in. 
+Now you just need to modify the touchstone script `touchstone/script.R` to run 
+the benchmarks you are interested in. 
 
-## script.R
+# Workflow overview
 
-The file consists of three parts, two of which you will need to modify to fit your needs. Within the GitHub Action {touchstone} will always run the `script.R` from the `HEAD` branch, so you can modify or extend the benchmarks if needed to fit your current branch. Please beware that a few 
+While you eventually want to run your benchmarks on GitHub Actions for every 
+pull request, it is handy to develop interactively and locally first to avoid 
+long feedback cycles with trivial errors. The 
+below diagram shows these two different workflows and what they entail.
+
+
+```{r, eval = TRUE, include = TRUE, echo = FALSE, out.width="100%"}
+knitr::include_graphics("../inst/workflow-visualization.png")
+```
+
+
+Note that there are two GitHub Action workflow files in `.github/workflows/` due
+to [security reasons](https://securitylab.github.com/research/github-actions-preventing-pwn-requests/).
+
+In the remainder, we'll explain how to adapt the touchstone script, which is the
+most important script you need to customize.
+
+## Adapting the touchstone script
+
+The file consists of three parts, two of which you will need to modify to fit your needs. Within the GitHub Action {touchstone} will always run the `touchstone/script.R` from the `HEAD` branch, so you can modify or extend the benchmarks if needed to fit your current branch. Please beware that a few 
 functions such as `refs_install()`, `pin_assets` or `benchmark_run_ref()` will 
 perform local git checkouts and therefore the git status should be clean and no 
 other processes should run in the directory.

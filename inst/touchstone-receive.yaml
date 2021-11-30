@@ -57,8 +57,8 @@ jobs:
             dplyr
             gert
       - name: Remove global installation
-        run: | 
-          pkg <- basename(getwd())
+        run: |
+          pkg <- unlist(read.dcf('DESCRIPTION')[, 'Package'])
           if (pkg %in% rownames(installed.packages())) {
             remove.packages(pkg)
             cat('removed package ', pkg, '.', sep = "")
