@@ -53,7 +53,7 @@ test_that("string input gives error", {
 
 
 test_that("dynamic dots are supported", {
-  path_test_pkg <- local_package()
+  local_package()
   x <- "cc"
   bm <- benchmark_run(
     expr_before_benchmark = {},
@@ -68,8 +68,7 @@ test_that("dynamic dots are supported", {
     expr_before_benchmark = {},
     !!!vec,
     branches =  "main",
-    n = 1,
-    path_pkg = path_test_pkg
+    n = 1
   )
   schema <- purrr::map_chr(bm, ~ class(.x)[1])
   expect_equal(schema, schema_disk())
