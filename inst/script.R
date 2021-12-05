@@ -6,7 +6,7 @@
 # touchstone::pin_assets("some/dir")
 
 # installs branches to benchmark
-touchstone::branches_install()
+touchstone::branch_install()
 
 # benchmark a function call from your package (two calls per branch)
 touchstone::benchmark_run(

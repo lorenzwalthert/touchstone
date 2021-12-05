@@ -38,7 +38,7 @@ test_that("can remove touchstone libpaths", {
     withr::local_options(dir_touchstone = fs::path_file(fs::file_temp()))
   }
   path_pkg <- local_package(setwd = !is_windows())
-  new_libpaths <- branches_install(branches, path_pkg, install_dependencies = FALSE)
+  new_libpaths <- branch_install(branches, path_pkg, install_dependencies = FALSE)
 
   withr::local_libpaths(new_libpaths)
 
@@ -85,7 +85,7 @@ test_that("Can abort with missing branches for benchmark run", {
   )
 
   expect_error(
-    branches_install(),
+    branch_install(),
     match
   )
 })

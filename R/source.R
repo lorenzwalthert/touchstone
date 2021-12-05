@@ -150,7 +150,7 @@ deactivate <- function(env = parent.frame()) {
 #'
 #' A touchstone script must:
 #'
-#' * install all versions of the benchmarked repository with [branches_install()].
+#' * install all versions of the benchmarked repository with [branch_install()].
 #' * create benchmarks with one or more calls to [benchmark_run()].
 #' * produce the artifacts required in the GitHub workflow with
 #'   [benchmarks_analyze()].
