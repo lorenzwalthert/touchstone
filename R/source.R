@@ -153,5 +153,5 @@ deactivate <- function(env = parent.frame()) {
 #' * install all versions of the benchmarked repository with [branch_install()].
 #' * create benchmarks with one or more calls to [benchmark_run()].
 #' * produce the artifacts required in the GitHub workflow with
-#'   [benchmarks_analyze()].
+#'   [benchmark_analyze()].
 NULL

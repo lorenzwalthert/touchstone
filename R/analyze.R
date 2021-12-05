@@ -15,12 +15,12 @@
 #' @return
 #' A character vector that summarizes the benchmarking results.
 #' @export
-benchmarks_analyze <- function(branches = c(
-                                 branch_get_or_fail("GITHUB_BASE_REF"),
-                                 branch_get_or_fail("GITHUB_HEAD_REF")
-                               ),
-                               names = NULL,
-                               ci = 0.95) {
+benchmark_analyze <- function(branches = c(
+                                branch_get_or_fail("GITHUB_BASE_REF"),
+                                branch_get_or_fail("GITHUB_HEAD_REF")
+                              ),
+                              names = NULL,
+                              ci = 0.95) {
   suggested_pkgs <- c("dplyr", "ggplot2", "glue")
   suggests_available <- purrr::map_lgl(
     suggested_pkgs,
@@ -175,7 +175,7 @@ benchmark_plot <- function(benchmark, timings) {
 #'
 #' The files `touchstone/header.R` and `touchstone/footer.R` allow you to modify
 #' the PR comment. The files will be evaluated in the context of
-#' [benchmarks_analyze()] and should return one string containing the text.
+#' [benchmark_analyze()] and should return one string containing the text.
 #' You can use github markdown e.g. emojis like :tada: in the string.
 #'
 #' @section Header:

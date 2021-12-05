@@ -16,7 +16,7 @@ test_that("can analyze results", {
     list(string = "[x.xx%, y.yy%]", emoji = ":rocket:"),
     depth = 2
   )
-  benchmarks_analyze(branches)
+  benchmark_analyze(branches)
   expect_match(
     readLines("touchstone/pr-comment/info.txt")[3],
     as.character(glue::glue("xx1: .*s -> .*s \\[.*%, .*%\\]"))
@@ -26,7 +26,7 @@ test_that("can analyze results", {
 
 
 test_that("can validate inputs before analysing", {
-  expect_error(benchmarks_analyze(branches = "just-one"), "exactly two branches")
+  expect_error(benchmark_analyze(branches = "just-one"), "exactly two branches")
 })
 
 test_that("can analyze results", {
@@ -58,7 +58,7 @@ test_that("can analyze results", {
   )
   fs::file_delete(fs::path(dir_touchstone(), "records", "xx1", branches[1]))
   expect_warning(
-    out <- benchmarks_analyze(branches),
+    out <- benchmark_analyze(branches),
     "All benchmarks to analyse must have the two branches"
   )
   expect_match(
@@ -70,6 +70,6 @@ test_that("can analyze results", {
 
 test_that("missing package throws error", {
   skip_if(packageVersion("mockery") < "0.4.2.9000")
-  mockery::stub(benchmarks_analyze, "requireNamespace", FALSE)
-  expect_error(benchmarks_analyze(), "additional package")
+  mockery::stub(benchmark_analyze, "requireNamespace", FALSE)
+  expect_error(benchmark_analyze(), "additional package")
 })
