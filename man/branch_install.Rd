@@ -4,20 +4,35 @@
 \alias{branch_install}
 \title{Checks out a source branch and install the package}
 \usage{
-branch_install(branch = "main", path_pkg = ".", install_dependencies = FALSE)
+branch_install(
+  branches = c(branch_get_or_fail("GITHUB_BASE_REF"),
+    branch_get_or_fail("GITHUB_HEAD_REF")),
+  path_pkg = ".",
+  install_dependencies = FALSE
+)
+
+branch_install(
+  branches = c(branch_get_or_fail("GITHUB_BASE_REF"),
+    branch_get_or_fail("GITHUB_HEAD_REF")),
+  path_pkg = ".",
+  install_dependencies = FALSE
+)
 }
 \arguments{
-\item{branch}{The name of the branch which should be installed.}
+\item{branches}{The names of the branches in a character vector.}
 
 \item{path_pkg}{The path to the repository to install.}
 
-\item{install_dependencies}{Passed to \code{\link[remotes:install_local]{remotes::install_local()}}. Set to
-\code{FALSE} can help when ran locally without internet connection.}
+\item{install_dependencies}{Passed to ``}
+
+\item{branch}{The name of the branch which should be installed.}
 }
 \value{
 A character vector with library paths.
+
+The global and touchstone library paths in a character vector (invisibly).
 }
 \description{
-Checks out a source branch and install the package
+Installs each \code{branch} in a separate library for isolation.
 }
 \keyword{internal}

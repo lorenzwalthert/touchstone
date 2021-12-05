@@ -6,7 +6,7 @@
 \description{
 The files \code{touchstone/header.R} and \code{touchstone/footer.R} allow you to modify
 the PR comment. The files will be evaluated in the context of
-\code{\link[=benchmarks_analyze]{benchmarks_analyze()}} and should return one string containing the text.
+\code{\link[=benchmark_analyze]{benchmark_analyze()}} and should return one string containing the text.
 You can use github markdown e.g. emojis like :tada: in the string.
 }
 \section{Header}{

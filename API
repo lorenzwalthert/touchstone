@@ -3,13 +3,13 @@
 ## Exported functions
 
 activate(head_branch = gert::git_branch(), base_branch = getOption("touchstone.default_base_branch", "main"), env = parent.frame())
+benchmark_analyze(benchmark, branches = c(branch_get_or_fail("GITHUB_BASE_REF"), branch_get_or_fail("GITHUB_HEAD_REF")), ci = 0.95)
 benchmark_ls(name)
 benchmark_read(name, branch)
 benchmark_run(expr_before_benchmark = {}, ..., branches = c(branch_get_or_fail("GITHUB_BASE_REF"), branch_get_or_fail("GITHUB_HEAD_REF")), n = 100, path_pkg = ".")
 benchmark_write(benchmark, name, branch, block = NA, iteration = NA, append = TRUE)
-benchmarks_analyze(branches = c(branch_get_or_fail("GITHUB_BASE_REF"), branch_get_or_fail("GITHUB_HEAD_REF")), names = NULL, ci = 0.95)
 branch_get_or_fail(var)
-branches_install(branches = c(branch_get_or_fail("GITHUB_BASE_REF"), branch_get_or_fail("GITHUB_HEAD_REF")), path_pkg = ".", install_dependencies = FALSE)
+branch_install(branches = c(branch_get_or_fail("GITHUB_BASE_REF"), branch_get_or_fail("GITHUB_HEAD_REF")), path_pkg = ".", install_dependencies = FALSE)
 deactivate(env = parent.frame())
 dir_touchstone()
 path_pinned_asset(..., branch = branch_get_or_fail("GITHUB_HEAD_REF"))
