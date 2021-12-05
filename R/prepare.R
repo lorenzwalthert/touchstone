@@ -7,9 +7,9 @@
 #' @return
 #' A character vector with library paths.
 #' @keywords internal
-branch_install <- function(branch = "main",
-                           path_pkg = ".",
-                           install_dependencies = FALSE) {
+branch_install_impl <- function(branch = "main",
+                                path_pkg = ".",
+                                install_dependencies = FALSE) {
   local_git_checkout(branch, path_pkg)
   if (getOption("touchstone.skip_install", FALSE)) {
     cli::cli_alert_info(
@@ -59,7 +59,7 @@ branch_install <- function(branches = c(
   force(branches)
   assert_no_global_installation(path_pkg)
   cli::cli_alert_info("Start installing branches into separate libraries.")
-  libpaths <- purrr::map(branches, branch_install,
+  libpaths <- purrr::map(branches, branch_install_impl,
     path_pkg = path_pkg,
     install_dependencies = install_dependencies
   ) %>%
