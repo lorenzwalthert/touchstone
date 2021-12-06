@@ -5,19 +5,19 @@
 \title{Turn raw benchmark results into text and figures}
 \usage{
 benchmark_analyze(
-  benchmark,
   branches = c(branch_get_or_fail("GITHUB_BASE_REF"),
     branch_get_or_fail("GITHUB_HEAD_REF")),
+  names = NULL,
   ci = 0.95
 )
 }
 \arguments{
 \item{branches}{The names of the branches for which analysis should be created.}
 
-\item{ci}{The confidence level, defaults to 95\%.}
-
 \item{names}{The names of the benchmarks to analyze. If \code{NULL}, all
 benchmarks with the \code{branches} are taken.}
+
+\item{ci}{The confidence level, defaults to 95\%.}
 }
 \value{
 A character vector that summarizes the benchmarking results.

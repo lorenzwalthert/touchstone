@@ -12,11 +12,6 @@ cache_update(branch, path_pkg)
 
 cache_get()
 }
-\arguments{
-\item{branch}{The name of the branch which should be installed.}
-
-\item{path_pkg}{The path to the repository to install.}
-}
 \description{
 This is required to make sure \code{\link[remotes:install_local]{remotes::install_local()}} installs again
 when source code changed.
