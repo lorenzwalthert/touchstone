@@ -26,9 +26,9 @@ reference:
   desc: >
     Functions you usually want to call in your touchstone script.
 - contents:
-  - branches_install
+  - branch_install
   - benchmark_run
-  - benchmarks_analyze
+  - benchmark_analyze
 - title: "Pinning"
   desc: >
     Working with assets across branches.

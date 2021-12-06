@@ -70,7 +70,7 @@ benchmark_analyze <- function(branches = c(
     }
   }
 
-  out <- purrr::walk(names$name, benchmark_analyze, branches = branches, ci = ci)
+  out <- purrr::walk(names$name, benchmark_analyze_impl, branches = branches, ci = ci)
   default_footer <- paste(
     "\nFurther explanation regarding interpretation and methodology can be found",
     "in the [documentation](https://lorenzwalthert.github.io/touchstone/articles/inference.html)."
@@ -82,11 +82,11 @@ benchmark_analyze <- function(branches = c(
 }
 
 #' @importFrom rlang .data
-benchmark_analyze <- function(benchmark, branches = c(
-                                branch_get_or_fail("GITHUB_BASE_REF"),
-                                branch_get_or_fail("GITHUB_HEAD_REF")
-                              ),
-                              ci = 0.95) {
+benchmark_analyze_impl <- function(benchmark, branches = c(
+                                     branch_get_or_fail("GITHUB_BASE_REF"),
+                                     branch_get_or_fail("GITHUB_HEAD_REF")
+                                   ),
+                                   ci = 0.95) {
   timings <- benchmark_read(benchmark, branches)
   benchmark_plot(benchmark, timings)
   benchmark_verbalize(benchmark, timings = timings, branches = branches, ci = ci)

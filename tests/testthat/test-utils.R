@@ -80,7 +80,7 @@ test_that("Can abort with missing branches for benchmark run", {
     match
   )
   expect_error(
-    benchmark_analyze("sume2"),
+    benchmark_analyze_impl("sume2"),
     match
   )
 

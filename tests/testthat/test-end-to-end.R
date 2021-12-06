@@ -28,7 +28,7 @@ test_that("end to end run - code", {
   diff <- max(out$mean) / min(out$mean)
   expect_lt(diff, 2.5)
   expect_gt(diff, 1.5)
-  out <- benchmark_analyze("bliblablup", branches)
+  out <- benchmark_analyze_impl("bliblablup", branches)
   expect_match(
     out,
     glue::glue("bliblablup: .* -> .*\\[.*%, .*\\]")
