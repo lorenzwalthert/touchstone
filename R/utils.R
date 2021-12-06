@@ -4,7 +4,8 @@
 #' @name touchstone_managers
 NULL
 
-#' @describeIn touchstone_managers returns the directory where the touchstone database lives.
+#' @describeIn touchstone_managers returns the directory where the touchstone
+#'   database lives.
 #' @aliases touchstone_managers
 #' @return
 #' Character vector of length one with th path to the touchstone directory.
