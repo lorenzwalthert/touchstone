@@ -10,7 +10,7 @@ benchmark_ls(name = "")
 \item{name}{The name of the benchmark.}
 }
 \value{
-A tibble with name and refs of the existing benchmarks.
+A tibble with name and branches of the existing benchmarks.
 }
 \description{
 List which benchmarks were recorded

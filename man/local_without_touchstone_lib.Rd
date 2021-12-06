@@ -18,9 +18,9 @@ This is useful in conjunction with \code{\link[=run_script]{run_script()}}.
 \details{
 \itemize{
 \item Add a touchstone library to the path with \code{\link[=run_script]{run_script()}} and
-run a script. The script hence may contain calls to libraries only installed
-in touchstone libraries.
-\item benchmark code with \code{\link[=benchmark_run_ref]{benchmark_run_ref()}}. At the start, remove all
+run a script. The script hence may contain calls to libraries only
+installed in touchstone libraries.
+\item benchmark code with \code{\link[=benchmark_run]{benchmark_run()}}. At the start, remove all
 all touchstone libraries from path and add the touchstone library we need.
 }
 

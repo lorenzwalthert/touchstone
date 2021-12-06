@@ -6,6 +6,7 @@ repos:
     hooks:
     -   id: style-files
         args: [--style_pkg=styler, --style_fun=tidyverse_style]
+    -   id: roxygenize
         # roxygen requires loading pkg -> add dependencies from DESCRIPTION
         additional_dependencies:
         -    bench@1.1.1
@@ -29,6 +30,7 @@ repos:
         -    usethis@2.0.1
         -    vctrs@0.3.8
         -    withr@2.4.2
+        -    r-lib/pkgapi
         require_serial: True # https://github.com/pre-commit-ci/runner-image/issues/93#issuecomment-927257158
     # codemeta must be above use-tidy-description when both are used
     # -   id: codemeta-description-updated

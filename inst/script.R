@@ -6,17 +6,17 @@
 # touchstone::pin_assets("some/dir")
 
 # installs branches to benchmark
-touchstone::refs_install()
+touchstone::branch_install()
 
 # benchmark a function call from your package (two calls per branch)
-touchstone::benchmark_run_ref(
+touchstone::benchmark_run(
   # expr_before_benchmark = source("dir/data.R"), #<-- TODO OTPIONAL setup before benchmark
   random_test = yourpkg::f(), #<- TODO put the call you want to benchmark here
   n = 2
 )
 
 # TODO OPTIONAL benchmark any R expression (six calls per branch)
-# touchstone::benchmark_run_ref(
+# touchstone::benchmark_run(
 #   more = {
 #     if (TRUE) {
 #       y <- yourpkg::f2(x = 3)
@@ -27,4 +27,4 @@ touchstone::benchmark_run_ref(
 
 
 # create artifacts used downstream in the GitHub Action
-touchstone::benchmarks_analyze()
+touchstone::benchmark_analyze()

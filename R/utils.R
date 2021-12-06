@@ -4,7 +4,8 @@
 #' @name touchstone_managers
 NULL
 
-#' @describeIn touchstone_managers returns the directory where the touchstone database lives.
+#' @describeIn touchstone_managers returns the directory where the touchstone
+#'   database lives.
 #' @aliases touchstone_managers
 #' @return
 #' Character vector of length one with th path to the touchstone directory.
@@ -13,15 +14,15 @@ dir_touchstone <- function() {
   getOption("touchstone.dir", "touchstone")
 }
 
-#' Get the ref from the environment variable or fail if not set
+#' Get the branch from the environment variable or fail if not set
 #'
 #' This function is only exported because it is a default argument.
 #' @param var The environment variable to retrieve.
 #' @return
-#' Returns a character vector of length one with the `ref` retrieved from the
+#' Returns a character vector of length one with the `branch` retrieved from the
 #' environment variable `var`.
 #' @export
-ref_get_or_fail <- function(var) {
+branch_get_or_fail <- function(var) {
   retrieved <- Sys.getenv(var)
   if (!nzchar(retrieved)) {
     cli::cli_alert_info(c(paste0(
@@ -30,7 +31,7 @@ ref_get_or_fail <- function(var) {
       "the below error should go away."
     )))
     cli::cli_abort(c(paste0(
-      "If you don't specify the argument {.arg ref(s)}, you must set the environment ",
+      "If you don't specify the argument {.arg branch(s)}, you must set the environment ",
       "variable {.envvar {var}} to tell {.pkg touchstone} ",
       "which branches you want to benchmark against each other."
     ),
@@ -59,18 +60,18 @@ touchstone_clear <- function(all = FALSE) {
   fs::dir_delete(paths)
 }
 
-#' Samples `ref`
+#' Samples `branch`
 #'
-#' A block is a permutation of all unique elements in `ref`. Then, we sample
+#' A block is a permutation of all unique elements in `branch`. Then, we sample
 #' `n` blocks. This is better than repeating one sample a certain number of
 #' times because if compute resources steadily increase, the first sample will
 #' always perform worse than the second, so the order within the blocks must be
 #' random.
 #' @keywords internal
-ref_upsample <- function(ref, n = 20) {
+branches_upsample <- function(branch, n = 20) {
   purrr::map_dfr(
     rlang::seq2(1, n),
-    ~ tibble::tibble(block = .x, ref = sample(unique(ref)))
+    ~ tibble::tibble(block = .x, branch = sample(unique(branch)))
   )
 }
 
@@ -80,7 +81,7 @@ ensure_dir <- function(...) {
 
 schema_disk <- function() {
   c(
-    elapsed = "numeric", iteration = "integer", ref = "character",
+    elapsed = "numeric", iteration = "integer", branch = "character",
     block = "integer",
     name = "character"
   )
@@ -114,9 +115,9 @@ local_git_checkout <- function(branch,
 #'   destruction.
 #' @details
 #' * Add a touchstone library to the path with [run_script()] and
-#'   run a script. The script hence may contain calls to libraries only installed
-#'   in touchstone libraries.
-#' * benchmark code with [benchmark_run_ref()]. At the start, remove all
+#'   run a script. The script hence may contain calls to libraries only
+#'   installed in touchstone libraries.
+#' * benchmark code with [benchmark_run()]. At the start, remove all
 #'   all touchstone libraries from path and add the touchstone library we need.
 #'
 #' Advantages: Keep benchmarked repo in touchstone library only.
@@ -168,12 +169,12 @@ is_windows <- function() {
 #' Pin asset directory
 #'
 #' Pin files or directories that need to be available on both branches when
-#' running the [touchstone_script]. During [benchmark_run_ref()] they will
+#' running the [touchstone_script]. During [benchmark_run()] they will
 #' available via [path_pinned_asset()]. This is only possible for assets
 #'  *within* the git repository.
 #' @param ... Any number of directories or files, as strings, that you want to
 #'   access in your [touchstone_script].
-#' @param ref The branch the passed assets are copied from.
+#' @param branch The branch the passed assets are copied from.
 #' @inheritParams fs::path
 #' @inheritParams fs::dir_copy
 #' @details When passing nested directories or files within nested directories
@@ -188,7 +189,7 @@ is_windows <- function() {
 #' source(path_pinned_asset("inst/setup.R"))
 #' load(path_pinned_asset("some/nested/dir/data.RData"))
 #'
-#' touchstone::benchmark_run_ref(
+#' touchstone::benchmark_run(
 #'   expr_before_benchmark = {
 #'     !!setup
 #'     source(path_pinned_asset("bench/exprs.R"))
@@ -199,11 +200,11 @@ is_windows <- function() {
 #' }
 #' @export
 pin_assets <- function(...,
-                       ref = ref_get_or_fail("GITHUB_HEAD_REF"),
+                       branch = branch_get_or_fail("GITHUB_HEAD_REF"),
                        overwrite = TRUE) {
-  asset_dir <- get_asset_dir(ref)
+  asset_dir <- get_asset_dir(branch)
 
-  local_git_checkout(ref)
+  local_git_checkout(branch)
   dirs <- rlang::list2(...)
   valid_dirs <- dirs %>% purrr::map_lgl(fs::file_exists)
 
@@ -268,37 +269,37 @@ pin_assets <- function(...,
 #'
 #' Get the path to a pinned asset within a [touchstone_script].
 #' @inheritParams fs::path
-#' @param ref The branch the passed asset was copied from.
+#' @param branch The branch the passed asset was copied from.
 #' @return The absolute path to the asset.
 #' @seealso [pin_assets()]
 #' @export
 path_pinned_asset <- function(...,
-                              ref = ref_get_or_fail("GITHUB_HEAD_REF")) {
-  asset_dir <- get_asset_dir(ref)
+                              branch = branch_get_or_fail("GITHUB_HEAD_REF")) {
+  asset_dir <- get_asset_dir(branch)
 
   path <- fs::path(asset_dir, ...)
   if (!fs::file_exists(path)) {
-    cli::cli_abort("Asset {.path {fs::path(...)}} not pinned at {.val {ref}}.")
+    cli::cli_abort("Asset {.path {fs::path(...)}} not pinned at {.val {branch}}.")
   }
 
   path
 }
 
 local_asset_dir <- function(..., env = parent.frame()) {
-  refs <- rlang::list2(...)
-  opts <- purrr::map(refs, fs::path_temp)
-  names(opts) <- purrr::map_chr(refs, ~ paste0("touchstone.dir_assets_", .x))
+  branches <- rlang::list2(...)
+  opts <- purrr::map(branches, fs::path_temp)
+  names(opts) <- purrr::map_chr(branches, ~ paste0("touchstone.dir_assets_", .x))
   withr::local_options(opts, .local_envir = env)
 
   invisible(opts)
 }
 
-get_asset_dir <- function(ref) {
-  asset_dir <- getOption(paste0("touchstone.dir_assets_", ref))
+get_asset_dir <- function(branch) {
+  asset_dir <- getOption(paste0("touchstone.dir_assets_", branch))
 
   if (is.null(asset_dir)) {
     cli::cli_abort(c(
-      "Temporary directory for ref {.arg {ref}} not found. ",
+      "Temporary directory for branch {.arg {branch}} not found. ",
       "i" = paste0(
         "This function is only for use within the {.code ?touchstone_script},",
         " which must be called with {.fun run_script}",

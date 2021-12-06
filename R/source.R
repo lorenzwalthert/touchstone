@@ -7,7 +7,7 @@
 #'
 #' @param path The script to run. It must fulfill the requirements of a
 #'   [touchstone_script].
-#' @param ref The branch that corresponds to the library that should be prepended
+#' @param branch The branch that corresponds to the library that should be prepended
 #'   to the library path when the script at `path` is executed, see 'Why this
 #'   function?' below.
 #' @section How to run this interactively?:
@@ -16,7 +16,7 @@
 #'  environment.
 #' In a GitHub Action workflow, the environment variables `GITHUB_BASE_REF` and
 #' `GITHUB_HEAD_REF` denote the target and source branch of the pull request -
-#' and these are default arguments in [benchmark_run_ref()] (and other functions
+#' and these are default arguments in [benchmark_run()] (and other functions
 #' you probably want to call in your benchmarking script) to determinate the
 #' branches to use.
 #' @section Why this function?:
@@ -24,11 +24,11 @@
 #' installed in the global package library, but only in touchstone libraries, as
 #' asserted with [assert_no_global_installation()]. However, this also implies
 #' that the package is not available in the touchstone script outside of
-#' benchmark runs (i.e. outside of [benchmark_run_ref()]. We sometimes still
+#' benchmark runs (i.e. outside of [benchmark_run()]. We sometimes still
 #' want to call that package to prepare a benchmarking run though. To
 #' allow this, we prepend a touchstone library location that
 #' contains the installed benchmarked package for set-up tasks, and temporarily
-#' remove it during benchmarking with [benchmark_run_ref()] so only one
+#' remove it during benchmarking with [benchmark_run()] so only one
 #' touchstone library is on the library path at any time.
 #' @return
 #' The same as [base::source()], which inherits from [base::withVisible()], i.e.
@@ -45,8 +45,8 @@
 #' }
 #' }
 run_script <- function(path = "touchstone/script.R",
-                       ref = ref_get_or_fail("GITHUB_HEAD_REF")) {
-  activate(ref, ref_get_or_fail("GITHUB_BASE_REF"))
+                       branch = branch_get_or_fail("GITHUB_HEAD_REF")) {
+  activate(branch, branch_get_or_fail("GITHUB_BASE_REF"))
 
   temp_file <- fs::file_temp()
   fs::file_copy(path, temp_file)
@@ -63,12 +63,12 @@ run_script <- function(path = "touchstone/script.R",
 #'
 #' This sets environment variables, R options and library paths to work
 #' interactively on the [touchstone_script].
-#' @param head_ref Git ref to be used as the `GITHUB_HEAD_REF` ref (i.e. the
+#' @param head_branch Git branch to be used as the `GITHUB_HEAD_REF` branch (i.e. the
 #'   branch with new changes) when running benchmarks. Defaults to the current
 #'   branch.
-#' @param base_ref Git ref for the `GITHUB_BASE_REF` (i.e. the branch you want
+#' @param base_branch Git branch for the `GITHUB_BASE_REF` (i.e. the branch you want
 #'   to merge your changes into) when running benchmarks.
-#'   Defaults to 'main' if the option `touchstone.default_base_ref`is not set.
+#'   Defaults to 'main' if the option `touchstone.default_base_branch`is not set.
 #' @param env In which environment the temporary changes should be made.
 #'   For use within functions.
 #' @examples
@@ -78,21 +78,21 @@ run_script <- function(path = "touchstone/script.R",
 #' deactivate()
 #' }
 #' @export
-activate <- function(head_ref = gert::git_branch(),
-                     base_ref = getOption(
-                       "touchstone.default_base_ref",
+activate <- function(head_branch = gert::git_branch(),
+                     base_branch = getOption(
+                       "touchstone.default_base_branch",
                        "main"
                      ),
                      env = parent.frame()) {
   suppressMessages({
     withr::local_envvar(
-      GITHUB_BASE_REF = base_ref,
-      GITHUB_HEAD_REF = head_ref,
+      GITHUB_BASE_REF = base_branch,
+      GITHUB_HEAD_REF = head_branch,
       .local_envir = env
     )
 
-    local_touchstone_libpath(head_ref, env = env)
-    local_asset_dir(base_ref, head_ref, env = env)
+    local_touchstone_libpath(head_branch, env = env)
+    local_asset_dir(base_branch, head_branch, env = env)
   })
 
   if (identical(env, .GlobalEnv)) {
@@ -111,12 +111,12 @@ activate <- function(head_ref = gert::git_branch(),
 #' [.libPaths()] and friends. Can be used in [touchstone_script]
 #'  to prepare benchmarks etc. If there are touchstone libraries on the path
 #'  when this function is called, they will be removed.
-#' @param ref Git ref to use, e.g. HEAD or BASE ref.
+#' @param branch Git branch to use, e.g. HEAD or BASE branch.
 #' @param env Environment in which the change should be applied.
 #' @seealso [run_script()]
 #' @keywords internal
-local_touchstone_libpath <- function(ref, env = parent.frame()) {
-  lib <- libpath_touchstone(ref)
+local_touchstone_libpath <- function(branch, env = parent.frame()) {
+  lib <- libpath_touchstone(branch)
   fs::dir_create(lib)
   current <- fs::path_real(.libPaths())
 
@@ -150,8 +150,8 @@ deactivate <- function(env = parent.frame()) {
 #'
 #' A touchstone script must:
 #'
-#' * install all versions of the benchmarked repository with [refs_install()].
-#' * create benchmarks with one or more calls to [benchmark_run_ref()].
+#' * install all versions of the benchmarked repository with [branch_install()].
+#' * create benchmarks with one or more calls to [benchmark_run()].
 #' * produce the artifacts required in the GitHub workflow with
-#'   [benchmarks_analyze()].
+#'   [benchmark_analyze()].
 NULL

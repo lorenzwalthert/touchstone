@@ -15,20 +15,20 @@ test_that("end to end run - code", {
       glue::glue("setup branch {branch}.")
     )
   }
-  bm <- benchmark_run_ref(
+  bm <- benchmark_run(
     expr_before_benchmark = source("R/core.R"),
     bliblablup = f(),
-    refs = branches,
+    branches = branches,
     n = 2
   )
   out <- benchmark_read("bliblablup", branches) %>%
-    dplyr::group_by(.data$ref) %>%
+    dplyr::group_by(.data$branch) %>%
     dplyr::summarise(mean = mean(elapsed), sd = sd(elapsed))
   # expect diff around 2
   diff <- max(out$mean) / min(out$mean)
   expect_lt(diff, 2.5)
   expect_gt(diff, 1.5)
-  out <- benchmark_analyze("bliblablup", branches)
+  out <- benchmark_analyze_impl("bliblablup", branches)
   expect_match(
     out,
     glue::glue("bliblablup: .* -> .*\\[.*%, .*\\]")

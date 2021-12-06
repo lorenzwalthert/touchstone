@@ -7,7 +7,7 @@ test_that("can analyze results", {
     "",
     dots = list(xx1 = "Sys.sleep(runif(1, 0, 1e-5))"),
     n = 2,
-    ref = .x,
+    branch = .x,
     block = 1
   ))
   mockery::stub(
@@ -16,7 +16,7 @@ test_that("can analyze results", {
     list(string = "[x.xx%, y.yy%]", emoji = ":rocket:"),
     depth = 2
   )
-  benchmarks_analyze(branches)
+  benchmark_analyze(branches)
   expect_match(
     readLines("touchstone/pr-comment/info.txt")[3],
     as.character(glue::glue("xx1: .*s -> .*s \\[.*%, .*%\\]"))
@@ -26,7 +26,7 @@ test_that("can analyze results", {
 
 
 test_that("can validate inputs before analysing", {
-  expect_error(benchmarks_analyze(refs = "just-one"), "exactly two refs")
+  expect_error(benchmark_analyze(branches = "just-one"), "exactly two branches")
 })
 
 test_that("can analyze results", {
@@ -38,7 +38,7 @@ test_that("can analyze results", {
     "",
     dots = list(xx1 = "Sys.sleep(runif(1, 0, 1e-5))"),
     n = 2,
-    ref = .x,
+    branch = .x,
     block = 1
   ))
 
@@ -46,7 +46,7 @@ test_that("can analyze results", {
     "",
     dots = list(xx2 = "Sys.sleep(runif(1, 0, 1e-5))"),
     n = 2,
-    ref = .x,
+    branch = .x,
     block = 1
   ))
 
@@ -58,8 +58,8 @@ test_that("can analyze results", {
   )
   fs::file_delete(fs::path(dir_touchstone(), "records", "xx1", branches[1]))
   expect_warning(
-    out <- benchmarks_analyze(branches),
-    "All benchmarks to analyse must have the two refs"
+    out <- benchmark_analyze(branches),
+    "All benchmarks to analyse must have the two branches"
   )
   expect_match(
     out[3],
@@ -70,6 +70,6 @@ test_that("can analyze results", {
 
 test_that("missing package throws error", {
   skip_if(packageVersion("mockery") < "0.4.2.9000")
-  mockery::stub(benchmarks_analyze, "requireNamespace", FALSE)
-  expect_error(benchmarks_analyze(), "additional package")
+  mockery::stub(benchmark_analyze, "requireNamespace", FALSE)
+  expect_error(benchmark_analyze(), "additional package")
 })

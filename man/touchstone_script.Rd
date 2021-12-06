@@ -12,10 +12,10 @@ typically called with \code{\link[=run_script]{run_script()}}.
 
 A touchstone script must:
 \itemize{
-\item install all versions of the benchmarked repository with \code{\link[=refs_install]{refs_install()}}.
-\item create benchmarks with one or more calls to \code{\link[=benchmark_run_ref]{benchmark_run_ref()}}.
+\item install all versions of the benchmarked repository with \code{\link[=branch_install]{branch_install()}}.
+\item create benchmarks with one or more calls to \code{\link[=benchmark_run]{benchmark_run()}}.
 \item produce the artifacts required in the GitHub workflow with
-\code{\link[=benchmarks_analyze]{benchmarks_analyze()}}.
+\code{\link[=benchmark_analyze]{benchmark_analyze()}}.
 }
 }
 

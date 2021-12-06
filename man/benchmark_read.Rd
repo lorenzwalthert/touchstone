@@ -4,12 +4,12 @@
 \alias{benchmark_read}
 \title{Read benchmarks}
 \usage{
-benchmark_read(name, ref)
+benchmark_read(name, branch)
 }
 \arguments{
 \item{name}{The name of the benchmark.}
 
-\item{ref}{A character vector of length one to indicate the git ref (i.e.
+\item{branch}{A character vector of length one to indicate the git branch (i.e.
 commit, tag, branch etc) of the benchmarking.}
 }
 \value{

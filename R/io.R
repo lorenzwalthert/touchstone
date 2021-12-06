@@ -3,26 +3,26 @@
 #' @param benchmark The result of [bench::mark()], with `iterations = 1`.
 #' @param name The name of the benchmark.
 #' @param append Whether to append the result to the file or not.
-#' @param ref A character vector of length one to indicate the git ref (i.e.
+#' @param branch A character vector of length one to indicate the git branch (i.e.
 #'   commit, tag, branch etc) of the benchmarking.
-#' @param block All refs appear once in a block.
+#' @param block All branches that appear once in a block.
 #' @param iteration An integer indicating to which iteration the benchmark
 #'   refers to. Multiple iterations within a block always benchmark the same
-#'   `ref`.
+#'   `branch`.
 #' @return
-#' Character vector of lenth one with path to the record written (invisibly).
+#' Character vector of length one with path to the record written (invisibly).
 #' @export
-benchmark_write <- function(benchmark, name, ref, block = NA, iteration = NA, append = TRUE) {
+benchmark_write <- function(benchmark, name, branch, block = NA, iteration = NA, append = TRUE) {
   if (benchmark$n_itr > 1) {
     cli::cli_abort("This package only supports benchmarks with {.code bench::mark(..., iterations = 1)}.")
   }
-  path <- path_record(name, ref)
+  path <- path_record(name, branch)
   init_touchstone()
   ensure_dir(fs::path_dir(path))
   tibble(
     elapsed = as.numeric(benchmark$median),
     iteration = iteration,
-    ref = enc2utf8(ref),
+    branch = enc2utf8(branch),
     block = block,
     name = name
   ) %>%
@@ -52,8 +52,8 @@ benchmark_write_impl <- function(benchmark, path, append) {
 #' @return
 #' A tibble with the benchmarks.
 #' @export
-benchmark_read <- function(name, ref) {
-  path_outputs <- path_record(name, ref)
+benchmark_read <- function(name, branch) {
+  path_outputs <- path_record(name, branch)
   out <- purrr::map(
     path_outputs,
     benchmark_read_impl
@@ -62,15 +62,15 @@ benchmark_read <- function(name, ref) {
 }
 
 
-new_benchmark_ls_tibble <- function(name = character(), ref = character()) {
-  tibble::tibble(name, ref)
+new_benchmark_ls_tibble <- function(name = character(), branch = character()) {
+  tibble::tibble(name, branch)
 }
 
 #' List which benchmarks were recorded
 #'
 #' @inheritParams benchmark_write
 #' @return
-#' A tibble with name and refs of the existing benchmarks.
+#' A tibble with name and branches of the existing benchmarks.
 #' @export
 benchmark_ls <- function(name = "") {
   path_record <- path_record()
@@ -86,12 +86,12 @@ benchmark_ls <- function(name = "") {
   dirs <- fs::dir_ls(path, type = "file")
   new_benchmark_ls_tibble(
     name = fs::path_file(fs::path_dir(dirs)),
-    ref = fs::path_file(dirs)
+    branch = fs::path_file(dirs)
   )
 }
 
-path_record <- function(name = "", ref = "") {
-  as.character(fs::path(dir_touchstone(), "records", name, ref))
+path_record <- function(name = "", branch = "") {
+  as.character(fs::path(dir_touchstone(), "records", name, branch))
 }
 
 benchmark_read_impl <- function(path) {

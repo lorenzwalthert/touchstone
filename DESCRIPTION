@@ -1,6 +1,6 @@
 Type: Package
 Package: touchstone
-Title: Continuous Benchmarking with statistical confidence based on 'Git' branches
+Title: Continuous Benchmarking with Statistical Confidence Based on 'Git' Branches
 Version: 0.0.0.9001
 Authors@R: 
     c(person(given = "Lorenz",
@@ -14,7 +14,7 @@ Authors@R:
              comment = c(ORCID = "0000-0002-7281-3989")))
 Description: A common problem of benchmarking in continuous integration is
     that the computational power of the virtual machines that run the job
-    varies over time.  This package allows users to benchmark two git refs
+    varies over time.  This package allows users to benchmark two branches
     of the same repo in a random sequence for better comparison.
 License: MIT + file LICENSE
 URL: https://github.com/lorenzwalthert/touchstone,

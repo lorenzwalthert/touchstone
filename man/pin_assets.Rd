@@ -4,13 +4,17 @@
 \alias{pin_assets}
 \title{Pin asset directory}
 \usage{
-pin_assets(..., ref = ref_get_or_fail("GITHUB_HEAD_REF"), overwrite = TRUE)
+pin_assets(
+  ...,
+  branch = branch_get_or_fail("GITHUB_HEAD_REF"),
+  overwrite = TRUE
+)
 }
 \arguments{
 \item{...}{Any number of directories or files, as strings, that you want to
 access in your \link{touchstone_script}.}
 
-\item{ref}{The branch the passed assets are copied from.}
+\item{branch}{The branch the passed assets are copied from.}
 
 \item{overwrite}{Overwrite files if they exist. If this is \code{FALSE} and the
 file exists an error will be thrown.}
@@ -20,7 +24,7 @@ The asset directory invisibly.
 }
 \description{
 Pin files or directories that need to be available on both branches when
-running the \link{touchstone_script}. During \code{\link[=benchmark_run_ref]{benchmark_run_ref()}} they will
+running the \link{touchstone_script}. During \code{\link[=benchmark_run]{benchmark_run()}} they will
 available via \code{\link[=path_pinned_asset]{path_pinned_asset()}}. This is only possible for assets
 \emph{within} the git repository.
 }
@@ -37,7 +41,7 @@ pin_assets(c("/home/user/pkg/bench", "inst/setup.R", "some/nested/dir"))
 source(path_pinned_asset("inst/setup.R"))
 load(path_pinned_asset("some/nested/dir/data.RData"))
 
-touchstone::benchmark_run_ref(
+touchstone::benchmark_run(
   expr_before_benchmark = {
     !!setup
     source(path_pinned_asset("bench/exprs.R"))

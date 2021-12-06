@@ -4,9 +4,9 @@
 \alias{benchmark_verbalize}
 \title{Create nice text from benchmarks}
 \usage{
-benchmark_verbalize(benchmark, timings, refs, ci)
+benchmark_verbalize(benchmark, timings, branches, ci)
 }
 \description{
-\code{refs} must be passed because the order is relevant.
+\code{branches} must be passed because the order is relevant.
 }
 \keyword{internal}

@@ -22,25 +22,25 @@ We first explain the output of the comment in the PR:
 ![](../man/figures/screenshot-pr-comment.png)
 
 Every bullet point corresponds to one expression you benchmarked in your
-touchstone script in `touchstone/script.R` with `benchmark_run_ref()`. The
+touchstone script in `touchstone/script.R` with `benchmark_run()`. The
 contents of the former are in this (simplified) example:
 
 ```{r}
 library(touchstone)
-refs_install()
-benchmark_run_ref(
+branches_install()
+benchmark_run(
   expr_before_benchmark = c("library(styler)", "cache_deactivate()"),
   without_cache = 'styler::style_pkg("touchstone/sources/here")',
   n = 30
 )
 
-benchmark_run_ref(
+benchmark_run(
   expr_before_benchmark = c("library(styler)", "cache_activate()"),
   cache_applying = 'styler::style_pkg("touchstone/sources/here")',
   n = 30
 )
 
-benchmark_run_ref(
+benchmark_run(
   expr_before_benchmark = c("library(styler)", "cache_deactivate()"),
   cache_recording = c(
     "gert::git_reset_hard(repo = 'touchstone/sources/here')",
@@ -67,7 +67,7 @@ of 100 times. It comes from a simple OLS model where we regress the elapsed time
 on the branch from which the result comes. Like this
 
 ```{r}
-fit <- stats::aov(elapsed ~ factor(ref), data = timings)
+fit <- stats::aov(elapsed ~ factor(branches), data = timings)
 confint(fit, ...)
 ```
 
@@ -91,7 +91,7 @@ also need to look at the range of the confidence interval.
 
 ## Sampling
 
-We sample both refs in `n` blocks. This gives us a more efficient estimate of
+We sample both branches in `n` blocks. This gives us a more efficient estimate of
 the speed difference than the completely at random, because completely at random
 can result in or close to one of the following scenarios assuming there is an
 upwards trend in available compute resources over the whole period:
@@ -105,5 +105,5 @@ The opposite effect occurs when compute power steadily decreases. So we sample
 randomly within blocks:
 
 ```{r, eval = TRUE}
-touchstone:::ref_upsample(c("main", "feature"))
+touchstone:::branches_upsample(c("main", "feature"))
 ```

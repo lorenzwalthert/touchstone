@@ -29,7 +29,8 @@ Utilities to manage the touchstone database.
 }
 \section{Functions}{
 \itemize{
-\item \code{dir_touchstone}: returns the directory where the touchstone database lives.
+\item \code{dir_touchstone}: returns the directory where the touchstone
+database lives.
 
 \item \code{touchstone_clear}: clears the touchstone database.
 
