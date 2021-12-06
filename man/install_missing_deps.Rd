@@ -10,9 +10,8 @@ install_missing_deps(path_pkg, quiet = FALSE)
 If the HEAD branch removes dependencies (compared to BASE), installing the
 package from the BASE branch will fail due to missing dependencies, as
 dependencies were installed in the GitHub Action based on the \code{DESCRIPTION}
-of the HEAD branch. The simplest way to
-ensure all required dependencies are present (including specification of
-remotes) is by simply installing them
+of the HEAD branch. The simplest way to ensure all required dependencies are
+present (including specification of remotes) is by simply installing them
 into the respective {touchstone} library. Prepend the local touchstone
 library to the library path with \code{\link[=local_touchstone_libpath]{local_touchstone_libpath()}}.
 }

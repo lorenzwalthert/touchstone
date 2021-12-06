@@ -14,8 +14,8 @@ benchmark_run_iteration(
 }
 \arguments{
 \item{expr_before_benchmark}{Expression to run before
-the benchmark is ran, will be captured with \code{\link[rlang:nse-defuse]{rlang::enexpr()}}.
-So you can use quasiquotation.}
+the benchmark is ran, will be captured with \code{\link[rlang:nse-defuse]{rlang::enexpr()}}. So you can
+use quasiquotation.}
 
 \item{dots}{list of quoted expressions (length 1).}
 
