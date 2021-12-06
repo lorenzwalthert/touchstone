@@ -45,8 +45,8 @@ branch_install_impl <- function(branch = "main",
 #'
 #' Installs each `branch` in a separate library for isolation.
 #' @param branches The names of the branches in a character vector.
-#' @param install_dependencies Passed to ``
-#' @inheritParams branch_install
+#' @param install_dependencies Passed to [remotes::install_local()].
+#' @inheritParams branch_install_impl
 #' @return
 #' The global and touchstone library paths in a character vector (invisibly).
 #' @export

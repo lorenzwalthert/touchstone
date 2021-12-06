@@ -14,7 +14,9 @@ branch_install(
 \arguments{
 \item{branches}{The names of the branches in a character vector.}
 
-\item{install_dependencies}{Passed to ``}
+\item{path_pkg}{The path to the repository to install.}
+
+\item{install_dependencies}{Passed to \code{\link[remotes:install_local]{remotes::install_local()}}.}
 }
 \value{
 The global and touchstone library paths in a character vector (invisibly).
