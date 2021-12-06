@@ -115,8 +115,8 @@ local_git_checkout <- function(branch,
 #'   destruction.
 #' @details
 #' * Add a touchstone library to the path with [run_script()] and
-#'   run a script. The script hence may contain calls to libraries only installed
-#'   in touchstone libraries.
+#'   run a script. The script hence may contain calls to libraries only
+#'   installed in touchstone libraries.
 #' * benchmark code with [benchmark_run()]. At the start, remove all
 #'   all touchstone libraries from path and add the touchstone library we need.
 #'

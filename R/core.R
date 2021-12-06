@@ -1,7 +1,7 @@
 #' Run a benchmark iteration
 #' @param expr_before_benchmark Expression to run before
-#'   the benchmark is ran, will be captured with [rlang::enexpr()].
-#'   So you can use quasiquotation.
+#'   the benchmark is ran, will be captured with [rlang::enexpr()]. So you can
+#'   use quasiquotation.
 #' @param n Number of iterations to run a benchmark within an iteration.
 #' @param dots list of quoted expressions (length 1).
 #' @inheritParams benchmark_write
