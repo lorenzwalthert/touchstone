@@ -52,7 +52,9 @@ benchmark_run_iteration <- function(expr_before_benchmark,
 #'   must be built for each benchmarked branch beforehand with [branch_install()].
 #'   The base branch is the target branch of the pull request in a workflow run,
 #'   the head branch is the source branch of the pull request in a workflow run.
-#' @param n Number of times benchmarks should be run for each `branch`.
+#' @param n Number of times benchmarks should be run for each `branch`. The more
+#'   iterations you run, the more narrow your confidence interval will be and
+#'   the smaller the differences you will detect.
 #' @param path_pkg The path to the package to benchmark. Will be used to
 #'   temporarily checkout the branch during benchmarking.
 #' @inheritParams branch_install
