@@ -26,7 +26,9 @@ must be built for each benchmarked branch beforehand with \code{\link[=branch_in
 The base branch is the target branch of the pull request in a workflow run,
 the head branch is the source branch of the pull request in a workflow run.}
 
-\item{n}{Number of times benchmarks should be run for each \code{branch}.}
+\item{n}{Number of times benchmarks should be run for each \code{branch}. The more
+iterations you run, the more narrow your confidence interval will be and
+the smaller the differences you will detect.}
 
 \item{path_pkg}{The path to the package to benchmark. Will be used to
 temporarily checkout the branch during benchmarking.}

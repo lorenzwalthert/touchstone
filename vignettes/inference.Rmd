@@ -63,8 +63,8 @@ be by chance. To avoid that, we run it `n` times and compute a confidence
 interval, which tells us how certain we can be about our estimated differences.
 A 95% confidence interval tells us that if we were to repeat the benchmarking
 experiment 100 times, our estimated speed change would be in the interval 95 out
-of 100 times. It comes from a simple OLS model where we regress the elapsed time
-on the branch from which the result comes. Like this
+of 100 times. It comes from a simple ANOVA model where we regress the elapsed 
+time on the branch from which the result comes. Like this:
 
 ```{r}
 fit <- stats::aov(elapsed ~ factor(branches), data = timings)
