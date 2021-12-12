@@ -19,6 +19,8 @@
 <![endif]-->
 </head>
 <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-article">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -37,12 +39,6 @@
 
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
-<li>
-  <a href="../index.html">
-    <span class="fas fa-home fa-lg"></span>
-     
-  </a>
-</li>
 <li>
   <a href="../articles/touchstone.html">Get started</a>
 </li>
@@ -67,7 +63,7 @@
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
-  <a href="https://github.com/lorenzwalthert/touchstone/">
+  <a href="https://github.com/lorenzwalthert/touchstone/" class="external-link">
     <span class="fab fa-github fa-lg"></span>
      
   </a>
@@ -88,16 +84,16 @@
       <h1 data-toc-skip>Using touchstone</h1>
             
       
-      <small class="dont-index">Source: <a href="https://github.com/lorenzwalthert/touchstone/blob/master/vignettes/touchstone.Rmd"><code>vignettes/touchstone.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/lorenzwalthert/touchstone/blob/HEAD/vignettes/touchstone.Rmd" class="external-link"><code>vignettes/touchstone.Rmd</code></a></small>
       <div class="hidden name"><code>touchstone.Rmd</code></div>
 
     </div>
 
     
     
-<div id="initialization" class="section level1">
-<h1 class="hasAnchor">
-<a href="#initialization" class="anchor"></a>Initialization</h1>
+<div class="section level1">
+<h1 id="initialization">Initialization<a class="anchor" aria-label="anchor" href="#initialization"></a>
+</h1>
 <p>Start by initializing {touchstone} in your package repository with:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">touchstone</span><span class="fu">::</span><span class="fu"><a href="../reference/use_touchstone.html">use_touchstone</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
@@ -131,73 +127,73 @@
 </ul>
 <p>Now you just need to modify the touchstone script <code>touchstone/script.R</code> to run the benchmarks you are interested in.</p>
 </div>
-<div id="workflow-overview" class="section level1">
-<h1 class="hasAnchor">
-<a href="#workflow-overview" class="anchor"></a>Workflow overview</h1>
+<div class="section level1">
+<h1 id="workflow-overview">Workflow overview<a class="anchor" aria-label="anchor" href="#workflow-overview"></a>
+</h1>
 <p>While you eventually want to run your benchmarks on GitHub Actions for every pull request, it is handy to develop interactively and locally first to avoid long feedback cycles with trivial errors. The below diagram shows these two different workflows and what they entail.</p>
 <p><img src="../inst/workflow-visualization.png" width="100%"></p>
-<p>Note that there are two GitHub Action workflow files in <code>.github/workflows/</code> due to <a href="https://securitylab.github.com/research/github-actions-preventing-pwn-requests/">security reasons</a>.</p>
+<p>Note that there are two GitHub Action workflow files in <code>.github/workflows/</code> due to <a href="https://securitylab.github.com/research/github-actions-preventing-pwn-requests/" class="external-link">security reasons</a>.</p>
 <p>In the remainder, we’ll explain how to adapt the touchstone script, which is the most important script you need to customize.</p>
-<div id="adapting-the-touchstone-script" class="section level2">
-<h2 class="hasAnchor">
-<a href="#adapting-the-touchstone-script" class="anchor"></a>Adapting the touchstone script</h2>
-<p>The file consists of three parts, two of which you will need to modify to fit your needs. Within the GitHub Action {touchstone} will always run the <code>touchstone/script.R</code> from the <code>HEAD</code> branch, so you can modify or extend the benchmarks if needed to fit your current branch. Please beware that a few functions such as <code><a href="../reference/refs_install.html">refs_install()</a></code>, <code>pin_assets</code> or <code><a href="../reference/benchmark_run_ref.html">benchmark_run_ref()</a></code> will perform local git checkouts and therefore the git status should be clean and no other processes should run in the directory.</p>
+<div class="section level2">
+<h2 id="adapting-the-touchstone-script">Adapting the touchstone script<a class="anchor" aria-label="anchor" href="#adapting-the-touchstone-script"></a>
+</h2>
+<p>The file consists of three parts, two of which you will need to modify to fit your needs. Within the GitHub Action {touchstone} will always run the <code>touchstone/script.R</code> from the <code>HEAD</code> branch, so you can modify or extend the benchmarks if needed to fit your current branch. Please beware that a few functions such as <code>branches_install()</code>, <code>pin_assets</code> or <code><a href="../reference/benchmark_run.html">benchmark_run()</a></code> will perform local git checkouts and therefore the git status should be clean and no other processes should run in the directory.</p>
 <p>The touchstone script will be run with <code><a href="../reference/run_script.html">run_script()</a></code> on GitHub Actions with the required environment variables <code>GITHUB_HEAD_REF</code> and <code>GITHUB_BASE_REF</code> set for various reasons explained in the help file. If you want to interactively work on your touchstone script, i.e. running it line by line, you must activate touchstone first with <code><a href="../reference/activate.html">activate()</a></code>, which sets environment variables, R options and library paths.</p>
-<div id="setup" class="section level3">
-<h3 class="hasAnchor">
-<a href="#setup" class="anchor"></a>Setup</h3>
-<p>We first install the different package versions in separate libraries with <code><a href="../reference/refs_install.html">refs_install()</a></code>, this is mandatory for any <code>script.R</code>. If you want to access some directory or file which only exists on one of the branches you can use <code>pin_assets(..., ref = "your-branch-name")</code> to make them available across branches. You can of course also run arbitrary code to prepare for the benchmarks.</p>
+<div class="section level3">
+<h3 id="setup">Setup<a class="anchor" aria-label="anchor" href="#setup"></a>
+</h3>
+<p>We first install the different package versions in separate libraries with <code>branches_install()</code>, this is mandatory for any <code>script.R</code>. If you want to access some directory or file which only exists on one of the branches you can use <code>pin_assets(..., ref = "your-branch-name")</code> to make them available across branches. You can of course also run arbitrary code to prepare for the benchmarks.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu">touchstone</span><span class="fu">::</span><span class="fu"><a href="../reference/refs_install.html">refs_install</a></span><span class="op">(</span><span class="op">)</span> <span class="co"># installs branches to benchmark</span>
+<code class="sourceCode R"><span class="fu">touchstone</span><span class="fu">::</span><span class="fu">branches_install</span><span class="op">(</span><span class="op">)</span> <span class="co"># installs branches to benchmark</span>
 <span class="fu">touchstone</span><span class="fu">::</span><span class="fu"><a href="../reference/pin_assets.html">pin_assets</a></span><span class="op">(</span><span class="st">"data/all.Rdata"</span>, <span class="st">"inst/scripts"</span><span class="op">)</span> <span class="co"># pin files and directories</span>
 
-<span class="fu"><a href="https://rdrr.io/r/base/load.html">load</a></span><span class="op">(</span><span class="fu"><a href="../reference/path_pinned_asset.html">path_pinned_asset</a></span><span class="op">(</span><span class="st">"all.Rdata"</span><span class="op">)</span><span class="op">)</span> <span class="co"># perform other setup you need for the benchmarks</span>
-<span class="kw"><a href="https://rdrr.io/r/base/source.html">source</a></span><span class="op">(</span><span class="fu"><a href="../reference/path_pinned_asset.html">path_pinned_asset</a></span><span class="op">(</span><span class="st">"scripts/prepare.R"</span><span class="op">)</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/base/load.html" class="external-link">load</a></span><span class="op">(</span><span class="fu"><a href="../reference/path_pinned_asset.html">path_pinned_asset</a></span><span class="op">(</span><span class="st">"all.Rdata"</span><span class="op">)</span><span class="op">)</span> <span class="co"># perform other setup you need for the benchmarks</span>
+<span class="kw"><a href="https://rdrr.io/r/base/source.html" class="external-link">source</a></span><span class="op">(</span><span class="fu"><a href="../reference/path_pinned_asset.html">path_pinned_asset</a></span><span class="op">(</span><span class="st">"scripts/prepare.R"</span><span class="op">)</span><span class="op">)</span>
 <span class="va">data_clean</span> <span class="op">&lt;-</span> <span class="fu">prepare_data</span><span class="op">(</span><span class="va">data_all</span><span class="op">)</span></code></pre></div>
 </div>
-<div id="benchmarks" class="section level3">
-<h3 class="hasAnchor">
-<a href="#benchmarks" class="anchor"></a>Benchmarks</h3>
-<p>Run any number of benchmarks, with one named benchmark per call of <code><a href="../reference/benchmark_run_ref.html">benchmark_run_ref()</a></code>. As benchmarks are run in a subprocess, setup (like setting a seed) needs to be passed with <code>expr_before_benchmark</code>. You can pass a single function call or a longer block of code wrapped in “{ }”. The expressions are captured with <code>rlang</code> so you can use <a href="https://rlang.r-lib.org/reference/quasiquotation.html">quasiquotation</a>.</p>
+<div class="section level3">
+<h3 id="benchmarks">Benchmarks<a class="anchor" aria-label="anchor" href="#benchmarks"></a>
+</h3>
+<p>Run any number of benchmarks, with one named benchmark per call of <code><a href="../reference/benchmark_run.html">benchmark_run()</a></code>. As benchmarks are run in a subprocess, setup (like setting a seed) needs to be passed with <code>expr_before_benchmark</code>. You can pass a single function call or a longer block of code wrapped in “{ }”. The expressions are captured with <code>rlang</code> so you can use <a href="https://rlang.r-lib.org/reference/quasiquotation.html" class="external-link">quasiquotation</a>.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># benchmark a function call from your package</span>
-<span class="fu">touchstone</span><span class="fu">::</span><span class="fu"><a href="../reference/benchmark_run_ref.html">benchmark_run_ref</a></span><span class="op">(</span>
+<span class="fu">touchstone</span><span class="fu">::</span><span class="fu"><a href="../reference/benchmark_run.html">benchmark_run</a></span><span class="op">(</span>
   random_test <span class="op">=</span> <span class="fu">yourpkg</span><span class="fu">::</span><span class="fu">fun</span><span class="op">(</span><span class="va">data_clean</span><span class="op">)</span>,
   n <span class="op">=</span> <span class="fl">2</span>
 <span class="op">)</span>
 
 <span class="co"># Optionally run setup code</span>
-<span class="fu">touchstone</span><span class="fu">::</span><span class="fu"><a href="../reference/benchmark_run_ref.html">benchmark_run_ref</a></span><span class="op">(</span>
+<span class="fu">touchstone</span><span class="fu">::</span><span class="fu"><a href="../reference/benchmark_run.html">benchmark_run</a></span><span class="op">(</span>
   expr_before_benchmark <span class="op">=</span> <span class="op">{</span>
-    <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">yourpkg</span><span class="op">)</span>
-    <span class="fu"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span><span class="op">(</span><span class="fl">42</span><span class="op">)</span>
+    <span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">yourpkg</span><span class="op">)</span>
+    <span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">42</span><span class="op">)</span>
   <span class="op">}</span>,
   test_with_seed <span class="op">=</span> <span class="fu">fun</span><span class="op">(</span><span class="va">data_clean</span><span class="op">)</span>,
   n <span class="op">=</span> <span class="fl">2</span>
 <span class="op">)</span></code></pre></div>
 </div>
-<div id="analyze" class="section level3">
-<h3 class="hasAnchor">
-<a href="#analyze" class="anchor"></a>Analyze</h3>
-<p>This part is just one call to <code><a href="../reference/benchmarks_analyze.html">benchmarks_analyze()</a></code>which analyses the results and prepares the PR comment.</p>
+<div class="section level3">
+<h3 id="analyze">Analyze<a class="anchor" aria-label="anchor" href="#analyze"></a>
+</h3>
+<p>This part is just one call to <code>benchmarks_analyze()</code>which analyses the results and prepares the PR comment.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># create artifacts used downstream in the GitHub Action</span>
-<span class="fu">touchstone</span><span class="fu">::</span><span class="fu"><a href="../reference/benchmarks_analyze.html">benchmarks_analyze</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
+<span class="fu">touchstone</span><span class="fu">::</span><span class="fu">benchmarks_analyze</span><span class="op">(</span><span class="op">)</span></code></pre></div>
 </div>
 </div>
-<div id="running-the-script" class="section level2">
-<h2 class="hasAnchor">
-<a href="#running-the-script" class="anchor"></a>Running the script</h2>
+<div class="section level2">
+<h2 id="running-the-script">Running the script<a class="anchor" aria-label="anchor" href="#running-the-script"></a>
+</h2>
 <p>After you have committed and pushed the workflow files to your default branch the benchmarks will be run on new pull requests and on each commit while that pull request is open.</p>
-<p>Note that various functions such as <code><a href="../reference/refs_install.html">refs_install()</a></code> <code><a href="../reference/pin_assets.html">pin_assets()</a></code> and <code><a href="../reference/benchmark_run_ref.html">benchmark_run_ref()</a></code> will check out different branches and should therefore be the only process running in the directory and with a clean git status.</p>
+<p>Note that various functions such as <code>branches_install()</code> <code><a href="../reference/pin_assets.html">pin_assets()</a></code> and <code><a href="../reference/benchmark_run.html">benchmark_run()</a></code> will check out different branches and should therefore be the only process running in the directory and with a clean git status.</p>
 </div>
-<div id="the-results" class="section level2">
-<h2 class="hasAnchor">
-<a href="#the-results" class="anchor"></a>The Results</h2>
+<div class="section level2">
+<h2 id="the-results">The Results<a class="anchor" aria-label="anchor" href="#the-results"></a>
+</h2>
 <p>When the GitHub Action successfully completes, the main result you will see is the comment posted on the pull request, it will look something like this:</p>
-<p><img src="../man/figures/screenshot-pr-comment.png"></p>
+<p><img src="../reference/figures/screenshot-pr-comment.png"></p>
 <p>You can change the header and footer, see <code><a href="../reference/pr_comment.html">?touchstone::pr_comment</a></code>. The main body is the list of benchmarks and their results. First the mean elapsed time of all iterations of that benchmark (BASE <span class="math inline">\(\rightarrow\)</span> HEAD) and a 95% confidence interval.</p>
-<p>To make it easier to spot benchmarks that need closer attention, we prefix the benchmarks with emojis indicating if there was a statistically significant change (see <a href="https://lorenzwalthert.github.io/touchstone/articles/inference.html">inference</a>) in the timing or not. In this example the HEAD version of <code>func1</code> is significantly faster, <code>func3</code> is slower than BASE while there is no significant change for <code>func2</code>.</p>
+<p>To make it easier to spot benchmarks that need closer attention, we prefix the benchmarks with emojis indicating if there was a statistically significant change (see <a href="https://lorenzwalthert.github.io/touchstone/articles/inference.html" class="external-link">inference</a>) in the timing or not. In this example the HEAD version of <code>func1</code> is significantly faster, <code>func3</code> is slower than BASE while there is no significant change for <code>func2</code>.</p>
 <p>The GitHub Action will also upload this text and plots of the timings as artifacts.</p>
 </div>
 </div>
@@ -220,11 +216,13 @@
 
 
       <footer><div class="copyright">
-  <p>Developed by <a href="https://lorenzwalthert.netlify.com">Lorenz Walthert</a>, Jacob Wujciak-Jens.</p>
+  <p></p>
+<p>Developed by <a href="https://lorenzwalthert.netlify.com" class="external-link">Lorenz Walthert</a>, Jacob Wujciak-Jens.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
+  <p></p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.1.</p>
 </div>
 
       </footer>
@@ -232,6 +230,8 @@
 
   
 
+
+  
 
   </body>
 </html>
