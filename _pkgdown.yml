@@ -41,7 +41,7 @@ reference:
 - contents:
   - touchstone_script
   - pr_comment
-- title: "Touchstone i/o"
+- title: "i/o"
   desc: >
     Low-level tools for accessing the touchstone datastore.
 - contents:
@@ -51,3 +51,8 @@ reference:
   - dir_touchstone
   - touchstone_clear
   - path_pr_comment
+- title: "Misc"
+  desc: >
+    Miscellaneous.
+- contents:
+  - branch_get_or_fail
