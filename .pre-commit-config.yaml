@@ -9,27 +9,18 @@ repos:
     -   id: roxygenize
         # roxygen requires loading pkg -> add dependencies from DESCRIPTION
         additional_dependencies:
-        -    bench@1.1.1
-        -    callr@3.7.0
-        -    cli@3.0.1
-        -    dplyr@1.0.7
-        -    fs@1.5.0
-        -    gert@1.3.2
-        -    ggplot2@3.3.5
-        -    glue@1.4.2
-        -    knitr@1.33
-        -    magrittr@2.0.1
-        -    mockery@0.4.2
-        -    openssl@1.4.5
-        -    purrr@0.3.4
-        -    remotes@2.4.0
-        -    rlang@0.4.11
-        -    rmarkdown@2.10
-        -    testthat@3.0.4
-        -    tibble@3.1.4
-        -    usethis@2.0.1
-        -    vctrs@0.3.8
-        -    withr@2.4.2
+        -    bench
+        -    callr
+        -    cli
+        -    fs
+        -    gert
+        -    magrittr
+        -    purrr
+        -    remotes
+        -    rlang
+        -    tibble
+        -    vctrs
+        -    withr
         -    r-lib/pkgapi
         require_serial: True # https://github.com/pre-commit-ci/runner-image/issues/93#issuecomment-927257158
     # codemeta must be above use-tidy-description when both are used
