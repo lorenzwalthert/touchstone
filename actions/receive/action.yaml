@@ -31,7 +31,7 @@ runs:
     - uses: r-lib/actions/setup-r-dependencies@v2
       with:
         extra-packages: |
-          lorenzwalthert/touchstone
+          github::lorenzwalthert/touchstone@main
           ggplot2
           dplyr
           gert
