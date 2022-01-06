@@ -32,7 +32,6 @@ runs:
     - name: Setup dependencies
       uses: r-lib/actions/setup-r-dependencies@v2
       with:
-        cache-version: 1
         extra-packages: |
           lorenzwalthert/touchstone
           ggplot2
