@@ -32,9 +32,9 @@ runs:
       with:
         extra-packages: |
           github::lorenzwalthert/touchstone@main
-          ggplot2
-          dplyr
-          gert
+          any::ggplot2
+          any::dplyr
+          any::gert
     - name: Remove global installation
       run: |
         pkg <- unlist(read.dcf('DESCRIPTION')[, 'Package'])
