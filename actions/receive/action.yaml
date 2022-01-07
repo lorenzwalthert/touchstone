@@ -37,10 +37,13 @@ runs:
       with:
         cache-version: ${{ inputs.cache_version }}
         extra-packages: |
-          github::lorenzwalthert/touchstone@main
           any::ggplot2
           any::dplyr
           any::gert
+          any::glue
+    - name: Install touchstone
+      run: pak::pkg_install("lorenzwalthert/touchstone@main")
+      shell: Rscript {0}
     - name: Remove global installation
       run: |
         pkg <- unlist(read.dcf('DESCRIPTION')[, 'Package'])
