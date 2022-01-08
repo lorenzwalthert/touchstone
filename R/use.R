@@ -2,18 +2,13 @@
 #'
 #' This function will initialize {touchstone} in your package repository, use
 #' from root directory.
-#' @param cancel Whether or not to also introduce a GitHub Actions
-#' [cancel workflow](https://github.com/marketplace/actions/cancel-workflow-action)
-#' for canceling old runs when new ones are started. This makes sense because
-#' touchstone runs can take a lot of time and compute resources and you usually
-#' don't care about old runs when you pushed new code.
 #' @details
 #' For more information see the 'Using touchstone' vignette:
 #'  `vignette("touchstone", package = "touchstone")
 #' @return
 #' The function is called for its side effects and returns `NULL` (invisibly).
 #' @export
-use_touchstone <- function(cancel = TRUE) {
+use_touchstone <- function() {
   dir_touchstone <- dir_touchstone()
   fs::dir_create(dir_touchstone)
   has_written_script <- copy_if_not_exists(
@@ -53,44 +48,6 @@ use_touchstone <- function(cancel = TRUE) {
   )
 
   append_rbuildignore("touchstone")
-
-  if (cancel) {
-    target <- fs::path(workflows, "cancel.yaml")
-    if (fs::file_exists(target)) {
-      cli::cli_warn(c(paste0(
-        "Could not add a file {.file cancel.yaml} to ",
-        "{.path .github/workflows/} as there is already a file with this name. "
-      ),
-      "i" = paste0(
-        "Please rename it and try again if you want to make sure outdated ",
-        "runs get cancelled."
-      ),
-      " " = "See {.fun use_touchstone} for details.", ">" = "Proceeding. "
-      ))
-    } else {
-      copy_if_not_exists(
-        system.file("cancel.yaml", package = "touchstone"),
-        target
-      )
-
-
-      cli::cli_bullets(c("v" = "Added a cancelling action for the touchstone workflow. ", "i" = paste0(
-        "A new push to a branch will stop the current",
-        " benchmarking run and start benchmarking ",
-        "your latest push (instead of queuing it until the previous completed). ",
-        "You can manually list other Github Actions workflows in the cancel workflow ",
-        "to stop running outdated actions to save compute resources and time."
-      )))
-    }
-  } else {
-    cli::cli_bullets(c(
-      "i" = "Not adding a cancelling workflow. ", "!" = paste0(
-        "Frequent pushes to the same branch ",
-        "will queue and potentially consume unnecessary energy, built time and ",
-        "create long waiting times until touchstone results are available."
-      )
-    ))
-  }
 
   if (has_written_script) {
     cli::cli_ul(
