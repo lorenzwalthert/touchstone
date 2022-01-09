@@ -1,5 +1,11 @@
 name: Continuous Benchmarks (Receive)
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.head_ref }}
+  cancel-in-progress: true
+
 on: pull_request
+
 jobs:
   prepare:
     runs-on: ubuntu-latest
@@ -9,7 +15,7 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v2
         with:
-           fetch-depth: 0
+          fetch-depth: 0
 
       - id: read_touchstone_config
         run: |
