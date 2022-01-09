@@ -42,6 +42,6 @@ jobs:
       - uses: lorenzwalthert/touchstone/actions/receive@standalone-action
         with:
           cache-version: 1
-          benchmarking_repo: ${{matrix.config.benchmarking_repo}}
-          benchmarking_ref: ${{matrix.config.benchmarking_ref}}
-          benchmarking_path: ${{matrix.config.benchmarking_path}}
+          benchmarking_repo: ${{ matrix.config.benchmarking_repo }}
+          benchmarking_ref: ${{ matrix.config.benchmarking_ref }}
+          benchmarking_path: ${{ matrix.config.benchmarking_path }}
