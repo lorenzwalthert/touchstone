@@ -68,18 +68,9 @@ from root directory.</p>
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">use_touchstone</span><span class="op">(</span>cancel <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">use_touchstone</span><span class="op">(</span><span class="op">)</span></code></pre></div>
     </div>
 
-    <div id="arguments">
-    <h2>Arguments</h2>
-    <dl><dt>cancel</dt>
-<dd><p>Whether or not to also introduce a GitHub Actions
-<a href="https://github.com/marketplace/actions/cancel-workflow-action" class="external-link">cancel workflow</a>
-for canceling old runs when new ones are started. This makes sense because
-touchstone runs can take a lot of time and compute resources and you usually
-don't care about old runs when you pushed new code.</p></dd>
-</dl></div>
     <div id="value">
     <h2>Value</h2>
     <p>The function is called for its side effects and returns <code>NULL</code> (invisibly).</p>
