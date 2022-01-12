@@ -1,6 +1,6 @@
 # Github Actions for {touchstone}
 
-This folder contains the [Github Actions](https://github.com/features/actions) used when benchmarking a package with {touchstone}. For [security reasons](https://docs.github.com/en/actions/security-guides/security-hardening-for-github-actions#understanding-the-risk-of-script-injections) the workflow is split into twp separate actions:
+This folder contains the [Github Actions](https://github.com/features/actions) used when benchmarking a package with {touchstone}. For [security reasons](https://securitylab.github.com/research/github-actions-preventing-pwn-requests/) the workflow is split into twp separate actions:
 
 * [lorenzwalthert/touchstone/actions/receive](https://github.com/lorenzwalthert/touchstone/tree/main/actions/receive)
   * Reads `config.json` to prepare and run the benchmark job.
