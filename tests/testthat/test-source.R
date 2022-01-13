@@ -47,3 +47,28 @@ test_that("can call package in script", {
   writeLines(with_assets, path_touchstone)
   expect_error(run_script(path_touchstone), NA)
 })
+
+
+cli::test_that_cli("activate warns", {
+  rlang::with_interactive(
+    {
+      expect_snapshot(activate())
+    },
+    TRUE
+  )
+
+  rlang::with_interactive(
+    {
+      expect_snapshot(activate())
+    },
+    FALSE
+  )
+
+  rlang::with_interactive(
+    {
+      withr::local_envvar(GITHUB_ACTIONS = TRUE)
+      expect_snapshot(activate())
+    },
+    FALSE
+  )
+})
