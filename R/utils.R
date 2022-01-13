@@ -372,3 +372,9 @@ get_git_root <- function() {
 
   git_root
 }
+
+gh_cat <- function(string) {
+  if (Sys.getenv("GITHUB_ACTIONS") == TRUE) {
+    cat(string)
+  }
+}
