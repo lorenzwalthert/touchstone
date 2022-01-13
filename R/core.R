@@ -72,6 +72,7 @@ benchmark_run_iteration <- function(expr_before_benchmark,
 #' This function will perform various git operations that affect the state of
 #' the directory it is ran in, in particular different branches will be checked
 #' out. Ensure a clean git working directory before invocation.
+#' @importFrom rlang "%|%"
 #' @export
 benchmark_run <- function(expr_before_benchmark =
                             {},
@@ -93,6 +94,10 @@ benchmark_run <- function(expr_before_benchmark =
   if (rlang::is_string(dots[[1]]) ||
     rlang::is_string(expr_before_benchmark)) {
     abort_string()
+  }
+
+  if (rlang::is_interactive()) {
+    n <- Sys.getenv("touchstone.n_runs", unset = NA) %>% as.numeric() %|% n
   }
 
   # touchstone libraries must be removed from the path temporarily

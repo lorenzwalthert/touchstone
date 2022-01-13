@@ -8,19 +8,23 @@
 activate(
   head_branch = gert::git_branch(),
   base_branch = getOption("touchstone.default_base_branch", "main"),
+  n = 1,
   env = parent.frame()
 )
 
 deactivate(env = parent.frame())
 }
 \arguments{
-\item{head_branch}{Git branch to be used as the \code{GITHUB_HEAD_REF} branch (i.e. the
-branch with new changes) when running benchmarks. Defaults to the current
-branch.}
+\item{head_branch}{Git branch to be used as the \code{GITHUB_HEAD_REF} branch
+(i.e. the branch with new changes) when running benchmarks. Defaults to the
+current branch.}
 
-\item{base_branch}{Git branch for the \code{GITHUB_BASE_REF} (i.e. the branch you want
-to merge your changes into) when running benchmarks.
-Defaults to 'main' if the option \code{touchstone.default_base_branch}is not set.}
+\item{base_branch}{Git branch for the \code{GITHUB_BASE_REF} (i.e. the branch you
+want to merge your changes into) when running benchmarks. Defaults to 'main'
+if the option \code{touchstone.default_base_branch}is not set.}
+
+\item{n}{Number of times benchmarks should be run for each \code{branch}. Will
+override \code{n} argument in all interactive calls to \link{benchmark_run}}
 
 \item{env}{In which environment the temporary changes should be made.
 For use within functions.}

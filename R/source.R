@@ -46,7 +46,9 @@
 #' }
 run_script <- function(path = "touchstone/script.R",
                        branch = branch_get_or_fail("GITHUB_HEAD_REF")) {
-  activate(branch, branch_get_or_fail("GITHUB_BASE_REF"))
+  rlang::with_interactive(
+    activate(branch, branch_get_or_fail("GITHUB_BASE_REF")), TRUE
+  )
 
   temp_file <- fs::file_temp()
   fs::file_copy(path, temp_file)
@@ -63,12 +65,14 @@ run_script <- function(path = "touchstone/script.R",
 #'
 #' This sets environment variables, R options and library paths to work
 #' interactively on the [touchstone_script].
-#' @param head_branch Git branch to be used as the `GITHUB_HEAD_REF` branch (i.e. the
-#'   branch with new changes) when running benchmarks. Defaults to the current
-#'   branch.
-#' @param base_branch Git branch for the `GITHUB_BASE_REF` (i.e. the branch you want
-#'   to merge your changes into) when running benchmarks.
-#'   Defaults to 'main' if the option `touchstone.default_base_branch`is not set.
+#' @param head_branch Git branch to be used as the `GITHUB_HEAD_REF` branch
+#' (i.e. the branch with new changes) when running benchmarks. Defaults to the
+#' current branch.
+#' @param base_branch Git branch for the `GITHUB_BASE_REF` (i.e. the branch you
+#' want to merge your changes into) when running benchmarks. Defaults to 'main'
+#' if the option `touchstone.default_base_branch`is not set.
+#' @param n Number of times benchmarks should be run for each `branch`. Will
+#' override `n` argument in all interactive calls to [benchmark_run]
 #' @param env In which environment the temporary changes should be made.
 #'   For use within functions.
 #' @examples
@@ -83,11 +87,28 @@ activate <- function(head_branch = gert::git_branch(),
                        "touchstone.default_base_branch",
                        "main"
                      ),
+                     n = 1,
                      env = parent.frame()) {
+  if (!rlang::is_interactive()) {
+    if (Sys.getenv("GITHUB_ACTIONS") == TRUE) {
+      cat(paste0(
+        "::warning ::activate() is meant for interactive use ",
+        "only, make sure script.R works as intended!"
+      ))
+    } else {
+      cli::cli_warn(paste0(
+        "{.fun activate} is meant for interactive use",
+        "only, make sure {.file script.R} works as intended!"
+      ))
+    }
+  }
+
+
   suppressMessages({
     withr::local_envvar(
       GITHUB_BASE_REF = base_branch,
       GITHUB_HEAD_REF = head_branch,
+      touchstone.n_runs = n,
       .local_envir = env
     )
 
