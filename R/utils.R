@@ -25,11 +25,12 @@ dir_touchstone <- function() {
 branch_get_or_fail <- function(var) {
   retrieved <- Sys.getenv(var)
   if (!nzchar(retrieved)) {
-    cli::cli_alert_info(c(paste0(
-      "touchstone not activated. Most likely, you want to run ",
-      "{.code touchstone::activate()} if you are working interactivley and ",
-      "the below error should go away."
-    )))
+    if (rlang::is_interactive()) {
+      cli::cli_alert_info(c(paste0(
+        "touchstone not activated. Most likely, you want to run ",
+        "{.code touchstone::activate()} and the below error should go away."
+      )))
+    }
     cli::cli_abort(c(paste0(
       "If you don't specify the argument {.arg branch(s)}, you must set the environment ",
       "variable {.envvar {var}} to tell {.pkg touchstone} ",
