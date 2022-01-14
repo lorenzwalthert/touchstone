@@ -2,7 +2,7 @@ name: 'comment'
 description: 'Action to comment {touchstone} results on the appropriate PR. Needs read/write access.'
 inputs:
   GITHUB_TOKEN:
-    description: The GITHUB_TOKEN secret. 
+    description: 'The GITHUB_TOKEN secret.'
     required: true
 runs:
   using: "composite"
