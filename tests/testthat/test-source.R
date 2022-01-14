@@ -64,6 +64,7 @@ cli::test_that_cli("activate warns", {
 
   rlang::with_interactive(
     {
+      withr::local_envvar(GITHUB_ACTIONS = FALSE)
       expect_snapshot(activate())
     },
     FALSE
