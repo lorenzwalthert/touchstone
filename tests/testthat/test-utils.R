@@ -141,7 +141,6 @@ test_that("assets work on HEAD", {
     expect_true(fs::is_dir(fs::path_join(c(temp_dir, "R"))))
     expect_true(fs::is_file(fs::path_join(c(temp_dir, "data.R"))))
 
-    # expect_error(path_pinned_asset("something", branch = "no-branch"), "for head or base")
     expect_error(path_pinned_asset("something"), "not pinned at")
     expect_equal(path_pinned_asset("R"), fs::path(temp_dir, "R"))
     expect_equal(path_pinned_asset("data.R"), fs::path(temp_dir, "data.R"))
@@ -196,7 +195,6 @@ test_that("asset paths are fetched correctly", {
     GITHUB_HEAD_REF = "devel"
   ))
 
-  # expect_error(get_asset_dir("not-main"), "head or base")
   expect_error(get_asset_dir("main"), "directory for branch")
   expect_equal(get_asset_dir("devel"), "asset/dir")
 })

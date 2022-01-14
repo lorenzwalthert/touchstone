@@ -50,6 +50,11 @@ test_that("can call package in script", {
 
 
 cli::test_that_cli("activate warns", {
+  branches <- c("main", "devel")
+  pkg_name <- "b42jk"
+  path_test_pkg <- local_package(pkg_name, branches = branches)
+  local_git_checkout("devel")
+
   rlang::with_interactive(
     {
       expect_snapshot(activate())
