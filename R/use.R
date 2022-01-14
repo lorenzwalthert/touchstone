@@ -75,7 +75,10 @@ copy_if_not_exists <- function(path, new_path) {
     cli::cli_alert_success("Populated file {.file {fs::path_file(new_path)}} in {.path {fs::path_dir(new_path)}/}.")
     TRUE
   } else {
-    cli::cli_warn("File {.file {fs::path_file(new_path)}} already exists at {.path {fs::path_dir(new_path)}/}, not copying.")
+    cli::cli_warn(paste0(
+      "File {.file {fs::path_file(new_path)}} already exists",
+      " at {.path {fs::path_dir(new_path)}/}, not copying."
+    ))
     FALSE
   }
 }

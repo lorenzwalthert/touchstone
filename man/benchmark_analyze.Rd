@@ -12,7 +12,8 @@ benchmark_analyze(
 )
 }
 \arguments{
-\item{branches}{The names of the branches for which analysis should be created.}
+\item{branches}{The names of the branches for which analysis should be
+created.}
 
 \item{names}{The names of the benchmarks to analyze. If \code{NULL}, all
 benchmarks with the \code{branches} are taken.}
@@ -28,10 +29,12 @@ Turn raw benchmark results into text and figures
 \details{
 Creates two side effects:
 \itemize{
-\item Density plots for each element in \code{branches} are written to \code{touchstone/plots}.
+\item Density plots for each element in \code{branches} are written to
+\code{touchstone/plots}.
 \item A text explaining the speed diff is written to
 \code{touchstone/pr-comment/info.txt} for every registered benchmarking
-expression. See \code{vignette("inference", package = "touchstone")} for details.
+expression. See \code{vignette("inference", package = "touchstone")} for
+details.
 }
 
 Requires \link[dplyr:dplyr]{dplyr::dplyr}, \link[ggplot2:ggplot2]{ggplot2::ggplot2} and \link[glue:glue]{glue::glue}.
