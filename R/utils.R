@@ -374,7 +374,13 @@ get_git_root <- function() {
 }
 
 gh_cat <- function(string) {
-  if (Sys.getenv("GITHUB_ACTIONS") == TRUE) {
+  if (envvar_true("GITHUB_ACTIONS")) {
     cat(string)
   }
+}
+
+#' @importFrom rlang "%|%"
+envvar_true <- function(var) {
+  stopifnot(is.character(var))
+  as.logical(toupper(Sys.getenv(var))) %|% FALSE
 }

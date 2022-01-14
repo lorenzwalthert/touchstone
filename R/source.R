@@ -10,15 +10,17 @@
 #' @param branch The branch that corresponds to the library that should be prepended
 #'   to the library path when the script at `path` is executed, see 'Why this
 #'   function?' below.
+#'
 #' @section How to run this interactively?:
 #' You can use [activate()] to setup the environment to interactively run your
-#'  script, as there are some adjustments needed to mirror the Github Action
-#'  environment.
+#' script, as there are some adjustments needed to mirror the Github Action
+#' environment.
 #' In a GitHub Action workflow, the environment variables `GITHUB_BASE_REF` and
 #' `GITHUB_HEAD_REF` denote the target and source branch of the pull request -
 #' and these are default arguments in [benchmark_run()] (and other functions
 #' you probably want to call in your benchmarking script) to determinate the
 #' branches to use.
+#'
 #' @section Why this function?:
 #' For isolation, \{touchstone\} does not allow the benchmarked package to be
 #' installed in the global package library, but only in touchstone libraries, as
@@ -30,9 +32,10 @@
 #' contains the installed benchmarked package for set-up tasks, and temporarily
 #' remove it during benchmarking with [benchmark_run()] so only one
 #' touchstone library is on the library path at any time.
+#'
 #' @return
-#' The same as [base::source()], which inherits from [base::withVisible()], i.e.
-#' a list with `value` and `visible` (invisibly).
+#'   The same as [base::source()], which inherits from [base::withVisible()], i.e.
+#'   a list with `value` and `visible` (invisibly).
 #' @export
 #' @examples
 #' \dontrun{
@@ -66,13 +69,13 @@ run_script <- function(path = "touchstone/script.R",
 #' This sets environment variables, R options and library paths to work
 #' interactively on the [touchstone_script].
 #' @param head_branch Git branch to be used as the `GITHUB_HEAD_REF` branch
-#' (i.e. the branch with new changes) when running benchmarks. Defaults to the
-#' current branch.
+#'   (i.e. the branch with new changes) when running benchmarks. Defaults to the
+#'   current branch.
 #' @param base_branch Git branch for the `GITHUB_BASE_REF` (i.e. the branch you
-#' want to merge your changes into) when running benchmarks. Defaults to 'main'
-#' if the option `touchstone.default_base_branch`is not set.
+#'   want to merge your changes into) when running benchmarks. Defaults to 'main'
+#'   if the option `touchstone.default_base_branch`is not set.
 #' @param n Number of times benchmarks should be run for each `branch`. Will
-#' override `n` argument in all interactive calls to [benchmark_run]
+#'   override `n` argument in all interactive calls to [benchmark_run()].
 #' @param env In which environment the temporary changes should be made.
 #'   For use within functions.
 #' @examples
@@ -90,7 +93,7 @@ activate <- function(head_branch = gert::git_branch(),
                      n = 1,
                      env = parent.frame()) {
   if (!rlang::is_interactive()) {
-    if (Sys.getenv("GITHUB_ACTIONS") == TRUE) {
+    if (envvar_true("GITHUB_ACTIONS")) {
       cat(paste0(
         "::warning ::activate() is meant for interactive use ",
         "only, make sure script.R works as intended!"
@@ -108,9 +111,9 @@ activate <- function(head_branch = gert::git_branch(),
     withr::local_envvar(
       GITHUB_BASE_REF = base_branch,
       GITHUB_HEAD_REF = head_branch,
-      touchstone.n_runs = n,
       .local_envir = env
     )
+    withr::local_options(touchstone.n_runs = n, .local_envir = env)
 
     local_touchstone_libpath(head_branch, env = env)
     local_asset_dir(base_branch, head_branch, env = env)

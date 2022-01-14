@@ -217,3 +217,16 @@ cli::test_that_cli("git root is found correctly", {
   expect_equal(find_git_root(with_git), as.character(with_git))
   expect_equal(find_git_root(deeper_git), as.character(with_git))
 })
+
+test_that("envvar_true works", {
+  withr::local_envvar(
+    NOT_BOOL = 23,
+    BOOL_T = TRUE,
+    BOOL_t = "true"
+  )
+
+  expect_error(envvar_true(23), "is not TRUE")
+  expect_true(envvar_true("BOOL_T"))
+  expect_true(envvar_true("BOOL_t"))
+  expect_false(envvar_true("NOT_BOOL"))
+})

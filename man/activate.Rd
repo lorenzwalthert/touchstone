@@ -24,7 +24,7 @@ want to merge your changes into) when running benchmarks. Defaults to 'main'
 if the option \code{touchstone.default_base_branch}is not set.}
 
 \item{n}{Number of times benchmarks should be run for each \code{branch}. Will
-override \code{n} argument in all interactive calls to \link{benchmark_run}}
+override \code{n} argument in all interactive calls to \code{\link[=benchmark_run]{benchmark_run()}}.}
 
 \item{env}{In which environment the temporary changes should be made.
 For use within functions.}
