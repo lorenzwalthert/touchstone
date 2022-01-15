@@ -34,7 +34,7 @@
 #' touchstone library is on the library path at any time.
 #'
 #' @return
-#'   The same as [base::source()], which inherits from [base::withVisible()], i.e.
+#' The same as [base::source()], which inherits from [base::withVisible()], i.e.
 #'   a list with `value` and `visible` (invisibly).
 #' @export
 #' @examples
