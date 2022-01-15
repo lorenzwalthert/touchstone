@@ -35,7 +35,7 @@
 #'
 #' @return
 #' The same as [base::source()], which inherits from [base::withVisible()], i.e.
-#'   a list with `value` and `visible` (invisibly).
+#' a list with `value` and `visible` (invisibly).
 #' @export
 #' @examples
 #' \dontrun{
