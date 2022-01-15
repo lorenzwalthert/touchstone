@@ -54,7 +54,10 @@ benchmark_run_iteration <- function(expr_before_benchmark,
 #'   the head branch is the source branch of the pull request in a workflow run.
 #' @param n Number of times benchmarks should be run for each `branch`. The more
 #'   iterations you run, the more narrow your confidence interval will be and
-#'   the smaller the differences you will detect.
+#'   the smaller the differences you will detect. See also
+#'   `vignette("inference")`. To simplify interactive experimentation with
+#'   `benchmark_run()`, `n` will be overridden in interactive usage after the
+#'   user calls `activate(..., n = 1)`.
 #' @param path_pkg The path to the package to benchmark. Will be used to
 #'   temporarily checkout the branch during benchmarking.
 #' @inheritParams branch_install
