@@ -101,7 +101,10 @@ benchmark_run <- function(expr_before_benchmark =
   if (rlang::is_interactive()) {
     new_n <- getOption("touchstone.n_runs")
     if (!is.null(new_n) && new_n != n) {
-      cli::cli_alert_info("{.fun activate} has overriden n = {n} with {new_n}.")
+      cli::cli_alert_info(paste0(
+        "{.fun activate} has overriden n = {n} with {new_n} since ",
+        "{.fun rlang::is_interactive } is {.code TRUE}."
+      ))
     }
     n <- new_n
   }
