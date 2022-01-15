@@ -49,6 +49,7 @@
 #' }
 run_script <- function(path = "touchstone/script.R",
                        branch = branch_get_or_fail("GITHUB_HEAD_REF")) {
+  force(branch)
   rlang::with_interactive(
     activate(branch, branch_get_or_fail("GITHUB_BASE_REF")), TRUE
   )
