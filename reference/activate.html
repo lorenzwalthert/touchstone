@@ -18,7 +18,7 @@ interactively on the touchstone_script."><!-- mathjax --><script src="https://cd
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">touchstone</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">0.0.0.9001</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">0.0.0.9002</span>
       </span>
     </div>
 
@@ -71,6 +71,7 @@ interactively on the <a href="touchstone_script.html">touchstone_script</a>.</p>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">activate</span><span class="op">(</span>
   head_branch <span class="op">=</span> <span class="fu">gert</span><span class="fu">::</span><span class="fu"><a href="https://docs.ropensci.org/gert/reference/git_branch.html" class="external-link">git_branch</a></span><span class="op">(</span><span class="op">)</span>,
   base_branch <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">getOption</a></span><span class="op">(</span><span class="st">"touchstone.default_base_branch"</span>, <span class="st">"main"</span><span class="op">)</span>,
+  n <span class="op">=</span> <span class="fl">1</span>,
   env <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sys.parent.html" class="external-link">parent.frame</a></span><span class="op">(</span><span class="op">)</span>
 <span class="op">)</span>
 
@@ -80,13 +81,16 @@ interactively on the <a href="touchstone_script.html">touchstone_script</a>.</p>
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>head_branch</dt>
-<dd><p>Git branch to be used as the <code>GITHUB_HEAD_REF</code> branch (i.e. the
-branch with new changes) when running benchmarks. Defaults to the current
-branch.</p></dd>
+<dd><p>Git branch to be used as the <code>GITHUB_HEAD_REF</code> branch
+(i.e. the branch with new changes) when running benchmarks. Defaults to the
+current branch.</p></dd>
 <dt>base_branch</dt>
-<dd><p>Git branch for the <code>GITHUB_BASE_REF</code> (i.e. the branch you want
-to merge your changes into) when running benchmarks.
-Defaults to 'main' if the option <code>touchstone.default_base_branch</code>is not set.</p></dd>
+<dd><p>Git branch for the <code>GITHUB_BASE_REF</code> (i.e. the branch you
+want to merge your changes into) when running benchmarks. Defaults to 'main'
+if the option <code>touchstone.default_base_branch</code>is not set.</p></dd>
+<dt>n</dt>
+<dd><p>Number of times benchmarks should be run for each <code>branch</code>. Will
+override <code>n</code> argument in all interactive calls to <code><a href="benchmark_run.html">benchmark_run()</a></code>.</p></dd>
 <dt>env</dt>
 <dd><p>In which environment the temporary changes should be made.
 For use within functions.</p></dd>

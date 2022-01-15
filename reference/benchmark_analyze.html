@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">touchstone</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">0.0.0.9001</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">0.0.0.9002</span>
       </span>
     </div>
 
@@ -77,7 +77,8 @@
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>branches</dt>
-<dd><p>The names of the branches for which analysis should be created.</p></dd>
+<dd><p>The names of the branches for which analysis should be
+created.</p></dd>
 <dt>names</dt>
 <dd><p>The names of the benchmarks to analyze. If <code>NULL</code>, all
 benchmarks with the <code>branches</code> are taken.</p></dd>
@@ -90,10 +91,12 @@ benchmarks with the <code>branches</code> are taken.</p></dd>
     </div>
     <div id="details">
     <h2>Details</h2>
-    <p>Creates two side effects:</p><ul><li><p>Density plots for each element in <code>branches</code> are written to <code>touchstone/plots</code>.</p></li>
+    <p>Creates two side effects:</p><ul><li><p>Density plots for each element in <code>branches</code> are written to
+<code>touchstone/plots</code>.</p></li>
 <li><p>A text explaining the speed diff is written to
 <code>touchstone/pr-comment/info.txt</code> for every registered benchmarking
-expression. See <code><a href="../articles/inference.html">vignette("inference", package = "touchstone")</a></code> for details.</p></li>
+expression. See <code><a href="../articles/inference.html">vignette("inference", package = "touchstone")</a></code> for
+details.</p></li>
 </ul><p>Requires <a href="https://dplyr.tidyverse.org/reference/dplyr-package.html" class="external-link">dplyr::dplyr</a>, <a href="https://ggplot2.tidyverse.org/reference/ggplot2-package.html" class="external-link">ggplot2::ggplot2</a> and <a href="https://glue.tidyverse.org/reference/glue.html" class="external-link">glue::glue</a>.</p>
     </div>
 

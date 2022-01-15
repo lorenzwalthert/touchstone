@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">touchstone</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">0.0.0.9001</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">0.0.0.9002</span>
       </span>
     </div>
 
@@ -93,7 +93,10 @@ the head branch is the source branch of the pull request in a workflow run.</p><
 <dt>n</dt>
 <dd><p>Number of times benchmarks should be run for each <code>branch</code>. The more
 iterations you run, the more narrow your confidence interval will be and
-the smaller the differences you will detect.</p></dd>
+the smaller the differences you will detect. See also
+<code><a href="../articles/inference.html">vignette("inference")</a></code>. To simplify interactive experimentation with
+<code>benchmark_run()</code>, <code>n</code> will be overridden in interactive usage after the
+user calls <code>activate(..., n = 1)</code>.</p></dd>
 <dt>path_pkg</dt>
 <dd><p>The path to the package to benchmark. Will be used to
 temporarily checkout the branch during benchmarking.</p></dd>

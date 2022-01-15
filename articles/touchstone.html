@@ -33,7 +33,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">touchstone</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">0.0.0.9001</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">0.0.0.9002</span>
       </span>
     </div>
 
@@ -78,7 +78,7 @@
 
       
 
-      </header><script src="touchstone_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
+      </header><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Using touchstone</h1>
@@ -105,14 +105,14 @@
 <li>
 <code>config.json</code> that defines how to run your benchmark. In particular, you can define a <code>benchmarking_repo</code>, that is, a repository you need to run your bench mark (use <code>""</code> if you don’t need an additional git repository checked out for your benchmark). This repository will be cloned into <code>benchmarking_path</code>. For example to benchmark {styler}, we format the {here} package with <code>style_pkg()</code> that is not part of the {styler} repository, but with the below config, will be located at <code>touchstone/sources/here</code> during benchmarking. The code you want to benchmark comes from the benchmarked repository, which in our case is the root from where you call <code><a href="../reference/use_touchstone.html">use_touchstone()</a></code> and hence does not need to be defined explicitly.</li>
 </ul>
-<div class="sourceCode" id="cb2"><pre class="sourceCode json"><code class="sourceCode json"><span id="cb2-1"><a href="#cb2-1"></a>  <span class="fu">{</span> </span>
-<span id="cb2-2"><a href="#cb2-2"></a>    <span class="dt">"benchmarking_repo"</span><span class="fu">:</span> <span class="st">"lorenzwalthert/here"</span><span class="fu">,</span> </span>
-<span id="cb2-3"><a href="#cb2-3"></a>    <span class="dt">"benchmarking_ref"</span><span class="fu">:</span> <span class="st">"ca9c8e69c727def88d8ba1c8b85b0e0bcea87b3f"</span><span class="fu">,</span> </span>
-<span id="cb2-4"><a href="#cb2-4"></a>    <span class="dt">"benchmarking_path"</span><span class="fu">:</span> <span class="st">"touchstone/sources/here"</span><span class="fu">,</span> </span>
-<span id="cb2-5"><a href="#cb2-5"></a>    <span class="dt">"os"</span><span class="fu">:</span> <span class="st">"ubuntu-18.04"</span><span class="fu">,</span> </span>
-<span id="cb2-6"><a href="#cb2-6"></a>    <span class="dt">"r"</span><span class="fu">:</span> <span class="st">"4.0.0"</span><span class="fu">,</span> </span>
-<span id="cb2-7"><a href="#cb2-7"></a>    <span class="dt">"rspm"</span><span class="fu">:</span> <span class="st">"https://packagemanager.rstudio.com/all/__linux__/bionic/291"</span> </span>
-<span id="cb2-8"><a href="#cb2-8"></a>  <span class="fu">}</span></span></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode json"><code class="sourceCode json"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>  <span class="fu">{</span> </span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>    <span class="dt">"benchmarking_repo"</span><span class="fu">:</span> <span class="st">"lorenzwalthert/here"</span><span class="fu">,</span> </span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>    <span class="dt">"benchmarking_ref"</span><span class="fu">:</span> <span class="st">"ca9c8e69c727def88d8ba1c8b85b0e0bcea87b3f"</span><span class="fu">,</span> </span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>    <span class="dt">"benchmarking_path"</span><span class="fu">:</span> <span class="st">"touchstone/sources/here"</span><span class="fu">,</span> </span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>    <span class="dt">"os"</span><span class="fu">:</span> <span class="st">"ubuntu-18.04"</span><span class="fu">,</span> </span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>    <span class="dt">"r"</span><span class="fu">:</span> <span class="st">"4.0.0"</span><span class="fu">,</span> </span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>    <span class="dt">"rspm"</span><span class="fu">:</span> <span class="st">"https://packagemanager.rstudio.com/all/__linux__/bionic/291"</span> </span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">}</span></span></code></pre></div>
 <ul>
 <li>
 <code>script.R</code>, the script that runs the benchmark, also called the <code>touchstone_script</code>.</li>
