@@ -141,7 +141,6 @@ test_that("assets work on HEAD", {
     expect_true(fs::is_dir(fs::path_join(c(temp_dir, "R"))))
     expect_true(fs::is_file(fs::path_join(c(temp_dir, "data.R"))))
 
-    # expect_error(path_pinned_asset("something", branch = "no-branch"), "for head or base")
     expect_error(path_pinned_asset("something"), "not pinned at")
     expect_equal(path_pinned_asset("R"), fs::path(temp_dir, "R"))
     expect_equal(path_pinned_asset("data.R"), fs::path(temp_dir, "data.R"))
@@ -196,7 +195,6 @@ test_that("asset paths are fetched correctly", {
     GITHUB_HEAD_REF = "devel"
   ))
 
-  # expect_error(get_asset_dir("not-main"), "head or base")
   expect_error(get_asset_dir("main"), "directory for branch")
   expect_equal(get_asset_dir("devel"), "asset/dir")
 })
@@ -218,4 +216,17 @@ cli::test_that_cli("git root is found correctly", {
   expect_snapshot(find_git_root(no_git))
   expect_equal(find_git_root(with_git), as.character(with_git))
   expect_equal(find_git_root(deeper_git), as.character(with_git))
+})
+
+test_that("envvar_true works", {
+  withr::local_envvar(
+    NOT_BOOL = 23,
+    BOOL_T = TRUE,
+    BOOL_t = "true"
+  )
+
+  expect_error(envvar_true(23), "is not TRUE")
+  expect_true(envvar_true("BOOL_T"))
+  expect_true(envvar_true("BOOL_t"))
+  expect_false(envvar_true("NOT_BOOL"))
 })

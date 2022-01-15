@@ -47,3 +47,34 @@ test_that("can call package in script", {
   writeLines(with_assets, path_touchstone)
   expect_error(run_script(path_touchstone), NA)
 })
+
+
+cli::test_that_cli("activate warns", {
+  branches <- c("main", "devel")
+  pkg_name <- "b42jk"
+  path_test_pkg <- local_package(pkg_name, branches = branches)
+  local_git_checkout("devel")
+
+  rlang::with_interactive(
+    {
+      expect_snapshot(activate())
+    },
+    TRUE
+  )
+
+  rlang::with_interactive(
+    {
+      withr::local_envvar(GITHUB_ACTIONS = FALSE)
+      expect_snapshot(activate())
+    },
+    FALSE
+  )
+
+  rlang::with_interactive(
+    {
+      withr::local_envvar(GITHUB_ACTIONS = TRUE)
+      expect_snapshot(activate())
+    },
+    FALSE
+  )
+})

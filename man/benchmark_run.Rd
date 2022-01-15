@@ -28,7 +28,10 @@ the head branch is the source branch of the pull request in a workflow run.}
 
 \item{n}{Number of times benchmarks should be run for each \code{branch}. The more
 iterations you run, the more narrow your confidence interval will be and
-the smaller the differences you will detect.}
+the smaller the differences you will detect. See also
+\code{vignette("inference")}. To simplify interactive experimentation with
+\code{benchmark_run()}, \code{n} will be overridden in interactive usage after the
+user calls \code{activate(..., n = 1)}.}
 
 \item{path_pkg}{The path to the package to benchmark. Will be used to
 temporarily checkout the branch during benchmarking.}

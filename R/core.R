@@ -54,7 +54,10 @@ benchmark_run_iteration <- function(expr_before_benchmark,
 #'   the head branch is the source branch of the pull request in a workflow run.
 #' @param n Number of times benchmarks should be run for each `branch`. The more
 #'   iterations you run, the more narrow your confidence interval will be and
-#'   the smaller the differences you will detect.
+#'   the smaller the differences you will detect. See also
+#'   `vignette("inference")`. To simplify interactive experimentation with
+#'   `benchmark_run()`, `n` will be overridden in interactive usage after the
+#'   user calls `activate(..., n = 1)`.
 #' @param path_pkg The path to the package to benchmark. Will be used to
 #'   temporarily checkout the branch during benchmarking.
 #' @inheritParams branch_install
@@ -95,9 +98,22 @@ benchmark_run <- function(expr_before_benchmark =
     abort_string()
   }
 
+  if (rlang::is_interactive()) {
+    new_n <- getOption("touchstone.n_runs")
+    if (!is.null(new_n) && new_n != n) {
+      cli::cli_alert_info(paste0(
+        "{.fun activate} has overriden n = {n} with {new_n} since ",
+        "{.fun rlang::is_interactive } is {.code TRUE}."
+      ))
+    }
+    n <- new_n
+  }
+
   # touchstone libraries must be removed from the path temporarily
   # and the one to benchmark will be added in benchmark_run_impl()
   local_without_touchstone_lib()
+  gh_cat(glue::glue("::group::Running benchmark: {names(dots)}"))
+  withr::defer(gh_cat("::endgroup::"))
   branches <- branches_upsample(branches, n = n)
   out_list <- purrr::pmap(branches, benchmark_run_impl,
     expr_before_benchmark = expr_before_benchmark,
