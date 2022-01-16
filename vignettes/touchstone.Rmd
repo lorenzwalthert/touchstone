@@ -69,7 +69,7 @@ below diagram shows these two different workflows and what they entail.
 
 
 ```{r, eval = TRUE, include = TRUE, echo = FALSE, out.width="100%"}
-knitr::include_graphics("../inst/workflow-visualization.png")
+knitr::include_graphics("../man/figures/workflow-visualization.png")
 ```
 
 
