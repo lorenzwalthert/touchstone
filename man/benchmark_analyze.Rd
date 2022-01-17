@@ -37,5 +37,5 @@ expression. See \code{vignette("inference", package = "touchstone")} for
 details.
 }
 
-Requires \link[dplyr:dplyr]{dplyr::dplyr}, \link[ggplot2:ggplot2]{ggplot2::ggplot2} and \link[glue:glue]{glue::glue}.
+Requires \link[dplyr:dplyr-package]{dplyr::dplyr}, \link[ggplot2:ggplot2-package]{ggplot2::ggplot2} and \link[glue:glue]{glue::glue}.
 }

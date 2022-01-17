@@ -7,7 +7,7 @@
 use_touchstone(overwrite = FALSE)
 }
 \arguments{
-\item{overwrite}{Overwrites files if they exists.}
+\item{overwrite}{Overwrites files if they exist.}
 }
 \value{
 The function is called for its side effects and returns \code{NULL} (invisibly).
