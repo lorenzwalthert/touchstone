@@ -14,6 +14,10 @@ inputs:
     description: 'Integer to use as cache version. Increment to use new cache.'
     required: true
     default: 1
+  touchstone_ref:
+    description: 'Which branch or tag of {touchstone} should be used. Mainly for debugging.'
+    required: true
+    default: '@main'
     
 runs:
   using: "composite"
@@ -26,14 +30,17 @@ runs:
       run: |
         git config --local user.name "GitHub Actions"
         git config --local user.email "actions@github.com"
+        echo $RSPM
       shell: bash
     - name: Ensure base branch is fetched
       run: |
         git checkout -b "$GITHUB_HEAD_REF" # this is current ref. This is required for naming.
         git branch $GITHUB_BASE_REF remotes/origin/$GITHUB_BASE_REF
       shell: bash
-    - uses: r-lib/actions/setup-r@v2
-    - uses: r-lib/actions/setup-r-dependencies@v2
+    - name: Setup R
+      uses: r-lib/actions/setup-r@v2
+    - name: Install dependencies
+      uses: r-lib/actions/setup-r-dependencies@v2
       with:
         cache-version: ${{ inputs.cache_version }}
         extra-packages: |
@@ -41,9 +48,7 @@ runs:
           any::dplyr
           any::gert
           any::glue
-    - name: Install touchstone
-      run: pak::pkg_install("lorenzwalthert/touchstone@main")
-      shell: Rscript {0}
+          github::lorenzwalthert/touchstone${{ inputs.touchstone_ref}}
     - name: Remove global installation
       run: |
         pkg <- unlist(read.dcf('DESCRIPTION')[, 'Package'])
@@ -62,7 +67,7 @@ runs:
     - name: Run benchmarks
       run: touchstone::run_script("touchstone/script.R")
       shell: Rscript {0}
-    - name: Save PR number
+    - name: Uploading Results
       run: |
         echo ${{ github.event.number }} > ./touchstone/pr-comment/NR
       shell: bash
