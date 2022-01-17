@@ -58,6 +58,8 @@ branch_install <- function(branches = c(
                            install_dependencies = FALSE) {
   force(branches)
   assert_no_global_installation(path_pkg)
+  gh_cat("::group::Installing branches\n\n")
+  withr::defer(gh_cat("::endgroup::\n"))
   cli::cli_alert_info("Start installing branches into separate libraries.")
   libpaths <- purrr::map(branches, branch_install_impl,
     path_pkg = path_pkg,
