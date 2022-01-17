@@ -4,7 +4,10 @@
 \alias{use_touchstone}
 \title{Initiate {touchstone}}
 \usage{
-use_touchstone()
+use_touchstone(overwrite = FALSE)
+}
+\arguments{
+\item{overwrite}{Overwrites files if they exists.}
 }
 \value{
 The function is called for its side effects and returns \code{NULL} (invisibly).
