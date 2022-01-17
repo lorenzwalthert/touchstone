@@ -333,11 +333,17 @@ abort_string <- function() {
 
 append_rbuildignore <- function(dir) {
   ignore <- ".Rbuildignore"
+  dir_str <- glue::glue("^{dir}$")
+
   if (fs::file_exists(ignore)) {
-    cat(
-      glue::glue("^{dir}$"),
-      sep = "\n", file = ignore, append = TRUE
-    )
+    already_ignored <- any(readLines(ignore) == dir_str)
+
+    if (!already_ignored) {
+      cat(
+        dir_str,
+        sep = "\n", file = ignore, append = TRUE
+      )
+    }
     cli::cli_alert_success("Added {.path {dir}} to {.file {ignore}}.")
   } else {
     cli::cli_alert_warning(
