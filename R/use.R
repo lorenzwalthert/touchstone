@@ -3,7 +3,7 @@
 #' This function will initialize {touchstone} in your package repository, use
 #' from root directory.
 #'
-#' @param overwrite Overwrites files if they exists.
+#' @param overwrite Overwrites files if they exist.
 #' @details
 #' For more information see the 'Using touchstone' vignette:
 #'  `vignette("touchstone", package = "touchstone")
