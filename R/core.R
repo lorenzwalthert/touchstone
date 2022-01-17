@@ -112,8 +112,8 @@ benchmark_run <- function(expr_before_benchmark =
   # touchstone libraries must be removed from the path temporarily
   # and the one to benchmark will be added in benchmark_run_impl()
   local_without_touchstone_lib()
-  gh_cat(glue::glue("::group::Running benchmark: {names(dots)}"))
-  withr::defer(gh_cat("::endgroup::"))
+  gh_cat(glue::glue("::group::Running benchmark: {names(dots)}\n\n"))
+  withr::defer(gh_cat("::endgroup::\n"))
   branches <- branches_upsample(branches, n = n)
   out_list <- purrr::pmap(branches, benchmark_run_impl,
     expr_before_benchmark = expr_before_benchmark,
