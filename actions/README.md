@@ -15,3 +15,7 @@ The actions will always be compatible with the version of {touchstone} of the sa
 ```yaml
 - uses lorenzwalthert/touchstone/actions/receive@v0.0.1
 ```
+There is also the tag `v1` which will occasionally be moved forward for small changes but never for breaking changes. ****We recommend this version for pre-CRAN releases.***
+```yaml
+- uses lorenzwalthert/touchstone/actions/receive@v1
+```
