@@ -17,7 +17,7 @@ inputs:
   touchstone_ref:
     description: 'Which branch or tag of {touchstone} should be used. Mainly for debugging.'
     required: true
-    default: '@main'
+    default: '@v1'
     
 runs:
   using: "composite"
