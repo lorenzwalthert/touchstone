@@ -32,20 +32,19 @@ runs:
       shell: bash
     - name: 'Comment on PR'
       id: 'comment'
-      run: exit 1
-      # uses: actions/github-script@v3
-      # with:
-      #   github-token: ${{ inputs.GITHUB_TOKEN }}
-      #   script: |
-      #     var fs = require('fs');
-      #     var issue_number = Number(fs.readFileSync('./NR'));
-      #     var body = fs.readFileSync('./info.txt').toString();
-      #     await github.issues.createComment({
-      #       owner: context.repo.owner,
-      #       repo: context.repo.repo,
-      #       issue_number: issue_number,
-      #       body: body
-      #     });
+      uses: actions/github-script@v3
+      with:
+        github-token: ${{ inputs.GITHUB_TOKEN }}
+        script: |
+          var fs = require('fs');
+          var issue_number = Number(fs.readFileSync('./NR'));
+          var body = fs.readFileSync('./info.txt').toString();
+          await github.issues.createComment({
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+            issue_number: issue_number,
+            body: body
+          });
     - uses: actions/github-script@v5
       if: always()
       with:
@@ -54,7 +53,7 @@ runs:
           let any_failed = ${{ steps.comment.outcome == 'failure' || steps.download.outcome == 'failure' }}
           let state = 'success'
           let description = 'Commenting succeeded!'
-
+          
           if(${{ github.event.workflow_run.conclusion == 'failure'}} || any_failed) {
             state = 'failure'
             description = 'Commenting failed!'
