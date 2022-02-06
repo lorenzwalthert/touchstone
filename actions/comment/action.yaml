@@ -51,17 +51,16 @@ runs:
         script: |
           let url = '${{ github.event.workflow_run.html_url }}'
           let any_failed = ${{ steps.comment.outcome == 'failure' || steps.download.outcome == 'failure' }}
-
+          let state = 'success'
+          let description = 'Commenting succeeded!'
+          
           if(${{ github.event.workflow_run.conclusion == 'failure'}} || any_failed) {
-            const state = 'failure'
-            const description = 'Commenting failed!'
+            state = 'failure'
+            description = 'Commenting failed!'
             if(any_failed) {
               url = "https://github.com/${{github.repository}}/actions/" + 
                     "${{ github.run_id }}"
             }
-          } else {
-            const state = 'success'
-            const description = 'Commenting succeeded!'
           }
 
           github.rest.repos.createCommitStatus({
