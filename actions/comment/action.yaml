@@ -8,6 +8,7 @@ runs:
   using: "composite"
   steps:
     - name: 'Download artifact'
+      id: 'download'
       uses: actions/github-script@v3.1.0
       with:
         script: |
@@ -30,6 +31,7 @@ runs:
     - run: unzip pr.zip
       shell: bash
     - name: 'Comment on PR'
+      id: 'comment'
       uses: actions/github-script@v3
       with:
         github-token: ${{ inputs.GITHUB_TOKEN }}
@@ -48,11 +50,12 @@ runs:
       with:
         script: |
           let url = '${{ github.event.workflow_run.html_url }}'
-
-          if(${{ github.event.workflow_run.conclusion == 'failure' || failure() }} ) {
+          let any_failed = ${{ steps.comment.outcome == 'failure' || steps.download.outcome == 'failure' }}
+          
+          if(${{ github.event.workflow_run.conclusion == 'failure'}} || any_failed) {
             const state = 'failure'
             const description = 'Commenting failed!'
-            if(${{ failure() }}) {
+            if(any_failed) {
               url = "https://github.com/${{github.repository}}/actions/" + 
                     "${{ github.run_id }}"
             }
