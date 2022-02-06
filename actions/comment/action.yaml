@@ -58,7 +58,7 @@ runs:
             state = 'failure'
             description = 'Commenting failed!'
             if(any_failed) {
-              url = "https://github.com/${{github.repository}}/actions/" + 
+              url = "https://github.com/${{github.repository}}/actions/runs/" + 
                     "${{ github.run_id }}"
             }
           }
