@@ -43,3 +43,30 @@ runs:
             issue_number: issue_number,
             body: body
           });
+    - uses: action/github-script@v5
+      if: always()
+      with:
+        script: |
+          let url = '${{ github.event.workflow_run.html_url }}'
+
+          if(${{ github.event.workflow_run.conclusion == 'failure' || failure() }} ) {
+            const state = 'failure'
+            const description = 'Commenting failed!'
+            if(${{ failure() }}) {
+              url = "https://github.com/${{github.repository}}/actions/" + 
+                    "${{ github.run_id }}"
+            }
+          } else {
+            const state = 'success'
+            const description = 'Commenting succeeded!'
+          }
+
+          github.rest.repos.createCommitStatus({
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+            sha: '${{ github.event.workflow_run.head_sha}}',
+            state: state,
+            target_url: url,
+            description: description,
+            context: 'touchstone comment'
+          })
