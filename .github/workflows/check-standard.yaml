@@ -39,9 +39,12 @@ jobs:
           http-user-agent: ${{ matrix.config.http-user-agent }}
           use-public-rspm: true
 
+        # desc gh version fixes a bug in create_package
       - uses: r-lib/actions/setup-r-dependencies@v2
         with:
-          extra-packages: any::rcmdcheck
+          extra-packages: |
+            any::rcmdcheck
+            github::r-lib/desc@main
           needs: check
 
       - uses: r-lib/actions/check-r-package@v2
