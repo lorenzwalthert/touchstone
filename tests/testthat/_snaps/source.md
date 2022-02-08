@@ -7,7 +7,7 @@
 
     Code
       activate()
-    Warning <warning>
+    Warning <rlang_warning>
       `activate()` is meant for interactive useonly, make sure 'script.R' works as intended!
 
 ---
@@ -26,7 +26,7 @@
 
     Code
       activate()
-    Warning <warning>
+    Warning <rlang_warning>
       [1m[22m[30m[47m`activate()`[49m[39m is meant for interactive useonly, make sure [34mscript.R[39m works as intended!
 
 ---
@@ -45,7 +45,7 @@
 
     Code
       activate()
-    Warning <warning>
+    Warning <rlang_warning>
       `activate()` is meant for interactive useonly, make sure 'script.R' works as intended!
 
 ---
@@ -64,7 +64,7 @@
 
     Code
       activate()
-    Warning <warning>
+    Warning <rlang_warning>
       [1m[22m[30m[47m`activate()`[49m[39m is meant for interactive useonly, make sure [34mscript.R[39m works as intended!
 
 ---
