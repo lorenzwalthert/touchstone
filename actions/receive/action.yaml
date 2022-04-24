@@ -41,7 +41,7 @@ runs:
 
           if (is_fork) {
             var head_repo = await github.rest.repos.get({
-                                    owner: pr.head.repo.owner,
+                                    owner: pr.head.repo.owner.login,
                                     repo: pr.head.repo.name
                                   })
             head_repo = head_repo.data
