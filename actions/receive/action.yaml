@@ -23,7 +23,6 @@ runs:
   using: "composite"
   steps:
     - uses: actions/github-script@v5
-      if: github.event_name == 'issue_comment'
       id: get-pull
       with:
         script: |
@@ -40,7 +39,6 @@ runs:
           console.log(pull)
           return pull
     - name: Set envvars
-      if: github.event_name == 'issue_comment'
       shell: bash
       run: |
         echo "GITHUB_HEAD_REF=${{ fromJSON(steps.get-pull.outputs.result).head_ref }}" >> $GITHUB_ENV
@@ -58,7 +56,6 @@ runs:
       shell: bash
     - name: Ensure base branch is fetched
       run: |
-        git checkout -b "${{ env.GITHUB_HEAD_REF }}" # this is current ref. This is required for naming.
         git branch ${{ env.GITHUB_BASE_REF }} remotes/origin/${{ env.GITHUB_BASE_REF }}
       shell: bash
     - name: Setup R
