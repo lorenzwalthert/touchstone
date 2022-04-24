@@ -32,11 +32,19 @@ runs:
                             repo: context.repo.repo,
                             pull_number: context.issue.number})
           var pull = {
-                  repo: a.data.head.repo.full_name,
-                  ref: a.data.head.sha
+                  head_repo: a.data.head.repo.full_name,
+                  head_ref: a.data.head.ref,
+                  base_repo:a.data.base.repo.full_name,
+                  base_ref: a.data.base.ref
                  }
           console.log(pull)
           return pull
+    - name: Set envvars
+      if: github.event_name == 'issue_comment'
+      shell: bash
+      run: |
+        echo "GITHUB_HEAD_REF=${{ fromJSON(steps.get-pull.outputs.result).head_ref }}" >> $GITHUB_ENV
+        echo "GITHUB_BASE_REF=${{ fromJSON(steps.get-pull.outputs.result).base_ref }}" >> $GITHUB_ENV
     - name: Checkout repo
       uses: actions/checkout@v2
       with:

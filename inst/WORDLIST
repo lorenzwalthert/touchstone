@@ -30,6 +30,7 @@ downloadArtifact
 dplyr
 env
 envir
+envvars
 eval
 expr
 fromJson
