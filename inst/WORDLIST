@@ -33,6 +33,7 @@ envir
 envvars
 eval
 expr
+fi
 fromJson
 fromJSON
 fs
