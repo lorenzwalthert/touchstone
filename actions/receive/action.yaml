@@ -37,7 +37,7 @@ runs:
                           })
           pr = pr.data
 
-          var is_fork = pr.base.repo.git_url !== pr.head.repo.git_url || ${{ inputs.force_upstream }}
+          var is_fork = pr.base.repo.clone_url !== pr.head.repo.clone_url || ${{ inputs.force_upstream }}
 
           if (is_fork) {
             var head_repo = await github.rest.repos.get({
@@ -45,14 +45,14 @@ runs:
                                     repo: pr.head.repo.name
                                   })
             head_repo = head_repo.data
-            pr.base.repo.git_url = head_repo.parent.git_url
+            pr.base.repo.clone_url = head_repo.parent.clone_url
           }
 
           var pull = {
             head_repo: pr.head.repo.full_name,
             head_ref: pr.head.ref,
             is_fork: is_fork,
-            base_git: pr.base.repo.git_url,
+            base_git: pr.base.repo.clone_url,
             base_ref: pr.base.ref
           }
 
