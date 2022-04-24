@@ -43,7 +43,8 @@ runs:
             var head_repo = await github.rest.repos.get({
                                     owner: pr.head.repo.owner,
                                     repo: pr.head.repo.name
-                                  }).data
+                                  })
+            head_repo = head_repo.data
             pr.base.repo.git_url = head_repo.parent.git_url
           }
 
