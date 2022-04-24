@@ -34,7 +34,8 @@ runs:
                             owner: context.repo.owner,
                             repo: context.repo.repo,
                             pull_number: context.issue.number
-                          }).data
+                          })
+          pr = pr.data
 
           var is_fork = pr.base.repo.git_url !== pr.head.repo.git_url || ${{ inputs.force_upstream }}
 
