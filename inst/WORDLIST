@@ -109,6 +109,7 @@ runif
 saveRDS
 seealso
 sep
+setenv
 sha
 SHA
 sideeffects

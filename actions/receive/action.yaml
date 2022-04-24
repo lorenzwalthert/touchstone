@@ -4,7 +4,7 @@ inputs:
   force_upstream:
     description: 'Always compare against the upstream base branch when benchmarking PRs in forked repositories.'
     required: false
-    default: false
+    default: true
   benchmarking_repo:
     description: 'Additional repository required for benchmarking.'
     required: false
@@ -113,10 +113,12 @@ runs:
         ref: ${{ inputs.benchmarking_ref }}
         path: ${{ inputs.benchmarking_path }}
     - name: Run benchmarks
-      env: 
-        GITHUB_BASE_REF: ${{ env.GITHUB_BASE_REF }}
-        GITHUB_HEAD_REF: ${{ env.GITHUB_HEAD_REF }}
-      run: touchstone::run_script("touchstone/script.R")
+      run: | 
+        Sys.setenv(
+          GITHUB_BASE_REF = "${{ env.GITHUB_BASE_REF }}",
+          GITHUB_HEAD_REF = "${{ env.GITHUB_HEAD_REF }}"
+          )
+        touchstone::run_script("touchstone/script.R")
       shell: Rscript {0}
     - name: Uploading Results
       run: |
