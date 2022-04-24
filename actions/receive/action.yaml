@@ -4,7 +4,7 @@ inputs:
   force_upstream:
     description: 'Always compare against the upstream base branch when benchmarking PRs in forked repositories.'
     required: false
-    default: true
+    default: false
   benchmarking_repo:
     description: 'Additional repository required for benchmarking.'
     required: false
