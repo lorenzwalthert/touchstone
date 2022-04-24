@@ -1,6 +1,10 @@
 name: 'receive'
 description: 'Action to run {touchstone} benchmarks and upload the results.'
 inputs:
+  force_upstream:
+    description: 'Always compare against the upstream base branch when benchmarking PRs in forked repositories.'
+    required: false
+    default: false
   benchmarking_repo:
     description: 'Additional repository required for benchmarking.'
     required: false
@@ -26,16 +30,30 @@ runs:
       id: get-pull
       with:
         script: |
-          var a = await github.rest.pulls.get({
+          var pr = await github.rest.pulls.get({
                             owner: context.repo.owner,
                             repo: context.repo.repo,
-                            pull_number: context.issue.number})
+                            pull_number: context.issue.number
+                          }).data
+
+          var is_fork = pr.base.repo.git_url !== pr.head.repo.git_url || ${{ inputs.force_upstream }}
+
+          if (is_fork) {
+            var head_repo = await github.rest.repos.get({
+                                    owner: pr.head.repo.owner,
+                                    repo: pr.head.repo.name
+                                  }).data
+            pr.base.repo.git_url = head_repo.parent.git_url
+          }
+
           var pull = {
-                  head_repo: a.data.head.repo.full_name,
-                  head_ref: a.data.head.ref,
-                  base_repo:a.data.base.repo.full_name,
-                  base_ref: a.data.base.ref
-                 }
+            head_repo: pr.head.repo.full_name,
+            head_ref: pr.head.ref,
+            is_fork: is_fork,
+            base_git: pr.base.repo.git_url,
+            base_ref: pr.base.ref
+          }
+
           console.log(pull)
           return pull
     - name: Set envvars
@@ -54,10 +72,18 @@ runs:
         git config --local user.name "GitHub Actions"
         git config --local user.email "actions@github.com"
       shell: bash
-    - name: Ensure base branch is fetched
-      run: |
-        git branch ${{ env.GITHUB_BASE_REF }} remotes/origin/${{ env.GITHUB_BASE_REF }}
+    - name: Get Upstream branch
+      if: fromJSON(steps.get-pull.outputs.result).is_fork
       shell: bash
+      run: |
+        ! git branch -D ${{ fromJSON(steps.get-pull.outputs.result).base_ref }}
+        git remote add touchstone_base ${{ fromJSON(steps.get-pull.outputs.result).base_git }}
+        git fetch touchstone_base
+        git switch -c ${{ fromJSON(steps.get-pull.outputs.result).base_ref }} touchstone_base/${{ fromJSON(steps.get-pull.outputs.result).base_ref }}
+    # - name: Ensure base branch is fetched
+    #   run: |
+    #     git branch ${{ env.GITHUB_BASE_REF }} remotes/origin/${{ env.GITHUB_BASE_REF }}
+    #   shell: bash
     - name: Setup R
       uses: r-lib/actions/setup-r@v2
     - name: Install dependencies
@@ -86,6 +112,9 @@ runs:
         ref: ${{ inputs.benchmarking_ref }}
         path: ${{ inputs.benchmarking_path }}
     - name: Run benchmarks
+      env: 
+        GITHUB_BASE_REF: ${{ env.GITHUB_BASE_REF }}
+        GITHUB_HEAD_REF: ${{ env.GITHUB_HEAD_REF }}
       run: touchstone::run_script("touchstone/script.R")
       shell: Rscript {0}
     - name: Uploading Results
