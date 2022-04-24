@@ -22,9 +22,26 @@ inputs:
 runs:
   using: "composite"
   steps:
+    - uses: actions/github-script@v5
+      if: github.event_name == 'issue_comment'
+      id: get-pull
+      with:
+        script: |
+          var a = await github.rest.pulls.get({
+                            owner: context.repo.owner,
+                            repo: context.repo.repo,
+                            pull_number: context.issue.number})
+          var pull = {
+                  repo: a.data.head.repo.full_name,
+                  ref: a.data.head.sha
+                 }
+          console.log(pull)
+          return pull
     - name: Checkout repo
       uses: actions/checkout@v2
       with:
+         repository: ${{ fromJSON(steps.get-pull.outputs.result).repo || ''}}
+         ref: ${{ fromJSON(steps.get-pull.outputs.result).ref || ''}}
          fetch-depth: 0
     - name: Set up git user
       run: |

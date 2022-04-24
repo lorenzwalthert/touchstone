@@ -33,6 +33,7 @@ envir
 eval
 expr
 fromJson
+fromJSON
 fs
 gcc
 gert
