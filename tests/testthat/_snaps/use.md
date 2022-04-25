@@ -32,7 +32,7 @@
       [33m![39m Could not find [34m[34m.Rbuildignore[34m[39m to add [34m[34mtouchstone[34m[39m.
       * Replace the mtcars sample code in `touchstone/script.R` with code from your
       package you want to benchmark.
-      [36mi[39m You can modify the PR comment, see [30m[47m[30m[47m`?touchstone::pr_comment`[47m[30m[49m[39m.
+      [36mi[39m You can modify the PR comment, see `?touchstone::pr_comment`.
       * Commit and push to GitHub to the default branch to activate the workflow,
       then make a pull request to trigger your first benchmark run.
 
@@ -70,7 +70,7 @@
       [33m![39m Could not find [34m[34m.Rbuildignore[34m[39m to add [34m[34mtouchstone[34m[39m.
       • Replace the mtcars sample code in `touchstone/script.R` with code from your
       package you want to benchmark.
-      [36mℹ[39m You can modify the PR comment, see [30m[47m[30m[47m`?touchstone::pr_comment`[47m[30m[49m[39m.
+      [36mℹ[39m You can modify the PR comment, see `?touchstone::pr_comment`.
       • Commit and push to GitHub to the default branch to activate the workflow,
       then make a pull request to trigger your first benchmark run.
 
