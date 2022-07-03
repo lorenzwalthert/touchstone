@@ -27,7 +27,7 @@ Set to \code{NULL} to allow everyone to trigger a benchmark.}
 \item{force_upstream}{Always benchmark against the upstream base branch.}
 }
 \value{
-
+The function is called for its side effects and returns \code{NULL} (invisibly).
 }
 \description{
 This function will add (or update) the {touchstone} GitHub Actions workflows

@@ -14,6 +14,7 @@
 #' # within your repository
 #' use_touchstone()
 #' }
+#' @seealso [touchstone::use_touchstone_workflows()]
 #' @export
 use_touchstone <- function(overwrite = FALSE,
                            on_comment = FALSE,
@@ -115,6 +116,7 @@ copy_if_not_exists <- function(path, new_path, overwrite = FALSE) {
 #'   Set to `NULL` to allow everyone to trigger a benchmark.
 #' @param force_upstream Always benchmark against the upstream base branch.
 #' @return
+#' The function is called for its side effects and returns `NULL` (invisibly).
 #' @details
 #' Possible roles for `limit_to`:
 #' - `OWNER`: Owner of the repository, e.g. user for user/repo.
@@ -136,13 +138,6 @@ use_touchstone_workflows <- function(overwrite = FALSE,
                                      command = "/benchmark",
                                      limit_to = c("OWNER", "MEMBER", "COLLABORATOR"),
                                      force_upstream = TRUE) {
-  workflows <- fs::dir_create(fs::path(".github", "workflows"))
-  copy_if_not_exists(
-    system.file("touchstone-comment.yaml", package = "touchstone"),
-    fs::path(workflows, "touchstone-comment.yaml"),
-    overwrite
-  )
-
   template <- readLines(
     system.file("touchstone-receive.yaml", package = "touchstone")
   )
@@ -192,9 +187,16 @@ use_touchstone_workflows <- function(overwrite = FALSE,
   temp_wf <- fs::file_temp("receive.yml")
   writeLines(wf, temp_wf)
 
+  workflows <- fs::dir_create(fs::path(".github", "workflows"))
   copy_if_not_exists(
     temp_wf,
     fs::path(workflows, "touchstone-receive.yaml"),
+    overwrite
+  )
+
+  copy_if_not_exists(
+    system.file("touchstone-comment.yaml", package = "touchstone"),
+    fs::path(workflows, "touchstone-comment.yaml"),
     overwrite
   )
 

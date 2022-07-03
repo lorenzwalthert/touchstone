@@ -43,3 +43,6 @@ For more information see the 'Using touchstone' vignette:
 use_touchstone()
 }
 }
+\seealso{
+\code{\link[=use_touchstone_workflows]{use_touchstone_workflows()}}
+}
