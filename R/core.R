@@ -27,7 +27,8 @@ benchmark_run_iteration <- function(expr_before_benchmark,
       options()[.]
   )
 
-  for (iteration in seq_len(n)) { # iterations
+  for (iteration in seq_len(n)) {
+    # iterations
     callr::r(
       function(expr_before_benchmark, dots, branch, block, iteration, asset_dirs) {
         withr::local_namespace("touchstone")
@@ -84,8 +85,7 @@ benchmark_run <- function(expr_before_benchmark =
                             branch_get_or_fail("GITHUB_HEAD_REF")
                           ),
                           n = 100,
-                          path_pkg = ".")
-{
+                          path_pkg = ".") {
   force(branches)
   expr_before_benchmark <- rlang::enexpr(expr_before_benchmark)
   dots <- rlang::enexprs(...)
