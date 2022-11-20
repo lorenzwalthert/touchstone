@@ -206,7 +206,7 @@ pin_assets <- function(...,
   asset_dir <- get_asset_dir(branch)
 
   local_git_checkout(branch)
-  dirs <- rlang::list2(...)
+  dirs <- rlang::list2(...) %>% unlist()
   valid_dirs <- dirs %>% purrr::map_lgl(fs::file_exists)
 
   if (!all(valid_dirs)) {
