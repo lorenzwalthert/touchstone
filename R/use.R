@@ -17,7 +17,7 @@
 #' @seealso [touchstone::use_touchstone_workflows()]
 #' @export
 use_touchstone <- function(overwrite = FALSE,
-                           command = "/benchmark",
+                           command = NULL,
                            limit_to = c("OWNER", "MEMBER", "COLLABORATOR"),
                            force_upstream = TRUE) {
   dir_touchstone <- dir_touchstone()
@@ -108,7 +108,7 @@ copy_if_not_exists <- function(path, new_path, overwrite = FALSE) {
 #' @param overwrite Overwrites files if they exist.
 #' @param command If set to `NULL` (the default) will run the workflow on every
 #'  commit. If set to a command (e.g. `/benchmark`) the benchmark will only run
-#'  when triggered with a comment on the PR starting with the command. 
+#'  when triggered with a comment on the PR starting with the command.
 #' @param limit_to Roles that are allowed to trigger the benchmark workflow
 #'   via comment. See details for a list of roles and their definition.
 #'   Set to `NULL` to allow everyone to trigger a benchmark.
