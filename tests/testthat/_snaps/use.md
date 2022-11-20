@@ -22,13 +22,13 @@
     Code
       use_touchstone()
     Message <cliMessage>
-      [32mv[39m Populated file [34m[34mscript.R[34m[39m in [34m[34m[34mtouchstone[34m/[34m[39m.
-      [32mv[39m Populated file [34m[34mheader.R[34m[39m in [34m[34m[34mtouchstone[34m/[34m[39m.
-      [32mv[39m Populated file [34m[34mfooter.R[34m[39m in [34m[34m[34mtouchstone[34m/[34m[39m.
-      [32mv[39m Populated file [34m[34mconfig.json[34m[39m in [34m[34m[34mtouchstone[34m/[34m[39m.
-      [32mv[39m Populated file [34m[34m.gitignore[34m[39m in [34m[34m[34mtouchstone[34m/[34m[39m.
-      [32mv[39m Populated file [34m[34mtouchstone-receive.yaml[34m[39m in [34m[34m[34m.github/workflows[34m/[34m[39m.
-      [32mv[39m Populated file [34m[34mtouchstone-comment.yaml[34m[39m in [34m[34m[34m.github/workflows[34m/[34m[39m.
+      [32mv[39m Populated file [34m[34mscript.R[34m[39m in [34m[34mtouchstone/[34m[39m.
+      [32mv[39m Populated file [34m[34mheader.R[34m[39m in [34m[34mtouchstone/[34m[39m.
+      [32mv[39m Populated file [34m[34mfooter.R[34m[39m in [34m[34mtouchstone/[34m[39m.
+      [32mv[39m Populated file [34m[34mconfig.json[34m[39m in [34m[34mtouchstone/[34m[39m.
+      [32mv[39m Populated file [34m[34m.gitignore[34m[39m in [34m[34mtouchstone/[34m[39m.
+      [32mv[39m Populated file [34m[34mtouchstone-receive.yaml[34m[39m in [34m[34m.github/workflows/[34m[39m.
+      [32mv[39m Populated file [34m[34mtouchstone-comment.yaml[34m[39m in [34m[34m.github/workflows/[34m[39m.
       [33m![39m Could not find [34m[34m.Rbuildignore[34m[39m to add [34m[34mtouchstone[34m[39m.
       * Replace the mtcars sample code in `touchstone/script.R` with code from your
       package you want to benchmark.
@@ -60,13 +60,13 @@
     Code
       use_touchstone()
     Message <cliMessage>
-      [32m✔[39m Populated file [34m[34mscript.R[34m[39m in [34m[34m[34mtouchstone[34m/[34m[39m.
-      [32m✔[39m Populated file [34m[34mheader.R[34m[39m in [34m[34m[34mtouchstone[34m/[34m[39m.
-      [32m✔[39m Populated file [34m[34mfooter.R[34m[39m in [34m[34m[34mtouchstone[34m/[34m[39m.
-      [32m✔[39m Populated file [34m[34mconfig.json[34m[39m in [34m[34m[34mtouchstone[34m/[34m[39m.
-      [32m✔[39m Populated file [34m[34m.gitignore[34m[39m in [34m[34m[34mtouchstone[34m/[34m[39m.
-      [32m✔[39m Populated file [34m[34mtouchstone-receive.yaml[34m[39m in [34m[34m[34m.github/workflows[34m/[34m[39m.
-      [32m✔[39m Populated file [34m[34mtouchstone-comment.yaml[34m[39m in [34m[34m[34m.github/workflows[34m/[34m[39m.
+      [32m✔[39m Populated file [34m[34mscript.R[34m[39m in [34m[34mtouchstone/[34m[39m.
+      [32m✔[39m Populated file [34m[34mheader.R[34m[39m in [34m[34mtouchstone/[34m[39m.
+      [32m✔[39m Populated file [34m[34mfooter.R[34m[39m in [34m[34mtouchstone/[34m[39m.
+      [32m✔[39m Populated file [34m[34mconfig.json[34m[39m in [34m[34mtouchstone/[34m[39m.
+      [32m✔[39m Populated file [34m[34m.gitignore[34m[39m in [34m[34mtouchstone/[34m[39m.
+      [32m✔[39m Populated file [34m[34mtouchstone-receive.yaml[34m[39m in [34m[34m.github/workflows/[34m[39m.
+      [32m✔[39m Populated file [34m[34mtouchstone-comment.yaml[34m[39m in [34m[34m.github/workflows/[34m[39m.
       [33m![39m Could not find [34m[34m.Rbuildignore[34m[39m to add [34m[34mtouchstone[34m[39m.
       • Replace the mtcars sample code in `touchstone/script.R` with code from your
       package you want to benchmark.
