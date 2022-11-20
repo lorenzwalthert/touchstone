@@ -35,9 +35,9 @@ interactively on the \link{touchstone_script}.
 }
 \section{Functions}{
 \itemize{
-\item \code{deactivate}: Restore the original environment state.
-}}
+\item \code{deactivate()}: Restore the original environment state.
 
+}}
 \examples{
 \dontrun{
 activate()

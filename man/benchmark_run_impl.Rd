@@ -13,7 +13,7 @@ commit, tag, branch etc) of the benchmarking.}
 \item{block}{All branches that appear once in a block.}
 
 \item{expr_before_benchmark}{Expression to run before
-the benchmark is ran, will be captured with \code{\link[rlang:nse-defuse]{rlang::enexpr()}}. So you can
+the benchmark is ran, will be captured with \code{\link[rlang:defusing-advanced]{rlang::enexpr()}}. So you can
 use quasiquotation.}
 
 \item{dots}{list of quoted expressions (length 1).}

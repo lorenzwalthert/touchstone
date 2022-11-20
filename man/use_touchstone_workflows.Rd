@@ -6,8 +6,7 @@
 \usage{
 use_touchstone_workflows(
   overwrite = FALSE,
-  on_comment = FALSE,
-  command = "/benchmark",
+  command = NULL,
   limit_to = c("OWNER", "MEMBER", "COLLABORATOR"),
   force_upstream = TRUE
 )
@@ -15,10 +14,9 @@ use_touchstone_workflows(
 \arguments{
 \item{overwrite}{Overwrites files if they exist.}
 
-\item{on_comment}{Don't benchmark every commit. Only trigger on PR
-comments starting with \code{command}.}
-
-\item{command}{The command to use to trigger the benchmark with a comment.}
+\item{command}{If set to \code{NULL} (the default) will run the workflow on every
+commit. If set to a command (e.g. \verb{/benchmark}) the benchmark will only run
+when triggered with a comment on the PR starting with the command.}
 
 \item{limit_to}{Roles that are allowed to trigger the benchmark workflow
 via comment. See details for a list of roles and their definition.

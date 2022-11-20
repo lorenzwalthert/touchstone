@@ -29,14 +29,14 @@ Utilities to manage the touchstone database.
 }
 \section{Functions}{
 \itemize{
-\item \code{dir_touchstone}: returns the directory where the touchstone
+\item \code{dir_touchstone()}: returns the directory where the touchstone
 database lives.
 
-\item \code{touchstone_clear}: clears the touchstone database.
+\item \code{touchstone_clear()}: clears the touchstone database.
 
-\item \code{path_pr_comment}: returns the path to the file containing the pr comment.
+\item \code{path_pr_comment()}: returns the path to the file containing the pr comment.
+
 }}
-
 \seealso{
 \link{pr_comment}
 }
