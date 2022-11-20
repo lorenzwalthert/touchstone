@@ -66,13 +66,13 @@
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">benchmark_run_iteration</span><span class="op">(</span>
-  <span class="va">expr_before_benchmark</span>,
-  <span class="va">dots</span>,
-  <span class="va">branch</span>,
-  <span class="va">block</span>,
-  n <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">getOption</a></span><span class="op">(</span><span class="st">"touchstone.n_iterations"</span>, <span class="fl">1</span><span class="op">)</span>
-<span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">benchmark_run_iteration</span><span class="op">(</span></span>
+<span>  <span class="va">expr_before_benchmark</span>,</span>
+<span>  <span class="va">dots</span>,</span>
+<span>  <span class="va">branch</span>,</span>
+<span>  <span class="va">block</span>,</span>
+<span>  n <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">getOption</a></span><span class="op">(</span><span class="st">"touchstone.n_iterations"</span>, <span class="fl">1</span><span class="op">)</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -81,15 +81,24 @@
 <dd><p>Expression to run before
 the benchmark is ran, will be captured with <code><a href="https://rlang.r-lib.org/reference/topic-defuse.html" class="external-link">rlang::enexpr()</a></code>. So you can
 use quasiquotation.</p></dd>
+
+
 <dt>dots</dt>
 <dd><p>list of quoted expressions (length 1).</p></dd>
+
+
 <dt>branch</dt>
 <dd><p>A character vector of length one to indicate the git branch (i.e.
 commit, tag, branch etc) of the benchmarking.</p></dd>
+
+
 <dt>block</dt>
 <dd><p>All branches that appear once in a block.</p></dd>
+
+
 <dt>n</dt>
 <dd><p>Number of iterations to run a benchmark within an iteration.</p></dd>
+
 </dl></div>
 
   </div>
@@ -104,7 +113,7 @@ commit, tag, branch etc) of the benchmarking.</p></dd>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer></div>

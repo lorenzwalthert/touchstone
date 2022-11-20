@@ -96,68 +96,103 @@
 </h2>
 <p>We first explain the output of the comment in the PR:</p>
 <p><img src="../reference/figures/screenshot-pr-comment.png"></p>
-<p>Every bullet point corresponds to one expression you benchmarked in your touchstone script in <code>touchstone/script.R</code> with <code><a href="../reference/benchmark_run.html">benchmark_run()</a></code>. The contents of the former are in this (simplified) example:</p>
+<p>Every bullet point corresponds to one expression you benchmarked in
+your touchstone script in <code>touchstone/script.R</code> with
+<code><a href="../reference/benchmark_run.html">benchmark_run()</a></code>. The contents of the former are in this
+(simplified) example:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/lorenzwalthert/touchstone" class="external-link">touchstone</a></span><span class="op">)</span>
-<span class="fu">branches_install</span><span class="op">(</span><span class="op">)</span>
-<span class="fu"><a href="../reference/benchmark_run.html">benchmark_run</a></span><span class="op">(</span>
-  expr_before_benchmark <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"library(styler)"</span>, <span class="st">"cache_deactivate()"</span><span class="op">)</span>,
-  without_cache <span class="op">=</span> <span class="st">'styler::style_pkg("touchstone/sources/here")'</span>,
-  n <span class="op">=</span> <span class="fl">30</span>
-<span class="op">)</span>
-
-<span class="fu"><a href="../reference/benchmark_run.html">benchmark_run</a></span><span class="op">(</span>
-  expr_before_benchmark <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"library(styler)"</span>, <span class="st">"cache_activate()"</span><span class="op">)</span>,
-  cache_applying <span class="op">=</span> <span class="st">'styler::style_pkg("touchstone/sources/here")'</span>,
-  n <span class="op">=</span> <span class="fl">30</span>
-<span class="op">)</span>
-
-<span class="fu"><a href="../reference/benchmark_run.html">benchmark_run</a></span><span class="op">(</span>
-  expr_before_benchmark <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"library(styler)"</span>, <span class="st">"cache_deactivate()"</span><span class="op">)</span>,
-  cache_recording <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>
-    <span class="st">"gert::git_reset_hard(repo = 'touchstone/sources/here')"</span>,
-    <span class="st">'styler::style_pkg("touchstone/sources/here")'</span>
-  <span class="op">)</span>,
-  n <span class="op">=</span> <span class="fl">30</span>
-<span class="op">)</span>
-
-<span class="fu">benchmarks_analyze</span><span class="op">(</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/lorenzwalthert/touchstone" class="external-link">touchstone</a></span><span class="op">)</span></span>
+<span><span class="fu">branches_install</span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="fu"><a href="../reference/benchmark_run.html">benchmark_run</a></span><span class="op">(</span></span>
+<span>  expr_before_benchmark <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"library(styler)"</span>, <span class="st">"cache_deactivate()"</span><span class="op">)</span>,</span>
+<span>  without_cache <span class="op">=</span> <span class="st">'styler::style_pkg("touchstone/sources/here")'</span>,</span>
+<span>  n <span class="op">=</span> <span class="fl">30</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="../reference/benchmark_run.html">benchmark_run</a></span><span class="op">(</span></span>
+<span>  expr_before_benchmark <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"library(styler)"</span>, <span class="st">"cache_activate()"</span><span class="op">)</span>,</span>
+<span>  cache_applying <span class="op">=</span> <span class="st">'styler::style_pkg("touchstone/sources/here")'</span>,</span>
+<span>  n <span class="op">=</span> <span class="fl">30</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="../reference/benchmark_run.html">benchmark_run</a></span><span class="op">(</span></span>
+<span>  expr_before_benchmark <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"library(styler)"</span>, <span class="st">"cache_deactivate()"</span><span class="op">)</span>,</span>
+<span>  cache_recording <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span></span>
+<span>    <span class="st">"gert::git_reset_hard(repo = 'touchstone/sources/here')"</span>,</span>
+<span>    <span class="st">'styler::style_pkg("touchstone/sources/here")'</span></span>
+<span>  <span class="op">)</span>,</span>
+<span>  n <span class="op">=</span> <span class="fl">30</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">benchmarks_analyze</span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <ul>
-<li><p>You can see that the expression <code>cache_applying</code> took on average 0.1 seconds on both branches.</p></li>
-<li><p>And if we merge this pull request, <code>cache_recording</code> and <code>without_cache</code> will be approximately 0.01 quicker than before the merge.</p></li>
+<li><p>You can see that the expression <code>cache_applying</code> took
+on average 0.1 seconds on both branches.</p></li>
+<li><p>And if we merge this pull request, <code>cache_recording</code>
+and <code>without_cache</code> will be approximately 0.01 quicker than
+before the merge.</p></li>
 </ul>
-<p>Imagine we only ran all expressions once per branch. Then, the differences could be by chance. To avoid that, we run it <code>n</code> times and compute a confidence interval, which tells us how certain we can be about our estimated differences. A 95% confidence interval tells us that if we were to repeat the benchmarking experiment 100 times, our estimated speed change would be in the interval 95 out of 100 times. It comes from a simple ANOVA model where we regress the elapsed time on the branch from which the result comes. Like this:</p>
+<p>Imagine we only ran all expressions once per branch. Then, the
+differences could be by chance. To avoid that, we run it <code>n</code>
+times and compute a confidence interval, which tells us how certain we
+can be about our estimated differences. A 95% confidence interval tells
+us that if we were to repeat the benchmarking experiment 100 times, our
+estimated speed change would be in the interval 95 out of 100 times. It
+comes from a simple ANOVA model where we regress the elapsed time on the
+branch from which the result comes. Like this:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">fit</span> <span class="op">&lt;-</span> <span class="fu">stats</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/stats/aov.html" class="external-link">aov</a></span><span class="op">(</span><span class="va">elapsed</span> <span class="op">~</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">factor</a></span><span class="op">(</span><span class="va">branches</span><span class="op">)</span>, data <span class="op">=</span> <span class="va">timings</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/stats/confint.html" class="external-link">confint</a></span><span class="op">(</span><span class="va">fit</span>, <span class="va">...</span><span class="op">)</span></code></pre></div>
-<p>We could in addition also control for <code>block</code>, but as we only have two observations per block, this required a lot of parameter estimates and would take away statistical power from our parameter of interest. Our estimates are also unbiased without it.</p>
-<p>Since changes in percent are more relevant than absolute changes, the confidence interval is reported relative to the target branch of the pull request. The measured difference is statistically significantly different from zero if the confidence interval does not overlap with 0. In the screenshot above, this is not the case for any benchmarked expression, as they all range from some negative to some positive number. If you increase <code>n</code>, you can estimate the speed implications of a pull request more precisely, meaning you’ll get a more narrow confidence interval which more likely does not cover zero. You’ll then easily reach statistical significance (and the CI run will take longer), but do you really care if your code gets 0.000001% slower? Probably not. That’s why you also need to look at the range of the confidence interval.</p>
+<code class="sourceCode R"><span><span class="va">fit</span> <span class="op">&lt;-</span> <span class="fu">stats</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/stats/aov.html" class="external-link">aov</a></span><span class="op">(</span><span class="va">elapsed</span> <span class="op">~</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">factor</a></span><span class="op">(</span><span class="va">branches</span><span class="op">)</span>, data <span class="op">=</span> <span class="va">timings</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/stats/confint.html" class="external-link">confint</a></span><span class="op">(</span><span class="va">fit</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
+<p>We could in addition also control for <code>block</code>, but as we
+only have two observations per block, this required a lot of parameter
+estimates and would take away statistical power from our parameter of
+interest. Our estimates are also unbiased without it.</p>
+<p>Since changes in percent are more relevant than absolute changes, the
+confidence interval is reported relative to the target branch of the
+pull request. The measured difference is statistically significantly
+different from zero if the confidence interval does not overlap with 0.
+In the screenshot above, this is not the case for any benchmarked
+expression, as they all range from some negative to some positive
+number. If you increase <code>n</code>, you can estimate the speed
+implications of a pull request more precisely, meaning you’ll get a more
+narrow confidence interval which more likely does not cover zero. You’ll
+then easily reach statistical significance (and the CI run will take
+longer), but do you really care if your code gets 0.000001% slower?
+Probably not. That’s why you also need to look at the range of the
+confidence interval.</p>
 </div>
 <div class="section level2">
 <h2 id="sampling">Sampling<a class="anchor" aria-label="anchor" href="#sampling"></a>
 </h2>
-<p>We sample both branches in <code>n</code> blocks. This gives us a more efficient estimate of the speed difference than the completely at random, because completely at random can result in or close to one of the following scenarios assuming there is an upwards trend in available compute resources over the whole period:</p>
+<p>We sample both branches in <code>n</code> blocks. This gives us a
+more efficient estimate of the speed difference than the completely at
+random, because completely at random can result in or close to one of
+the following scenarios assuming there is an upwards trend in available
+compute resources over the whole period:</p>
 <ul>
-<li><p>We run the PR branch <code>n</code> times before we run the target branch, the PR branch is at disadvantage.</p></li>
-<li><p>If we always switch branches, the first branch is at disadvantage.</p></li>
+<li><p>We run the PR branch <code>n</code> times before we run the
+target branch, the PR branch is at disadvantage.</p></li>
+<li><p>If we always switch branches, the first branch is at
+disadvantage.</p></li>
 </ul>
-<p>The opposite effect occurs when compute power steadily decreases. So we sample randomly within blocks:</p>
+<p>The opposite effect occurs when compute power steadily decreases. So
+we sample randomly within blocks:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu">touchstone</span><span class="fu">:::</span><span class="fu"><a href="../reference/branches_upsample.html">branches_upsample</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"main"</span>, <span class="st">"feature"</span><span class="op">)</span><span class="op">)</span>
-<span class="co">#&gt; <span style="color: #949494;"># A tibble: 40 × 2</span></span>
-<span class="co">#&gt;    block branch </span>
-<span class="co">#&gt;    <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  </span>
-<span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span>     1 main   </span>
-<span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span>     1 feature</span>
-<span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span>     2 feature</span>
-<span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span>     2 main   </span>
-<span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span>     3 main   </span>
-<span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span>     3 feature</span>
-<span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span>     4 feature</span>
-<span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span>     4 main   </span>
-<span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span>     5 main   </span>
-<span class="co">#&gt; <span style="color: #BCBCBC;">10</span>     5 feature</span>
-<span class="co">#&gt; <span style="color: #949494;"># … with 30 more rows</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu">touchstone</span><span class="fu">:::</span><span class="fu"><a href="../reference/branches_upsample.html">branches_upsample</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"main"</span>, <span class="st">"feature"</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 40 × 2</span></span></span>
+<span><span class="co">#&gt;    block branch </span></span>
+<span><span class="co">#&gt;    <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span>     1 main   </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span>     1 feature</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span>     2 feature</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span>     2 main   </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span>     3 feature</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span>     3 main   </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span>     4 main   </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span>     4 feature</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span>     5 main   </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span>     5 feature</span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># … with 30 more rows</span></span></span></code></pre></div>
 </div>
   </div>
 
@@ -178,7 +213,7 @@
 
 <div class="pkgdown">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer>

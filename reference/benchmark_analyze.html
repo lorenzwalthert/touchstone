@@ -66,12 +66,12 @@
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">benchmark_analyze</span><span class="op">(</span>
-  branches <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fu"><a href="branch_get_or_fail.html">branch_get_or_fail</a></span><span class="op">(</span><span class="st">"GITHUB_BASE_REF"</span><span class="op">)</span>,
-    <span class="fu"><a href="branch_get_or_fail.html">branch_get_or_fail</a></span><span class="op">(</span><span class="st">"GITHUB_HEAD_REF"</span><span class="op">)</span><span class="op">)</span>,
-  names <span class="op">=</span> <span class="cn">NULL</span>,
-  ci <span class="op">=</span> <span class="fl">0.95</span>
-<span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">benchmark_analyze</span><span class="op">(</span></span>
+<span>  branches <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fu"><a href="branch_get_or_fail.html">branch_get_or_fail</a></span><span class="op">(</span><span class="st">"GITHUB_BASE_REF"</span><span class="op">)</span>,</span>
+<span>    <span class="fu"><a href="branch_get_or_fail.html">branch_get_or_fail</a></span><span class="op">(</span><span class="st">"GITHUB_HEAD_REF"</span><span class="op">)</span><span class="op">)</span>,</span>
+<span>  names <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  ci <span class="op">=</span> <span class="fl">0.95</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -79,15 +79,22 @@
     <dl><dt>branches</dt>
 <dd><p>The names of the branches for which analysis should be
 created.</p></dd>
+
+
 <dt>names</dt>
 <dd><p>The names of the benchmarks to analyze. If <code>NULL</code>, all
 benchmarks with the <code>branches</code> are taken.</p></dd>
+
+
 <dt>ci</dt>
 <dd><p>The confidence level, defaults to 95%.</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>A character vector that summarizes the benchmarking results.</p>
+    
+
+<p>A character vector that summarizes the benchmarking results.</p>
     </div>
     <div id="details">
     <h2>Details</h2>
@@ -112,7 +119,7 @@ details.</p></li>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer></div>

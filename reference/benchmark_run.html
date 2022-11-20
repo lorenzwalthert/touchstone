@@ -66,14 +66,14 @@
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">benchmark_run</span><span class="op">(</span>
-  expr_before_benchmark <span class="op">=</span> <span class="op">{</span> <span class="op">}</span>,
-  <span class="va">...</span>,
-  branches <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fu"><a href="branch_get_or_fail.html">branch_get_or_fail</a></span><span class="op">(</span><span class="st">"GITHUB_BASE_REF"</span><span class="op">)</span>,
-    <span class="fu"><a href="branch_get_or_fail.html">branch_get_or_fail</a></span><span class="op">(</span><span class="st">"GITHUB_HEAD_REF"</span><span class="op">)</span><span class="op">)</span>,
-  n <span class="op">=</span> <span class="fl">100</span>,
-  path_pkg <span class="op">=</span> <span class="st">"."</span>
-<span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">benchmark_run</span><span class="op">(</span></span>
+<span>  expr_before_benchmark <span class="op">=</span> <span class="op">{</span> <span class="op">}</span>,</span>
+<span>  <span class="va">...</span>,</span>
+<span>  branches <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fu"><a href="branch_get_or_fail.html">branch_get_or_fail</a></span><span class="op">(</span><span class="st">"GITHUB_BASE_REF"</span><span class="op">)</span>,</span>
+<span>    <span class="fu"><a href="branch_get_or_fail.html">branch_get_or_fail</a></span><span class="op">(</span><span class="st">"GITHUB_HEAD_REF"</span><span class="op">)</span><span class="op">)</span>,</span>
+<span>  n <span class="op">=</span> <span class="fl">100</span>,</span>
+<span>  path_pkg <span class="op">=</span> <span class="st">"."</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -82,14 +82,20 @@
 <dd><p>Expression to run before
 the benchmark is ran, will be captured with <code><a href="https://rlang.r-lib.org/reference/topic-defuse.html" class="external-link">rlang::enexpr()</a></code>. So you can
 use quasiquotation.</p></dd>
+
+
 <dt>...</dt>
 <dd><p>Named expression of length one with code to benchmark,
 will be captured with <code><a href="https://rlang.r-lib.org/reference/topic-defuse.html" class="external-link">rlang::enexprs()</a></code>. So you can use quasiquotation.</p></dd>
+
+
 <dt>branches</dt>
 <dd><p>Character vector with branch names to benchmark. The package
 must be built for each benchmarked branch beforehand with <code><a href="branch_install.html">branch_install()</a></code>.
 The base branch is the target branch of the pull request in a workflow run,
 the head branch is the source branch of the pull request in a workflow run.</p></dd>
+
+
 <dt>n</dt>
 <dd><p>Number of times benchmarks should be run for each <code>branch</code>. The more
 iterations you run, the more narrow your confidence interval will be and
@@ -97,13 +103,18 @@ the smaller the differences you will detect. See also
 <code><a href="../articles/inference.html">vignette("inference")</a></code>. To simplify interactive experimentation with
 <code>benchmark_run()</code>, <code>n</code> will be overridden in interactive usage after the
 user calls <code>activate(..., n = 1)</code>.</p></dd>
+
+
 <dt>path_pkg</dt>
 <dd><p>The path to the package to benchmark. Will be used to
 temporarily checkout the branch during benchmarking.</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>All timings in a tibble.</p>
+    
+
+<p>All timings in a tibble.</p>
     </div>
     <div id="details">
     <h2>Details</h2>
@@ -133,7 +144,7 @@ out. Ensure a clean git working directory before invocation.</p>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer></div>

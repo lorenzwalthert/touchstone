@@ -68,32 +68,41 @@ until the local frame is destroyed.</p>
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">local_package</span><span class="op">(</span>
-  pkg_name <span class="op">=</span> <span class="fu">fs</span><span class="fu">::</span><span class="fu"><a href="https://fs.r-lib.org/reference/path_file.html" class="external-link">path_file</a></span><span class="op">(</span><span class="fu">fs</span><span class="fu">::</span><span class="fu"><a href="https://fs.r-lib.org/reference/file_temp.html" class="external-link">file_temp</a></span><span class="op">(</span><span class="st">"pkg"</span><span class="op">)</span><span class="op">)</span>,
-  branches <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"main"</span>, <span class="st">"devel"</span><span class="op">)</span>,
-  r_sample <span class="op">=</span> <span class="cn">NULL</span>,
-  setwd <span class="op">=</span> <span class="cn">TRUE</span>,
-  envir <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sys.parent.html" class="external-link">parent.frame</a></span><span class="op">(</span><span class="op">)</span>
-<span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">local_package</span><span class="op">(</span></span>
+<span>  pkg_name <span class="op">=</span> <span class="fu">fs</span><span class="fu">::</span><span class="fu"><a href="https://fs.r-lib.org/reference/path_file.html" class="external-link">path_file</a></span><span class="op">(</span><span class="fu">fs</span><span class="fu">::</span><span class="fu"><a href="https://fs.r-lib.org/reference/file_temp.html" class="external-link">file_temp</a></span><span class="op">(</span><span class="st">"pkg"</span><span class="op">)</span><span class="op">)</span>,</span>
+<span>  branches <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"main"</span>, <span class="st">"devel"</span><span class="op">)</span>,</span>
+<span>  r_sample <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  setwd <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  envir <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sys.parent.html" class="external-link">parent.frame</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>pkg_name</dt>
 <dd><p>The name of the temporary package.</p></dd>
+
+
 <dt>branches</dt>
 <dd><p>Branches to be created.</p></dd>
+
+
 <dt>r_sample</dt>
 <dd><p>Character with code to write to <code>R/sampleR.</code>. This is helpful
 to validate if the installed package corresponds to source branch for
 testing. If <code>NULL</code>, nothing is written.</p></dd>
+
+
 <dt>setwd</dt>
 <dd><p>Whether or not the working directory should be temporarily
 set to the package root.</p></dd>
+
+
 <dt>envir</dt>
 <dd><p><code>[environment]</code><br> Attach exit handlers to this environment.
 Typically, this should be either the current environment or
 a parent frame (accessed through <code><a href="https://rdrr.io/r/base/sys.parent.html" class="external-link">parent.frame()</a></code>).</p></dd>
+
 </dl></div>
     <div id="details">
     <h2>Details</h2>
@@ -117,7 +126,7 @@ a parent frame (accessed through <code><a href="https://rdrr.io/r/base/sys.paren
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer></div>

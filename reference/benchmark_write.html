@@ -66,37 +66,50 @@
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">benchmark_write</span><span class="op">(</span>
-  <span class="va">benchmark</span>,
-  <span class="va">name</span>,
-  <span class="va">branch</span>,
-  block <span class="op">=</span> <span class="cn">NA</span>,
-  iteration <span class="op">=</span> <span class="cn">NA</span>,
-  append <span class="op">=</span> <span class="cn">TRUE</span>
-<span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">benchmark_write</span><span class="op">(</span></span>
+<span>  <span class="va">benchmark</span>,</span>
+<span>  <span class="va">name</span>,</span>
+<span>  <span class="va">branch</span>,</span>
+<span>  block <span class="op">=</span> <span class="cn">NA</span>,</span>
+<span>  iteration <span class="op">=</span> <span class="cn">NA</span>,</span>
+<span>  append <span class="op">=</span> <span class="cn">TRUE</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>benchmark</dt>
 <dd><p>The result of <code><a href="http://bench.r-lib.org/reference/mark.html" class="external-link">bench::mark()</a></code>, with <code>iterations = 1</code>.</p></dd>
+
+
 <dt>name</dt>
 <dd><p>The name of the benchmark.</p></dd>
+
+
 <dt>branch</dt>
 <dd><p>A character vector of length one to indicate the git branch (i.e.
 commit, tag, branch etc) of the benchmarking.</p></dd>
+
+
 <dt>block</dt>
 <dd><p>All branches that appear once in a block.</p></dd>
+
+
 <dt>iteration</dt>
 <dd><p>An integer indicating to which iteration the benchmark
 refers to. Multiple iterations within a block always benchmark the same
 <code>branch</code>.</p></dd>
+
+
 <dt>append</dt>
 <dd><p>Whether to append the result to the file or not.</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>Character vector of length one with path to the record written (invisibly).</p>
+    
+
+<p>Character vector of length one with path to the record written (invisibly).</p>
     </div>
 
   </div>
@@ -111,7 +124,7 @@ refers to. Multiple iterations within a block always benchmark the same
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer></div>
