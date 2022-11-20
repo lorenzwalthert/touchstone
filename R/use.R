@@ -17,7 +17,6 @@
 #' @seealso [touchstone::use_touchstone_workflows()]
 #' @export
 use_touchstone <- function(overwrite = FALSE,
-                           on_comment = FALSE,
                            command = "/benchmark",
                            limit_to = c("OWNER", "MEMBER", "COLLABORATOR"),
                            force_upstream = TRUE) {
@@ -55,7 +54,6 @@ use_touchstone <- function(overwrite = FALSE,
 
   use_touchstone_workflows(
     overwrite = overwrite,
-    on_comment = on_comment,
     command = command,
     limit_to = limit_to,
     force_upstream = force_upstream
@@ -76,7 +74,7 @@ use_touchstone <- function(overwrite = FALSE,
   cli::cli_ul(paste0(
     "Commit and push to GitHub to the default branch to activate the ",
     "workflow, then ",
-    ifelse(on_comment, "comment '{command}' on", "make"),
+    ifelse(!is.null(command), "comment '{command}' on", "make"),
     " a pull request to trigger your first benchmark run."
   ))
   invisible(NULL)
@@ -108,9 +106,9 @@ copy_if_not_exists <- function(path, new_path, overwrite = FALSE) {
 #' This function will be called by [touchstone::use_touchstone()], you should
 #' only need to call it to update the workflows or change their parameters.
 #' @param overwrite Overwrites files if they exist.
-#' @param on_comment Don't benchmark every commit. Only trigger on PR
-#'  comments starting with `command`.
-#' @param command The command to use to trigger the benchmark with a comment.
+#' @param command If set to `NULL` (the default) will run the workflow on every
+#'  commit. If set to a command (e.g. `/benchmark`) the benchmark will only run
+#'  when triggered with a comment on the PR starting with the command. 
 #' @param limit_to Roles that are allowed to trigger the benchmark workflow
 #'   via comment. See details for a list of roles and their definition.
 #'   Set to `NULL` to allow everyone to trigger a benchmark.
@@ -134,8 +132,7 @@ copy_if_not_exists <- function(path, new_path, overwrite = FALSE) {
 #' [documentation](https://docs.github.com/en/rest/issues/comments).
 #' @export
 use_touchstone_workflows <- function(overwrite = FALSE,
-                                     on_comment = FALSE,
-                                     command = "/benchmark",
+                                     command = NULL,
                                      limit_to = c("OWNER", "MEMBER", "COLLABORATOR"),
                                      force_upstream = TRUE) {
   template <- readLines(
@@ -161,7 +158,7 @@ use_touchstone_workflows <- function(overwrite = FALSE,
     limit <- ""
   }
 
-  if (on_comment) {
+  if (!is.null(command)) {
     # these have to be indented with 2 spaces per tab,
     # yaml does not allow tabs
     trigger <- glue::glue(
