@@ -158,6 +158,13 @@ use_touchstone_workflows <- function(overwrite = FALSE,
     limit <- ""
   }
 
+  ward <- glue::glue(
+    "\n    if:\n",
+    "      true ",
+    limit,
+    .trim = FALSE
+  )
+
   if (!is.null(command)) {
     # these have to be indented with 2 spaces per tab,
     # yaml does not allow tabs
