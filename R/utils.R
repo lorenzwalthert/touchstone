@@ -31,12 +31,13 @@ branch_get_or_fail <- function(var) {
         "{.code touchstone::activate()} and the below error should go away."
       )))
     }
-    cli::cli_abort(c(paste0(
-      "If you don't specify the argument {.arg branch(s)}, you must set the environment ",
-      "variable {.envvar {var}} to tell {.pkg touchstone} ",
-      "which branches you want to benchmark against each other."
-    ),
-    "i" = "See {.code ?touchstone::run_script}."
+    cli::cli_abort(c(
+      paste0(
+        "If you don't specify the argument {.arg branch(s)}, you must set the environment ",
+        "variable {.envvar {var}} to tell {.pkg touchstone} ",
+        "which branches you want to benchmark against each other."
+      ),
+      "i" = "See {.code ?touchstone::run_script}."
     ))
   } else {
     retrieved
