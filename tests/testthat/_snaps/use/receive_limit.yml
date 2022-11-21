@@ -4,11 +4,17 @@ concurrency:
   group: ${{ github.workflow }}-${{ github.head_ref }}
   cancel-in-progress: true
 
-on: #- trigger
+on: 
+  pull_request:
 
 jobs:
   prepare:
-    runs-on: ubuntu-latest #- ward
+    runs-on: ubuntu-latest 
+    if:
+      true &&
+      (
+        github.event.comment.author_association == 'OWNER' 
+      )
     outputs:
       config: ${{ steps.read_touchstone_config.outputs.config }}
     steps:
@@ -44,4 +50,5 @@ jobs:
           cache-version: 1
           benchmarking_repo: ${{ matrix.config.benchmarking_repo }}
           benchmarking_ref: ${{ matrix.config.benchmarking_ref }}
-          benchmarking_path: ${{ matrix.config.benchmarking_path }} #- force
+          benchmarking_path: ${{ matrix.config.benchmarking_path }} 
+          force_upstream: true

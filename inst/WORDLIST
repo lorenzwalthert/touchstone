@@ -30,9 +30,12 @@ downloadArtifact
 dplyr
 env
 envir
+envvars
 eval
 expr
+fi
 fromJson
+fromJSON
 fs
 gcc
 gert
@@ -107,10 +110,12 @@ runif
 saveRDS
 seealso
 sep
+setenv
 sha
 SHA
 sideeffects
 sprintf
+startsWith
 styfle
 styler
 sublicense

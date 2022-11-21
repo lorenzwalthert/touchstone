@@ -4,10 +4,25 @@
 \alias{use_touchstone}
 \title{Initiate {touchstone}}
 \usage{
-use_touchstone(overwrite = FALSE)
+use_touchstone(
+  overwrite = FALSE,
+  command = NULL,
+  limit_to = c("OWNER", "MEMBER", "COLLABORATOR"),
+  force_upstream = TRUE
+)
 }
 \arguments{
 \item{overwrite}{Overwrites files if they exist.}
+
+\item{command}{If set to \code{NULL} (the default) will run the workflow on every
+commit. If set to a command (e.g. \verb{/benchmark}) the benchmark will only run
+when triggered with a comment on the PR starting with the command.}
+
+\item{limit_to}{Roles that are allowed to trigger the benchmark workflow
+via comment. See details for a list of roles and their definition.
+Set to \code{NULL} to allow everyone to trigger a benchmark.}
+
+\item{force_upstream}{Always benchmark against the upstream base branch.}
 }
 \value{
 The function is called for its side effects and returns \code{NULL} (invisibly).
@@ -19,4 +34,13 @@ from root directory.
 \details{
 For more information see the 'Using touchstone' vignette:
 `vignette("touchstone", package = "touchstone")
+}
+\examples{
+\dontrun{
+# within your repository
+use_touchstone()
+}
+}
+\seealso{
+\code{\link[=use_touchstone_workflows]{use_touchstone_workflows()}}
 }
