@@ -19,6 +19,7 @@ reference:
     Setup, interactive workflow and touchstone script execution.
 - contents:
   - use_touchstone
+  - use_touchstone_workflows
   - activate
   - deactivate
   - run_script
