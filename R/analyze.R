@@ -147,13 +147,13 @@ confint_relative_get <- function(timings, branches, reference, ci) {
   var <- paste0("branch", branches[2])
   confint <- confint(fit, var, level = ci)
   confint <- round(100 * confint / reference, 2)
-  emoji <- confint %>%
-    purrr::when(
-      all(. < 0) ~ faster,
-      all(. > 0) ~ slower,
-      ~no_change
-    )
-
+  emoji <- if (all(confint < 0)) {
+    faster
+  } else if (all(confint) > 0) {
+    slower
+  } else {
+    no_change
+  }
   list(
     string = paste0(
       "[",
