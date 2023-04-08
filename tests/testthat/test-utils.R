@@ -230,3 +230,10 @@ test_that("envvar_true works", {
   expect_true(envvar_true("BOOL_t"))
   expect_false(envvar_true("NOT_BOOL"))
 })
+
+test_that("can assert no global installation", {
+
+  local_package()
+  mockery::stub(assert_no_global_installation, "is_installed", list(installed = TRUE, name = "pkg"))
+  expect_error(assert_no_global_installation(), "can be found on a non-touchstone library path.")
+})
