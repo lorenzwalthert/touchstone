@@ -105,8 +105,8 @@ benchmark_run <- function(expr_before_benchmark =
         "{.fun activate} has overriden n = {n} with {new_n} since ",
         "{.fun rlang::is_interactive } is {.code TRUE}."
       ))
+      n <- new_n
     }
-    n <- new_n
   }
 
   # touchstone libraries must be removed from the path temporarily
