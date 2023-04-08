@@ -149,7 +149,7 @@ confint_relative_get <- function(timings, branches, reference, ci) {
   confint <- round(100 * confint / reference, 2)
   emoji <- if (all(confint < 0)) {
     faster
-  } else if (all(confint) > 0) {
+  } else if (all(confint > 0)) {
     slower
   } else {
     no_change
