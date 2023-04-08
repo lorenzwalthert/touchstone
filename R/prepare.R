@@ -25,7 +25,7 @@ branch_install_impl <- function(branch = "main",
       force = !cache_up_to_date(branch, path_pkg)
     )
     withr::local_options(warn = 2)
-    rlang::with_handlers(
+    rlang::try_fetch(
       {
         install_missing_deps(path_pkg = path_pkg, quiet = TRUE)
         install_local(quiet = TRUE)
