@@ -23,7 +23,7 @@ BugReports: https://github.com/lorenzwalthert/touchstone/issues
 Imports: 
     bench,
     callr,
-    cli (>= 3.0.1),
+    cli (>= 3.6.1),
     fs,
     gert,
     magrittr,
