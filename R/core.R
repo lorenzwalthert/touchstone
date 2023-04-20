@@ -115,7 +115,7 @@ benchmark_run <- function(expr_before_benchmark =
   gh_cat(glue::glue("::group::Benchmark: {names(dots)}\n\n"))
   withr::defer(gh_cat("::endgroup::\n"))
   branches <- branches_upsample(branches, n = n)
-  cli::cli_alert_info("Running {2*n} iterations of bechmark: {names(dots)}.")
+  cli::cli_alert_info("Running {2*n} iterations of benchmark: {names(dots)}.")
   out_list <- purrr::pmap(branches, benchmark_run_impl,
     expr_before_benchmark = expr_before_benchmark,
     dots = dots,
