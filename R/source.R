@@ -122,7 +122,7 @@ activate <- function(head_branch = gert::git_branch(),
 
   if (identical(env, .GlobalEnv)) {
     cli::cli_alert_success(
-      "Environment ready to interactivley execute your touchstone script."
+      "Environment ready to interactively execute your touchstone script."
     )
     cli::cli_alert_info(
       "Use {.fun touchstone::deactivate} to restore original environment."
