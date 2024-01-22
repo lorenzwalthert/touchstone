@@ -58,7 +58,7 @@ test_that("dynamic dots are supported", {
   bm <- benchmark_run(
     expr_before_benchmark = {},
     !!x := rlang::expr(Sys.sleep(0)),
-    branches =  "main",
+    branches = "main",
     n = 1
   )
   schema <- purrr::map_chr(bm, ~ class(.x)[1])
@@ -67,7 +67,7 @@ test_that("dynamic dots are supported", {
   bm <- benchmark_run(
     expr_before_benchmark = {},
     !!!vec,
-    branches =  "main",
+    branches = "main",
     n = 1
   )
   schema <- purrr::map_chr(bm, ~ class(.x)[1])
