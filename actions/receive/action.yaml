@@ -22,7 +22,9 @@ inputs:
     description: 'Which branch or tag of {touchstone} should be used. Mainly for debugging.'
     required: true
     default: '@v1'
-    
+  extra-packages:
+    description: 'Any extra packages that should be installed.'
+
 runs:
   using: "composite"
   steps:
@@ -99,6 +101,7 @@ runs:
           any::gert
           any::glue
           github::lorenzwalthert/touchstone${{ inputs.touchstone_ref}}
+          ${{ inputs.extra-packages }}
     - name: Remove global installation
       run: |
         pkg <- unlist(read.dcf('DESCRIPTION')[, 'Package'])
