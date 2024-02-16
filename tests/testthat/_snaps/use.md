@@ -2,7 +2,7 @@
 
     Code
       use_touchstone()
-    Message <cliMessage>
+    Message
       v Populated file 'script.R' in 'touchstone/'.
       v Populated file 'header.R' in 'touchstone/'.
       v Populated file 'footer.R' in 'touchstone/'.
@@ -21,7 +21,7 @@
 
     Code
       use_touchstone()
-    Message <cliMessage>
+    Message
       [32mv[39m Populated file [34m[34mscript.R[34m[39m in [34m[34mtouchstone/[34m[39m.
       [32mv[39m Populated file [34m[34mheader.R[34m[39m in [34m[34mtouchstone/[34m[39m.
       [32mv[39m Populated file [34m[34mfooter.R[34m[39m in [34m[34mtouchstone/[34m[39m.
@@ -40,7 +40,7 @@
 
     Code
       use_touchstone()
-    Message <cliMessage>
+    Message
       ✔ Populated file 'script.R' in 'touchstone/'.
       ✔ Populated file 'header.R' in 'touchstone/'.
       ✔ Populated file 'footer.R' in 'touchstone/'.
@@ -59,7 +59,7 @@
 
     Code
       use_touchstone()
-    Message <cliMessage>
+    Message
       [32m✔[39m Populated file [34m[34mscript.R[34m[39m in [34m[34mtouchstone/[34m[39m.
       [32m✔[39m Populated file [34m[34mheader.R[34m[39m in [34m[34mtouchstone/[34m[39m.
       [32m✔[39m Populated file [34m[34mfooter.R[34m[39m in [34m[34mtouchstone/[34m[39m.
