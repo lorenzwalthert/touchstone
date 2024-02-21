@@ -1,4 +1,7 @@
-linters: with_defaults(line_length_linter(120),
-                       open_curly_linter = NULL, # clashes with {styler}
-                       object_usage_linter = NULL) # too many false positives
+linters: linters_with_defaults(
+    line_length_linter(120),
+    brace_linter = NULL, # clashes with {styler}
+    indentation_linter = NULL,
+    object_usage_linter = NULL # too many false positives
+  )
 exclusions: list("inst/script.R","R/zzz.R"=1)
