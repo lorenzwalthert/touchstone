@@ -53,6 +53,7 @@ runs:
           }
 
           var pull = {
+            number: pr.number,
             head_repo: pr.head.repo.full_name,
             head_ref: pr.head.ref,
             is_fork: is_fork,
@@ -127,7 +128,7 @@ runs:
       shell: Rscript {0}
     - name: Uploading Results
       run: |
-        echo ${{ github.event.number }} > ./touchstone/pr-comment/NR
+        echo ${{ fromJSON(steps.get-pull.outputs.result).number }} > ./touchstone/pr-comment/NR
       shell: bash
     - uses: actions/upload-artifact@v2
       with:
