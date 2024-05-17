@@ -166,10 +166,10 @@ use_touchstone_workflows <- function(overwrite = FALSE,
   if (is.null(command)) {
     trigger <- "\n  pull_request:"
     ward <- glue::glue(
-     "\n    if:\n",
-     "      true ",
-     limit,
-     .trim = FALSE
+      "\n    if:\n",
+      "      true ",
+      limit,
+      .trim = FALSE
     )
   } else {
     # these have to be indented with 2 spaces per tab,
