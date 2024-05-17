@@ -8,6 +8,9 @@ on:
   issue_comment:
     types: ['created', 'edited']
 
+permissions:
+  contents: read
+
 jobs:
   prepare:
     runs-on: ubuntu-latest 
