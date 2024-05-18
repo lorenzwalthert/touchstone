@@ -139,13 +139,17 @@ use_touchstone_workflows <- function(overwrite = FALSE,
     system.file("touchstone-receive.yaml", package = "touchstone")
   )
 
-  trigger <- "\n  pull_request:"
-  ward <- ""
   force <- ifelse(force_upstream, "\n          force_upstream: true", "")
+
+  if (is.null(command)) {
+    author_association <- "github.event.pull_request.author_association"
+  } else {
+    author_association <- "github.event.comment.author_association"
+  }
 
   if (!is.null(limit_to)) {
     limit <- glue::glue_collapse(
-      glue::glue("        github.event.comment.author_association == '{limit_to}' "),
+      glue::glue("        {author_association} == '{limit_to}' "),
       sep = "||\n"
     )
     limit <- glue::glue(
@@ -158,14 +162,16 @@ use_touchstone_workflows <- function(overwrite = FALSE,
     limit <- ""
   }
 
-  ward <- glue::glue(
-    "\n    if:\n",
-    "      true ",
-    limit,
-    .trim = FALSE
-  )
 
-  if (!is.null(command)) {
+  if (is.null(command)) {
+    trigger <- "\n  pull_request:"
+    ward <- glue::glue(
+      "\n    if:\n",
+      "      true ",
+      limit,
+      .trim = FALSE
+    )
+  } else {
     # these have to be indented with 2 spaces per tab,
     # yaml does not allow tabs
     trigger <- glue::glue(

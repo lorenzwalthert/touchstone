@@ -13,7 +13,7 @@ jobs:
     if:
       true &&
       (
-        github.event.comment.author_association == 'OWNER' 
+        github.event.pull_request.author_association == 'OWNER' 
       )
     outputs:
       config: ${{ steps.read_touchstone_config.outputs.config }}
