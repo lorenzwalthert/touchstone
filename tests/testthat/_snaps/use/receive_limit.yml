@@ -7,6 +7,9 @@ concurrency:
 on: 
   pull_request:
 
+permissions:
+  contents: read
+
 jobs:
   prepare:
     runs-on: ubuntu-latest 

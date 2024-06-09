@@ -10,6 +10,11 @@ on:
     types:
       - completed
 
+permissions:
+  contents: read
+  statuses: write
+  pull-requests: write
+
 jobs:
   upload:
     runs-on: ubuntu-latest
