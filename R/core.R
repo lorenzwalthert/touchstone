@@ -34,7 +34,7 @@ benchmark_run_iteration <- function(expr_before_benchmark,
         withr::local_namespace("touchstone")
         withr::local_options(asset_dirs)
         eval(expr_before_benchmark)
-        benchmark <- bench::mark(eval(dots[[1]]), memory = FALSE, iterations = 1)
+        benchmark <- bench::mark(eval(dots[[1]]), check = FALSE, memory = FALSE, iterations = 1)
         benchmark_write(benchmark, names(dots), branch = branch, block = block, iteration = iteration)
       },
       args = append(args, lst(iteration)),
