@@ -1,126 +1,44 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url>
-    <loc>/404.html</loc>
-  </url>
-  <url>
-    <loc>/LICENSE-text.html</loc>
-  </url>
-  <url>
-    <loc>/LICENSE.html</loc>
-  </url>
-  <url>
-    <loc>/articles/index.html</loc>
-  </url>
-  <url>
-    <loc>/articles/inference.html</loc>
-  </url>
-  <url>
-    <loc>/articles/touchstone.html</loc>
-  </url>
-  <url>
-    <loc>/authors.html</loc>
-  </url>
-  <url>
-    <loc>/index.html</loc>
-  </url>
-  <url>
-    <loc>/news/index.html</loc>
-  </url>
-  <url>
-    <loc>/reference/activate.html</loc>
-  </url>
-  <url>
-    <loc>/reference/assert_no_global_installation.html</loc>
-  </url>
-  <url>
-    <loc>/reference/benchmark_analyze.html</loc>
-  </url>
-  <url>
-    <loc>/reference/benchmark_ls.html</loc>
-  </url>
-  <url>
-    <loc>/reference/benchmark_read.html</loc>
-  </url>
-  <url>
-    <loc>/reference/benchmark_run.html</loc>
-  </url>
-  <url>
-    <loc>/reference/benchmark_run_impl.html</loc>
-  </url>
-  <url>
-    <loc>/reference/benchmark_run_iteration.html</loc>
-  </url>
-  <url>
-    <loc>/reference/benchmark_verbalize.html</loc>
-  </url>
-  <url>
-    <loc>/reference/benchmark_write.html</loc>
-  </url>
-  <url>
-    <loc>/reference/branch_get_or_fail.html</loc>
-  </url>
-  <url>
-    <loc>/reference/branch_install.html</loc>
-  </url>
-  <url>
-    <loc>/reference/branch_install_impl.html</loc>
-  </url>
-  <url>
-    <loc>/reference/branches_upsample.html</loc>
-  </url>
-  <url>
-    <loc>/reference/cache_up_to_date.html</loc>
-  </url>
-  <url>
-    <loc>/reference/hash_pkg.html</loc>
-  </url>
-  <url>
-    <loc>/reference/index.html</loc>
-  </url>
-  <url>
-    <loc>/reference/install_missing_deps.html</loc>
-  </url>
-  <url>
-    <loc>/reference/is_installed.html</loc>
-  </url>
-  <url>
-    <loc>/reference/local_clean_touchstone.html</loc>
-  </url>
-  <url>
-    <loc>/reference/local_package.html</loc>
-  </url>
-  <url>
-    <loc>/reference/local_touchstone_libpath.html</loc>
-  </url>
-  <url>
-    <loc>/reference/local_without_touchstone_lib.html</loc>
-  </url>
-  <url>
-    <loc>/reference/path_pinned_asset.html</loc>
-  </url>
-  <url>
-    <loc>/reference/pin_assets.html</loc>
-  </url>
-  <url>
-    <loc>/reference/pr_comment.html</loc>
-  </url>
-  <url>
-    <loc>/reference/run_script.html</loc>
-  </url>
-  <url>
-    <loc>/reference/touchstone-package.html</loc>
-  </url>
-  <url>
-    <loc>/reference/touchstone_managers.html</loc>
-  </url>
-  <url>
-    <loc>/reference/touchstone_script.html</loc>
-  </url>
-  <url>
-    <loc>/reference/use_touchstone.html</loc>
-  </url>
-  <url>
-    <loc>/reference/use_touchstone_workflows.html</loc>
-  </url>
+<urlset xmlns = 'http://www.sitemaps.org/schemas/sitemap/0.9'>
+<url><loc>/404.html</loc></url>
+<url><loc>/LICENSE-text.html</loc></url>
+<url><loc>/LICENSE.html</loc></url>
+<url><loc>/articles/index.html</loc></url>
+<url><loc>/articles/inference.html</loc></url>
+<url><loc>/articles/touchstone.html</loc></url>
+<url><loc>/authors.html</loc></url>
+<url><loc>/index.html</loc></url>
+<url><loc>/news/index.html</loc></url>
+<url><loc>/reference/activate.html</loc></url>
+<url><loc>/reference/assert_no_global_installation.html</loc></url>
+<url><loc>/reference/benchmark_analyze.html</loc></url>
+<url><loc>/reference/benchmark_ls.html</loc></url>
+<url><loc>/reference/benchmark_read.html</loc></url>
+<url><loc>/reference/benchmark_run.html</loc></url>
+<url><loc>/reference/benchmark_run_impl.html</loc></url>
+<url><loc>/reference/benchmark_run_iteration.html</loc></url>
+<url><loc>/reference/benchmark_verbalize.html</loc></url>
+<url><loc>/reference/benchmark_write.html</loc></url>
+<url><loc>/reference/branch_get_or_fail.html</loc></url>
+<url><loc>/reference/branch_install.html</loc></url>
+<url><loc>/reference/branch_install_impl.html</loc></url>
+<url><loc>/reference/branches_upsample.html</loc></url>
+<url><loc>/reference/cache_up_to_date.html</loc></url>
+<url><loc>/reference/hash_pkg.html</loc></url>
+<url><loc>/reference/index.html</loc></url>
+<url><loc>/reference/install_missing_deps.html</loc></url>
+<url><loc>/reference/is_installed.html</loc></url>
+<url><loc>/reference/local_clean_touchstone.html</loc></url>
+<url><loc>/reference/local_package.html</loc></url>
+<url><loc>/reference/local_touchstone_libpath.html</loc></url>
+<url><loc>/reference/local_without_touchstone_lib.html</loc></url>
+<url><loc>/reference/path_pinned_asset.html</loc></url>
+<url><loc>/reference/pin_assets.html</loc></url>
+<url><loc>/reference/pr_comment.html</loc></url>
+<url><loc>/reference/run_script.html</loc></url>
+<url><loc>/reference/touchstone-package.html</loc></url>
+<url><loc>/reference/touchstone_managers.html</loc></url>
+<url><loc>/reference/touchstone_script.html</loc></url>
+<url><loc>/reference/use_touchstone.html</loc></url>
+<url><loc>/reference/use_touchstone_workflows.html</loc></url>
 </urlset>
+
