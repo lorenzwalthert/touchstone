@@ -21,7 +21,11 @@ inputs:
   touchstone_package:
     description: 'Which package of {touchstone} should be used. Mainly for debugging.'
     required: true
-    default: 'github::lorenzwalthert/touchstone@v1'
+    default: 'github::lorenzwalthert/touchstone'
+  touchstone_ref:
+    description: 'Which branch or tag of {touchstone} should be used. This will be appended to the touchstone_package option. Mainly for debugging.'
+    required: true
+    default: '@v1'
   extra-packages:
     description: 'Any extra packages that should be installed.'
 
@@ -100,7 +104,7 @@ runs:
           any::dplyr
           any::gert
           any::glue
-          ${{ inputs.touchstone_package }}
+          ${{ inputs.touchstone_package }}${{ inputs.touchstone_ref }}
           ${{ inputs.extra-packages }}
     - name: Remove global installation
       run: |
