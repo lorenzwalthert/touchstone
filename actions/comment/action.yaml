@@ -12,7 +12,7 @@ runs:
       uses: actions/download-artifact@v4
       with:
         name: pr
-        github-token: ${{ secrets.GITHUB_TOKEN }}
+        github-token: ${{ inputs.GITHUB_TOKEN }}
         repository: context.repo.repo
         run-id: ${{github.event.workflow_run.id }}
     - run: unzip pr.zip
