@@ -15,8 +15,6 @@ runs:
         github-token: ${{ inputs.GITHUB_TOKEN }}
         repository: ${{ github.repository }}
         run-id: ${{github.event.workflow_run.id }}
-    - run: unzip pr.zip
-      shell: bash
     - name: 'Comment on PR'
       id: 'comment'
       uses: actions/github-script@v3
