@@ -13,7 +13,7 @@ runs:
       with:
         name: pr
         github-token: ${{ inputs.GITHUB_TOKEN }}
-        repository: context.repo.repo
+        repository: ${{ github.repository }}
         run-id: ${{github.event.workflow_run.id }}
     - run: unzip pr.zip
       shell: bash
