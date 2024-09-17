@@ -130,15 +130,15 @@ runs:
         echo ${{ fromJSON(steps.get-pull.outputs.result).number }} > ./touchstone/pr-comment/NR
         cat touchstone/pr-comment/info.txt
       shell: bash
-    - uses: actions/upload-artifact@v2
+    - uses: actions/upload-artifact@v4
       with:
         name: visual-benchmarks
         path: touchstone/plots/
-    - uses: actions/upload-artifact@v2
+    - uses: actions/upload-artifact@v4
       with:
         name: results
         path: touchstone/records/
-    - uses: actions/upload-artifact@v2
+    - uses: actions/upload-artifact@v4
       with:
         name: pr
         path: touchstone/pr-comment/
