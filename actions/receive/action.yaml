@@ -24,6 +24,9 @@ inputs:
     default: '@v1'
   extra-packages:
     description: 'Any extra packages that should be installed.'
+  extra-repositories:
+    description: 'Specify extra repositories to be passed to setup-r'
+    default: ''
 
 runs:
   using: "composite"
@@ -91,6 +94,9 @@ runs:
         git branch -f ${{ env.GITHUB_BASE_REF }} $REMOTE/${{ env.GITHUB_BASE_REF }}
     - name: Setup R
       uses: r-lib/actions/setup-r@v2
+      with:
+        extra-repositories: ${{ inputs.extra-repositories }}
+
     - name: Install dependencies
       uses: r-lib/actions/setup-r-dependencies@v2
       with:
@@ -130,15 +136,15 @@ runs:
         echo ${{ fromJSON(steps.get-pull.outputs.result).number }} > ./touchstone/pr-comment/NR
         cat touchstone/pr-comment/info.txt
       shell: bash
-    - uses: actions/upload-artifact@v2
+    - uses: actions/upload-artifact@v4
       with:
         name: visual-benchmarks
         path: touchstone/plots/
-    - uses: actions/upload-artifact@v2
+    - uses: actions/upload-artifact@v4
       with:
         name: results
         path: touchstone/records/
-    - uses: actions/upload-artifact@v2
+    - uses: actions/upload-artifact@v4
       with:
         name: pr
         path: touchstone/pr-comment/

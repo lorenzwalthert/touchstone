@@ -9,27 +9,12 @@ runs:
   steps:
     - name: 'Download artifact'
       id: 'download'
-      uses: actions/github-script@v7
+      uses: actions/download-artifact@v4
       with:
-        script: |
-          var artifacts = await github.actions.listWorkflowRunArtifacts({
-             owner: context.repo.owner,
-             repo: context.repo.repo,
-             run_id: ${{github.event.workflow_run.id }},
-          });
-          var matchArtifact = artifacts.data.artifacts.filter((artifact) => {
-            return artifact.name == "pr"
-          })[0];
-          var download = await github.actions.downloadArtifact({
-             owner: context.repo.owner,
-             repo: context.repo.repo,
-             artifact_id: matchArtifact.id,
-             archive_format: 'zip',
-          });
-          var fs = require('fs');
-          fs.writeFileSync('${{github.workspace}}/pr.zip', Buffer.from(download.data));
-    - run: unzip pr.zip
-      shell: bash
+        name: pr
+        github-token: ${{ inputs.GITHUB_TOKEN }}
+        repository: ${{ github.repository }}
+        run-id: ${{github.event.workflow_run.id }}
     - name: 'Comment on PR'
       id: 'comment'
       uses: actions/github-script@v7
