@@ -72,7 +72,7 @@ runs:
         echo "GITHUB_HEAD_REF=${{ fromJSON(steps.get-pull.outputs.result).head_ref }}" >> $GITHUB_ENV
         echo "GITHUB_BASE_REF=${{ fromJSON(steps.get-pull.outputs.result).base_ref }}" >> $GITHUB_ENV
     - name: Checkout repo
-      uses: actions/checkout@v3
+      uses: actions/checkout@v4
       with:
          repository: ${{ fromJSON(steps.get-pull.outputs.result).head_repo }}
          ref: ${{ fromJSON(steps.get-pull.outputs.result).head_ref }}
@@ -118,7 +118,7 @@ runs:
       shell: Rscript {0}
     - name: Checkout benchmarking repo
       if: ${{ inputs.benchmarking_repo != ''}}
-      uses: actions/checkout@v2
+      uses: actions/checkout@v4
       with:
         repository: ${{ inputs.benchmarking_repo }}
         ref: ${{ inputs.benchmarking_ref }}
