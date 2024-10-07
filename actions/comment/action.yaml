@@ -24,7 +24,7 @@ runs:
           var fs = require('fs');
           var issue_number = Number(fs.readFileSync('./NR'));
           var body = fs.readFileSync('./info.txt').toString();
-          await github.issues.createComment({
+          await github.rest.issues.createComment({
             owner: context.repo.owner,
             repo: context.repo.repo,
             issue_number: issue_number,
