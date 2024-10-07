@@ -18,8 +18,12 @@ inputs:
     description: 'Integer to use as cache version. Increment to use new cache.'
     required: true
     default: 1
+  touchstone_package:
+    description: 'Which package of {touchstone} should be used. Mainly for debugging.'
+    required: true
+    default: 'github::lorenzwalthert/touchstone'
   touchstone_ref:
-    description: 'Which branch or tag of {touchstone} should be used. Mainly for debugging.'
+    description: 'Which branch or tag of {touchstone} should be used. This will be appended to the touchstone_package option. Mainly for debugging.'
     required: true
     default: '@v1'
   extra-packages:
@@ -106,7 +110,7 @@ runs:
           any::dplyr
           any::gert
           any::glue
-          github::lorenzwalthert/touchstone${{ inputs.touchstone_ref}}
+          ${{ inputs.touchstone_package }}${{ inputs.touchstone_ref }}
           ${{ inputs.extra-packages }}
     - name: Remove global installation
       run: |
