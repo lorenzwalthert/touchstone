@@ -5,7 +5,7 @@ ci:
 
 repos:
 -   repo: https://github.com/lorenzwalthert/precommit
-    rev: v0.4.3.9012
+    rev: v0.4.3.9014
     hooks:
     -   id: style-files
         args: [--style_pkg=styler, --style_fun=tidyverse_style]
@@ -76,7 +76,7 @@ repos:
           vignettes/touchstone\.Rmd
           )$
 -   repo: https://github.com/pre-commit/pre-commit-hooks
-    rev: v5.0.0
+    rev: v6.0.0
     hooks:
     -   id: check-added-large-files
         args: ['--maxkb=200']
