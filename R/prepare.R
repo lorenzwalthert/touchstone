@@ -76,7 +76,6 @@ branch_install <- function(branches = c(
 }
 
 
-
 libpath_touchstone <- function(branch) {
   fs::path(dir_touchstone(), "lib", branch)
 }
