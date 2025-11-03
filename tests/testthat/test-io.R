@@ -18,7 +18,6 @@ test_that("does fail infomatively if there is no benchmark", {
 })
 
 
-
 test_that("fails on corrupt benchmark", {
   local_clean_touchstone()
   branch <- "malformed"
