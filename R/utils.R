@@ -401,7 +401,6 @@ envvar_true <- function(var) {
 #' @return The encoded branch name(s) safe for use in file paths.
 #' @keywords internal
 branch_encode <- function(branch) {
-
   # Order matters: encode % first to avoid double-encoding
 
   branch <- gsub("%", "%25", branch, fixed = TRUE)

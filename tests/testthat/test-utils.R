@@ -271,4 +271,3 @@ test_that("branch_encode and branch_decode are inverses", {
   )
   expect_equal(branch_decode(branch_encode(branches)), branches)
 })
-
