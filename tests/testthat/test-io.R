@@ -29,32 +29,18 @@ test_that("fails on corrupt benchmark", {
   )
 })
 
-test_that("can handle branch names with slashes", {
+test_that("can handle branch names with filesystem-unsafe characters", {
   local_clean_touchstone()
-  branch <- "feature/new-feature"
+  # Test slashes, colons, and other problematic characters
+  branches <- c("feature/new", "user/deep/branch", "fix:bug", "test<issue>")
   atomic <- bench::mark(1 + 1, iterations = 1)
-  expect_silent(
-    benchmark_write(atomic, name = "x1", branch = branch)
-  )
-  bm <- benchmark_read(branch, name = "x1")
-  expect_equal(unique(bm$branch), branch)
-  expect_equal(
-    benchmark_ls(name = "x1"),
-    tibble::tibble(name = "x1", branch = branch)
-  )
-})
-
-test_that("can handle branch names with multiple slashes", {
-  local_clean_touchstone()
-  branch <- "user/feature/deep-branch"
-  atomic <- bench::mark(1 + 1, iterations = 1)
-  expect_silent(
-    benchmark_write(atomic, name = "x1", branch = branch)
-  )
-  bm <- benchmark_read(branch, name = "x1")
-  expect_equal(unique(bm$branch), branch)
-  expect_equal(
-    benchmark_ls(name = "x1"),
-    tibble::tibble(name = "x1", branch = branch)
-  )
+  for (branch in branches) {
+    expect_silent(
+      benchmark_write(atomic, name = "x1", branch = branch)
+    )
+    bm <- benchmark_read(branch, name = "x1")
+    expect_equal(unique(bm$branch), branch)
+  }
+  result <- benchmark_ls(name = "x1")
+  expect_equal(sort(result$branch), sort(branches))
 })

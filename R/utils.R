@@ -394,22 +394,41 @@ envvar_true <- function(var) {
 
 #' Encode branch name for use in file paths
 #'
-#' Replaces forward slashes with a safe placeholder to allow branch names
-#' like "feature/new-feature" to be used as directory names.
+#' Replaces characters that are problematic for file systems with URL-style
+#' percent encoding. This allows branch names like "feature/new-feature" or
+#' "fix<issue>" to be used as directory names across all platforms.
 #' @param branch A character vector of branch names.
 #' @return The encoded branch name(s) safe for use in file paths.
 #' @keywords internal
 branch_encode <- function(branch) {
-  gsub("/", "%2F", branch, fixed = TRUE)
+
+  # Order matters: encode % first to avoid double-encoding
+
+  branch <- gsub("%", "%25", branch, fixed = TRUE)
+  branch <- gsub("/", "%2F", branch, fixed = TRUE)
+  branch <- gsub(":", "%3A", branch, fixed = TRUE)
+  branch <- gsub("<", "%3C", branch, fixed = TRUE)
+  branch <- gsub(">", "%3E", branch, fixed = TRUE)
+  branch <- gsub("\"", "%22", branch, fixed = TRUE)
+  branch <- gsub("|", "%7C", branch, fixed = TRUE)
+  branch
 }
 
 #' Decode branch name from file path
 #'
-#' Restores the original branch name by converting the placeholder back to
-#' forward slashes.
+#' Restores the original branch name by converting percent-encoded characters
+#' back to their original form.
 #' @param branch A character vector of encoded branch names.
 #' @return The decoded branch name(s).
 #' @keywords internal
 branch_decode <- function(branch) {
-  gsub("%2F", "/", branch, fixed = TRUE)
+  # Order matters: decode % last to avoid issues with encoded %
+  branch <- gsub("%2F", "/", branch, fixed = TRUE)
+  branch <- gsub("%3A", ":", branch, fixed = TRUE)
+  branch <- gsub("%3C", "<", branch, fixed = TRUE)
+  branch <- gsub("%3E", ">", branch, fixed = TRUE)
+  branch <- gsub("%22", "\"", branch, fixed = TRUE)
+  branch <- gsub("%7C", "|", branch, fixed = TRUE)
+  branch <- gsub("%25", "%", branch, fixed = TRUE)
+  branch
 }
