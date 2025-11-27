@@ -28,3 +28,33 @@ test_that("fails on corrupt benchmark", {
     "only supports"
   )
 })
+
+test_that("can handle branch names with slashes", {
+  local_clean_touchstone()
+  branch <- "feature/new-feature"
+  atomic <- bench::mark(1 + 1, iterations = 1)
+  expect_silent(
+    benchmark_write(atomic, name = "x1", branch = branch)
+  )
+  bm <- benchmark_read(branch, name = "x1")
+  expect_equal(unique(bm$branch), branch)
+  expect_equal(
+    benchmark_ls(name = "x1"),
+    tibble::tibble(name = "x1", branch = branch)
+  )
+})
+
+test_that("can handle branch names with multiple slashes", {
+  local_clean_touchstone()
+  branch <- "user/feature/deep-branch"
+  atomic <- bench::mark(1 + 1, iterations = 1)
+  expect_silent(
+    benchmark_write(atomic, name = "x1", branch = branch)
+  )
+  bm <- benchmark_read(branch, name = "x1")
+  expect_equal(unique(bm$branch), branch)
+  expect_equal(
+    benchmark_ls(name = "x1"),
+    tibble::tibble(name = "x1", branch = branch)
+  )
+})

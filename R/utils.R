@@ -391,3 +391,25 @@ envvar_true <- function(var) {
   stopifnot(is.character(var))
   as.logical(toupper(Sys.getenv(var))) %|% FALSE
 }
+
+#' Encode branch name for use in file paths
+#'
+#' Replaces forward slashes with a safe placeholder to allow branch names
+#' like "feature/new-feature" to be used as directory names.
+#' @param branch A character vector of branch names.
+#' @return The encoded branch name(s) safe for use in file paths.
+#' @keywords internal
+branch_encode <- function(branch) {
+  gsub("/", "%2F", branch, fixed = TRUE)
+}
+
+#' Decode branch name from file path
+#'
+#' Restores the original branch name by converting the placeholder back to
+#' forward slashes.
+#' @param branch A character vector of encoded branch names.
+#' @return The decoded branch name(s).
+#' @keywords internal
+branch_decode <- function(branch) {
+  gsub("%2F", "/", branch, fixed = TRUE)
+}

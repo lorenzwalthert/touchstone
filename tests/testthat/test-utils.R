@@ -236,3 +236,23 @@ test_that("can assert no global installation", {
   mockery::stub(assert_no_global_installation, "is_installed", list(installed = TRUE, name = "pkg"))
   expect_error(assert_no_global_installation(), "can be found on a non-touchstone library path.")
 })
+
+test_that("branch_encode handles slashes", {
+  expect_equal(branch_encode("main"), "main")
+  expect_equal(branch_encode("feature/new"), "feature%2Fnew")
+  expect_equal(branch_encode("user/feature/deep"), "user%2Ffeature%2Fdeep")
+  expect_equal(branch_encode(""), "")
+})
+
+test_that("branch_decode restores slashes", {
+  expect_equal(branch_decode("main"), "main")
+  expect_equal(branch_decode("feature%2Fnew"), "feature/new")
+  expect_equal(branch_decode("user%2Ffeature%2Fdeep"), "user/feature/deep")
+  expect_equal(branch_decode(""), "")
+})
+
+test_that("branch_encode and branch_decode are inverses", {
+  branches <- c("main", "feature/new", "user/deep/branch", "no-slash")
+  expect_equal(branch_decode(branch_encode(branches)), branches)
+})
+
