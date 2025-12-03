@@ -236,3 +236,38 @@ test_that("can assert no global installation", {
   mockery::stub(assert_no_global_installation, "is_installed", list(installed = TRUE, name = "pkg"))
   expect_error(assert_no_global_installation(), "can be found on a non-touchstone library path.")
 })
+
+test_that("branch_encode handles filesystem-unsafe characters", {
+  expect_equal(branch_encode("main"), "main")
+  expect_equal(branch_encode("feature/new"), "feature%2Fnew")
+  expect_equal(branch_encode("fix:bug"), "fix%3Abug")
+  expect_equal(branch_encode("test<>issue"), "test%3C%3Eissue")
+  expect_equal(branch_encode("pipe|test"), "pipe%7Ctest")
+  expect_equal(branch_encode("has%percent"), "has%25percent")
+  expect_equal(branch_encode(""), "")
+})
+
+test_that("branch_decode restores original characters", {
+  expect_equal(branch_decode("main"), "main")
+  expect_equal(branch_decode("feature%2Fnew"), "feature/new")
+  expect_equal(branch_decode("fix%3Abug"), "fix:bug")
+  expect_equal(branch_decode("test%3C%3Eissue"), "test<>issue")
+  expect_equal(branch_decode("has%25percent"), "has%percent")
+  expect_equal(branch_decode(""), "")
+})
+
+test_that("branch_encode and branch_decode are inverses", {
+  # Test all problematic characters: / : < > " | %
+  branches <- c(
+    "main",
+    "feature/new",
+    "user/deep/branch",
+    "fix:bug",
+    "test<issue>",
+    "with\"quotes",
+    "pipe|char",
+    "has%percent",
+    "all/chars:<>|\"%mixed"
+  )
+  expect_equal(branch_decode(branch_encode(branches)), branches)
+})

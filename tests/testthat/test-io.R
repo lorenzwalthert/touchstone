@@ -27,3 +27,19 @@ test_that("fails on corrupt benchmark", {
     "only supports"
   )
 })
+
+test_that("can handle branch names with filesystem-unsafe characters", {
+  local_clean_touchstone()
+  # Test slashes, colons, and other problematic characters
+  branches <- c("feature/new", "user/deep/branch", "fix:bug", "test<issue>")
+  atomic <- bench::mark(1 + 1, iterations = 1)
+  for (branch in branches) {
+    expect_silent(
+      benchmark_write(atomic, name = "x1", branch = branch)
+    )
+    bm <- benchmark_read(branch, name = "x1")
+    expect_equal(unique(bm$branch), branch)
+  }
+  result <- benchmark_ls(name = "x1")
+  expect_equal(sort(result$branch), sort(branches))
+})

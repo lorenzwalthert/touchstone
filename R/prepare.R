@@ -77,7 +77,7 @@ branch_install <- function(branches = c(
 
 
 libpath_touchstone <- function(branch) {
-  fs::path(dir_touchstone(), "lib", branch)
+  fs::path(dir_touchstone(), "lib", branch_encode(branch))
 }
 
 #' When did the package sources change last?

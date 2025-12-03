@@ -86,12 +86,14 @@ benchmark_ls <- function(name = "") {
   dirs <- fs::dir_ls(path, type = "file")
   new_benchmark_ls_tibble(
     name = fs::path_file(fs::path_dir(dirs)),
-    branch = fs::path_file(dirs)
+    branch = branch_decode(fs::path_file(dirs))
   )
 }
 
 path_record <- function(name = "", branch = "") {
-  as.character(fs::path(dir_touchstone(), "records", name, branch))
+  as.character(
+    fs::path(dir_touchstone(), "records", name, branch_encode(branch))
+  )
 }
 
 benchmark_read_impl <- function(path) {
