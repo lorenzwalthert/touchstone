@@ -9,7 +9,7 @@ runs:
   steps:
     - name: 'Download artifact'
       id: 'download'
-      uses: actions/download-artifact@v5
+      uses: actions/download-artifact@v6
       with:
         name: pr
         github-token: ${{ inputs.GITHUB_TOKEN }}
