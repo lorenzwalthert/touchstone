@@ -8,7 +8,9 @@ benchmark_analyze(
   branches = c(branch_get_or_fail("GITHUB_BASE_REF"),
     branch_get_or_fail("GITHUB_HEAD_REF")),
   names = NULL,
-  ci = 0.95
+  ci = 0.95,
+  sorting = c("name", "performance_improvement", "performance_regression",
+    "current_running_time", "incoming_running_time")
 )
 }
 \arguments{
@@ -19,6 +21,18 @@ created.}
 benchmarks with the \code{branches} are taken.}
 
 \item{ci}{The confidence level, defaults to 95\%.}
+
+\item{sorting}{How to order the rows of the table:
+\itemize{
+\item \code{"name"}: alphabetically by benchmark name.
+\item \code{"performance_improvement"}: strongest decrease in running time first.
+\item \code{"performance_regression"}: strongest increase in running time first.
+\item \code{"current_running_time"}: largest running time on the base branch first.
+\item \code{"incoming_running_time"}: largest running time on the head branch first.
+}
+
+The relative change used for the performance options is the midpoint of
+the confidence interval.}
 }
 \value{
 A character vector that summarizes the benchmarking results.
@@ -31,11 +45,11 @@ Creates two side effects:
 \itemize{
 \item Density plots for each element in \code{branches} are written to
 \code{touchstone/plots}.
-\item A text explaining the speed diff is written to
-\code{touchstone/pr-comment/info.txt} for every registered benchmarking
-expression. See \code{vignette("inference", package = "touchstone")} for
-details.
+\item A Markdown table explaining the speed diff, with one row for every
+registered benchmarking expression, is written to
+\code{touchstone/pr-comment/info.txt}. See
+\code{vignette("inference", package = "touchstone")} for details.
 }
 
-Requires \link[dplyr:dplyr-package]{dplyr::dplyr}, \link[ggplot2:ggplot2-package]{ggplot2::ggplot2} and \link[glue:glue]{glue::glue}.
+Requires \link[dplyr:dplyr]{dplyr::dplyr}, \link[ggplot2:ggplot2]{ggplot2::ggplot2} and \link[glue:glue]{glue::glue}.
 }

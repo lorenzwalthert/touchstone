@@ -29,8 +29,8 @@ test_that("end to end run - code", {
   expect_lt(diff, 2.5)
   expect_gt(diff, 1.5)
   out <- benchmark_analyze_impl("bliblablup", branches)
-  expect_match(
-    out,
-    glue::glue("bliblablup: .* -> .*\\[.*%, .*\\]")
-  )
+  expect_equal(out$name, "bliblablup")
+  expect_match(out$interval, "^\\[.*%, .*%\\]$")
+  # feature is slower
+  expect_gt(out$relative_change, 0)
 })

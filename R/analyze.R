@@ -5,25 +5,53 @@
 #'
 #' * Density plots for each element in `branches` are written to
 #'   `touchstone/plots`.
-#' * A text explaining the speed diff is written to
-#'   `touchstone/pr-comment/info.txt` for every registered benchmarking
-#'   expression. See `vignette("inference", package = "touchstone")` for
-#'   details.
+#' * A Markdown table explaining the speed diff, with one row for every
+#'   registered benchmarking expression, is written to
+#'   `touchstone/pr-comment/info.txt`. See
+#'   `vignette("inference", package = "touchstone")` for details.
 #' @param branches The names of the branches for which analysis should be
 #'   created.
 #' @param names The names of the benchmarks to analyze. If `NULL`, all
 #'   benchmarks with the `branches` are taken.
 #' @param ci The confidence level, defaults to 95%.
+#' @param sorting How to order the rows of the table:
+#'   * `"name"`: alphabetically by benchmark name.
+#'   * `"performance_improvement"`: strongest decrease in running time first.
+#'   * `"performance_regression"`: strongest increase in running time first.
+#'   * `"current_running_time"`: largest running time on the base branch first.
+#'   * `"incoming_running_time"`: largest running time on the head branch first.
+#'
+#'   The relative change used for the performance options is the midpoint of
+#'   the confidence interval.
 #' @details Requires [dplyr::dplyr], [ggplot2::ggplot2] and [glue::glue].
 #' @return
 #' A character vector that summarizes the benchmarking results.
 #' @export
-benchmark_analyze <- function(branches = c(
-                                branch_get_or_fail("GITHUB_BASE_REF"),
-                                branch_get_or_fail("GITHUB_HEAD_REF")
-                              ),
-                              names = NULL,
-                              ci = 0.95) {
+benchmark_analyze <- function(
+  branches = c(
+    branch_get_or_fail("GITHUB_BASE_REF"),
+    branch_get_or_fail("GITHUB_HEAD_REF")
+  ),
+  names = NULL,
+  ci = 0.95,
+  sorting = c(
+    "name",
+    "performance_improvement",
+    "performance_regression",
+    "current_running_time",
+    "incoming_running_time"
+  )
+) {
+  sorting <- rlang::arg_match(
+    sorting,
+    c(
+      "name",
+      "performance_improvement",
+      "performance_regression",
+      "current_running_time",
+      "incoming_running_time"
+    )
+  )
   suggested_pkgs <- c("dplyr", "ggplot2", "glue")
   suggests_available <- purrr::map_lgl(
     suggested_pkgs,
@@ -46,10 +74,14 @@ benchmark_analyze <- function(branches = c(
   }
   path_info <- path_pr_comment()
   default_header <- paste0(
-    "This is how benchmark results would change (along with a ", 100 * ci,
+    "This is how benchmark results would change (along with a ",
+    100 * ci,
     "% confidence interval in relative change) if ",
     system2("git", c("rev-parse", "HEAD"), stdout = TRUE),
-    " is merged into ", branches[1], ":", "\n"
+    " is merged into ",
+    branches[1],
+    ":",
+    "\n"
   )
 
   get_comment_text("header", default_header) %>%
@@ -73,11 +105,19 @@ benchmark_analyze <- function(branches = c(
     }
   }
 
-  out <- purrr::walk(
+  tbl <- purrr::map(
     names$name,
     benchmark_analyze_impl,
-    branches = branches, ci = ci
-  )
+    branches = branches,
+    ci = ci
+  ) %>%
+    do.call(rbind, .)
+
+  tbl %>%
+    benchmark_table_sort(sorting) %>%
+    benchmark_table_format() %>%
+    cat(sep = "\n", file = path_info, append = TRUE)
+
   default_footer <- paste(
     "\nFurther explanation regarding interpretation and methodology can be found",
     "in the [documentation](https://lorenzwalthert.github.io/touchstone/articles/inference.html)."
@@ -89,44 +129,86 @@ benchmark_analyze <- function(branches = c(
 }
 
 #' @importFrom rlang .data
-benchmark_analyze_impl <- function(benchmark, branches = c(
-                                     branch_get_or_fail("GITHUB_BASE_REF"),
-                                     branch_get_or_fail("GITHUB_HEAD_REF")
-                                   ),
-                                   ci = 0.95) {
+benchmark_analyze_impl <- function(
+  benchmark,
+  branches = c(
+    branch_get_or_fail("GITHUB_BASE_REF"),
+    branch_get_or_fail("GITHUB_HEAD_REF")
+  ),
+  ci = 0.95
+) {
   timings <- benchmark_read(benchmark, branches)
   benchmark_plot(benchmark, timings)
-  benchmark_verbalize(benchmark, timings = timings, branches = branches, ci = ci)
+  benchmark_verbalize(
+    benchmark,
+    timings = timings,
+    branches = branches,
+    ci = ci
+  )
 }
 
-#' Create nice text from benchmarks
+#' Summarise benchmarks as a table row
 #'
 #' `branches` must be passed because the order is relevant.
 #' @inheritParams benchmark_plot
+#' @return A one-row tibble with the benchmark name, the status emoji, the mean
+#'   running time on both branches and the confidence interval of the relative
+#'   change.
 #' @keywords internal
 benchmark_verbalize <- function(benchmark, timings, branches, ci) {
   tbl <- timings %>%
     dplyr::group_by(.data$branch) %>%
     dplyr::summarise(
-      mean = bench::as_bench_time(mean(.data$elapsed)),
+      mean = mean(.data$elapsed),
       sd = stats::sd(.data$elapsed)
     ) %>%
     dplyr::inner_join(tibble::tibble(branch = branches), ., by = "branch")
 
   if (nrow(tbl) > 2) {
-    cli::cli_abort("Benchmarks with more than two {.val branches} cannot be verbalized.")
+    cli::cli_abort(
+      "Benchmarks with more than two {.val branches} cannot be verbalized."
+    )
   }
-  confint <- confint_relative_get(timings, branches, as.numeric(tbl$mean[1]), ci = ci)
+  confint <- confint_relative_get(
+    timings,
+    branches,
+    tbl$mean[1],
+    ci = ci
+  )
 
-  text <- glue::glue(
-    "* {confint$emoji}{benchmark}: {tbl$mean[1]} -> {tbl$mean[2]} {confint$string}"
+  tibble::tibble(
+    name = benchmark,
+    emoji = confint$emoji,
+    current = tbl$mean[1],
+    incoming = tbl$mean[2],
+    relative_change = confint$relative_change,
+    interval = confint$string
   )
-  cat(
-    text,
-    fill = TRUE, file = path_pr_comment(),
-    append = TRUE
+}
+
+benchmark_table_sort <- function(tbl, sorting) {
+  key <- switch(
+    sorting,
+    name = tbl$name,
+    performance_improvement = tbl$relative_change,
+    performance_regression = -tbl$relative_change,
+    current_running_time = -tbl$current,
+    incoming_running_time = -tbl$incoming
   )
-  text
+  # ties are broken by name
+  tbl[order(key, tbl$name), , drop = FALSE]
+}
+
+benchmark_table_format <- function(tbl) {
+  c(
+    "| Status | Name | Current | Incoming | Interval |",
+    "| :----- | :--: | :------ | :------: | :------: |",
+    glue::glue(
+      "| {tbl$emoji} | `{tbl$name}` | ",
+      "{format(bench::as_bench_time(tbl$current))} | ",
+      "{format(bench::as_bench_time(tbl$incoming))} | {tbl$interval} |"
+    )
+  )
 }
 
 set_sign <- function(x) {
@@ -140,7 +222,8 @@ confint_relative_get <- function(timings, branches, reference, ci) {
 
   timings_with_factors <- timings %>%
     dplyr::mutate(
-      block = factor(.data$block), branch = factor(.data$branch, levels = branches)
+      block = factor(.data$block),
+      branch = factor(.data$branch, levels = branches)
     )
   stopifnot(inherits(timings_with_factors$branch, "factor"))
   fit <- stats::aov(elapsed ~ branch, data = timings_with_factors)
@@ -160,6 +243,7 @@ confint_relative_get <- function(timings, branches, reference, ci) {
       paste0(set_sign(confint), collapse = "%, "),
       "%]"
     ),
+    relative_change = mean(confint),
     emoji = emoji
   )
 }
@@ -198,7 +282,11 @@ benchmark_plot <- function(benchmark, timings) {
 #' @seealso [base::eval()] [base::parse()]
 NULL
 
-get_comment_text <- function(part = c("footer", "header"), default, env = parent.frame()) {
+get_comment_text <- function(
+  part = c("footer", "header"),
+  default,
+  env = parent.frame()
+) {
   part <- match.arg(part)
   file <- glue::glue("{part}.R")
   path <- fs::path(dir_touchstone(), file)
@@ -210,7 +298,8 @@ get_comment_text <- function(part = c("footer", "header"), default, env = parent
     text <- eval(parse(path), envir = env)
     if (!is.character(text)) {
       cli::cli_warn(
-        c("Parsed comment {part} is not a valid string. Using default.",
+        c(
+          "Parsed comment {part} is not a valid string. Using default.",
           "i" = "See {.code ?touchstone::pr_comment} for more information."
         )
       )
