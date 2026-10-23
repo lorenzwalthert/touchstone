@@ -21,13 +21,13 @@ We first explain the output of the comment in the PR:
 
 ![](../man/figures/screenshot-pr-comment.png)
 
-Every bullet point corresponds to one expression you benchmarked in your
+Every row of the table corresponds to one expression you benchmarked in your
 touchstone script in `touchstone/script.R` with `benchmark_run()`. The
 contents of the former are in this (simplified) example:
 
 ```{r}
 library(touchstone)
-branches_install()
+branch_install()
 benchmark_run(
   expr_before_benchmark = c("library(styler)", "cache_deactivate()"),
   without_cache = 'styler::style_pkg("touchstone/sources/here")',
@@ -49,7 +49,7 @@ benchmark_run(
   n = 30
 )
 
-benchmarks_analyze()
+benchmark_analyze()
 ```
 
 * You can see that the expression `cache_applying` took on average 0.1 seconds
