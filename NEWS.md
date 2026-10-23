@@ -2,8 +2,9 @@
 
 * `benchmark_analyze()` now writes the benchmark results to the PR comment as a
   Markdown table instead of a bullet list. The new `sorting` argument orders
-  the rows by name (the default), by performance improvement or regression, or
-  by current or incoming running time. (#172)
+  the rows in the order of the touchstone script (the default), by name, by
+  performance improvement or regression, or by current or incoming running
+  time. (#172)
 
 # touchstone 0.1.0-rc
 

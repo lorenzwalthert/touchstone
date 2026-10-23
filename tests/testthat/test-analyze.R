@@ -10,6 +10,8 @@ test_that("can analyze results", {
     branch = .x,
     block = 1
   ))
+  # as benchmark_run() would
+  benchmark_order_append("xx1")
   mockery::stub(
     benchmark_verbalize,
     "confint_relative_get",
@@ -57,6 +59,8 @@ test_that("can analyze results", {
     branch = .x,
     block = 1
   ))
+  # as benchmark_run() would
+  benchmark_order_append(c("xx1", "xx2"))
 
   mockery::stub(
     benchmark_verbalize,
@@ -104,6 +108,32 @@ test_that("can sort the benchmark table", {
     benchmark_table_sort(tbl, "incoming_running_time")$name,
     c("c", "a", "b")
   )
+})
+
+test_that("can sort the benchmark table in script order", {
+  local_package()
+  tbl <- tibble::tibble(
+    name = c("b", "a", "c"),
+    emoji = c(":rocket:", ":exclamation::snail:", ":heavy_check_mark:"),
+    current = c(0.242, 0.1, 0.5),
+    incoming = c(0.1, 0.3, 0.5),
+    relative_change = c(-55, 200, 0),
+    interval = c("[-60%, -50%]", "[+190%, +210%]", "[-1%, +1%]")
+  )
+  # without order file, falls back to name
+  expect_warning(
+    sorted <- benchmark_table_sort(tbl, "script"),
+    "Sorting benchmarks by name instead"
+  )
+  expect_equal(sorted$name, c("a", "b", "c"))
+  # benchmarks run twice keep their first position, benchmarks not in the
+  # file come last
+  init_touchstone()
+  benchmark_order_append("c")
+  benchmark_order_append("a")
+  benchmark_order_append("c")
+  expect_equal(benchmark_order_read(), c("c", "a"))
+  expect_equal(benchmark_table_sort(tbl, "script")$name, c("c", "a", "b"))
 })
 
 test_that("can format the benchmark table", {

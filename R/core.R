@@ -121,6 +121,7 @@ benchmark_run <- function(expr_before_benchmark =
     dots = dots,
     path_pkg = path_pkg
   )
+  benchmark_order_append(names(dots))
   vctrs::vec_rbind(!!!out_list)
 }
 

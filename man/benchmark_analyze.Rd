@@ -9,8 +9,8 @@ benchmark_analyze(
     branch_get_or_fail("GITHUB_HEAD_REF")),
   names = NULL,
   ci = 0.95,
-  sorting = c("name", "performance_improvement", "performance_regression",
-    "current_running_time", "incoming_running_time")
+  sorting = c("script", "name", "performance_improvement",
+    "performance_regression", "current_running_time", "incoming_running_time")
 )
 }
 \arguments{
@@ -24,6 +24,9 @@ benchmarks with the \code{branches} are taken.}
 
 \item{sorting}{How to order the rows of the table:
 \itemize{
+\item \code{"script"}: in the order in which the benchmarks were run with
+\code{\link[=benchmark_run]{benchmark_run()}}, i.e. the order of the touchstone script. Benchmarks
+not run in that way come last, alphabetically.
 \item \code{"name"}: alphabetically by benchmark name.
 \item \code{"performance_improvement"}: strongest decrease in running time first.
 \item \code{"performance_regression"}: strongest increase in running time first.

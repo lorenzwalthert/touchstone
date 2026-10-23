@@ -15,6 +15,9 @@
 #'   benchmarks with the `branches` are taken.
 #' @param ci The confidence level, defaults to 95%.
 #' @param sorting How to order the rows of the table:
+#'   * `"script"`: in the order in which the benchmarks were run with
+#'     [benchmark_run()], i.e. the order of the touchstone script. Benchmarks
+#'     not run in that way come last, alphabetically.
 #'   * `"name"`: alphabetically by benchmark name.
 #'   * `"performance_improvement"`: strongest decrease in running time first.
 #'   * `"performance_regression"`: strongest increase in running time first.
@@ -35,6 +38,7 @@ benchmark_analyze <- function(
   names = NULL,
   ci = 0.95,
   sorting = c(
+    "script",
     "name",
     "performance_improvement",
     "performance_regression",
@@ -42,16 +46,7 @@ benchmark_analyze <- function(
     "incoming_running_time"
   )
 ) {
-  sorting <- rlang::arg_match(
-    sorting,
-    c(
-      "name",
-      "performance_improvement",
-      "performance_regression",
-      "current_running_time",
-      "incoming_running_time"
-    )
-  )
+  sorting <- rlang::arg_match(sorting)
   suggested_pkgs <- c("dplyr", "ggplot2", "glue")
   suggests_available <- purrr::map_lgl(
     suggested_pkgs,
@@ -192,6 +187,7 @@ benchmark_verbalize <- function(benchmark, timings, branches, ci) {
 benchmark_table_sort <- function(tbl, sorting) {
   key <- switch(sorting,
     name = tbl$name,
+    script = match(tbl$name, benchmark_order_read()),
     performance_improvement = tbl$relative_change,
     performance_regression = -tbl$relative_change,
     current_running_time = -tbl$current,

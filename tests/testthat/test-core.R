@@ -22,6 +22,7 @@ test_that("branches can be run", {
   )
   schema <- purrr::map_chr(bm, ~ class(.x)[1])
   expect_equal(schema, schema_disk())
+  expect_equal(benchmark_order_read(), "bliblablup")
 })
 
 
