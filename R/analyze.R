@@ -190,8 +190,7 @@ benchmark_verbalize <- function(benchmark, timings, branches, ci) {
 }
 
 benchmark_table_sort <- function(tbl, sorting) {
-  key <- switch(
-    sorting,
+  key <- switch(sorting,
     name = tbl$name,
     performance_improvement = tbl$relative_change,
     performance_regression = -tbl$relative_change,
