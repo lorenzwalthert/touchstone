@@ -96,6 +96,29 @@ path_record <- function(name = "", branch = "") {
   )
 }
 
+# order in which the benchmarks were run, i.e. the order of the touchstone
+# script
+path_benchmark_order <- function() {
+  fs::path(dir_touchstone(), "records", "order.txt")
+}
+
+benchmark_order_append <- function(name) {
+  cat(name, "\n", sep = "", file = path_benchmark_order(), append = TRUE)
+}
+
+benchmark_order_read <- function() {
+  path <- path_benchmark_order()
+  if (!fs::file_exists(path)) {
+    cli::cli_warn(c(
+      "Can't find the order in which the benchmarks were run.",
+      "!" = "Sorting benchmarks by name instead.",
+      "i" = "The order is recorded by {.fun touchstone::benchmark_run}."
+    ))
+    return(character())
+  }
+  unique(readLines(path))
+}
+
 benchmark_read_impl <- function(path) {
   utils::read.table(path, header = TRUE, colClasses = schema_disk()) %>%
     tibble::as_tibble()
