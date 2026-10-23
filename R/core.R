@@ -16,15 +16,13 @@ benchmark_run_iteration <- function(expr_before_benchmark,
     expr_before_benchmark <- rlang::expr({})
   }
 
+  all_options <- options()
   args <- rlang::list2(
     expr_before_benchmark = expr_before_benchmark,
     dots = dots,
     branch = branch,
     block = block,
-    asset_dirs = options() %>%
-      names() %>%
-      grep("touchstone.dir_assets_", .) %>%
-      options()[.]
+    asset_dirs = all_options[grep("touchstone.dir_assets_", names(all_options))]
   )
 
   for (iteration in seq_len(n)) {
