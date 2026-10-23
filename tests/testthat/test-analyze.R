@@ -24,6 +24,11 @@ test_that("can analyze results", {
     "^\\| :rocket: \\| `xx1` \\| .*s \\| .*s \\| \\[x.xx%, y.yy%\\] \\|$",
     all = FALSE
   )
+  # the table is surrounded by empty lines, so header and footer are not part
+  # of it
+  rows <- grep("^\\|", lines)
+  expect_equal(lines[min(rows) - 1], "")
+  expect_equal(lines[max(rows) + 1], "")
   expect_true(fs::file_exists("touchstone/plots/xx1.png"))
 })
 

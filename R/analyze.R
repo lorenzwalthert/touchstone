@@ -116,6 +116,9 @@ benchmark_analyze <- function(
   tbl %>%
     benchmark_table_sort(sorting) %>%
     benchmark_table_format() %>%
+    # empty lines around the table so that it is not merged with the header
+    # or footer, which may not start or end with a newline
+    c("", ., "") %>%
     cat(sep = "\n", file = path_info, append = TRUE)
 
   default_footer <- paste(
