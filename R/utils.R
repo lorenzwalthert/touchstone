@@ -207,8 +207,8 @@ pin_assets <- function(...,
   asset_dir <- get_asset_dir(branch)
 
   local_git_checkout(branch)
-  dirs <- rlang::list2(...) %>% unlist()
-  valid_dirs <- dirs %>% purrr::map_lgl(fs::file_exists)
+  dirs <- rlang::list2(...) |> unlist()
+  valid_dirs <- dirs |> purrr::map_lgl(fs::file_exists)
 
   if (!all(valid_dirs)) {
     cli::cli_warn(paste0(
@@ -238,8 +238,7 @@ pin_assets <- function(...,
         overwrite = overwrite
       )
     } else if (fs::is_file(asset)[[1]]) {
-      fs::path_dir(rel_asset) %>%
-        fs::path(asset_dir, .) %>%
+      fs::path(asset_dir, fs::path_dir(rel_asset)) |>
         fs::dir_create()
 
       fs::file_copy(
@@ -250,7 +249,7 @@ pin_assets <- function(...,
     }
   }
 
-  dirs[valid_dirs] %>% purrr::walk(create_and_copy)
+  dirs[valid_dirs] |> purrr::walk(create_and_copy)
 
   if (any(valid_dirs)) {
     cli::cli_alert_success(
