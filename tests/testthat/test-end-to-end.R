@@ -1,7 +1,7 @@
 test_that("end to end run - code", {
   branches <- c("manila_master", "setova_feature")
   # feature is slower
-  timings <- c(0.4, 0.8) %>%
+  timings <- c(0.4, 0.8) |>
     rlang::set_names(branches)
   local_package(branches = branches)
   for (branch in branches) {
@@ -21,8 +21,8 @@ test_that("end to end run - code", {
     branches = branches,
     n = 2
   )
-  out <- benchmark_read("bliblablup", branches) %>%
-    dplyr::group_by(.data$branch) %>%
+  out <- benchmark_read("bliblablup", branches) |>
+    dplyr::group_by(.data$branch) |>
     dplyr::summarise(mean = mean(elapsed), sd = sd(elapsed))
   # expect diff around 2
   diff <- max(out$mean) / min(out$mean)

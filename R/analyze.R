@@ -73,14 +73,14 @@ benchmark_analyze <- function(branches = c(
     " is merged into ", branches[1], ":", "\n"
   )
 
-  get_comment_text("header", default_header) %>%
+  get_comment_text("header", default_header) |>
     writeLines(path_info)
 
   if (is.null(names)) {
     # only select names that occur exactly twice
-    names <- benchmark_ls() %>%
-      dplyr::filter(.data$branch %in% !!branches) %>%
-      dplyr::group_by(.data$name) %>%
+    names <- benchmark_ls() |>
+      dplyr::filter(.data$branch %in% !!branches) |>
+      dplyr::group_by(.data$name) |>
       dplyr::count()
 
     filtered_names <- dplyr::filter(names, .data$n == 2)
@@ -98,16 +98,15 @@ benchmark_analyze <- function(branches = c(
     names$name,
     benchmark_analyze_impl,
     branches = branches, ci = ci
-  ) %>%
-    do.call(rbind, .)
+  )
+  tbl <- do.call(rbind, tbl)
 
-  tbl %>%
-    benchmark_table_sort(sorting) %>%
-    benchmark_table_format() %>%
-    # empty lines around the table so that it is not merged with the header
-    # or footer, which may not start or end with a newline
-    c("", ., "") %>%
-    cat(sep = "\n", file = path_info, append = TRUE)
+  table_lines <- tbl |>
+    benchmark_table_sort(sorting) |>
+    benchmark_table_format()
+  # empty lines around the table so that it is not merged with the header
+  # or footer, which may not start or end with a newline
+  cat(c("", table_lines, ""), sep = "\n", file = path_info, append = TRUE)
 
   default_footer <- paste(
     "\nFurther explanation regarding interpretation and methodology can be found",
@@ -139,13 +138,13 @@ benchmark_analyze_impl <- function(benchmark, branches = c(
 #'   change.
 #' @keywords internal
 benchmark_verbalize <- function(benchmark, timings, branches, ci) {
-  tbl <- timings %>%
-    dplyr::group_by(.data$branch) %>%
+  tbl <- timings |>
+    dplyr::group_by(.data$branch) |>
     dplyr::summarise(
       mean = mean(.data$elapsed),
       sd = stats::sd(.data$elapsed)
-    ) %>%
-    dplyr::inner_join(tibble::tibble(branch = branches), ., by = "branch")
+    )
+  tbl <- dplyr::inner_join(tibble::tibble(branch = branches), tbl, by = "branch")
 
   if (nrow(tbl) > 2) {
     cli::cli_abort("Benchmarks with more than two {.val branches} cannot be verbalized.")
@@ -196,7 +195,7 @@ confint_relative_get <- function(timings, branches, reference, ci) {
   slower <- ":exclamation::snail:"
   faster <- ":rocket:"
 
-  timings_with_factors <- timings %>%
+  timings_with_factors <- timings |>
     dplyr::mutate(
       block = factor(.data$block), branch = factor(.data$branch, levels = branches)
     )
@@ -228,11 +227,11 @@ confint_relative_get <- function(timings, branches, reference, ci) {
 #'   only contain one unique value.
 #' @keywords internal
 benchmark_plot <- function(benchmark, timings) {
-  timings %>%
+  timings |>
     ggplot2::ggplot(ggplot2::aes(x = .data$elapsed, color = .data$branch)) +
     ggplot2::geom_density()
-  fs::path(dir_touchstone(), "plots", benchmark) %>%
-    fs::path_ext_set("png") %>%
+  fs::path(dir_touchstone(), "plots", benchmark) |>
+    fs::path_ext_set("png") |>
     ggplot2::ggsave()
 }
 

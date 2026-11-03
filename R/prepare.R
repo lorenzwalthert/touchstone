@@ -64,11 +64,11 @@ branch_install <- function(branches = c(
   libpaths <- purrr::map(branches, branch_install_impl,
     path_pkg = path_pkg,
     install_dependencies = install_dependencies
-  ) %>%
-    purrr::flatten_chr() %>%
-    unique() %>%
-    fs::path_abs() %>%
-    as.character() %>%
+  ) |>
+    purrr::flatten_chr() |>
+    unique() |>
+    fs::path_abs() |>
+    as.character() |>
     sort()
   assert_no_global_installation(path_pkg)
   cli::cli_alert_success("Completed installations.")

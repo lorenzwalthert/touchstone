@@ -25,7 +25,7 @@ benchmark_write <- function(benchmark, name, branch, block = NA, iteration = NA,
     branch = enc2utf8(branch),
     block = block,
     name = name
-  ) %>%
+  ) |>
     benchmark_write_impl(path = path, append = append)
 }
 
@@ -120,6 +120,6 @@ benchmark_order_read <- function() {
 }
 
 benchmark_read_impl <- function(path) {
-  utils::read.table(path, header = TRUE, colClasses = schema_disk()) %>%
+  utils::read.table(path, header = TRUE, colClasses = schema_disk()) |>
     tibble::as_tibble()
 }
