@@ -20,13 +20,14 @@ License: MIT + file LICENSE
 URL: https://github.com/lorenzwalthert/touchstone,
     https://lorenzwalthert.github.io/touchstone
 BugReports: https://github.com/lorenzwalthert/touchstone/issues
+Depends:
+    R (>= 4.1.0)
 Imports: 
     bench,
     callr,
     cli (>= 3.6.1),
     fs,
     gert,
-    magrittr,
     purrr,
     remotes,
     rlang,

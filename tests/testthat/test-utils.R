@@ -151,8 +151,8 @@ test_that("assets work HEAD and BASE", {
   branches <- c("rc-1.0", "feat")
   local_asset_dir(!!!branches)
   git_root <- local_package(branches = branches)
-  dirs <- c("R", "bench") %>% rlang::set_names(branches)
-  files <- c("data.Rdata", "utils.R") %>% rlang::set_names(branches)
+  dirs <- c("R", "bench") |> rlang::set_names(branches)
+  files <- c("data.Rdata", "utils.R") |> rlang::set_names(branches)
   withr::local_options(list(
     touchstone.git_root = fs::path_real(git_root)
   ))

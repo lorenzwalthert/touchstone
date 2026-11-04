@@ -2,9 +2,14 @@
 % Please edit documentation in R/analyze.R
 \name{benchmark_verbalize}
 \alias{benchmark_verbalize}
-\title{Create nice text from benchmarks}
+\title{Summarise benchmarks as a table row}
 \usage{
 benchmark_verbalize(benchmark, timings, branches, ci)
+}
+\value{
+A one-row tibble with the benchmark name, the status emoji, the mean
+running time on both branches and the confidence interval of the relative
+change.
 }
 \description{
 \code{branches} must be passed because the order is relevant.

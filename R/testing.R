@@ -53,9 +53,8 @@ local_package <- function(pkg_name = fs::path_file(fs::file_temp("pkg")),
   writeLines(if (is.null(r_sample)) "" else r_sample, fs::path("R", "sample.R"))
   gert::git_add("R/")
   gert::git_commit("[init]")
-  branches <- gert::git_branch_list() %>%
-    dplyr::pull(.data$name) %>%
-    dplyr::setdiff(branches, .)
+  existing_branches <- dplyr::pull(gert::git_branch_list(), .data$name)
+  branches <- dplyr::setdiff(branches, existing_branches)
   purrr::walk(branches, gert::git_branch_create)
   withr::defer(unlink(path), envir = envir)
   install_check <- is_installed(path)
