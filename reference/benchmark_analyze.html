@@ -70,7 +70,9 @@
 <span>  branches <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fu"><a href="branch_get_or_fail.html">branch_get_or_fail</a></span><span class="op">(</span><span class="st">"GITHUB_BASE_REF"</span><span class="op">)</span>,</span>
 <span>    <span class="fu"><a href="branch_get_or_fail.html">branch_get_or_fail</a></span><span class="op">(</span><span class="st">"GITHUB_HEAD_REF"</span><span class="op">)</span><span class="op">)</span>,</span>
 <span>  names <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  ci <span class="op">=</span> <span class="fl">0.95</span></span>
+<span>  ci <span class="op">=</span> <span class="fl">0.95</span>,</span>
+<span>  sorting <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"script"</span>, <span class="st">"name"</span>, <span class="st">"performance_improvement"</span>,</span>
+<span>    <span class="st">"performance_regression"</span>, <span class="st">"current_running_time"</span>, <span class="st">"incoming_running_time"</span><span class="op">)</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
 
@@ -91,6 +93,19 @@ benchmarks with the <code>branches</code> are taken.</p></dd>
 <dt id="arg-ci">ci<a class="anchor" aria-label="anchor" href="#arg-ci"></a></dt>
 <dd><p>The confidence level, defaults to 95%.</p></dd>
 
+
+<dt id="arg-sorting">sorting<a class="anchor" aria-label="anchor" href="#arg-sorting"></a></dt>
+<dd><p>How to order the rows of the table:</p><ul><li><p><code>"script"</code>: in the order in which the benchmarks were run with
+<code><a href="benchmark_run.html">benchmark_run()</a></code>, i.e. the order of the touchstone script. Benchmarks
+not run in that way come last, alphabetically.</p></li>
+<li><p><code>"name"</code>: alphabetically by benchmark name.</p></li>
+<li><p><code>"performance_improvement"</code>: strongest decrease in running time first.</p></li>
+<li><p><code>"performance_regression"</code>: strongest increase in running time first.</p></li>
+<li><p><code>"current_running_time"</code>: largest running time on the base branch first.</p></li>
+<li><p><code>"incoming_running_time"</code>: largest running time on the head branch first.</p></li>
+</ul><p>The relative change used for the performance options is the midpoint of
+the confidence interval.</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
@@ -100,10 +115,10 @@ benchmarks with the <code>branches</code> are taken.</p></dd>
     <h2>Details</h2>
     <p>Creates two side effects:</p><ul><li><p>Density plots for each element in <code>branches</code> are written to
 <code>touchstone/plots</code>.</p></li>
-<li><p>A text explaining the speed diff is written to
-<code>touchstone/pr-comment/info.txt</code> for every registered benchmarking
-expression. See <code><a href="../articles/inference.html">vignette("inference", package = "touchstone")</a></code> for
-details.</p></li>
+<li><p>A Markdown table explaining the speed diff, with one row for every
+registered benchmarking expression, is written to
+<code>touchstone/pr-comment/info.txt</code>. See
+<code><a href="../articles/inference.html">vignette("inference", package = "touchstone")</a></code> for details.</p></li>
 </ul><p>Requires <a href="https://dplyr.tidyverse.org/reference/dplyr-package.html" class="external-link">dplyr::dplyr</a>, <a href="https://ggplot2.tidyverse.org/reference/ggplot2-package.html" class="external-link">ggplot2::ggplot2</a> and <a href="https://glue.tidyverse.org/reference/glue.html" class="external-link">glue::glue</a>.</p>
     </div>
 
@@ -119,7 +134,7 @@ details.</p></li>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.0.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.1.</p>
 </div>
 
       </footer></div>

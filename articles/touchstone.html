@@ -167,7 +167,7 @@ modify to fit your needs. Within the GitHub Action {touchstone} will
 always run the <code>touchstone/script.R</code> from the
 <code>HEAD</code> branch, so you can modify or extend the benchmarks if
 needed to fit your current branch. Please beware that a few functions
-such as <code>branches_install()</code>, <code>pin_assets</code> or
+such as <code><a href="../reference/branch_install.html">branch_install()</a></code>, <code>pin_assets</code> or
 <code><a href="../reference/benchmark_run.html">benchmark_run()</a></code> will perform local git checkouts and
 therefore the git status should be clean and no other processes should
 run in the directory.</p>
@@ -182,14 +182,14 @@ environment variables, R options and library paths.</p>
 <h4 id="setup">Setup<a class="anchor" aria-label="anchor" href="#setup"></a>
 </h4>
 <p>We first install the different package versions in separate libraries
-with <code>branches_install()</code>, this is mandatory for any
+with <code><a href="../reference/branch_install.html">branch_install()</a></code>, this is mandatory for any
 <code>script.R</code>. If you want to access some directory or file
 which only exists on one of the branches you can use
 <code>pin_assets(..., ref = "your-branch-name")</code> to make them
 available across branches. You can of course also run arbitrary code to
 prepare for the benchmarks.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu">touchstone</span><span class="fu">::</span><span class="fu">branches_install</span><span class="op">(</span><span class="op">)</span> <span class="co"># installs branches to benchmark</span></span>
+<code class="sourceCode R"><span><span class="fu">touchstone</span><span class="fu">::</span><span class="fu"><a href="../reference/branch_install.html">branch_install</a></span><span class="op">(</span><span class="op">)</span> <span class="co"># installs branches to benchmark</span></span>
 <span><span class="fu">touchstone</span><span class="fu">::</span><span class="fu"><a href="../reference/pin_assets.html">pin_assets</a></span><span class="op">(</span><span class="st">"data/all.Rdata"</span>, <span class="st">"inst/scripts"</span><span class="op">)</span> <span class="co"># pin files and directories</span></span>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/load.html" class="external-link">load</a></span><span class="op">(</span><span class="fu"><a href="../reference/path_pinned_asset.html">path_pinned_asset</a></span><span class="op">(</span><span class="st">"all.Rdata"</span><span class="op">)</span><span class="op">)</span> <span class="co"># perform other setup you need for the benchmarks</span></span>
@@ -225,11 +225,18 @@ with <code>rlang</code> so you can use <a href="https://rlang.r-lib.org/referenc
 <div class="section level4">
 <h4 id="analyze">Analyze<a class="anchor" aria-label="anchor" href="#analyze"></a>
 </h4>
-<p>This part is just one call to <code>benchmarks_analyze()</code>which
-analyses the results and prepares the PR comment.</p>
+<p>This part is just one call to <code><a href="../reference/benchmark_analyze.html">benchmark_analyze()</a></code>, which
+analyses the results and prepares the PR comment. By default, the table
+in the PR comment lists the benchmarks in the order of your touchstone
+script. Use the <code>sorting</code> argument to sort them by name, by
+performance improvement or regression, or by running time instead, see
+<code><a href="../reference/benchmark_analyze.html">?touchstone::benchmark_analyze</a></code>.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># create artifacts used downstream in the GitHub Action</span></span>
-<span><span class="fu">touchstone</span><span class="fu">::</span><span class="fu">benchmarks_analyze</span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu">touchstone</span><span class="fu">::</span><span class="fu"><a href="../reference/benchmark_analyze.html">benchmark_analyze</a></span><span class="op">(</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># or, to list the strongest regressions first</span></span>
+<span><span class="fu">touchstone</span><span class="fu">::</span><span class="fu"><a href="../reference/benchmark_analyze.html">benchmark_analyze</a></span><span class="op">(</span>sorting <span class="op">=</span> <span class="st">"performance_regression"</span><span class="op">)</span></span></code></pre></div>
 </div>
 </div>
 <div class="section level3">
@@ -238,7 +245,7 @@ analyses the results and prepares the PR comment.</p>
 <p>After you have committed and pushed the workflow files to your
 default branch the benchmarks will be run on new pull requests and on
 each commit while that pull request is open.</p>
-<p>Note that various functions such as <code>branches_install()</code>
+<p>Note that various functions such as <code><a href="../reference/branch_install.html">branch_install()</a></code>
 <code><a href="../reference/pin_assets.html">pin_assets()</a></code> and <code><a href="../reference/benchmark_run.html">benchmark_run()</a></code> will check
 out different branches and should therefore be the only process running
 in the directory and with a clean git status.</p>
@@ -251,14 +258,13 @@ will see is the comment posted on the pull request, it will look
 something like this:</p>
 <p><img src="../reference/figures/screenshot-pr-comment.png"></p>
 <p>You can change the header and footer, see
-<code><a href="../reference/pr_comment.html">?touchstone::pr_comment</a></code>. The main body is the list of
-benchmarks and their results. First the mean elapsed time of all
-iterations of that benchmark (BASE
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mo>→</mo><annotation encoding="application/x-tex">\rightarrow</annotation></semantics></math>
-HEAD) and a 95% confidence interval.</p>
-<p>To make it easier to spot benchmarks that need closer attention, we
-prefix the benchmarks with emojis indicating if there was a
-statistically significant change (see <a href="https://lorenzwalthert.github.io/touchstone/articles/inference.html" class="external-link">inference</a>)
+<code><a href="../reference/pr_comment.html">?touchstone::pr_comment</a></code>. The main body is a table with one
+row per benchmark: the mean elapsed time of all iterations of that
+benchmark on BASE (“Current”) and on HEAD (“Incoming”), and a 95%
+confidence interval of the relative change.</p>
+<p>To make it easier to spot benchmarks that need closer attention, the
+“Status” column shows emojis indicating if there was a statistically
+significant change (see <a href="https://lorenzwalthert.github.io/touchstone/articles/inference.html" class="external-link">inference</a>)
 in the timing or not. In this example the HEAD version of
 <code>func1</code> is significantly faster, <code>func3</code> is slower
 than BASE while there is no significant change for
@@ -292,7 +298,7 @@ new PRs.<a href="#fnref1" class="footnote-back">↩︎</a></p></li>
 
 <div class="pkgdown">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.0.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.1.</p>
 </div>
 
       </footer>
