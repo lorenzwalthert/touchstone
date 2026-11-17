@@ -66,7 +66,14 @@
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">benchmark_run_impl</span><span class="op">(</span><span class="va">branch</span>, <span class="va">block</span>, <span class="va">expr_before_benchmark</span>, <span class="va">dots</span>, <span class="va">path_pkg</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">benchmark_run_impl</span><span class="op">(</span></span>
+<span>  <span class="va">branch</span>,</span>
+<span>  <span class="va">block</span>,</span>
+<span>  <span class="va">expr_before_benchmark</span>,</span>
+<span>  <span class="va">dots</span>,</span>
+<span>  <span class="va">path_pkg</span>,</span>
+<span>  <span class="va">n_blocks</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -94,6 +101,10 @@ use quasiquotation.</p></dd>
 
 <dt id="arg-path-pkg">path_pkg<a class="anchor" aria-label="anchor" href="#arg-path-pkg"></a></dt>
 <dd><p>The path to the root of the package you want to benchmark.</p></dd>
+
+
+<dt id="arg-n-blocks">n_blocks<a class="anchor" aria-label="anchor" href="#arg-n-blocks"></a></dt>
+<dd><p>Total number of blocks, used to report progress.</p></dd>
 
 </dl></div>
 
