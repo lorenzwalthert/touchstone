@@ -4,7 +4,14 @@
 \alias{benchmark_run_impl}
 \title{Checkout a branch from a repo and run an iteration}
 \usage{
-benchmark_run_impl(branch, block, expr_before_benchmark, dots, path_pkg)
+benchmark_run_impl(
+  branch,
+  block,
+  expr_before_benchmark,
+  dots,
+  path_pkg,
+  n_blocks
+)
 }
 \arguments{
 \item{branch}{A character vector of length one to indicate the git branch (i.e.
@@ -19,6 +26,8 @@ use quasiquotation.}
 \item{dots}{list of quoted expressions (length 1).}
 
 \item{path_pkg}{The path to the root of the package you want to benchmark.}
+
+\item{n_blocks}{Total number of blocks, used to report progress.}
 }
 \description{
 Checkout a branch from a repo and run an iteration
