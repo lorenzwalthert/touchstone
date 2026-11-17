@@ -1,5 +1,9 @@
 # touchstone (development version)
 
+* `benchmark_run()` now logs which iteration it just ran out of the total, for
+  example "Ran iteration 24/100 of branch main", so you can see how far along
+  a workflow is. (#116)
+
 * `benchmark_analyze()` now writes the benchmark results to the PR comment as a
   Markdown table instead of a bullet list. The new `sorting` argument orders
   the rows in the order of the touchstone script (the default), by name, by

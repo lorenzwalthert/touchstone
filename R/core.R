@@ -4,6 +4,7 @@
 #'   use quasiquotation.
 #' @param n Number of iterations to run a benchmark within an iteration.
 #' @param dots list of quoted expressions (length 1).
+#' @param n_blocks Total number of blocks, used to report progress.
 #' @inheritParams benchmark_write
 #' @importFrom tibble lst tibble
 #' @keywords internal
@@ -11,6 +12,7 @@ benchmark_run_iteration <- function(expr_before_benchmark,
                                     dots,
                                     branch,
                                     block,
+                                    n_blocks,
                                     n = getOption("touchstone.n_iterations", 1)) {
   if (rlang::is_missing(expr_before_benchmark)) {
     expr_before_benchmark <- rlang::expr({})
@@ -39,7 +41,13 @@ benchmark_run_iteration <- function(expr_before_benchmark,
       libpath = c(libpath_touchstone(branch), .libPaths())
     )
   }
-  cli::cli_alert_success("Ran {n} iteration{?s} of branch {.val {branch}}.")
+  if (n == 1) {
+    cli::cli_alert_success("Ran iteration {block}/{n_blocks} of branch {.val {branch}}.")
+  } else {
+    cli::cli_alert_success(
+      "Ran iteration {block}/{n_blocks} ({n} runs) of branch {.val {branch}}."
+    )
+  }
   benchmark_read(names(dots), branch)
 }
 
@@ -113,11 +121,12 @@ benchmark_run <- function(expr_before_benchmark =
   gh_cat(glue::glue("::group::Benchmark: {names(dots)}\n\n"))
   withr::defer(gh_cat("::endgroup::\n"))
   branches <- branches_upsample(branches, n = n)
-  cli::cli_alert_info("Running {2*n} iterations of benchmark: {names(dots)}.")
+  cli::cli_alert_info("Running {nrow(branches)} iteration{?s} of benchmark: {names(dots)}.")
   out_list <- purrr::pmap(branches, benchmark_run_impl,
     expr_before_benchmark = expr_before_benchmark,
     dots = dots,
-    path_pkg = path_pkg
+    path_pkg = path_pkg,
+    n_blocks = n
   )
   benchmark_order_append(names(dots))
   vctrs::vec_rbind(!!!out_list)
@@ -132,12 +141,14 @@ benchmark_run_impl <- function(branch,
                                block,
                                expr_before_benchmark,
                                dots,
-                               path_pkg) {
+                               path_pkg,
+                               n_blocks) {
   local_git_checkout(branch, path_pkg)
   benchmark_run_iteration(
     expr_before_benchmark = expr_before_benchmark,
     dots = dots,
     branch = branch,
-    block = block
+    block = block,
+    n_blocks = n_blocks
   )
 }
