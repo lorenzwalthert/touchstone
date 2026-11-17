@@ -8,7 +8,8 @@ test_that("can analyze results", {
     dots = list(xx1 = "Sys.sleep(runif(1, 0, 1e-5))"),
     n = 2,
     branch = .x,
-    block = 1
+    block = 1,
+    n_blocks = 1
   ))
   # as benchmark_run() would
   benchmark_order_append("xx1")
@@ -49,7 +50,8 @@ test_that("can analyze results", {
     dots = list(xx1 = "Sys.sleep(runif(1, 0, 1e-5))"),
     n = 2,
     branch = .x,
-    block = 1
+    block = 1,
+    n_blocks = 1
   ))
 
   purrr::walk(branches, ~ benchmark_run_iteration(
@@ -57,7 +59,8 @@ test_that("can analyze results", {
     dots = list(xx2 = "Sys.sleep(runif(1, 0, 1e-5))"),
     n = 2,
     branch = .x,
-    block = 1
+    block = 1,
+    n_blocks = 1
   ))
   # as benchmark_run() would
   benchmark_order_append(c("xx1", "xx2"))

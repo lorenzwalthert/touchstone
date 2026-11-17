@@ -9,6 +9,7 @@ benchmark_run_iteration(
   dots,
   branch,
   block,
+  n_blocks,
   n = getOption("touchstone.n_iterations", 1)
 )
 }
@@ -23,6 +24,8 @@ use quasiquotation.}
 commit, tag, branch etc) of the benchmarking.}
 
 \item{block}{All branches that appear once in a block.}
+
+\item{n_blocks}{Total number of blocks, used to report progress.}
 
 \item{n}{Number of iterations to run a benchmark within an iteration.}
 }

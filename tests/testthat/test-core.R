@@ -5,6 +5,7 @@ test_that("iterations can be run", {
     dots = list(expr_to_benchmark = expect_equal(Sys.sleep(1e-3), NULL)),
     branch = "benchmark_run_iteration",
     block = 1,
+    n_blocks = 1,
     n = 2
   )
   schema <- purrr::map_chr(bm, ~ class(.x)[1])
