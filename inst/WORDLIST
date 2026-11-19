@@ -65,6 +65,7 @@ Lifecycle
 linter
 linters
 linux
+listComments
 listWorkflowRunArtifacts
 lorenz
 lorenzwalthert
@@ -136,6 +137,7 @@ toString
 touchstone<U+0092>
 ubuntu
 unlist
+updateComment
 usethis
 va
 vctrs
